@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+
+    <record model="ir.actions.act_window" id="giaovien_list_action">
+      <field name="name">Giáo viên</field>
+        <field name="res_model">giaoanchinhsua.giaovien</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Thêm mới giáo viên
+          </p>
+        </field>
+      </record>
+
+      <record model="ir.ui.view" id="giaovien_form_view">
+        <field name="name">giaovien.form</field>
+        <field name="model">giaoanchinhsua.giaovien</field>
+        <field name="arch" type="xml">
+          <form string="Giáo viên">
+            <sheet>
+              <group>
+                <field name="name"/>
+                <field name="is_hieu_truong"/>
+                <field name="truonghoc"/>
+                <field name="email"/>
+                <field name="password"/>
+                <field name="phone"/>
+                <field name="ccdaxem"/>
+              </group>
+            </sheet>
+          </form>
+        </field>
+      </record>
+
+      <!-- override the automatically generated list view for courses -->
+      <record model="ir.ui.view" id="giaovien_tree_view">
+        <field name="name">giaovien.tree</field>
+        <field name="model">giaoanchinhsua.giaovien</field>
+        <field name="arch" type="xml">
+          <tree string="Giáo viên Tree">
+            <field name="name"/>
+            <field name="is_hieu_truong"/>
+            <field name="truonghoc"/>
+          </tree>
+        </field>
+      </record>
+
+      <record model="ir.ui.view" id="tietdaxem_tree_view">
+        <field name="name">tietdaxem.tree</field>
+        <field name="model">giaoanchinhsua.tietdaxem</field>
+        <field name="arch" type="xml">
+          <tree string="tietdaxem Tree">
+            <field name="chuongtrinh"/>
+            <field name="tiethocmin"/>
+            <field name="tiethocmax"/>
+          </tree>
+        </field>
+      </record>
+
+      <record model="ir.ui.view" id="tietdaxem_form_view">
+        <field name="name">tietdaxem.form</field>
+        <field name="model">giaoanchinhsua.tietdaxem</field>
+        <field name="arch" type="xml">
+          <form string="Tiết đã xem">
+            <sheet>
+              <group>
+                <field name="chuongtrinh"/>
+                <field name="tiethocmin"/>
+                <field name="tiethocmax"/>
+              </group>
+            </sheet>
+          </form>
+        </field>
+      </record>
+
+
+          <record model="ir.actions.act_window" id="giaodichcanhan_list_action">
+            <field name="name">Giao dịch với giáo viên</field>
+              <field name="res_model">giaoanchinhsua.giaodichcanhan</field>
+              <field name="view_type">form</field>
+              <field name="view_mode">tree,form</field>
+              <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                  Thêm mới giao dịch với giáo viên
+                </p>
+              </field>
+            </record>
+
+            <record model="ir.ui.view" id="giaodichcanhan_form_view">
+              <field name="name">giaodichcanhan.form</field>
+              <field name="model">giaoanchinhsua.giaodichcanhan</field>
+              <field name="arch" type="xml">
+                <form string="Giáo viên">
+                  <sheet>
+                    <group>
+                      <field name="name"/>
+                      <field name="MaGD"/>
+                      <field name="giaovien"/>
+                      <field name="start_time"/>
+                      <field name="end_time"/>
+                      <field name="chuongtrinhapdung"/>
+                      <field name="conhieuluc" string="Còn hiệu lực"/>
+                    </group>
+                  </sheet>
+                </form>
+              </field>
+            </record>
+
+            <!-- override the automatically generated list view for courses -->
+            <record model="ir.ui.view" id="giaodichcanhan_tree_view">
+              <field name="name">giaovien.tree</field>
+              <field name="model">giaoanchinhsua.giaodichcanhan</field>
+              <field name="arch" type="xml">
+                <tree string="Giáo viên Tree">
+                  <field name="name"/>
+                  <field name="giaovien"/>
+                  <field name="chuongtrinhapdung"/>
+                </tree>
+              </field>
+            </record>
+
+            <record model="ir.actions.act_window" id="giaodichtruonghoc_list_action">
+              <field name="name">Giao dịch trường học</field>
+                <field name="res_model">giaoanchinhsua.giaodichtruonghoc</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="help" type="html">
+                  <p class="oe_view_nocontent_create">
+                    Thêm mới giao dịch với trường học
+                  </p>
+                </field>
+              </record>
+
+              <record model="ir.ui.view" id="giaodichtruonghoc_form_view">
+                <field name="name">giaodichtruonghoc.form</field>
+                <field name="model">giaoanchinhsua.giaodichtruonghoc</field>
+                <field name="arch" type="xml">
+                  <form string="Giao dịch trường học">
+                    <sheet>
+                      <group>
+                        <field name="name"/>
+                        <field name="MaGD"/>
+                        <field name="start_time"/>
+                        <field name="end_time"/>
+                        <field name="truonghoc"/>
+                        <field name="conhieuluc" string="Còn hiệu lực"/>
+                      </group>
+                    </sheet>
+                  </form>
+                </field>
+              </record>
+
+              <!-- override the automatically generated list view for courses -->
+              <record model="ir.ui.view" id="giaodichtruonghoc_tree_view">
+                <field name="name">giaovien.tree</field>
+                <field name="model">giaoanchinhsua.giaodichtruonghoc</field>
+                <field name="arch" type="xml">
+                  <tree string="Giao dịch trường học">
+                    <field name="name"/>
+                    <field name="MaGD"/>
+                    <field name="start_time"/>
+                    <field name="end_time"/>
+                    <field name="truonghoc"/>
+                  </tree>
+                </field>
+              </record>
+
+
+
+          <record model="ir.actions.act_window" id="truonghoc_list_action">
+            <field name="name">Trường học</field>
+              <field name="res_model">giaoanchinhsua.truonghoc</field>
+              <field name="view_type">form</field>
+              <field name="view_mode">tree,form</field>
+              <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                  Thêm mới trường học
+                </p>
+              </field>
+            </record>
+
+            <record model="ir.ui.view" id="truonghoc_form_view">
+              <field name="name">giaovien.form</field>
+              <field name="model">giaoanchinhsua.truonghoc</field>
+              <field name="arch" type="xml">
+                <form string="Trường học">
+                  <sheet>
+                    <group>
+                      <field name="name" string="Tên trường học"/>
+                      <field name="hieutruong"/>
+                      <field name="email"/>
+                      <field name="website"/>
+                      <field name="phone"/>
+                      <field name="fax"/>
+                      <field name="cacgiaovien"/>
+                    </group>
+                  </sheet>
+                </form>
+              </field>
+            </record>
+
+            <!-- override the automatically generated list view for courses -->
+            <record model="ir.ui.view" id="truonghoc_tree_view">
+              <field name="name">truonghoc.tree</field>
+              <field name="model">giaoanchinhsua.truonghoc</field>
+              <field name="arch" type="xml">
+                <tree string="Trường học Tree">
+                  <field name="name"/>
+                  <field name="hieutruong"/>
+                </tree>
+              </field>
+            </record>
+
+
+    <record model="ir.actions.act_window" id="chuongtrinh_list_action">
+      <field name="name">Chương trình</field>
+        <field name="res_model">giaoanchinhsua.chuongtrinh</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Thêm mới chương trình học
+          </p>
+        </field>
+      </record>
+
+      <record model="ir.ui.view" id="chuongtrinh_form_view">
+        <field name="name">chuongtrinh.form</field>
+        <field name="model">giaoanchinhsua.chuongtrinh</field>
+        <field name="arch" type="xml">
+          <form string="Tiết học">
+            <sheet>
+              <group>
+                <field name="name"/>
+                <field name="cactiethoc" string="Chọn các tiết học"/>
+                <field name="namlop" string="Lớp"/>
+                <!-- <field name="categ_id" string="Chọn Internal Category"/> -->
+              </group>
+            </sheet>
+          </form>
+        </field>
+      </record>
+
+      <!-- override the automatically generated list view for courses -->
+      <record model="ir.ui.view" id="chuongtrinh_tree_view">
+        <field name="name">chuongtrinh.tree</field>
+        <field name="model">giaoanchinhsua.chuongtrinh</field>
+        <field name="arch" type="xml">
+          <tree string="chuongtrinh Tree">
+            <field name="name"/>
+          </tree>
+        </field>
+      </record>
+
+    <record model="ir.actions.act_window" id="tiethoc_list_action">
+      <field name="name">Tiết học</field>
+        <field name="res_model">giaoanchinhsua.tiethoc</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Thêm mới tiết học
+          </p>
+        </field>
+      </record>
+
+      <record model="ir.ui.view" id="tiethoc_form_view">
+        <field name="name">tiethoc.form</field>
+        <field name="model">giaoanchinhsua.tiethoc</field>
+        <field name="arch" type="xml">
+          <form string="Tiết học">
+            <sheet>
+              <group>
+                <field name="name"/>
+                <field name="thutu"/>
+                <field name="filedinhkem" widget="many2many_binary"/>
+              </group>
+            </sheet>
+          </form>
+        </field>
+      </record>
+
+      <!-- override the automatically generated list view for courses -->
+      <record model="ir.ui.view" id="tiethoc_tree_view">
+        <field name="name">tiethoc.tree</field>
+        <field name="model">giaoanchinhsua.tiethoc</field>
+        <field name="arch" type="xml">
+          <tree string="tiethoc Tree">
+            <field name="name"/>
+            <field name="thutu"/>
+          </tree>
+        </field>
+      </record>
+
+      <!-- Menu Chinh Sach Cong Ty-->
+      <menuitem id="main_giaoanchinhsua_menu" name="Giáo án"
+        web_icon="chinhsachcongty,static/description/icon.png"/>
+      <menuitem id="giaoanchinhsua_menu" name="Giáo án"
+        parent="main_giaoanchinhsua_menu"/>
+      <menuitem id="tiethoc_menu" name="Bài giảng" parent="giaoanchinhsua_menu"
+        action="tiethoc_list_action"/>
+      <menuitem id="chuongtrinh_menu" name="Chương trình" parent="giaoanchinhsua_menu"
+        action="chuongtrinh_list_action"/>b
+      <menuitem id="cauhinh_menu" name="Cấu hình" parent="main_giaoanchinhsua_menu"/>
+      <menuitem id="loaisanpham_menu" name="Kiểu chương trình" parent="cauhinh_menu"
+        action="product.product_category_action_form"/>
+
+      <menuitem id="main_giaovien_menu" name="Giáo viên"/>
+      <menuitem id="gvnt_menu" name="Giáo viên và Nhà trường" parent="main_giaovien_menu"/>
+      <menuitem id="giaovien_menu" name="Giáo viên" parent="gvnt_menu" action="giaovien_list_action"/>
+      <menuitem id="nhatruong_menu" name="Nhà trường" parent="gvnt_menu" action="truonghoc_list_action"/>
+
+      <menuitem id="main_capquyen_menu" name="Cấp quyền"/>
+      <menuitem id="qlth_menu" name="Quản lý thời hạn" parent="main_capquyen_menu"/>
+      <menuitem id="cqgv_menu" name="Giáo viên" parent="qlth_menu" action="giaodichcanhan_list_action"/>
+      <menuitem id="cqnt_menu" name="Nhà trường" parent="qlth_menu" action="giaodichtruonghoc_list_action"/>
+
+      <!-- <menuitem id="capquyenmoi_menu" name="Nhà trường" parent="gvnt_menu" /> -->
+
+
+  </data>
+</odoo>
