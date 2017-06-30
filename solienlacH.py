@@ -5,7 +5,6 @@ from odoo import models, fields, api
 
 class giaovien(models.Model):
     _name = 'solienlac.giaovien'
-    sml = fields.Char("SML")
     magiaovien = fields.Char("Mã giáo viên")
     hoten = fields.Char("Họ tên")
     gioitinh = fields.Selection([
