@@ -1,5 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
   <data>
+    
     <menuitem id="solienlacBarmenu" name="Sổ liên lạc điện tử" sequence="10" />
       <menuitem id="solienlacHeadermenu"  parent="VTKids_BarMenu" name="Danh mục quản lý"/>
         <menuitem id="solienlacItemmenu" parent="VTKids_CagMenu" name="Người dùng" action="action_list_nguoidung"/>
@@ -8,5 +10,6 @@
         <menuitem id="solienlacItemmenu" parent="VTKids_CagMenu" name="Bài giảng" action="action_list_baigiang"/>
         <menuitem id="solienlacItemmenu" parent="VTKids_CagMenu" name="Tiết học" action="action_list_tiethoc"/>
         <menuitem id="solienlacItemmenu" parent="VTKids_CagMenu" name="Loại bài giảng" action="action_list_loaibaigiang"/>
+
   </data>
 </odoo>
