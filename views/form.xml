@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
   <data>
+
     <!-- Giáo viên - form view -->
     <record id="giaovien_view_form" model="ir.ui.view">
       <field name="name">giaovien.form</field>
@@ -30,7 +31,44 @@
       </field>
     </record>
 
-
-
+    <!--hocsinh-->
+    <record id="hocsinh_view_form" model="ir.ui.view">
+      <field name="name">solienlac.hocsinh .form</field>
+      <field name="model">solienlac.hocsinh</field>
+      <field name="arch" type="xml">
+        <form string="Học sinh">
+          <header>
+            Quản lý thông tin học sinh
+          </header>
+          <sheet>
+            <group colspan="4" col="4">
+              <group colspan="2" col="2" string='Thông tin học sinh'>
+                <field name="mahocsinh"/>
+                <field name="hoten"/>
+                <field name="gioitinh"/>
+                <field name="ngaysinh"/>
+                <field name="noisinh"/>
+                <field name="quequan"/>
+                <field name="phuongxa"/>
+                <field name="dantoc"/>
+                <field name="tongiao"/>
+              </group>
+              <group colspan="2" col="2" string='Thông tin quản lý'>
+                <field name="lop"/>
+                <field name="chucvu"/>
+                <field name="tuyenhoc"/>
+                <field name="doituongchinhsach"/>
+                <field name="doituonguutien"/>
+              </group>
+              <notebook colspan="4">
+                <page string="Thông tin phụ huynh">
+                  <field name="phuhuynh"/>
+                </page>
+              </notebook>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
   </data>
 </odoo>
