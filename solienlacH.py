@@ -77,7 +77,7 @@ class phongban(models.Model):
     _rec_name = 'tenphongban' # optional
     maphongban = fields.Char("Mã phòng ban")
     tenphongban = fields.Char("Tên phòng ban")
-    sdt = fields.Char("Tên phòng ban")
+    sdt = fields.Char("Số điện thoại")
     ghichu = fields.Char("Ghi chú")
     truongphong = fields.Many2one('solienlac.giaovien', string = "Trưởng phòng")
 
