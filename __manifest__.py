@@ -26,5 +26,6 @@
         # 'templates.xml',
         # 'user_groups.xml',
         'views/giaoanchinhsua.xml',
+        'views/form.xml',
     ],
 }

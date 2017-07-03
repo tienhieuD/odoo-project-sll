@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+    <!-- Giáo viên - form view -->
+    <record id="giaovien_view_form" model="ir.ui.view">
+      <field name="name">giaovien.form</field>
+      <field name="model">solienlac.giaovien</field>
+      <field name="arch" type="xml">
+        <form string="Giáo viên">
+          <sheet>
+            <group>
+              <field name="magiaovien"/>
+              <field name="hoten"/>
+              <field name="gioitinh"/>
+              <field name="ngaysinh"/>
+              <field name="noisinh"/>
+              <field name="sodienthoai"/>
+              <field name="socmnd"/>
+              <field name="email"/>
+              <field name="matkhau"/>
+              <field name="phuongxa"/>
+              <field name="dantoc"/>
+              <field name="tongiao"/>
+              <field name="to"/>
+              <field name="phongban"/>
+              <field name="bomon"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+
+  </data>
+</odoo>
