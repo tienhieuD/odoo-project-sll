@@ -58,7 +58,7 @@ class dantoc(models.Model):
     ghichu = fields.Char("Ghi chú")
 
 class tongiao(models.Model):
-    _name = 'solienlac.dantoc'
+    _name = 'solienlac.tongiao'
     matongiao = fields.Char("Mã tôn giáo")
     tentongiao = fields.Char("Tên tôn giáo")
     ghichu = fields.Char("Ghi chú")

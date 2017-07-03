@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <!--Giáo viên-->
+    <record id="giaovien_action_form" model="ir.actions.act_window">
+      <field name="name">Giáo viên</field>
+      <field name="res_model">solienlac.giaovien</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          Chưa tạo ai.
+        </p>
+        <p>
+          Hãy tạo thêm giáo viên.
+        </p>
+      </field>
+    </record>
+
+    <!--Tổ-->
+    <record id="to_action_form" model="ir.actions.act_window">
+      <field name="name">Tổ</field>
+      <field name="res_model">solienlac.to</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          <!-- Add Text Here -->
+        </p>
+        <p>
+          <!-- More details about what a user can do -->
+        </p>
+      </field>
+    </record>
+
+    <!--Phòng ban-->
+    <record id="phongban_action_form" model="ir.actions.act_window">
+      <field name="name">Phòng ban</field>
+      <field name="res_model">solienlac.phongban</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          <!-- Add Text Here -->
+        </p>
+        <p>
+          <!-- More details about what a user can do -->
+        </p>
+      </field>
+    </record>
+
+    <!--Bộ môn-->
+    <record id="bomon_action_form" model="ir.actions.act_window">
+      <field name="name">Bộ môn</field>
+      <field name="res_model">solienlac.bomon</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          <!-- Add Text Here -->
+        </p>
+        <p>
+          <!-- More details about what a user can do -->
+        </p>
+      </field>
+    </record>
+
+    <!--Phường xã-->
+    <record id="phuongxa_action_form" model="ir.actions.act_window">
+      <field name="name">Phường/Xã</field>
+      <field name="res_model">solienlac.phuongxa</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          <!-- Add Text Here -->
+        </p>
+        <p>
+          <!-- More details about what a user can do -->
+        </p>
+      </field>
+    </record>
+
+    <!--Quận huyện-->
+    <record id="quanhuyen_action_form" model="ir.actions.act_window">
+      <field name="name">Quận/Huyện</field>
+      <field name="res_model">solienlac.quanhuyen</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          <!-- Add Text Here -->
+        </p>
+        <p>
+          <!-- More details about what a user can do -->
+        </p>
+      </field>
+    </record>
+
+    <!--Tỉnh thành phố-->
+    <record id="tinhthanhpho_action_form" model="ir.actions.act_window">
+      <field name="name">Tỉnh/Thành phố</field>
+      <field name="res_model">solienlac.tinhthanhpho</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          <!-- Add Text Here -->
+        </p>
+        <p>
+          <!-- More details about what a user can do -->
+        </p>
+      </field>
+    </record>
+
+    <!--Dân tộc-->
+    <record id="dantoc_action_form" model="ir.actions.act_window">
+      <field name="name">Dân tộc</field>
+      <field name="res_model">solienlac.dantoc</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          <!-- Add Text Here -->
+        </p>
+        <p>
+          <!-- More details about what a user can do -->
+        </p>
+      </field>
+    </record>
+
+    <!--Tôn giáo-->
+    <record id="tongiao_action_form" model="ir.actions.act_window">
+      <field name="name">Tôn giáo</field>
+      <field name="res_model">solienlac.tongiao</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          Chưa có dữ liệu nào, ấn vào tạo mới để tiến hành thêm danh mục!
+        </p>
+        <p>
+          Hoặc nhập dữ liệu từ file bằng cách bấm vào Import.
+        </p>
+      </field>
+    </record>
+
+    <!--Menu-->
+    <menuitem id="menu_root" name="Sổ liên lạc điện tử" sequence="0"/>
+      <menuitem id="menu_danhmuc_giaovien" name="Danh mục giáo viên" parent="menu_root" sequence="0"/>
+        <menuitem id="menu_giaovien" name="Giáo viên" parent="menu_danhmuc_giaovien" action="giaovien_action_form" sequence="0"/>
+        <menuitem id="menu_to" name="Tổ" parent="menu_danhmuc_giaovien" action="to_action_form" sequence="1"/>
+        <menuitem id="menu_phongban" name="Phòng ban" parent="menu_danhmuc_giaovien" action="phongban_action_form" sequence="2"/>
+        <menuitem id="menu_bomon" name="Bộ môn" parent="menu_danhmuc_giaovien" action="bomon_action_form" sequence="3"/>
+      <menuitem id="menu_danhmuc_hanhchinh" name="Danh mục hành chính" parent="menu_root" sequence="1"/>
+        <menuitem id="menu_phuongxa" name="Phường/xã" parent="menu_danhmuc_hanhchinh" action="phuongxa_action_form" sequence="0"/>
+        <menuitem id="menu_quanhuyen" name="Quận huyện" parent="menu_danhmuc_hanhchinh" action="quanhuyen_action_form" sequence="1"/>
+        <menuitem id="menu_tinhthanhpho" name="Tỉnh/Thành phố" parent="menu_danhmuc_hanhchinh" action="tinhthanhpho_action_form" sequence="2"/>
+        <menuitem id="menu_dantoc" name="Dân tộc" parent="menu_danhmuc_hanhchinh" action="dantoc_action_form" sequence="3"/>
+        <menuitem id="menu_tongiao" name="Tôn giáo" parent="menu_danhmuc_hanhchinh" action="tongiao_action_form" sequence="4"/>
+  </data>
+</odoo>
