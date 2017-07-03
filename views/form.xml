@@ -59,13 +59,17 @@
                 <field name="tuyenhoc"/>
                 <field name="doituongchinhsach" widget="many2many_tags"/>
                 <field name="doituonguutien" widget="many2many_tags"/>
+                <field name="phuhuynh"/>
               </group>
               <notebook colspan="4">
-                <page string="Thông tin phụ huynh">
-                  <field name="phuhuynh"/>
-                </page>
                 <page string="Hạnh kiểm">
                   <field name="hanhkiem"/>
+                </page>
+                <page string="Kết quả học tập">
+                  <field name="ketquahoctap"/>
+                </page>
+                <page string="Nề nếp">
+                  <field name="nenep"/>
                 </page>
               </notebook>
             </group>
