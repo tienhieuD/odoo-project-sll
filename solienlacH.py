@@ -140,7 +140,7 @@ class hanhkiem(models.Model):
     )
     nhanxetcuagiaovien = fields.Char('Nhận Xét Của Giáo Viên')
     ghichu = fields.Char('Ghi Chú')
-    hocsinh = fields.Many2many('solienlac.hocsinh', string='Học Sinh')
+    hocsinh = fields.Many2one('solienlac.hocsinh', string='Học Sinh')
 
 class phuhuynh(models.Model):
     _name = 'solienlac.phuhuynh'
@@ -193,6 +193,7 @@ class hocsinh(models.Model):
     doituongchinhsach = fields.Many2many('solienlac.doituongchinhsach', string='Đối tượng chính sách')
     doituonguutien = fields.Many2many('solienlac.doituonguutien', string='Đối tượng ưu tiên')
     phuhuynh = fields.Many2many('solienlac.phuhuynh', string='Phụ huynh')
+    hanhkiem = fields.One2many("solienlac.hanhkiem", "hocsinh", string="Hạnh kiểm")
 
 class lop(models.Model):
     _name = 'solienlac.lop'

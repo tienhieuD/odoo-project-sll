@@ -64,6 +64,9 @@
                 <page string="Thông tin phụ huynh">
                   <field name="phuhuynh"/>
                 </page>
+                <page string="Hạnh kiểm">
+                  <field name="hanhkiem"/>
+                </page>
               </notebook>
             </group>
           </sheet>
