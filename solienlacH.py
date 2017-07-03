@@ -77,7 +77,7 @@ class phongban(models.Model):
     _rec_name = 'tenphongban' # optional
     maphongban = fields.Char("Mã phòng ban")
     tenphongban = fields.Char("Tên phòng ban")
-    sdt = fields.Char("Số điện thoại")
+    sodienthoai = fields.Char("Số điện thoại")
     ghichu = fields.Char("Ghi chú")
     truongphong = fields.Many2one('solienlac.giaovien', string = "Trưởng phòng")
 
@@ -156,6 +156,7 @@ class phuhuynh(models.Model):
     phuongxa = fields.Many2one('solienlac.phuongxa', string='Xã\Phường')
     dantoc = fields.Many2one('solienlac.dantoc', string='Dân Tộc')
     tongiao = fields.Many2one('solienlac.tongiao', string='Tôn Giáo')
+    hocsinh = fields.Many2one('solienlac.hocsinh', string='Học Sinh')
 
 class bomon(models.Model):
     _name = 'solienlac.bomon'
@@ -233,8 +234,8 @@ class ketquahoctap(models.Model):
     monhoc = fields.Many2one('solienlac.monhoc', string='Môn học')
     giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên')
     diemtongket = fields.Float('Điểm tổng kết')
-    kyhoc = fields.Integer('Năm học')
-    namhoc = fields.Integer('Học kỳ')
+    namhoc = fields.Integer('Năm học')
+    hocky = fields.Integer('Học kỳ')
     ngaycapnhat = fields.Date('Ngày cập nhật')
     ykiengiaovien = fields.Char('Ý kiến giáo viên')
 
@@ -267,12 +268,12 @@ class nenep(models.Model):
     _name = 'solienlac.nenep'
     _rec_name = 'hocsinh' # optional
     dongphuc = fields.Integer('Đồng phục')
-    dihocmuon = fields.Integer('Đồng phục')
-    noichuyen = fields.Integer('Đồng phục')
-    noituc = fields.Integer('Đồng phục')
+    dihocmuon = fields.Integer('Đi học muộn')
+    noichuyen = fields.Integer('Nói chuyện')
+    noituc = fields.Integer('Nói tục')
     # dongphuc = fields.Integer('Đồng phục')
-    truybai = fields.Integer('Đồng phục')
-    ntvt = fields.Integer('Đồng phục')
-    hocky = fields.Integer('Đồng phục')
-    namhoc = fields.Integer('Đồng phục')
+    truybai = fields.Integer('Truy bài')
+    ntvt = fields.Integer('NTVT')
+    hocky = fields.Integer('Học kỳ')
+    namhoc = fields.Integer('Năm học')
     hocsinh = fields.Many2one('solienlac.hocsinh', string='Học sinh')
