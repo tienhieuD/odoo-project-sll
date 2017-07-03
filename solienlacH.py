@@ -146,7 +146,10 @@ class phuhuynh(models.Model):
     _name = 'solienlac.phuhuynh'
     _rec_name = 'hoten' # optional
     hoten = fields.Char('Họ Tên')
-    gioitinh = fields.Char('Giới Tính')
+    gioitinh = fields.Selection([
+            ('Nam', 'Nam'),
+            ('Nu', 'Nữ'),
+            ('KXD', 'Không xác định')], string = "Giới tính")
     ngaysinh = fields.Date('Ngày Sinh')
     sodienthoai = fields.Char('Số Điện Thoại')
     ghichu = fields.Char('Ghi Chú')
