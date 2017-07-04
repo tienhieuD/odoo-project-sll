@@ -482,6 +482,8 @@
                 <field name="tuyenhoc"/>
                 <field name="doituongchinhsach" widget="many2many_tags"/>
                 <field name="doituonguutien" widget="many2many_tags"/>
+              </group>
+              <group colspan="4" string='Thông tin phụ huynh'>
                 <field name="phuhuynh"/>
               </group>
               <notebook colspan="4">
