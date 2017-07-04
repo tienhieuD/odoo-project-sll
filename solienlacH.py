@@ -210,6 +210,8 @@ class lop(models.Model):
     nienkhoa = fields.Char('Niên khóa', required='True')
     ghichu = fields.Char('Ghi chú', required='True')
     khoi = fields.Many2one('solienlac.khoi', string='Khối')
+    hocsinh = fields.One2many('solienlac.hocsinh', 'lop', string="Danh sách học sinh")
+
 
 class banhoc(models.Model):
     _name = 'solienlac.banhoc'
@@ -319,3 +321,8 @@ class bangdiem(models.Model):
     hocsinh = fields.Many2one('solienlac.hocsinh', string='Học sinh')
     ghichu = fields.Char(string="Ghi chú", )
     ngaycapnhat = fields.Date('Ngày cập nhật')
+
+class nhapdiem(models.Model):
+    _name = 'solienlac.nhapdiem'
+    name = fields.Char()
+    

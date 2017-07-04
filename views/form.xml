@@ -13,7 +13,7 @@
           </header>
           <sheet>
               <group colspan="4" col="4">
-                <group colspan="2" col="2" string='Thông tin học sinh'>
+                <group colspan="2" col="2" string='Thông tin giáo viên'>
                   <field name="magiaovien"/>
                   <field name="hoten"/>
                   <field name="gioitinh"/>
@@ -22,18 +22,18 @@
                   <field name="sodienthoai"/>
                   <field name="socmnd"/>
                   <field name="email"/>
-                  <!-- <field name="matkhau"/> -->
-                </group>
-                <group colspan="2" col="2" string='Thông tin quản lý'>
                   <field name="phuongxa"/>
                   <field name="dantoc"/>
                   <field name="tongiao"/>
+                  <!-- <field name="matkhau"/> -->
+                </group>
+                <group colspan="2" col="2" string='Thông tin quản lý'>
                   <field name="to"/>
                   <field name="phongban"/>
+                  <field name="bomon"/>
                 </group>
                 <notebook colspan="4">
-                  <page string="Thông tin phụ huynh">
-                  <field name="bomon"/>
+                  <page string="">
                   </page>
                 </notebook>
             </group>
@@ -322,6 +322,9 @@
                 <field name="khoi"/>
                 <field name="nienkhoa"/>
               </group>
+            </group>
+            <group colspan="4" string='Học sinh'>
+              <field name="hocsinh"/>
             </group>
           </sheet>
         </form>
