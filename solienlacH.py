@@ -126,8 +126,8 @@ class khoi(models.Model):
 class hanhkiem(models.Model):
     _name = 'solienlac.hanhkiem'
     _rec_name = 'xeploai' # optional
-    hocky = fields.Char('Học Kỳ')
-    namhoc = fields.Char('Năm Học')
+    hocky = fields.Char('Học kỳ')
+    namhoc = fields.Char('Năm học')
     xeploai = fields.Selection(
         string="Xếp loại",
         selection=[
@@ -234,7 +234,7 @@ class ketquahoctap(models.Model):
     monhoc = fields.Many2one('solienlac.monhoc', string='Môn học')
     giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên')
     diemtongket = fields.Float('Điểm tổng kết')
-    kyhoc = fields.Integer('Học kỳ')
+    hocky = fields.Char('Học kỳ')
     namhoc = fields.Char('Năm học')
     ngaycapnhat = fields.Date('Ngày cập nhật')
     ykiengiaovien = fields.Char('Ý kiến giáo viên')
@@ -274,6 +274,6 @@ class nenep(models.Model):
     # dongphuc = fields.Integer('Đồng phục')
     truybai = fields.Integer('Truy bài')
     ntvt = fields.Integer('NTVT')
-    hocky = fields.Integer('Học kỳ')
+    hocky = fields.Char('Học kỳ')
     namhoc = fields.Char('Năm học')
     hocsinh = fields.Many2one('solienlac.hocsinh', string='Học sinh')
