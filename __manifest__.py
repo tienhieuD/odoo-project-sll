@@ -28,5 +28,6 @@
         # 'user_groups.xml',
         'views/giaoanchinhsua.xml',
         'views/form.xml',
+        'views/tree.xml',
     ],
 }

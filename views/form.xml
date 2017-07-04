@@ -8,30 +8,453 @@
       <field name="model">solienlac.giaovien</field>
       <field name="arch" type="xml">
         <form string="Giáo viên">
+          <header>
+            Quản lý thông tin giáo viên
+          </header>
           <sheet>
-            <group>
-              <field name="magiaovien"/>
-              <field name="hoten"/>
-              <field name="gioitinh"/>
-              <field name="ngaysinh"/>
-              <field name="noisinh"/>
-              <field name="sodienthoai"/>
-              <field name="socmnd"/>
-              <field name="email"/>
-              <field name="matkhau"/>
-              <field name="phuongxa"/>
-              <field name="dantoc"/>
-              <field name="tongiao"/>
-              <field name="to"/>
-              <field name="phongban"/>
-              <field name="bomon"/>
+              <group colspan="4" col="4">
+                <group colspan="2" col="2" string='Thông tin học sinh'>
+                  <field name="magiaovien"/>
+                  <field name="hoten"/>
+                  <field name="gioitinh"/>
+                  <field name="ngaysinh"/>
+                  <field name="noisinh"/>
+                  <field name="sodienthoai"/>
+                  <field name="socmnd"/>
+                  <field name="email"/>
+                  <!-- <field name="matkhau"/> -->
+                </group>
+                <group colspan="2" col="2" string='Thông tin quản lý'>
+                  <field name="phuongxa"/>
+                  <field name="dantoc"/>
+                  <field name="tongiao"/>
+                  <field name="to"/>
+                  <field name="phongban"/>
+                </group>
+                <notebook colspan="4">
+                  <page string="Thông tin phụ huynh">
+                  <field name="bomon"/>
+                  </page>
+                </notebook>
             </group>
           </sheet>
         </form>
       </field>
     </record>
 
-    <!--hocsinh-->
+    <!-- tổ - form wiews -->
+    <record id="to_view_form" model="ir.ui.view">
+      <field name="name">to.form</field>
+      <field name="model">solienlac.to</field>
+      <field name="arch" type="xml">
+        <form string="Tổ">
+          <header>
+            Quản lý thông tin tổ
+          </header>
+          <sheet>
+            <group colspan="4" col="4">
+              <group colspan="2" col="2" string='Thông tin tổ'>
+                <field name="mato"/>
+                <field name="tento"/>
+                <field name="totruong"/>
+              </group>
+              <group colspan="2" col="2">
+                <field name="ghichu"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- phòng ban - form wiews -->
+    <record id="phongban_view_form" model="ir.ui.view">
+      <field name="name">phongban.form</field>
+      <field name="model">solienlac.phongban</field>
+      <field name="arch" type="xml">
+        <form string="Phòng Ban">
+          <header>
+            Quản lý thông tin phòng ban
+          </header>
+          <sheet>
+            <group colspan="4" col="4">
+              <group colspan="2" col="2" string='Thông tin phòng ban'>
+                <field name="maphongban"/>
+                <field name="tenphongban"/>
+                <field name="sodienthoai"/>
+              </group>
+              <group colspan="2" col="2" string='Trưởng phòng'>
+                <field name="truongphong"/>
+                <!-- <field name="ghichu"/> -->
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Bộ môn - form wiews -->
+    <record id="bomon_view_form" model="ir.ui.view">
+      <field name="name">bomon.form</field>
+      <field name="model">solienlac.bomon</field>
+      <field name="arch" type="xml">
+        <form string="Bộ Môn">
+          <header>
+            Quản lý thông tin bộ môn
+          </header>
+          <sheet>
+            <group colspan="4" col="4">
+              <group colspan="2" col="2" string='Thông tin bộ môn'>
+                <field name="mabomon"/>
+                <field name="tenbomon"/>
+              </group>
+              <group colspan="2" col="2" string='Trưởng bộ môn'>
+                <field name="truongbomon"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Phường/Xã - form wiews -->
+    <record id="phuongxa_view_form" model="ir.ui.view">
+      <field name="name">phuongxa.form</field>
+      <field name="model">solienlac.phuongxa</field>
+      <field name="arch" type="xml">
+        <form string="Phường xã">
+          <header>
+            Quản lý thông tin Phường/Xã
+          </header>
+          <sheet>
+            <group colspan="4" col="4">
+              <group colspan="2" col="2" string='Thông tin Phường/Xã'>
+                <field name="maphuongxa"/>
+                <field name="tenphuongxa"/>
+              </group>
+              <group colspan="2" col="2" string='Trực thuộc Quận/Huyện'>
+                <field name="quanhuyen"/>
+                <field name="ghichu"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Quận/Huyện - form wiews -->
+    <record id="quanhuyen_view_form" model="ir.ui.view">
+      <field name="name">quanhuyen.form</field>
+      <field name="model">solienlac.quanhuyen</field>
+      <field name="arch" type="xml">
+        <form string="Quận/Huyện">
+          <header>
+            Quản lý thông tin Quận/Huyện
+          </header>
+          <sheet>
+            <group colspan="4" col="4">
+              <group colspan="2" col="2" string='Thông tin Quận/Huyện'>
+                <field name="maquanhuyen"/>
+                <field name="tenquanhuyen"/>
+              </group>
+              <group colspan="2" col="2" string='Trực thuộc Tỉnh/Thành Phố'>
+                <field name="tinhthanhpho"/>
+                <field name="ghichu"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Tỉnh/Thành Phố - form wiews -->
+    <record id="tinhthanhpho_view_form" model="ir.ui.view">
+      <field name="name">tinhthanhpho.form</field>
+      <field name="model">solienlac.tinhthanhpho</field>
+      <field name="arch" type="xml">
+        <form string="Tỉnh/Thành Phố">
+          <header>
+            Quản lý thông tin Tỉnh/Thành Phố
+          </header>
+          <sheet>
+            <group colspan="4" col="4">
+              <group colspan="2" col="2" string='Thông tin Tỉnh/Thành Phố'>
+                <field name="matinhthanhpho"/>
+                <field name="tentinhthanhpho"/>
+              </group>
+              <group colspan="2" col="2">
+                <field name="ghichu"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Khối học - form wiews -->
+    <record id="khoi_view_form" model="ir.ui.view">
+      <field name="name">khoi.form</field>
+      <field name="model">solienlac.khoi</field>
+      <field name="arch" type="xml">
+        <form string="Khối học">
+          <header>
+            Quản lý thông tin Khối học
+          </header>
+          <sheet>
+            <group colspan="4" col="4">
+              <group colspan="2" col="2" string='Thông tin Khối'>
+                <field name="makhoi"/>
+                <field name="ghichu"/>
+              </group>
+              <group colspan="2" col="2" string="">
+                <field name="tenkhoi"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Hạnh kiểm - form wiews -->
+    <record id="hanhkiem_view_form" model="ir.ui.view">
+      <field name="name">hanhkiem.form</field>
+      <field name="model">solienlac.hanhkiem</field>
+      <field name="arch" type="xml">
+        <form string="Hạnh kiểm">
+          <header>
+            Quản lý hạnh kiểm học sinh
+          </header>
+          <sheet>
+            <group colspan="4" col="4">
+              <group colspan="2" col="2" string='Thông tin học sinh'>
+                <field name="hocsinh"/>
+                <field name="namhoc"/>
+                <field name="hocky"/>
+              </group>
+              <group colspan="2" col="2" string='Chi tiết đánh giá hạnh kiểm'>
+                <field name="xeploai"/>
+                <field name="nhanxetcuagiaovien"/>
+                <field name="ghichu"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Phụ Huynh - form wiews -->
+    <record id="phuhuynh_view_form" model="ir.ui.view">
+      <field name="name">phuhuynh.form</field>
+      <field name="model">solienlac.phuhuynh</field>
+      <field name="arch" type="xml">
+        <form string="Phụ Huynh">
+          <header>
+            Quản lý thông tin phụ huynh
+          </header>
+          <sheet>
+            <group colspan="6" col="6">
+              <group colspan="2" col="2" string='Thông tin học sinh'>
+                <field name="hocsinh"/>
+              </group>
+              <group colspan="2" col="2" string='Thông tin phụ huynh học sinh'>
+                <field name="hoten"/>
+                <field name="gioitinh"/>
+                <field name="ngaysinh"/>
+                <field name="sodienthoai"/>
+                <field name="dantoc"/>
+                <field name="tongiao"/>
+              </group>
+              <group colspan="2" col="2" string='Địa chỉ'>
+                <field name="phuongxa"/>
+                <field name="ghichu"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Điểm danh - form wiews -->
+    <record id="bangdiemdanh_view_form" model="ir.ui.view">
+      <field name="name">bangdiemdanh.form</field>
+      <field name="model">solienlac.bangdiemdanh</field>
+      <field name="arch" type="xml">
+        <form string="Bảng Điểm Danh">
+          <header>
+            Quản lý thông tin điểm danh
+          </header>
+          <sheet>
+            <group colspan="4" col="4">
+              <group colspan="2" col="2" string='Thông tin học sinh'>
+                <field name="mabangdiemdanh"/>
+                <field name="hocsinh"/>
+                <field name="giaoviendiemdanh"/>
+              </group>
+              <group colspan="2" col="2" string='Chi tiết điểm danh'>
+                <field name="monhoc"/>
+                <field name="ngayvang"/>
+                <field name="tietvang"/>
+                <field name="ghichu"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Lớp - form wiews -->
+    <record id="lop_view_form" model="ir.ui.view">
+      <field name="name">lop.form</field>
+      <field name="model">solienlac.lop</field>
+      <field name="arch" type="xml">
+        <form string="Lớp">
+          <header>
+            Quản lý thông tin lớp học
+          </header>
+          <sheet>
+            <group colspan="4" col="4">
+              <group colspan="2" col="2" string='Thông tin lớp học'>
+                <field name="malop"/>
+                <field name="tenlop"/>
+                <field name="ghichu"/>
+              </group>
+              <group colspan="2" col="2" string='Niên Khóa'>
+                <field name="khoi"/>
+                <field name="nienkhoa"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Ban học - form wiews -->
+    <record id="ban_view_form" model="ir.ui.view">
+      <field name="name">banhoc.form</field>
+      <field name="model">solienlac.banhoc</field>
+      <field name="arch" type="xml">
+        <form string="Ban Học">
+          <header>
+            Quản lý thông tin ban học
+          </header>
+          <sheet>
+            <group colspan="4" col="4">
+              <group colspan="2" col="2">
+                <field name="maban"/>
+                <field name="tenban"/>
+              </group>
+              <group colspan="2" col="2">
+                <field name="ghichu"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Môn học - form wiews -->
+    <record id="monhoc_view_form" model="ir.ui.view">
+      <field name="name">monhoc.form</field>
+      <field name="model">solienlac.monhoc</field>
+      <field name="arch" type="xml">
+        <form string="Môn Học">
+          <header>
+            Quản lý thông tin môn học
+          </header>
+          <sheet>
+            <group colspan="4" col="4">
+              <group colspan="2" col="2" string='Thông tin môn học'>
+                <field name="mamonhoc"/>
+                <field name="tenmonhoc"/>
+              </group>
+              <group colspan="2" col="2" string='Chi tiết'>
+                <field name="bomon"/>
+                <field name="banhoc"/>
+                <field name="heso"/>
+                <field name="ghichu"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Loại điểm - form wiews -->
+    <record id="loaidiem_view_form" model="ir.ui.view">
+      <field name="name">loaidiem.form</field>
+      <field name="model">solienlac.loaidiem</field>
+      <field name="arch" type="xml">
+        <form string="Loại Điểm">
+          <sheet>
+            <group colspan="4" col="4">
+              <group colspan="2" col="2">
+                <field name="maloai"/>
+                <field name="tenloai"/>
+                <field name="heso"/>
+              </group>
+              <group colspan="2" col="2">
+                <field name="ghichu"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Điểm - form wiews -->
+    <record id="diem_view_form" model="ir.ui.view">
+      <field name="name">diem.form</field>
+      <field name="model">solienlac.diem</field>
+      <field name="arch" type="xml">
+        <form string="Điểm">
+          <sheet>
+            <group colspan="4" col="4">
+              <group colspan="2" col="2" string='Thông tin điểm'>
+                <field name="ketquahoctap"/>
+                <field name="diem"/>
+              </group>
+              <group colspan="2" col="2" string='Chi tiết'>
+                <field name="loaidiem"/>
+                <field name="ngaynhap"/>
+                <field name="giaovien"/>
+                <field name="ghichu"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Nề nếp - form wiews -->
+    <record id="nenep_view_form" model="ir.ui.view">
+      <field name="name">nenep.form</field>
+      <field name="model">solienlac.nenep</field>
+      <field name="arch" type="xml">
+        <form string="Nề nếp">
+          <sheet>
+            <group colspan="6" col="6">
+              <group colspan="2" col="2" string='Thông tin học sinh'>
+                <field name="hocsinh"/>
+              </group>
+              <group colspan="2" col="2" string='Thông tin năm học'>
+                <field name="namhoc"/>
+                <field name="hocky"/>
+              </group>
+              <group colspan="2" col="2" string='Chi tiết'>
+                <field name="truybai"/>
+                <field name="dongphuc"/>
+                <field name="noichuyen"/>
+                <field name="noituc"/>
+                <field name="dihocmuon"/>
+                <field name="ntvt"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--hocsinh - form views-->
     <record id="hocsinh_view_form" model="ir.ui.view">
       <field name="name">solienlac.hocsinh .form</field>
       <field name="model">solienlac.hocsinh</field>

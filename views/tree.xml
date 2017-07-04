@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+    <!-- Giáo viên - tree views -->
+    <record id="giaovien_view_tree" model="ir.ui.view">
+      <field name="name">giaovien.tree</field>
+      <field name="model">solienlac.giaovien</field>
+      <field name="arch" type="xml">
+        <tree string="Giáo Viên Tree">
+          <field name="magiaovien"/>
+          <field name="hoten"/>
+          <field name="gioitinh"/>
+          <field name="ngaysinh"/>
+          <field name="sodienthoai"/>
+          <field name="email"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- Tổ - tree views -->
+    <record id="to_view_tree" model="ir.ui.view">
+      <field name="name">to.tree</field>
+      <field name="model">solienlac.to</field>
+      <field name="arch" type="xml">
+        <tree string="Tổ Tree">
+          <field name="mato"/>
+          <field name="tento"/>
+          <field name="totruong"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Phòng ban - tree views -->
+    <record id="phongban_view_tree" model="ir.ui.view">
+      <field name="name">phongban.tree</field>
+      <field name="model">solienlac.phongban</field>
+      <field name="arch" type="xml">
+        <tree string="Phòng ban Tree">
+          <field name="maphongban"/>
+          <field name="tenphongban"/>
+          <field name="sodienthoai"/>
+          <field name="truongphong"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Bộ môn - tree views -->
+    <record id="bomon_view_tree" model="ir.ui.view">
+      <field name="name">bomon.tree</field>
+      <field name="model">solienlac.bomon</field>
+      <field name="arch" type="xml">
+        <tree string="Bộ môn Tree">
+          <field name="mabomon"/>
+          <field name="tenbomon"/>
+          <field name="truongbomon"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Dân tộc - tree views -->
+    <record id="bomon_view_tree" model="ir.ui.view">
+      <field name="name">dantoc.tree</field>
+      <field name="model">solienlac.dantoc</field>
+      <field name="arch" type="xml">
+        <tree string="Dân tộc Tree">
+          <field name="madantoc"/>
+          <field name="tendantoc"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Tôn giáo - tree views -->
+    <record id="tongiao_view_tree" model="ir.ui.view">
+      <field name="name">tongiao.tree</field>
+      <field name="model">solienlac.tongiao</field>
+      <field name="arch" type="xml">
+        <tree string="Tôn giáo Tree">
+          <field name="matongiao"/>
+          <field name="tentongiao"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Khổi - tree views -->
+    <record id="khoi_view_tree" model="ir.ui.view">
+      <field name="name">khoi.tree</field>
+      <field name="model">solienlac.khoi</field>
+      <field name="arch" type="xml">
+        <tree string="Khối Tree">
+          <field name="makhoi"/>
+          <field name="tenkhoi"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Ban học - tree views -->
+    <record id="banhoc_view_tree" model="ir.ui.view">
+      <field name="name">banhoc.tree</field>
+      <field name="model">solienlac.banhoc</field>
+      <field name="arch" type="xml">
+        <tree string="Ban học Tree">
+          <field name="maban"/>
+          <field name="tenban"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- Chức vụ - tree views -->
+    <record id="chucvu_view_tree" model="ir.ui.view">
+      <field name="name">chucvu.tree</field>
+      <field name="model">solienlac.chucvu</field>
+      <field name="arch" type="xml">
+        <tree string="Chức vụ Tree">
+          <field name="machucvu"/>
+          <field name="tenchucvu"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- Phường/Xã - tree views -->
+    <record id="phuongxa_view_tree" model="ir.ui.view">
+      <field name="name">phuongxa.tree</field>
+      <field name="model">solienlac.phuongxa</field>
+      <field name="arch" type="xml">
+        <tree string="Phường/Xã Tree">
+          <field name="maphuongxa"/>
+          <field name="tenphuongxa"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- Quận/Huyện - tree views -->
+    <record id="quanhuyen_view_tree" model="ir.ui.view">
+      <field name="name">quanhuyen.tree</field>
+      <field name="model">solienlac.quanhuyen</field>
+      <field name="arch" type="xml">
+        <tree string="Dân tộc Tree">
+          <field name="maquanhuyen"/>
+          <field name="tenquanhuyen"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- Tỉnh/Thành phố - tree views -->
+    <record id="tinhthanhpho_view_tree" model="ir.ui.view">
+      <field name="name">tinhthanhpho.tree</field>
+      <field name="model">solienlac.tinhthanhpho</field>
+      <field name="arch" type="xml">
+        <tree string="Tỉnh/Thành phố">
+          <field name="matinhthanhpho"/>
+          <field name="tentinhthanhpho"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- Đối tượng chính sách - tree views -->
+    <record id="doituongchinhsach_view_tree" model="ir.ui.view">
+      <field name="name">doituongchinhsach.tree</field>
+      <field name="model">solienlac.doituongchinhsach</field>
+      <field name="arch" type="xml">
+        <tree string="Đối tượng chính sách">
+          <field name="tendoituongchinhsach"/>
+          <field name="miengiam"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Hạnh kiểm - tree views -->
+    <record id="hanhkiem_view_tree" model="ir.ui.view">
+      <field name="name">hanhkiem.tree</field>
+      <field name="model">solienlac.hanhkiem</field>
+      <field name="arch" type="xml">
+        <tree string="Hạnh kiểm">
+          <field name="hocsinh"/>
+          <field name="hocky"/>
+          <field name="namhoc"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Phụ huynh - tree views -->
+    <record id="phuhuynh_view_tree" model="ir.ui.view">
+      <field name="name">phuhuynh.tree</field>
+      <field name="model">solienlac.phuhuynh</field>
+      <field name="arch" type="xml">
+        <tree string="Phụ huynh">
+          <field name="hoten"/>
+          <field name="gioitinh"/>
+          <field name="ngaysinh"/>
+          <field name="sodienthoai"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- Bảng điểm danh - tree views -->
+    <record id="bangdiemdanh_view_tree" model="ir.ui.view">
+      <field name="name">bangdiemdanh.tree</field>
+      <field name="model">solienlac.bangdiemdanh</field>
+      <field name="arch" type="xml">
+        <tree string="Bảng điểm danh">
+          <field name="mabangdiemdanh"/>
+          <field name="hocsinh"/>
+          <field name="giaoviendiemdanh"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- Học sinh - tree views -->
+    <record id="hocsinh_view_tree" model="ir.ui.view">
+      <field name="name">hocsinh.tree</field>
+      <field name="model">solienlac.hocsinh</field>
+      <field name="arch" type="xml">
+        <tree string="Học sinh">
+          <field name="mahocsinh"/>
+          <field name="hoten"/>
+          <field name="gioitinh"/>
+          <field name="ngaysinh"/>
+          <field name="noisinh"/>
+          <field name="lop"/>
+          <field name="chucvu"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- Lớp - tree views -->
+    <record id="lop_view_tree" model="ir.ui.view">
+      <field name="name">lop.tree</field>
+      <field name="model">solienlac.lop</field>
+      <field name="arch" type="xml">
+        <tree string="Lớp">
+          <field name="malop"/>
+          <field name="tenlop"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- Môn học - tree views -->
+    <record id="monhoc_view_tree" model="ir.ui.view">
+      <field name="name">monhoc.tree</field>
+      <field name="model">solienlac.monhoc</field>
+      <field name="arch" type="xml">
+        <tree string="Môn học">
+          <field name="mamonhoc"/>
+          <field name="tenmonhoc"/>
+          <field name="heso"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- Kết quả học tập - tree views -->
+    <record id="ketquahoctap_view_tree" model="ir.ui.view">
+      <field name="name">ketquahoctap.tree</field>
+      <field name="model">solienlac.ketquahoctap</field>
+      <field name="arch" type="xml">
+        <tree string="Kết quả học tập">
+          <field name="hocsinh"/>
+          <field name="monhoc"/>
+          <field name="hocky"/>
+          <field name="diemtongket"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- Loại điểm - tree views -->
+    <record id="loaidiem_view_tree" model="ir.ui.view">
+      <field name="name">loaidiem.tree</field>
+      <field name="model">solienlac.loaidiem</field>
+      <field name="arch" type="xml">
+        <tree string="Loại">
+          <field name="maloai"/>
+          <field name="tenloai"/>
+          <field name="heso"/>
+        </tree>
+      </field>
+    </record>
+  </data>
+</odoo>

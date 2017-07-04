@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 import datetime
 import time
 from odoo import models, fields, api
@@ -77,7 +77,7 @@ class phongban(models.Model):
     _rec_name = 'tenphongban' # optional
     maphongban = fields.Char("Mã phòng ban")
     tenphongban = fields.Char("Tên phòng ban")
-    sdt = fields.Char("Số điện thoại")
+    sodienthoai = fields.Char("Số điện thoại")
     ghichu = fields.Char("Ghi chú")
     truongphong = fields.Many2one('solienlac.giaovien', string = "Trưởng phòng")
 
@@ -156,6 +156,7 @@ class phuhuynh(models.Model):
     phuongxa = fields.Many2one('solienlac.phuongxa', string='Xã\Phường')
     dantoc = fields.Many2one('solienlac.dantoc', string='Dân Tộc')
     tongiao = fields.Many2one('solienlac.tongiao', string='Tôn Giáo')
+    hocsinh = fields.Many2one('solienlac.hocsinh', string='Học Sinh')
 
 class bomon(models.Model):
     _name = 'solienlac.bomon'
