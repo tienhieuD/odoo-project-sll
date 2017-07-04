@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="hanhkiem_view_tree" model="ir.ui.view">
+    <field name="name">hanhkiem.tree</field>
+    <field name="model">solienlac.hanhkiem</field>
+    <field name="arch" type="xml">
+      <tree string="Hạnh kiểm">
+        <field name="namhoc"/>
+        <field name="hocky"/>
+        <field name="xeploai"/>
+        <field name="nhanxetcuagiaovien"/>
+        <field name="ghichu"/>
+      </tree>
+    </field>
+  </record>
+</odoo>

@@ -22,6 +22,7 @@
 
     # always loaded
     'data': [
+        'views/treeH.xml',
         # 'security/ir.model.access.csv',
         # 'templates.xml',
         # 'user_groups.xml',

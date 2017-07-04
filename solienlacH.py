@@ -224,8 +224,7 @@ class monhoc(models.Model):
     heso = fields.Float('Hệ số')
     ghichu = fields.Char('Ghi chú')
     bomon = fields.Many2one('solienlac.bomon', string='Bộ môn')
-    banhoc = fields.Many2one('solienlac.banhoc', string='Ban hoc')
-
+    banhoc = fields.Many2many('solienlac.banhoc', string='Ban hoc')
 
 class ketquahoctap(models.Model):
     _name = 'solienlac.ketquahoctap'
