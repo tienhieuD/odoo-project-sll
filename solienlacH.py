@@ -238,6 +238,7 @@ class ketquahoctap(models.Model):
     namhoc = fields.Char('Năm học')
     ngaycapnhat = fields.Date('Ngày cập nhật')
     ykiengiaovien = fields.Char('Ý kiến giáo viên')
+    xeploai = fields.Char(string="Xếp loại học lực", )
 
 class loaidiem(models.Model):
     _name = 'solienlac.loaidiem'

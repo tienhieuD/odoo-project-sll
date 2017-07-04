@@ -13,4 +13,17 @@
       </tree>
     </field>
   </record>
+
+  <record id="ketquahoctap_view_tree" model="ir.ui.view">
+    <field name="name">ketquahoctap.tree</field>
+    <field name="model">solienlac.ketquahoctap</field>
+    <field name="arch" type="xml">
+      <tree string="Kết quả học tập">
+        <field name="namhoc"/>
+        <field name="kyhoc"/>
+        <field name="diemtongket"/>
+        <field name="ykiengiaovien"/>
+      </tree>
+    </field>
+  </record>
 </odoo>

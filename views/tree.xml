@@ -171,7 +171,7 @@
       </field>
     </record>
 
-    <!-- Hạnh kiểm - tree views -->
+    <!-- Hạnh kiểm - tree views
     <record id="hanhkiem_view_tree" model="ir.ui.view">
       <field name="name">hanhkiem.tree</field>
       <field name="model">solienlac.hanhkiem</field>
@@ -182,7 +182,7 @@
           <field name="namhoc"/>
         </tree>
       </field>
-    </record>
+    </record>-->
 
     <!-- Phụ huynh - tree views -->
     <record id="phuhuynh_view_tree" model="ir.ui.view">
@@ -258,7 +258,7 @@
     </record>
 
 
-    <!-- Kết quả học tập - tree views -->
+    <!-- Kết quả học tập - tree views
     <record id="ketquahoctap_view_tree" model="ir.ui.view">
       <field name="name">ketquahoctap.tree</field>
       <field name="model">solienlac.ketquahoctap</field>
@@ -266,11 +266,11 @@
         <tree string="Kết quả học tập">
           <field name="hocsinh"/>
           <field name="monhoc"/>
-          <field name="hocky"/>
+          <field name="kyhoc"/>
           <field name="diemtongket"/>
         </tree>
       </field>
-    </record>
+    </record> -->
 
 
     <!-- Loại điểm - tree views -->
