@@ -376,6 +376,19 @@
       </field>
     </record>
 
+    <!--bangdiem-->
+    <record id="bangdiem_action_form" model="ir.actions.act_window">
+      <field name="name">Bảng điểm</field>
+      <field name="res_model">solienlac.bangdiem</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+        </p>
+        <p>
+        </p>
+      </field>
+    </record>
+
     <!--Menu-->
     <menuitem id="menu_root" name="Sổ liên lạc điện tử" sequence="0"/>
       <menuitem id="menu_danhmuc_giaovien" name="Danh mục giáo viên" parent="menu_root" sequence="0"/>

@@ -199,6 +199,7 @@ class hocsinh(models.Model):
     phuhuynh = fields.Many2many('solienlac.phuhuynh', string='Phụ huynh')
     hanhkiem = fields.One2many("solienlac.hanhkiem", "hocsinh", string="Hạnh kiểm")
     ketquahoctap = fields.One2many('solienlac.ketquahoctap', 'hocsinh', string="Kết quả học tập")
+    bangdiem = fields.One2many('solienlac.bangdiem', 'hocsinh', string="Bảng điểm")
     nenep = fields.One2many('solienlac.nenep', 'hocsinh', string="Nề nếp")
 
 class lop(models.Model):
@@ -277,3 +278,44 @@ class nenep(models.Model):
     hocky = fields.Char('Học kỳ')
     namhoc = fields.Char('Năm học')
     hocsinh = fields.Many2one('solienlac.hocsinh', string='Học sinh')
+
+class diemthanhphan(models.Model):
+    _name = 'solienlac.diemthanhphan'
+    bangdiem_thanhphan = fields.Many2one('solienlac.bangdiem_thanhphan', string='Kết quả thành phần')
+    diem = fields.Float(string="Điểm sô")
+    heso = fields.Float(string="Hệ số")
+    ngaycapnhat = fields.Datetime(string="Ngày cập nhật")
+    loaidiem = fields.Selection(
+        string="Loại điểm",
+        selection=[
+                ('mieng', 'Điểm kiểm tra miệng'),
+                ('15p', 'Điểm kiểm tra HS1'),
+                ('1t', 'Điểm kiểm tra HS2'),
+                ('hk', 'Điểm kiểm tra Học kỳ'),
+                ('tn', 'Điểm kiểm tra khác'),
+        ],
+    )
+
+class bangdiem_thanhphan(models.Model):
+    _name = 'solienlac.bangdiem_thanhphan'
+    monhoc = fields.Many2one('solienlac.monhoc', string='Môn học')
+    bangdiem = fields.Many2one('solienlac.bangdiem', string='Kết quả học tập')
+    diemthanhphan = fields.One2many("solienlac.diemthanhphan", "bangdiem_thanhphan", string="Điểm thành phần")
+    diemtongket = fields.Float(string="Điểm tổng kết môn")
+    ghichu = fields.Char(string="Ghi chú")
+    giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên bộ môn')
+    ykiengiaovien = fields.Char('Ý kiến giáo viên bộ môn')
+    ngaycapnhat = fields.Datetime(string="Ngày cập nhật")
+
+class bangdiem(models.Model):
+    _name = 'solienlac.bangdiem'
+    kyhoc = fields.Char('Học kỳ')
+    namhoc = fields.Char('Năm học')
+    bangdiem_thanhphan = fields.One2many("solienlac.bangdiem_thanhphan", "bangdiem", string="Bảng điểm thành phần")
+    diemtongket = fields.Float('Điểm tổng kết')
+    xeploai = fields.Char(string="Xếp loại học lực")
+    giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên')
+    ykiengiaovien = fields.Char('Ý kiến giáo viên')
+    hocsinh = fields.Many2one('solienlac.hocsinh', string='Học sinh')
+    ghichu = fields.Char(string="Ghi chú", )
+    ngaycapnhat = fields.Date('Ngày cập nhật')

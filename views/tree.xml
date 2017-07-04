@@ -285,5 +285,22 @@
         </tree>
       </field>
     </record>
+
+    <!--bangdiem-->
+    <record id="bangdiem_view_tree" model="ir.ui.view">
+      <field name="name">bangdiem.tree</field>
+      <field name="model">solienlac.bangdiem</field>
+      <field name="arch" type="xml">
+        <tree string="Bảng diểm">
+          <field name="namhoc"/>
+          <field name="kyhoc"/>
+          <field name="diemtongket"/>
+          <field name="xeploai"/>
+          <field name="ykiengiaovien"/>
+          <field name="giaovien"/>
+          <field name="ghichu"/>
+        </tree>
+      </field>
+    </record>
   </data>
 </odoo>

@@ -456,7 +456,7 @@
 
     <!--hocsinh - form views-->
     <record id="hocsinh_view_form" model="ir.ui.view">
-      <field name="name">solienlac.hocsinh .form</field>
+      <field name="name">solienlac.hocsinh.form</field>
       <field name="model">solienlac.hocsinh</field>
       <field name="arch" type="xml">
         <form string="Học sinh">
@@ -489,7 +489,7 @@
                   <field name="hanhkiem"/>
                 </page>
                 <page string="Kết quả học tập">
-                  <field name="ketquahoctap"/>
+                  <field name="bangdiem"/>
                 </page>
                 <page string="Nề nếp">
                   <field name="nenep"/>
@@ -500,5 +500,27 @@
         </form>
       </field>
     </record>
+
+    <!--bangdiem-->
+    <record id="bangdiem_view_form" model="ir.ui.view">
+      <field name="name">bangdiem.form</field>
+      <field name="model">solienlac.bangdiem</field>
+      <field name="arch" type="xml">
+        <form string="Bảng điểm">
+          <sheet>
+            <group>
+              <field name="namhoc"/>
+              <field name="kyhoc"/>
+              <field name="giaovien"/>
+              <field name="ykiengiaovien"/>
+              <field name="ghichu"/>
+              <field name="ngaycapnhat"/>
+              <field name="bangdiem_thanhphan"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
   </data>
 </odoo>
