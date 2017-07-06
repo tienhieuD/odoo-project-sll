@@ -22,12 +22,12 @@
 
     # always loaded
     'data': [
-        'views/treeH.xml',
         # 'security/ir.model.access.csv',
         # 'templates.xml',
         # 'user_groups.xml',
         'views/giaoanchinhsua.xml',
         'views/form.xml',
         'views/tree.xml',
+        # 'views/treeH.xml',
     ],
 }
