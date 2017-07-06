@@ -285,5 +285,85 @@
         </tree>
       </field>
     </record>
+
+    <record id="hanhkiem_view_tree" model="ir.ui.view">
+      <field name="name">hanhkiem.tree</field>
+      <field name="model">solienlac.hanhkiem</field>
+      <field name="arch" type="xml">
+        <tree string="Hạnh kiểm">
+          <field name="namhoc"/>
+          <field name="hocky"/>
+          <field name="xeploai"/>
+          <field name="nhanxetcuagiaovien"/>
+          <field name="ghichu"/>
+        </tree>
+      </field>
+    </record>
+
+    <!--bangdiem-->
+   <record id="bangdiem_view_tree" model="ir.ui.view">
+     <field name="name">bangdiem.tree</field>
+     <field name="model">solienlac.bangdiem</field>
+     <field name="arch" type="xml">
+       <tree string="Bảng diểm">
+         <field name="namhoc"/>
+         <field name="kyhoc"/>
+         <field name="diemtongket"/>
+         <field name="xeploai"/>
+         <field name="ykiengiaovien"/>
+         <field name="giaovien"/>
+         <field name="ghichu"/>
+       </tree>
+     </field>
+   </record>
+
+   <!--nenep-->
+   <record id="nenep_view_tree" model="ir.ui.view">
+     <field name="name">solienlac.nenep.tree</field>
+     <field name="model">solienlac.nenep</field>
+     <field name="arch" type="xml">
+       <tree string="Nề nếp học đường">
+         <field name="namhoc"/>
+         <field name="hocky"/>
+         <field name="dongphuc"/>
+         <field name="dihocmuon"/>
+         <field name="noichuyen"/>
+         <field name="noituc"/>
+         <field name="truybai"/>
+         <field name="ntvt"/>
+       </tree>
+     </field>
+   </record>
+
+   <!--bangdiem_thanhphan-->
+   <record id="bangdiem_thanhphan_view_tree" model="ir.ui.view">
+     <field name="name">solienlac.bangdiem_thanhphan.tree</field>
+     <field name="model">solienlac.bangdiem_thanhphan</field>
+     <field name="arch" type="xml">
+       <tree string="Bảng điểm thành phần">
+         <field name="monhoc"/>
+         <field name="diemtongket"/>
+         <field name="ykiengiaovien"/>
+         <field name="giaovien"/>
+         <field name="ngaycapnhat"/>
+         <field name="ghichu"/>
+       </tree>
+     </field>
+   </record>
+
+   <!--diemthanhphan-->
+   <record id="diemthanhphan_view_tree" model="ir.ui.view">
+     <field name="name">solienlac.diemthanhphan.tree</field>
+     <field name="model">solienlac.diemthanhphan</field>
+     <field name="arch" type="xml">
+       <tree string="Điểm thành phần">
+         <field name="loaidiem"/>
+         <field name="diem"/>
+         <field name="heso"/>
+         <field name="ngaycapnhat"/>
+       </tree>
+     </field>
+   </record>
+
   </data>
 </odoo>
