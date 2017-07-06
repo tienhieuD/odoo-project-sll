@@ -40,21 +40,34 @@ class phuongxa(models.Model):
     tenphuongxa = fields.Char("Tên phường/xã")
     ghichu = fields.Char("Ghi chú")
     quanhuyen = fields.Many2one('solienlac.quanhuyen', string = "Quận/Huyện")
+    FK_TinhID = fields.Integer('Tỉnh ID')
+    FK_QuanHuyenID = fields.Integer('Quận huyện ID')
+    PhuongXaID = fields.Integer('Phường xã ID')
+    VungDiaLyID = fields.Integer('Vùng địa lý ID')
+    TenPhuongXa_VT=fields.Integer('Tên phường xã VT')
+    KhoKhan=fields.Boolean('Khó khăn')
+    BienGioi =fields.Boolean('Biên giới')
+    HspcKvuc=fields.Char('Hệ số phụ cấp khu vực')
 
 class quanhuyen(models.Model):
     _name = 'solienlac.quanhuyen'
     _rec_name = 'tenquanhuyen' # optional
     _description = 'Module description'
-    maquanhuyen = fields.Char("Mã quận/huyện")
+    maquanhuyen = fields.Integer("Mã quận/huyện")
     tenquanhuyen = fields.Char("Tên quận/huyện")
     ghichu = fields.Char("Ghi chú")
     tinhthanhpho = fields.Many2one('solienlac.tinhthanhpho', string = "Tỉnh/Thành phố")
+    tenquanhuyenVT=fields.Integer("Tên quận/huyện viết tắt")
+    vungdialy = fields.Integer(string="Vùng địa lý")
+    matinhthanhpho = fields.Integer(string="Mã tỉnh/thành phố")
 
 class tinhthanhpho(models.Model):
     _name = 'solienlac.tinhthanhpho'
     _rec_name = 'tentinhthanhpho' # optional
     matinhthanhpho = fields.Char("Mã tỉnh/thành phố")
     tentinhthanhpho = fields.Char("Tên tỉnh/thành phố")
+    vungdialy = fields.Char("Vùng địa lý")
+    vungkinhte = fields.Char("Vùng kinh tế")
     ghichu = fields.Char("Ghi chú")
 
 class dantoc(models.Model):
@@ -263,8 +276,8 @@ class diem(models.Model):
 class chucvu(models.Model):
     _name = 'solienlac.chucvu'
     _rec_name = 'tenchucvu' # optional
-    machucvu = fields.Char('Mã chức vụ', required='True')
-    tenchucvu = fields.Char('Tên chức vụ', required='True')
+    machucvu = fields.Integer('Mã chức vụ', )
+    tenchucvu = fields.Char('Tên chức vụ', )
     ghichu = fields.Char('Ghi chú')
 
 class nenep(models.Model):
@@ -325,4 +338,3 @@ class bangdiem(models.Model):
 class nhapdiem(models.Model):
     _name = 'solienlac.nhapdiem'
     name = fields.Char()
-    

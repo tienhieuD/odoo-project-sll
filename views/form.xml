@@ -131,6 +131,14 @@
               <group colspan="2" col="2" string='Thông tin Phường/Xã'>
                 <field name="maphuongxa"/>
                 <field name="tenphuongxa"/>
+                <field name="FK_TinhID"/>
+                <field name="FK_QuanHuyenID"/>
+                <field name="PhuongXaID"/>
+                <field name="VungDiaLyID"/>
+                <field name="TenPhuongXa_VT"/>
+                <field name="KhoKhan"/>
+                <field name="BienGioi"/>
+                <field name="HspcKvuc"/>
               </group>
               <group colspan="2" col="2" string='Trực thuộc Quận/Huyện'>
                 <field name="quanhuyen"/>
@@ -156,9 +164,13 @@
               <group colspan="2" col="2" string='Thông tin Quận/Huyện'>
                 <field name="maquanhuyen"/>
                 <field name="tenquanhuyen"/>
+                <field name="tenquanhuyenVT"/>
+                <field name="tenquanhuyen"/>
+                <field name="vungdialy"/>
               </group>
               <group colspan="2" col="2" string='Trực thuộc Tỉnh/Thành Phố'>
                 <field name="tinhthanhpho"/>
+                <field name="matinhthanhpho"/>
                 <field name="ghichu"/>
               </group>
             </group>
@@ -181,6 +193,8 @@
               <group colspan="2" col="2" string='Thông tin Tỉnh/Thành Phố'>
                 <field name="matinhthanhpho"/>
                 <field name="tentinhthanhpho"/>
+                <field name="vungdialy"/>
+                <field name="vungkinhte"/>
               </group>
               <group colspan="2" col="2">
                 <field name="ghichu"/>
