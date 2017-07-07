@@ -257,7 +257,7 @@ class phuhuynh(models.Model):
     dantoc = fields.Many2one('solienlac.dantoc', string='Dân Tộc')
     tongiao = fields.Many2one('solienlac.tongiao', string='Tôn Giáo')
 
-    nghenghiep = = fields.Selection([
+    nghenghiep = fields.Selection([
           	('value1', 'Công chức'),
             ('value2', 'Viên chức'),
             ('value3', 'Công nhân'),
@@ -269,7 +269,7 @@ class phuhuynh(models.Model):
             ('value9', 'Nội trợ'),
             ('value10', 'Khác'),
         ], string = "Nghề nghiệp")
-    quanhe = = fields.Selection([
+    quanhe = fields.Selection([
           	('value1', 'Bố đẻ'),
             ('value2', 'Mẹ đẻ'),
             ('value3', 'Anh ruột'),
@@ -415,9 +415,9 @@ class hocsinh(models.Model):
                 ('value8', 'Không xác định'),
         ],default='value1'
     )
-     tochucdoanthe = fields.Many2one('solienlac.tochucdoanthe', 'Tổ chức')
-     thoihoc = fields.selection(
-        string="Thôi học",
+    tochucdoanthe = fields.Many2one('solienlac.tochucdoanthe', string='Tổ chức')
+    thoihoc = fields.Selection(
+        string="Field name",
         selection=[
                 ('value1', 'Không'),
                 ('value2', 'Khiếm thính'),
@@ -427,8 +427,8 @@ class hocsinh(models.Model):
                 ('value6', 'Đa tật'),
                 ('value7', 'Khuyết tật khác'),
                 ('value8', 'Không xác định'),
-        ],default='value1'
-     )
+        ],
+    )
 class monhocnghe(models.Model):
     _name = 'solienlac.monhocnghe'
     _rec_name = 'tenmonhocnghe'
@@ -455,7 +455,7 @@ class monhocnghe(models.Model):
 
 class tochucdoanthe(models.Model):
     _name = 'solienlac.tochucdoanthe'
-    _rec_name = 'tentochuc'
+    _rec_name = 'vitridoanthe'
     vitridoanthe = fields.Selection(
         string="Vị trí đoàn thể",
         selection=[
