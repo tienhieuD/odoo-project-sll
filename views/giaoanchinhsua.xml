@@ -181,6 +181,36 @@
       </field>
     </record>
 
+    <!--khenthuonghocsinh-->
+    <record id="khenthuonghocsinh_action_form" model="ir.actions.act_window">
+      <field name="name">Khen thưởng học sinh</field>
+      <field name="res_model">solienlac.khenthuonghocsinh</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          <!-- Add Text Here -->
+        </p>
+        <p>
+          <!-- More details about what a user can do -->
+        </p>
+      </field>
+    </record>
+
+    <!--kyluathocsinh-->
+    <record id="kyluathocsinh_action_form" model="ir.actions.act_window">
+      <field name="name">Kỷ luật học sinh</field>
+      <field name="res_model">solienlac.kyluathocsinh</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          <!-- Add Text Here -->
+        </p>
+        <p>
+          <!-- More details about what a user can do -->
+        </p>
+      </field>
+    </record>
+
     <!--khoi-->
     <record id="khoi_action_form" model="ir.actions.act_window">
       <field name="name">Khối học</field>
@@ -389,6 +419,8 @@
       </field>
     </record>
 
+
+
     <!--Menu-->
     <menuitem id="menu_danhmuchanhchinh" name="Danh mục hành chính" sequence=""/>
       <menuitem id="menu_phuongxa" name="Phường/xã" parent="menu_danhmuchanhchinh" action="phuongxa_action_form" sequence=""/>
@@ -410,8 +442,8 @@
         <menuitem id="menu_hocsinh" name="Học sinh" parent="menu_quanlyhocsinh" action="hocsinh_action_form" sequence=""/>
         <menuitem id="menu_bangdiemdanh" name="Bảng điểm danh" parent="menu_quanlyhocsinh" action="bangdiemdanh_action_form" sequence=""/>
         <menuitem id="menu_chucvu" name="Chức vụ học sinh" parent="menu_quanlyhocsinh" action="chucvu_action_form" sequence=""/>
-        <menuitem id="menu_khenthuong_hocsinh" name="Khen thưởng học sinh" parent="menu_quanlyhocsinh" action="khenthuongkyluat_hocsinh_action_form" sequence=""/>
-        <menuitem id="menu_kyluat_hocsinh" name="Kỷ luật học sinh" parent="menu_quanlyhocsinh" action="khenthuongkyluat_hocsinh_action_form" sequence=""/>
+        <menuitem id="menu_khenthuong_hocsinh" name="Khen thưởng học sinh" parent="menu_quanlyhocsinh" action="khenthuonghocsinh_action_form" sequence=""/>
+        <menuitem id="menu_kyluat_hocsinh" name="Kỷ luật học sinh" parent="menu_quanlyhocsinh" action="kyluathocsinh_action_form" sequence=""/>
         <menuitem id="menu_phuhuynh" name="Phụ huynh học sinh" parent="menu_quanlyhocsinh" action="phuhuynh_action_form" sequence=""/>
       <menuitem id="menu_khac" name="Khác" parent="menu_truongquanly" sequence=""/>
         <menuitem id="menu_doituongchinhsach" name="Đối tượng chính sách" parent="menu_khac" action="doituongchinhsach_action_form" sequence=""/>

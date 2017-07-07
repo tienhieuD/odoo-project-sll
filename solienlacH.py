@@ -144,6 +144,43 @@ class khenthuongkyluat(models.Model):
     hinhthuckhenthuongkyluat = fields.Char(string='Hình Thức Khen Thưởng Kỷ Luật')
     ghichu = fields.Char(string='Ghi Chú')
 
+class kyluathocsinh(models.Model):
+    _name = 'solienlac.kyluathocsinh'
+    _rec_name = 'lydokyluat' # optional
+    lydokyluat = fields.Char(string='Lý do kỷ luật')
+    hinhthuckyluat = fields.Selection(
+        string="Hình thức kỷ luật",
+        selection=[
+                ('1', 'Phê bình trước lớp, trước trường'),
+                ('2', 'Khiển trách và thông cáo với gia đình'),
+                ('3', 'Cảnh cáo, ghi học bạ'),
+                ('4', 'Buộc thôi học có thời hạn'),
+                ('5', 'Khác'),
+        ],
+    )
+    thoihantu = fields.Date(string="Thời hạn từ", )
+    thoihanden = fields.Date(string="Thời hạn đến", )
+    ghichu = fields.Char(string='Ghi Chú')
+    hocsinh = fields.Many2many("solienlac.hocsinh",string="Học sinh")
+
+class khenthuonghocsinh(models.Model):
+    _name = 'solienlac.khenthuonghocsinh'
+    _rec_name = 'lydokhenthuong' # optional
+    lydokhenthuong = fields.Char(string="Lý do khen thưởng", )
+    hinhthuckhenthuong = fields.Selection(
+        string="Hình thức khen thưởng",
+        selection=[
+                ('1', 'Khen trước lớp, trước trường'),
+                ('2', 'Được tặng danh hiệu'),
+                ('3', 'Được ghi tên vào bảng danh dự của trường'),
+                ('4', 'Được khen thưởng đặc biệt'),
+                ('5', 'Khác'),
+        ],
+    )
+    ngaykhenthuong = fields.Date(string="Ngày khen thưởng", )
+    ghichu = fields.Char(string="Ghi chú", )
+    hocsinh = fields.Many2many("solienlac.hocsinh",string="Học sinh")
+
 class khenthuongkyluat_hocsinh(models.Model):
     _name = 'solienlac.khenthuongkyluat_hocsinh'
     _rec_name = 'ngay_ktkl' # optional
@@ -249,6 +286,9 @@ class bangdiemdanh(models.Model):
 class hocsinh(models.Model):
     _name = 'solienlac.hocsinh'
     _rec_name = 'hoten' # optional
+    danhhieuhocsinh = fields.One2many('solienlac.danhhieuhocsinh', 'hocsinh', string = 'Danh hiệu học sinh')
+    khenthuonghocsinh = fields.Many2many('solienlac.khenthuonghocsinh', string = 'Thành tích khen thưởng')
+    kyluathocsinh = fields.Many2many('solienlac.kyluathocsinh', string = 'Kỷ luật học sinh')
     mahocsinh = fields.Char('Mã học sinh', required='True')
     hoten = fields.Char('Họ tên', required='True')
     gioitinh = fields.Selection([
@@ -578,7 +618,21 @@ class bangdiem(models.Model):
     ghichu = fields.Char(string="Ghi chú", )
     ngaycapnhat = fields.Date('Ngày cập nhật')
 
-
-class nhapdiem(models.Model):
-    _name = 'solienlac.nhapdiem'
-    name = fields.Char()
+class danhhieuhocsinh(models.Model):
+    _name = 'solienlac.danhhieuhocsinh'
+    _rec_name = 'hocky' # optional
+    # _description = 'Danh hiệu của học sinh tính theo kỳ'
+    hocky = fields.Char(string="Học kỳ", )
+    namhoc = fields.Char(string="Năm học", )
+    danhhieu = fields.Selection(
+        string="Danh hiệu",
+        selection=[
+                ('kc', 'Chưa đạt danh hiệu gì'),
+                ('hsxs', 'Học sinh xuất sắc'),
+                ('hsg', 'Học sinh giỏi'),
+                ('hstt', 'Học sinh tiên tiến'),
+        ],
+    )
+    ykiengiaovien = fields.Char('Ý kiến giáo viên')
+    ghichu = fields.Char('Ghi chú')
+    hocsinh = fields.Many2one('solienlac.hocsinh', string='Học sinh')
