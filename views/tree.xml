@@ -365,5 +365,20 @@
      </field>
    </record>
 
+   <!--danhhieuhocsinh-->
+   <record id="danhhieuhocsinh_view_tree" model="ir.ui.view">
+     <field name="name">solienlac.danhhieuhocsinh.tree</field>
+     <field name="model">solienlac.danhhieuhocsinh</field>
+     <field name="arch" type="xml">
+       <tree string="Danh hiệu học sinh">
+         <field name="namhoc"/>
+         <field name="namhoc"/>
+         <field name="danhhieu"/>
+         <field name="ykiengiaovien"/>
+         <field name="ghichu"/>
+       </tree>
+     </field>
+   </record>
+
   </data>
 </odoo>
