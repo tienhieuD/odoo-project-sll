@@ -39,7 +39,14 @@ class monhoc_has_giaovien(models.Model):
     _name = 'solienlac.monhoc_has_giaovien'
     _rec_name = 'lop'
     namhoc = fields.Char('Năm học')
-    hocky = fields.Char('Học kỳ')
+    hocky = fields.Selection(
+        string="Học kỳ",
+        selection=[
+                ('i', 'Học kỳ I'),
+                ('ii', 'Học kỳ II'),
+                ('iii', 'Cả năm'),
+        ],
+    )
     lop = fields.Many2one('solienlac.lop', string='Lớp')
     monhoc = fields.Many2one('solienlac.monhoc', string='Môn học')
     giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên')
@@ -50,7 +57,14 @@ class lop_has_giaovien(models.Model):
     lop = fields.Many2one('solienlac.lop', string='Lớp')
     giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên')
     namhoc = fields.Char('Năm học')
-    hocky = fields.Char('Học kỳ')
+    hocky = fields.Selection(
+        string="Học kỳ",
+        selection=[
+                ('i', 'Học kỳ I'),
+                ('ii', 'Học kỳ II'),
+                ('iii', 'Cả năm'),
+        ],
+    )
     ngaybatdau = fields.Date('Ngày bắt đầu:')
     ngayketthuc = fields.Date('Ngày kết thúc: ')
 
@@ -198,14 +212,21 @@ class tuyenhoc(models.Model):
 class khoi(models.Model):
     _name = 'solienlac.khoi'
     _rec_name = 'tenkhoi' # optional
-    makhoi = fields.Char(string='Mã Khối', required='True')
+    makhoi = fields.Integer(string='Mã Khối', )
     tenkhoi = fields.Char(string='Tên Khối')
     ghichu = fields.Char('Ghi Chú')
 
 class hanhkiem(models.Model):
     _name = 'solienlac.hanhkiem'
     _rec_name = 'xeploai' # optional
-    hocky = fields.Char('Học kỳ')
+    hocky = fields.Selection(
+        string="Học kỳ",
+        selection=[
+                ('i', 'Học kỳ I'),
+                ('ii', 'Học kỳ II'),
+                ('iii', 'Cả năm'),
+        ],
+    )
     namhoc = fields.Char('Năm học')
     xeploai = fields.Selection(
         string="Xếp loại",
@@ -268,7 +289,7 @@ class phuhuynh(models.Model):
 class bomon(models.Model):
     _name = 'solienlac.bomon'
     _rec_name = 'tenbomon' # optional
-    mabomon = fields.Char('Mã bộ môn')
+    mabomon = fields.Integer('Mã bộ môn')
     tenbomon = fields.Char('Tên bộ môn')
     truongbomon = fields.Many2one('solienlac.giaovien', string = "Trưởng bộ môn")
 
@@ -471,7 +492,7 @@ class lop(models.Model):
     nienkhoa = fields.Char('Niên khóa')
     ghichu = fields.Char('Ghi chú')
     khoi = fields.Many2one('solienlac.khoi', string='Khối')
-    hocsinh = fields.Many2one('solienlac.hocsinh', string='Học sinh')
+    hocsinh = fields.One2many('solienlac.hocsinh', 'lop', string='Học sinh')
     monhoc = fields.One2many('solienlac.monhoc_has_giaovien', 'lop', string='Môn học')
     giaovien = fields.One2many('solienlac.lop_has_giaovien', 'lop', string='Giáo viên')
     siso = fields.Integer(string='Sĩ số')
@@ -506,6 +527,20 @@ class lop(models.Model):
                 ('nhotrenduoi', 'Nhô trên và dưới'),
         ],default='khong'
     )
+    hengoaingu = fields.Selection(
+        string="Hệ ngoại ngữ",
+        selection=[
+                ('1', 'Tiếng Anh'),
+                ('2', 'Tiếng Pháp'),
+                ('3', 'Tiếng Trung'),
+                ('4', 'Tiếng Nga'),
+                ('5', 'Tiếng Nhật'),
+                ('6', 'Tiếng Đức'),
+                ('7', 'Tiếng Hàn'),
+                ('8', 'Tiếng khác'),
+                ('9', 'Không học'),
+        ],
+    )
 
 
 class banhoc(models.Model):
@@ -518,8 +553,8 @@ class banhoc(models.Model):
 class monhoc(models.Model):
     _name = 'solienlac.monhoc'
     _rec_name = 'tenmonhoc' # optional
-    mamonhoc = fields.Char('Mã môn học', required='True')
-    tenmonhoc = fields.Char('Tên môn học', required='True')
+    mamonhoc = fields.Integer('Mã môn học',)
+    tenmonhoc = fields.Char('Tên môn học', )
     heso = fields.Float('Hệ số')
     ghichu = fields.Char('Ghi chú')
     bomon = fields.Many2one('solienlac.bomon', string='Bộ môn')
@@ -533,7 +568,14 @@ class ketquahoctap(models.Model):
     monhoc = fields.Many2one('solienlac.monhoc', string='Môn học')
     giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên')
     diemtongket = fields.Float('Điểm tổng kết')
-    hocky = fields.Char('Học kỳ')
+    hocky = fields.Selection(
+        string="Học kỳ",
+        selection=[
+                ('i', 'Học kỳ I'),
+                ('ii', 'Học kỳ II'),
+                ('iii', 'Cả năm'),
+        ],
+    )
     namhoc = fields.Char('Năm học')
     ngaycapnhat = fields.Date('Ngày cập nhật')
     ykiengiaovien = fields.Char('Ý kiến giáo viên')
@@ -573,7 +615,14 @@ class nenep(models.Model):
     # dongphuc = fields.Integer('Đồng phục')
     truybai = fields.Integer('Truy bài')
     ntvt = fields.Integer('NTVT')
-    hocky = fields.Char('Học kỳ')
+    hocky = fields.Selection(
+        string="Học kỳ",
+        selection=[
+                ('i', 'Học kỳ I'),
+                ('ii', 'Học kỳ II'),
+                ('iii', 'Cả năm'),
+        ],
+    )
     namhoc = fields.Char('Năm học')
     hocsinh = fields.Many2one('solienlac.hocsinh', string='Học sinh')
 
@@ -607,8 +656,25 @@ class bangdiem_thanhphan(models.Model):
 
 class bangdiem(models.Model):
     _name = 'solienlac.bangdiem'
-    kyhoc = fields.Char('Học kỳ')
+    kyhoc = fields.Selection(
+        string="Học kỳ",
+        selection=[
+                ('i', 'Học kỳ I'),
+                ('ii', 'Học kỳ II'),
+                ('iii', 'Cả năm'),
+        ],
+    )
     namhoc = fields.Char('Năm học')
+    kythi = fields.Selection(
+        string="Kỳ thi",
+        selection=[
+                ('1', 'Học kỳ'),
+                ('2', 'Thi Tốt nghiệp'),
+                ('3', 'Thi HSG'),
+                ('4', 'Thi nghề phổ thông'),
+                ('99', 'Thi khác'),
+        ],
+    )
     bangdiem_thanhphan = fields.One2many("solienlac.bangdiem_thanhphan", "bangdiem", string="Bảng điểm thành phần")
     diemtongket = fields.Float('Điểm tổng kết')
     xeploai = fields.Char(string="Xếp loại học lực")
@@ -622,7 +688,14 @@ class danhhieuhocsinh(models.Model):
     _name = 'solienlac.danhhieuhocsinh'
     _rec_name = 'hocky' # optional
     # _description = 'Danh hiệu của học sinh tính theo kỳ'
-    hocky = fields.Char(string="Học kỳ", )
+    hocky = fields.Selection(
+        string="Học kỳ",
+        selection=[
+                ('i', 'Học kỳ I'),
+                ('ii', 'Học kỳ II'),
+                ('iii', 'Cả năm'),
+        ],
+    )
     namhoc = fields.Char(string="Năm học", )
     danhhieu = fields.Selection(
         string="Danh hiệu",

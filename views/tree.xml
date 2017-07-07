@@ -306,6 +306,7 @@
      <field name="model">solienlac.bangdiem</field>
      <field name="arch" type="xml">
        <tree string="Bảng diểm">
+         <field name="kythi"/>
          <field name="namhoc"/>
          <field name="kyhoc"/>
          <field name="diemtongket"/>

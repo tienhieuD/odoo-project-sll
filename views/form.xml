@@ -331,6 +331,7 @@
               <group colspan="2" col="2" string='Thông tin lớp học'>
                 <field name="malop"/>
                 <field name="tenlop"/>
+                <field name="hengoaingu"/>
                 <field name="ghichu"/>
               </group>
               <group colspan="2" col="2" string='Niên Khóa'>
@@ -538,6 +539,7 @@
         <form string="Bảng điểm">
           <sheet>
             <group>
+              <field name="kythi"/>
               <field name="namhoc"/>
               <field name="kyhoc"/>
               <field name="giaovien"/>

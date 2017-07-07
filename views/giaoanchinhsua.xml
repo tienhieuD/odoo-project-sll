@@ -447,6 +447,6 @@
         <menuitem id="menu_phuhuynh" name="Phụ huynh học sinh" parent="menu_quanlyhocsinh" action="phuhuynh_action_form" sequence=""/>
       <menuitem id="menu_khac" name="Khác" parent="menu_truongquanly" sequence=""/>
         <menuitem id="menu_doituongchinhsach" name="Đối tượng chính sách" parent="menu_khac" action="doituongchinhsach_action_form" sequence=""/>
-        <menuitem id="menu_khenthuongkyluat" name="Khen thưởng/Kỷ luật" parent="menu_khac" action="khenthuongkyluat_action_form" sequence=""/>
+        <!-- <menuitem id="menu_khenthuongkyluat" name="Khen thưởng/Kỷ luật" parent="menu_khac" action="khenthuongkyluat_action_form" sequence=""/> -->
   </data>
 </odoo>
