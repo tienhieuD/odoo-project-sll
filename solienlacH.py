@@ -243,7 +243,90 @@ class hocsinh(models.Model):
     ketquahoctap = fields.One2many('solienlac.ketquahoctap', 'hocsinh', string="Kết quả học tập")
     bangdiem = fields.One2many('solienlac.bangdiem', 'hocsinh', string="Bảng điểm")
     nenep = fields.One2many('solienlac.nenep', 'hocsinh', string="Nề nếp")
+    tinhtranghocsinh = fields.Selection(
+        string="Tình trạng học sinh",
+        selection=[
+                ('value1', 'Học bình thường'),
+                ('value2', 'Bỏ học'),
+                ('value3', 'Ốm dài hạn'),
+                ('value4', 'Ốm dài hạn'),
+                ('value5', 'Bị buộc thôi học'),
+                ('value6', 'Du học'),
+                ('value7', 'Chết'),
+                ('value8', 'Dự thính'),
+        ],default='value1'
+    )
+    nguongochocsinh = fields.Selection(
+        string="Nguồn gốc học sinh",
+        selection=[
+                ('value1', 'Tuyển sinh'),
+                ('value2', 'Được lên lớp'),
+                ('value3', 'Ở lại lớp'),
+                ('value4', 'Chuyển đến'),
+        ],default='value1',
+    )
+    nangkhieu = fields.Selection(
+        string="Năng khiếu",
+        selection=[
+                ('value1', 'Không có năng khiếu'),
+                ('value2', 'Thể dục, thể thao'),
+                ('value3', 'Âm nhạc'),
+                ('value4', 'Mỹ thuật'),
+                ('value5', 'Toán'),
+                ('value6', 'Lý'),
+                ('value7', 'Hóa'),
+                ('value8', 'Sinh'),
+                ('value9', 'Văn'),
+                ('value10', 'Sử'),
+                ('value11', 'Địa'),
+                ('value12', 'Ngoại ngữ'),
+                ('value13', 'Tin'),
+                ('value14', 'Tự nhiên'),
+                ('value15', 'Xã hội'),
+                ('value16', 'Hoạt động xã hội'),
+                ('value17', 'Khác'),
+                ('value18', 'Không xác định'),
+        ],default='value1',
+    )
+    monhocnghe = fields.Many2one(string="Môn học nghề",comodel_name="solienlac.monhocnghe")
+    lydothoihoc = fields.Selection(
+        string="Lý do thôi học",
+        selection=[
+                ('value1', 'Không'),
+                ('value2', 'Chuyển đi'),
+                ('value3', 'Nghỉ học chữa bệnh dài hạn'),
+                ('value4', 'Kỷ luật buộc thôi học 1 năm'),
+                ('value5', 'Tự bỏ học'),
+        ],default='value1'
+    )
 
+    loaihocsinhnhaptruong = fields.Selection(
+        string="Loại học sinh nhập trường",
+        selection=[
+                ('value1', 'Tuyển mới'),
+                ('value2', 'Chuyển đến'),
+                ('value3', 'Lên lớp'),
+                ('value4', 'Ở lại lớp'),
+                ('value5', 'Thí sinh tự do	Trong thi tốt nghiệp'),
+                ('value6', 'Thi lại	Xét lên lớp'),
+                ('value7', 'Rèn luyện lại	Xét lên lớp'),
+                ('value8', 'TL&RLL	Xét lên lớp'),
+        ],default='value1'
+    )
+    khuyettat = fields.Selection(
+        string="Khuyết tật",
+        selection=[
+                ('value1', 'Không'),
+                ('value2', 'Khiếm thính'),
+                ('value3', 'Khiếm thị'),
+                ('value4', 'Khó khăn vê hoạt động'),
+                ('value5', 'Khó khăn về trí tuệ'),
+                ('value6', 'Đa tật'),
+                ('value7', 'Khuyết tật khác'),
+                ('value8', 'Không xác định'),
+        ],default='value1'
+    )
+    # tochucdoanthe = fields
 class lop(models.Model):
     _name = 'solienlac.lop'
     # _inherit = 'solienlac.hocsinh'
