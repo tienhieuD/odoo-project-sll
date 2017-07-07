@@ -198,6 +198,34 @@ class phuhuynh(models.Model):
     phuongxa = fields.Many2one('solienlac.phuongxa', string='Xã\Phường')
     dantoc = fields.Many2one('solienlac.dantoc', string='Dân Tộc')
     tongiao = fields.Many2one('solienlac.tongiao', string='Tôn Giáo')
+
+    nghenghiep = = fields.Selection([
+          	('value1', 'Công chức'),
+            ('value2', 'Viên chức'),
+            ('value3', 'Công nhân'),
+            ('value4', 'Nông dân'),
+            ('value5', 'Công an'),
+            ('value6', 'Bộ đội'),
+            ('value7', 'Doanh nhân'),
+            ('value8', 'Lao động tự do'),
+            ('value9', 'Nội trợ'),
+            ('value10', 'Khác'),
+        ], string = "Nghề nghiệp")
+    quanhe = = fields.Selection([
+          	('value1', 'Bố đẻ'),
+            ('value2', 'Mẹ đẻ'),
+            ('value3', 'Anh ruột'),
+            ('value4', 'Chị ruột'),
+            ('value5', 'Em trai ruột'),
+            ('value6', 'Em gái ruột'),
+            ('value7', 'Bố dượng'),
+            ('value8', 'Mẹ dượng'),
+            ('value9', 'Bố nuôi'),
+            ('value10', 'Mẹ nuôi'),
+            ('value11', 'Vợ'),
+            ('value12', 'Chồng'),
+        ], string = "Nghề nghiệp")
+
     hocsinh = fields.Many2one('solienlac.hocsinh', string='Học Sinh')
 
 class bomon(models.Model):
@@ -326,7 +354,74 @@ class hocsinh(models.Model):
                 ('value8', 'Không xác định'),
         ],default='value1'
     )
-    # tochucdoanthe = fields
+     tochucdoanthe = fields.Many2one('solienlac.tochucdoanthe', 'Tổ chức')
+     thoihoc = fields.selection(
+        string="Thôi học",
+        selection=[
+                ('value1', 'Không'),
+                ('value2', 'Khiếm thính'),
+                ('value3', 'Khiếm thị'),
+                ('value4', 'Khó khăn vê hoạt động'),
+                ('value5', 'Khó khăn về trí tuệ'),
+                ('value6', 'Đa tật'),
+                ('value7', 'Khuyết tật khác'),
+                ('value8', 'Không xác định'),
+        ],default='value1'
+     )
+class monhocnghe(models.Model):
+    _name = 'solienlac.monhocnghe'
+    _rec_name = 'tenmonhocnghe'
+    mamonhocnghe = fields.Char("Mã môn học ", required='True')
+    tenmonhocnghe = fields.Selection(
+        string="Môn học nghề",
+        selection=[
+                ('value1', 'Không học nghề'),
+                ('value2', 'Tin học ứng dụng'),
+                ('value3', 'Mộc'),
+                ('value4', 'May'),
+                ('value5', 'Nấu ăn'),
+                ('value6', 'Nhiếp ảnh'),
+                ('value7', 'Điện dân dụng'),
+                ('value8', 'Điện tử'),
+                ('value9', 'Thêu'),
+                ('value10', 'Nề'),
+                ('value11', 'Đan len'),
+                ('value12', 'Đan lưới'),
+                ('value13', 'Lâm sinh'),
+        ],default='value1'
+    )
+    ghichu = fields.Char('Ghi chú')
+
+class tochucdoanthe(models.Model):
+    _name = 'solienlac.tochucdoanthe'
+    _rec_name = 'tentochuc'
+    vitridoanthe = fields.Selection(
+        string="Vị trí đoàn thể",
+        selection=[
+                ('value1', 'Không'),
+                ('value2', 'Đội viên'),
+                ('value3', 'Đoàn viên'),
+                ('value4', 'Đảng viên'),
+                ('value5', 'Không xác định'),
+        ],default='value1'
+    )
+    chucvudoanthe = fields.Selection(
+        string="Field name",
+        selection=[
+                ('value1', 'Không'),
+                ('value2', 'Liên đội trưởng'),
+                ('value3', 'Liên đội phó'),
+                ('value4', 'Bí thư đoàn trường'),
+                ('value5', 'Phó Bí thư đoàn trường'),
+                ('value6', 'Bí thư chi đoàn'),
+                ('value7', 'Phó Bí thư chi đoàn'),
+                ('value8', 'Chi đội trưởng'),
+                ('value9', 'Chi đội phó'),
+        ],
+    )
+    ngaygianhap = fields.Date('Ngày gia nhập')
+    ghichu = fields.Char('Ghi chú')
+
 class lop(models.Model):
     _name = 'solienlac.lop'
     # _inherit = 'solienlac.hocsinh'
@@ -340,7 +435,6 @@ class lop(models.Model):
     monhoc = fields.One2many('solienlac.monhoc_has_giaovien', 'lop', string='Môn học')
     giaovien = fields.One2many('solienlac.lop_has_giaovien', 'lop', string='Giáo viên')
     siso = fields.Integer(string='Sĩ số')
-    danhsachhocsinh = fields.Many2many(compute="hocsinh_of_lop", string="Danh sach hoc sinh")
     lopdacbiet = fields.Selection(
         string="Lớp đặc biệt",
         selection=[
@@ -373,11 +467,6 @@ class lop(models.Model):
         ],default='khong'
     )
 
-    # danhsachhocsinh = fields.Char(compute="a_fun", string="Danh sach hoc sinh")
-
-    # @api.one
-    # def number_hocsinh_of_lop(self):
-    #     self.siso = self.env['solienlac.hocsinh'].search_count([('lop','=',self.tenlop)])
 
 class banhoc(models.Model):
     _name = 'solienlac.banhoc'
