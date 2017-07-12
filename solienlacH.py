@@ -709,3 +709,50 @@ class danhhieuhocsinh(models.Model):
     ykiengiaovien = fields.Char('Ý kiến giáo viên')
     ghichu = fields.Char('Ghi chú')
     hocsinh = fields.Many2one('solienlac.hocsinh', string='Học sinh')
+
+class nhapdiemhocsinh(models.Model):
+    _name = 'solienlac.nhapdiemhocsinh'
+    giaovien = fields.Many2one(
+        string="Giáo viên",
+        comodel_name="solienlac.giaovien",
+    )
+    lop = fields.Many2one(
+        string="Lớp",
+        comodel_name="solienlac.lop",
+    )
+    hocky = fields.Selection(
+        string="Học kỳ",
+        selection=[
+                ('i', 'Học kỳ I'),
+                ('ii', 'Học kỳ II'),
+                ('iii', 'Cả năm'),
+        ],
+    )
+    namhoc = fields.Char(string="Năm học", )
+    monhoc = fields.Many2one(
+        string="Môn học",
+        comodel_name="solienlac.monhoc",
+    )
+    nhapdiemchitiet = fields.Many2many('solienlac.nhapdiemchitiet', string='Chi tiết')
+
+class nhapdiemchitiet(models.Model):
+    _name = 'solienlac.nhapdiemchitiet'
+    hocsinh = fields.Many2one('solienlac.hocsinh', string='Học sinh')
+    diemmieng1 = fields.Float('M\n1')
+    diemmieng2 = fields.Float('M\n2')
+    diemmieng3 = fields.Float('M\n3')
+    diemmieng4 = fields.Float('M\n4')
+    diemmieng5 = fields.Float('M\n5')
+    diem15phut1 = fields.Float('15P\n1')
+    diem15phut2 = fields.Float('15P\n2')
+    diem15phut3 = fields.Float('15P\n3')
+    diem15phut4 = fields.Float('15P\n4')
+    diem15phut5 = fields.Float('15P\n5')
+    diem1tiet1 = fields.Float('1T\n1')
+    diem1tiet2 = fields.Float('1T\n2')
+    diem1tiet3 = fields.Float('1T\n3')
+    diem1tiet4 = fields.Float('1T\n4')
+    diem1tiet5 = fields.Float('1T\n5')
+    diemhocky = fields.Float('Học kỳ')
+    diemtongket = fields.Float('Tổng kểt')
+    xephang = fields.Integer('Xếp hạng')
