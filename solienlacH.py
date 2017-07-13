@@ -734,6 +734,11 @@ class nhapdiemhocsinh(models.Model):
         comodel_name="solienlac.monhoc",
     )
     nhapdiemchitiet = fields.Many2many('solienlac.nhapdiemchitiet', string='Chi tiết')
+    @api.multi
+    @api.onchange('lop')
+    def _compute_model(self):
+        # self.namhoc = self.lop.tenlop
+        self.nhapdiemchitiet = self.env['solienlac.nhapdiemchitiet'].search([('hocsinh.lop.id', '=', self.lop.id)])
 
 class nhapdiemchitiet(models.Model):
     _name = 'solienlac.nhapdiemchitiet'
