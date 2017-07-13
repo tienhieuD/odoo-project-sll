@@ -553,5 +553,30 @@
       </field>
     </record>
 
+    <!--nhapdiemhocsinh-->
+    <record id="nhapdiemhocsinh_view_form" model="ir.ui.view">
+      <field name="name">solienlac.nhapdiemhocsinh.form</field>
+      <field name="model">solienlac.nhapdiemhocsinh</field>
+      <field name="arch" type="xml">
+        <form string="Nhập điểm học sinh">
+          <sheet>
+            <group colspan='4' col='4'>
+              <group colspan='2' col='2'>
+                <field name="giaovien"/>
+                <field name="monhoc"/>
+                <field name="lop"/>
+              </group>
+              <group colspan='2' col='2'>
+                <field name="hocky"/>
+                <field name="namhoc"/>
+              </group>
+            </group>
+          </sheet>
+            <field name="nhapdiemchitiet" options="{'no_create': True}"/>
+        </form>
+      </field>
+    </record>
+
+
   </data>
 </odoo>
