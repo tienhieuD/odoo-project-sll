@@ -434,6 +434,22 @@
       </field>
     </record>
 
+    <!--baocao-->
+    <!--Xếp loại hạnh kiểm học sinh hòa nhập, khuyết tật-->
+    <record id="xlhkhshnkt_action_form" model="ir.actions.act_window">
+      <field name="name">Xếp loại hạnh kiểm học sinh hòa nhập, khuyết tật</field>
+      <field name="res_model">solienlac.bc.xlhkhshnkt</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          <!-- Add Text Here -->
+        </p>
+        <p>
+          <!-- More details about what a user can do -->
+        </p>
+      </field>
+    </record>
+
     <!--Menu-->
     <menuitem id="menu_danhmuchanhchinh" name="Danh mục hành chính" sequence=""/>
       <menuitem id="menu_phuongxa" name="Phường/xã" parent="menu_danhmuchanhchinh" action="phuongxa_action_form" sequence=""/>
@@ -462,5 +478,11 @@
       <menuitem id="menu_khac" name="Khác" parent="menu_truongquanly" sequence=""/>
         <menuitem id="menu_doituongchinhsach" name="Đối tượng chính sách" parent="menu_khac" action="doituongchinhsach_action_form" sequence=""/>
         <!-- <menuitem id="menu_khenthuongkyluat" name="Khen thưởng/Kỷ luật" parent="menu_khac" action="khenthuongkyluat_action_form" sequence=""/> -->
+
+      <menuitem id="menu_baocao" name="Báo cáo" sequence=""/>
+        <menuitem id="menu_xlhkhshnkt" name="Xếp loại hạnh kiểm học sinh hòa nhập, khuyết tật" parent="menu_baocao" action="xlhkhshnkt_action_form" sequence=""/>
+
+
+
   </data>
 </odoo>

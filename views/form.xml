@@ -499,6 +499,7 @@
                 <field name="lop"/>
                 <field name="chucvu"/>
                 <field name="tuyenhoc"/>
+                <field name="khuyettat"/>
                 <field name="doituongchinhsach" widget="many2many_tags"/>
                 <field name="doituonguutien" widget="many2many_tags"/>
               </group>
