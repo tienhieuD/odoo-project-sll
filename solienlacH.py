@@ -345,15 +345,7 @@ class hocsinh(models.Model):
                 ('value8', 'Dự thính'),
         ],default='value1'
     )
-    nguongochocsinh = fields.Selection(
-        string="Nguồn gốc học sinh",
-        selection=[
-                ('value1', 'Tuyển sinh'),
-                ('value2', 'Được lên lớp'),
-                ('value3', 'Ở lại lớp'),
-                ('value4', 'Chuyển đến'),
-        ],default='value1',
-    )
+    nguongochocsinh = fields.Many2one('solienlac.nguongochocsinh', string='Nguồn gốc học sinh')
     nangkhieu = fields.Selection(
         string="Năng khiếu",
         selection=[
@@ -378,17 +370,6 @@ class hocsinh(models.Model):
         ],default='value1',
     )
     monhocnghe = fields.Many2one(string="Môn học nghề",comodel_name="solienlac.monhocnghe")
-    lydothoihoc = fields.Selection(
-        string="Lý do thôi học",
-        selection=[
-                ('value1', 'Không'),
-                ('value2', 'Chuyển đi'),
-                ('value3', 'Nghỉ học chữa bệnh dài hạn'),
-                ('value4', 'Kỷ luật buộc thôi học 1 năm'),
-                ('value5', 'Tự bỏ học'),
-        ],default='value1'
-    )
-
     loaihocsinhnhaptruong = fields.Selection(
         string="Loại học sinh nhập trường",
         selection=[
@@ -417,7 +398,7 @@ class hocsinh(models.Model):
     )
     tochucdoanthe = fields.Many2one('solienlac.tochucdoanthe', string='Tổ chức')
     thoihoc = fields.Selection(
-        string="Field name",
+        string="Thôi học",
         selection=[
                 ('value1', 'Không'),
                 ('value2', 'Khiếm thính'),
@@ -429,6 +410,37 @@ class hocsinh(models.Model):
                 ('value8', 'Không xác định'),
         ],
     )
+    lydothoihoc = fields.Many2one(string="Lý do thôi học",comodel_name="solienlac.lydothoihoc")
+class lydothoihoc(models.Model):
+    _name = 'solienlac.lydothoihoc'
+    _rec_name = 'lydothoihoc'
+    lydothoihoc = fields.Selection(
+        string="Lý do thôi học",
+        selection=[
+                ('value1', 'Không'),
+                ('value2', 'Chuyển đi'),
+                ('value3', 'Nghỉ học chữa bệnh dài hạn'),
+                ('value4', 'Kỷ luật buộc thôi học 1 năm'),
+                ('value5', 'Tự bỏ học'),
+        ],default='value1'
+    )
+    thoidiemthoihoc = fields.Date('Thời điểm thôi học')
+    ghichu = fields.Char('Ghi chú')
+
+class nguongochocsinh(models.Model):
+    _name = 'solienlac.nguongochocsinh'
+    _rec_name = 'nguongochocsinh'
+    nguongochocsinh = fields.Selection(
+        string="Nguồn gốc học sinh",
+        selection=[
+                ('value1', 'Tuyển sinh'),
+                ('value2', 'Được lên lớp'),
+                ('value3', 'Ở lại lớp'),
+                ('value4', 'Chuyển đến'),
+        ],default='value1',
+    )
+    thoidiemnhaptruong = fields.Date('Thời điểm nhập trường')
+    ghichu = fields.Char('Ghi chú')
 class monhocnghe(models.Model):
     _name = 'solienlac.monhocnghe'
     _rec_name = 'tenmonhocnghe'
