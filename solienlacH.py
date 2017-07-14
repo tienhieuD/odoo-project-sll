@@ -116,7 +116,7 @@ class tinhthanhpho(models.Model):
 class dantoc(models.Model):
     _name = 'solienlac.dantoc'
     _rec_name = 'tendantoc' # optional
-    madantoc = fields.Char("Mã dân tộc")
+    madantoc = fields.Integer("Mã dân tộc")
     tendantoc = fields.Char("Tên dân tộc")
     ghichu = fields.Char("Ghi chú")
 
