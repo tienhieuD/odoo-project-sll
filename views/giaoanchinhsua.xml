@@ -459,6 +459,34 @@
         </p>
       </field>
     </record>
+    <!--'''Xếp loại học lực học sinh hòa nhập, khuyết tật'''-->
+    <record id="xlhlhshnkt_action_form" model="ir.actions.act_window">
+      <field name="name">Xếp loại học lực học sinh hòa nhập, khuyết tật</field>
+      <field name="res_model">solienlac.baocao.xlhlhshnkt</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          <!-- Add Text Here -->
+        </p>
+        <p>
+          <!-- More details about what a user can do -->
+        </p>
+      </field>
+    </record>
+    <!--'''Xếp loại học lực học sinh dân tộc'''-->
+    <record id="xlhlhsdt_action_form" model="ir.actions.act_window">
+      <field name="name">Xếp loại học lực học sinh dân tộc</field>
+      <field name="res_model">solienlac.baocao.xlhlhsdt</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          <!-- Add Text Here -->
+        </p>
+        <p>
+          <!-- More details about what a user can do -->
+        </p>
+      </field>
+    </record>
 
     <!--Tình hình học sinh thôi học-->
     <record id="tinhhinhhocsinhthoihoc_action_form" model="ir.actions.act_window">
@@ -508,7 +536,8 @@
           <menuitem id="menu_xlhkhshnkt" name="Học sinh hòa nhập, khuyết tật" parent="menu_xeploaihanhkiem" action="xlhkhshnkt_action_form" sequence=""/>
         <menuitem id="menu_tinhhinhhocsinhthoihoc" name="Tình hình học sinh thôi học" parent="menu_baocao" action="tinhhinhhocsinhthoihoc_action_form" sequence=""/>
           <!-- <menuitem id="menu_gvdd_hskt" name="Số hiệu giáo viên giảng dạy và học sinnh khuyết tật" parent="menu_baocao" action="gvdd_hskt_action_form" sequence=""/> -->
-
+          <menuitem id="menu_xlhlhshnkt" name="(1f) XL HL HS hòa nhập khuyết tật" parent="menu_baocao" action="xlhlhshnkt_action_form" sequence=""/>
+          <menuitem id="menu_xlhlhsdt" name="(1g) XL HL HS dân tộc" parent="menu_baocao" action="xlhlhsdt_action_form" sequence=""/>
 
   </data>
 </odoo>
