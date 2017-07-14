@@ -551,6 +551,8 @@
               <field name="kythi"/>
               <field name="namhoc"/>
               <field name="kyhoc"/>
+              <field name="diemtongket"/>
+              <field name="xeploai"/>
               <field name="giaovien"/>
               <field name="ykiengiaovien"/>
               <field name="ghichu"/>

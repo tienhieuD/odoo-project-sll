@@ -711,7 +711,17 @@ class bangdiem(models.Model):
     )
     bangdiem_thanhphan = fields.One2many("solienlac.bangdiem_thanhphan", "bangdiem", string="Bảng điểm thành phần")
     diemtongket = fields.Float('Điểm tổng kết')
-    xeploai = fields.Char(string="Xếp loại học lực")
+    # xeploai = fields.Char(string="Xếp loại học lực") : cái cũ xóa lúc 1115.14072017
+    xeploai = fields.Selection(
+        string="Xếp loại học lực",
+        selection=[
+                ('gioi', 'Giỏi'),
+                ('kha', 'Khá'),
+                ('tb', 'Trung bình'),
+                ('yeu', 'Yếu'),
+                ('kem', 'Kém'),
+        ],
+    )
     giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên')
     ykiengiaovien = fields.Char('Ý kiến giáo viên')
     hocsinh = fields.Many2one('solienlac.hocsinh', string='Học sinh')
