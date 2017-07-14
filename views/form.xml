@@ -216,12 +216,12 @@
             Quản lý thông tin Khối học
           </header>
           <sheet>
-            <group colspan="4" col="4">
-              <group colspan="2" col="2" string='Thông tin Khối'>
+            <group colspan="4" col="4" string='Thông tin Khối học'>
+              <group colspan="2" col="2">
                 <field name="makhoi"/>
                 <field name="ghichu"/>
               </group>
-              <group colspan="2" col="2" string="">
+              <group colspan="2" col="2">
                 <field name="tenkhoi"/>
               </group>
             </group>
@@ -267,10 +267,7 @@
             Quản lý thông tin phụ huynh
           </header>
           <sheet>
-            <group colspan="6" col="6">
-              <group colspan="2" col="2" string='Thông tin học sinh'>
-                <field name="hocsinh"/>
-              </group>
+            <group colspan="4" col="4">
               <group colspan="2" col="2" string='Thông tin phụ huynh học sinh'>
                 <field name="hoten"/>
                 <field name="gioitinh"/>
@@ -499,12 +496,23 @@
                 <field name="lop"/>
                 <field name="chucvu"/>
                 <field name="tuyenhoc"/>
-                <field name="khuyettat"/>
                 <field name="doituongchinhsach" widget="many2many_tags"/>
                 <field name="doituonguutien" widget="many2many_tags"/>
               </group>
               <group colspan="4" string='Thông tin phụ huynh'>
                 <field name="phuhuynh"/>
+              </group>
+              <group colspan="4" string='Nguồn gốc và tình trạng học sinh'>
+                <!-- <field name="nguongochocsinh"/>
+                <field name="tinhtranghocsinh"/>
+                <field name="lydothoihoc"/> --> -->
+                <group colspan="2" col="2">
+                  <field name="nguongochocsinh"/>
+                </group>
+                <group colspan="2" col="2">
+                  <field name="tinhtranghocsinh"/>
+                  <field name="lydothoihoc"/>
+                </group>
               </group>
               <notebook colspan="4">
                 <page string="Danh hiệu">
@@ -574,6 +582,38 @@
             </group>
           </sheet>
             <field name="nhapdiemchitiet" options="{'no_create': True}"/>
+        </form>
+      </field>
+    </record>
+
+    <record id="tinhhinhhocsinhthoihoc_view_form" model="ir.ui.view">
+      <field name="name">tinhhinhhocsinhthoihoc.form</field>
+      <field name="model">solienlac.tinhhinhhocsinhthoihoc</field>
+      <field name="arch" type="xml">
+        <form string="Tình hình học sinh thôi học">
+          <sheet>
+              <group colspan='6' col='6'>
+                <group colspan='2' col='2'>
+                  <field name="namhoc"/>
+                  <!-- <field name="hocky"/> -->
+                  <field name="khoi"/>
+                </group>
+                <group colspan='2' col='2'>
+                  <field name="tongsohocsinhdaunam"/>
+                  <field name="tongsohocsinhcuoinam"/>
+                  <field name="tongsohocsinhthoihoc"/>
+                  <field name="sohocsinhchuyenden"/>
+                  <field name="sohocsinhchuyendi"/>
+                </group>
+                <group colspan='2' col='2'>
+                  <field name="kyluatbuocthoihoc1nam"/>
+                  <field name="dohoclucyeukem"/>
+                  <field name="dohoancanhkhokhan"/>
+                  <field name="doxanha"/>
+                  <field name="lydokhac"/>
+                </group>
+              </group>
+          </sheet>
         </form>
       </field>
     </record>

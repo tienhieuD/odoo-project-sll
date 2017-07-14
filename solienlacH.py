@@ -419,13 +419,25 @@ class lydothoihoc(models.Model):
         selection=[
                 ('value1', 'Không'),
                 ('value2', 'Chuyển đi'),
-                ('value3', 'Nghỉ học chữa bệnh dài hạn'),
-                ('value4', 'Kỷ luật buộc thôi học 1 năm'),
-                ('value5', 'Tự bỏ học'),
+                ('value3', 'Kỷ luật buộc thôi học 1 năm'),
+                ('value4', 'Học lực yếu kém'),
+                ('value5', 'Xa nhà'),
+                ('value6', 'Gia đình hoàn cảnh khó khăn'),
+                ('value7', 'Lý do khác: tai nạn, ốm đau'),
         ],default='value1'
     )
     thoidiemthoihoc = fields.Date('Thời điểm thôi học')
+    hocky = fields.Selection(
+        string="Học kỳ",
+        selection=[
+                ('i', 'Học kỳ I'),
+                ('ii', 'Học kỳ II'),
+                ('iii', 'Cả năm'),
+        ],
+    )
+    namhoc = fields.Char('Năm học')
     ghichu = fields.Char('Ghi chú')
+    hocsinh = fields.One2many('solienlac.hocsinh', 'lydothoihoc', string='Học sinh')
 
 class nguongochocsinh(models.Model):
     _name = 'solienlac.nguongochocsinh'
@@ -439,7 +451,17 @@ class nguongochocsinh(models.Model):
                 ('value4', 'Chuyển đến'),
         ],default='value1',
     )
+    hocky = fields.Selection(
+        string="Học kỳ",
+        selection=[
+                ('i', 'Học kỳ I'),
+                ('ii', 'Học kỳ II'),
+                ('iii', 'Cả năm'),
+        ],
+    )
+    namhoc = fields.Char('Năm học')
     thoidiemnhaptruong = fields.Date('Thời điểm nhập trường')
+    hocsinh = fields.One2many('solienlac.hocsinh', 'nguongochocsinh', string='Học sinh')
     ghichu = fields.Char('Ghi chú')
 class monhocnghe(models.Model):
     _name = 'solienlac.monhocnghe'
