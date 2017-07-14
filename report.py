@@ -38,6 +38,7 @@ class xlhkhshnkt(models.Model):
                     ('hanhkiem.xeploai','=', hanhkiem),
                     ('hanhkiem.hocky', '=', self.hocky),
                     ('hanhkiem.namhoc', '=', self.namhoc),
+                    ('tinhtranghocsinh', '=?', 'value1'),
                 ]
             )
         def layphantram_hs(x,y):
@@ -48,6 +49,7 @@ class xlhkhshnkt(models.Model):
         _tongsohs = self.env['solienlac.hocsinh'].search_count([
                 ('lop.khoi.id','=',self.khoi.id),
                 ('khuyettat','!=','value1'),
+                ('tinhtranghocsinh', '=?', 'value1'),
             ])
         _tot_sl = laysoluong_hs('tot')
         _kha_sl = laysoluong_hs('kha')
@@ -105,6 +107,7 @@ class xlhkhsdt(models.Model):
                     ('hanhkiem.xeploai','=', hanhkiem),
                     ('hanhkiem.hocky', '=', self.hocky),
                     ('hanhkiem.namhoc', '=', self.namhoc),
+                    ('tinhtranghocsinh', '=?', 'value1'),
                 ]
             )
         def layphantram_hs(x,y):
@@ -115,6 +118,7 @@ class xlhkhsdt(models.Model):
         _tongsohs = self.env['solienlac.hocsinh'].search_count([
                 ('lop.khoi.id','=',self.khoi.id),
                 ('dantoc.tendantoc','not like','Kinh'),
+                ('tinhtranghocsinh', '=?', 'value1'),
             ])
         _tot_sl = laysoluong_hs('tot')
         _kha_sl = laysoluong_hs('kha')

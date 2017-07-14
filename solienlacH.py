@@ -336,13 +336,7 @@ class hocsinh(models.Model):
         string="Tình trạng học sinh",
         selection=[
                 ('value1', 'Học bình thường'),
-                ('value2', 'Bỏ học'),
-                ('value3', 'Ốm dài hạn'),
-                ('value4', 'Ốm dài hạn'),
-                ('value5', 'Bị buộc thôi học'),
-                ('value6', 'Du học'),
-                ('value7', 'Chết'),
-                ('value8', 'Dự thính'),
+                ('value2', 'Đã nghỉ học'),
         ],default='value1'
     )
     nguongochocsinh = fields.Many2one('solienlac.nguongochocsinh', string='Nguồn gốc học sinh')
