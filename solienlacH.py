@@ -33,7 +33,7 @@ class giaovien(models.Model):
     phongban = fields.Many2one('solienlac.phongban', string = "Phòng ban")
     bomon = fields.Many2many('solienlac.bomon', string = "Bộ môn")
     monhoc = fields.One2many('solienlac.monhoc_has_giaovien', 'giaovien', string = "Lớp")
-    lop = fields.One2many(string="Lớp", comodel_name="solienlac.lop_has_giaovien", inverse_name="giaovien")
+    lops = fields.One2many(string="Lớp", comodel_name="solienlac.monhoc_has_giaovien", inverse_name="giaovien")
 
 class monhoc_has_giaovien(models.Model):
     _name = 'solienlac.monhoc_has_giaovien'
@@ -50,7 +50,9 @@ class monhoc_has_giaovien(models.Model):
     lop = fields.Many2one('solienlac.lop', string='Lớp')
     monhoc = fields.Many2one('solienlac.monhoc', string='Môn học')
     giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên')
-
+    lop = fields.Many2one('solienlac.lop', string='Lớp')
+    ngaybatdau = fields.Date('Ngày bắt đầu:')
+    ngayketthuc = fields.Date('Ngày kết thúc: ')
 class lop_has_giaovien(models.Model):
     _name = 'solienlac.lop_has_giaovien'
     _rec_name = 'giaovien'
@@ -235,7 +237,7 @@ class hanhkiem(models.Model):
                 ('kha', 'Khá'),
                 ('tb', 'Trung bình'),
                 ('yeu', 'Yếu'),
-                ('kem', 'Kém'),
+                # ('kem', 'Kém'),
         ],
     )
     nhanxetcuagiaovien = fields.Char('Nhận Xét Của Giáo Viên')
@@ -575,13 +577,22 @@ class lop(models.Model):
                 ('9', 'Không học'),
         ],
     )
-
+    banhoc = fields.Many2one('solienlac.banhoc', string='Phân ban')
 
 class banhoc(models.Model):
     _name = 'solienlac.banhoc'
     _rec_name = 'tenban' # optional
     maban = fields.Char('Mã ban', required='True')
-    tenban = fields.Char('Tên ban')
+    tenban = fields.Selection([
+        ('tunhien', 'Ban tự nhiên'),
+        ('xahoi', 'Ban xã hội'),
+        ('coban_kpb', 'Ban cơ bản(Không phân ban)'),
+        ('coban_a', 'Ban cơ bản(A)'),
+        ('coban_b', 'Ban cơ bản(B)'),
+        ('coban_c', 'Ban cơ bản(C)'),
+        ('coban_d', 'Ban cơ bản(D)'),
+    ], default = 'coban_kpb' ,string='Phân ban')
+    lop = fields.One2many('solienlac.lop', 'banhoc', string='Lớp')
     ghichu = fields.Char('Ghi chú')
 
 class monhoc(models.Model):
@@ -711,7 +722,13 @@ class bangdiem(models.Model):
     )
     bangdiem_thanhphan = fields.One2many("solienlac.bangdiem_thanhphan", "bangdiem", string="Bảng điểm thành phần")
     diemtongket = fields.Float('Điểm tổng kết')
-    xeploai = fields.Char(string="Xếp loại học lực")
+    xeploai = fields.Selection([
+        ('tot', 'Tốt'),
+        ('kha', 'Khá'),
+        ('tb', 'Trung bình'),
+        ('yeu', 'Yếu'),
+        # ('kem', 'Kém'),
+    ],string='Xếp loại học lực')
     giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên')
     ykiengiaovien = fields.Char('Ý kiến giáo viên')
     hocsinh = fields.Many2one('solienlac.hocsinh', string='Học sinh')
