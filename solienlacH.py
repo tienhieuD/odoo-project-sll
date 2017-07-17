@@ -2,12 +2,55 @@
 import datetime
 import time
 from odoo import models, fields, api
+class caphoc(models.Model):
+    _name = 'solienlac.caphoc'
+    _rec_name = 'tencaphoc'
+
+    macaphoc = fields.Integer('Mã cấp học', required='True')
+    tencaphoc = fields.Selection([
+        ('1', 'Nhà trẻ'),
+        ('2', 'Mẫu giáo'),
+        ('3', 'Tiểu học'),
+        ('4', 'Trung học cơ sở'),
+        ('5', 'Trung học phổ thông'),
+        ('6', 'Trung cấp chuyên nghiệp'),
+        ('7', 'Cao đẳng'),
+        ('8', 'Đại học'),
+        ('9', 'Sau đại học'),
+    ],default='1', string='Tên cấp học')
+    ghichu = fields.Char('Ghi chú')
+
+class captruong(models.Model):
+    _name = 'solienlac.captruong'
+    _rec_name = 'tencaptruong'
+
+    macaptruong = fields.Integer('Mã cấp trường', required='True')
+    tencaptruong = fields.Selection([
+        ('1', 'Nhà trẻ'),
+        ('2', 'Trường Mẫu giáo'),
+        ('3', 'Trường Mầm non'),
+        ('4', 'Trường Tiểu học'),
+        ('5', 'Trường Trung học cơ sở'),
+        ('6', 'Trường Trung học phổ thông'),
+        ('7', 'Trường đa cấp (Tiểu học và THCS)'),
+        ('8', 'Trường đa cấp (THCS và THPT)'),
+        ('9', 'Trường đa cấp (Tiểu học,THCS và THPT)'),
+        ('10', 'Trung tâm Giáo dục thường xuyên'),
+        ('11', 'Trung tâm Kỹ thuật tổng hợp - Hướng nghiệp'),
+        ('12', 'Trung cấp chuyên nghiệp'),
+        ('13', 'Cao đẳng'),
+        ('14', 'Đại học'),
+        ('15', 'Nhóm trẻ độc lập'),
+        ('16', 'Lớp mẫu giáo độc lập'),
+        ('17', 'Lớp mầm non độc lập'),
+    ],default='1', string='Tên cấp trường')
+    ghichu = fields.Char('Ghi chú')
 
 class truong(models.Model):
     _name = 'solienlac.truong'
     _rec_name = 'tentruong'
 
-    matruong = fields.Char('Mã trường', required='True')
+    matruong = fields.Integer('Mã trường', required='True')
     tentruong = fields.Char('Tên trường')
     diachi = fields.Char('Địa chỉ')
     fax = fields.Char('Fax')
@@ -16,14 +59,44 @@ class truong(models.Model):
     website = fields.Char('Website')
     hieutruong = fields.Char('Hiệu trưởng')
 
-    # loailopnho
+    loailopnho = fields.Integer('Loại lớp nhô')
     hangtruong = fields.Selection([
         ('hang1', 'Hạng I'),
         ('hang2', 'Hạng II'),
         ('hang3', 'Hạng III'),
-    ])
-    # tinh = fields.Many2one
+    ], string='Hạng trường')
+    tinh = fields.Many2one('solienlac.tinhthanhpho', string='Tỉnh/Thành phố')
+    huyen = fields.Many2one('solienlac.quanhuyen', string='Quận/Huyện')
+    xa = fields.Many2one('solienlac.phuongxa', string='Xã/Phường')
 
+    toado_x = fields.Integer('Tọa độ x')
+    toado_x = fields.Integer('Tọa độ x')
+    namthanhlap = fields.Date('Năm thành lập')
+    thanhthi = fields.Boolean('Thành thị')
+    chatluongcao = fields.Boolean('Chất lượng cao')
+    bdkk = fields.Boolean('BDKK')
+    biengioi = fields.Boolean('Biên giới')
+    captruong = fields.Many2one('solienlac.captruong', string='Cấp trường ID')
+    nhomcaphoc = fields.Many2one('solienlac.caphoc', string='Cấp học ID')
+    truongchuyenbiet = fields.Selection([
+        ('1', 'Năng khiếu TDTT'),
+        ('2', 'Khuyết tật'),
+        ('3', 'Năng khiếu nghệ thuật'),
+        ('4', 'Chuyên'),
+        ('5', 'Dân tộc nội trú'),
+        ('6', 'THPT Kỹ thuật'),
+        ('7', 'Dự bị đại học'),
+    ],default='4', string='Trường chuyên biệt')
+    loaihinhtruong = fields.Selection([
+        ('1', 'Công lập'),
+        ('2', 'Bán công'),
+        ('3', 'Dân lập'),
+        ('4', 'Tư thục'),
+        ('5', 'Chuyên'),
+        ('6', 'Chuyên ban'),
+        ('7', 'Kỹ thuật'),
+        ('8', 'Khác'),
+    ],default='1', string='Trường chuyên biệt')
     # giaovien = fields.One2many(string="Giáo viên của trường", comodel_name="solienlac.giaovien", inverse_name="truong",domain="[('truong.matruong', '=', matruong)]",})
     # hocsinh = fields.One2many(string="Học sinh của trường", comodel_name="solienlac.hocsinh", inverse_name="truong",domain="[('truong.matruong', '=', matruong)]",})
     # khoi = fields.One2many(string="Khối", comodel_name="solienlac.khoi", inverse_name="truong")
