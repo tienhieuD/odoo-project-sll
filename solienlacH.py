@@ -590,7 +590,6 @@ class lop(models.Model):
                 ('9', 'Không học'),
         ],
     )
-<<<<<<< HEAD
     chuongtrinhtangcuong = fields.Selection(
         string="Chương trình tăng cường",
         selection=[
@@ -604,9 +603,7 @@ class lop(models.Model):
                 ('8', 'Không học'),
         ],
     )
-=======
     banhoc = fields.Many2one('solienlac.banhoc', string='Phân ban')
->>>>>>> origin/master
 
 class banhoc(models.Model):
     _name = 'solienlac.banhoc'
