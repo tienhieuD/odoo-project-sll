@@ -672,6 +672,21 @@ class lop(models.Model):
                 ('9', 'Không học'),
         ],
     )
+
+    chuongtrinhtangcuong = fields.Selection(
+        string="Chương trình tăng cường",
+        selection=[
+                ('1', 'Tin Học'),
+                ('2', 'Tiếng Anh'),
+                ('3', 'Tiếng Pháp'),
+                ('4', 'Tiếng Nhật/Trung'),
+                ('5', '2 Tiếng Nhật'),
+                ('6', '2 Tiếng Đức'),
+                ('7', '2 Tiếng Pháp'),
+                ('8', 'Không học'),
+        ],
+    )
+
     banhoc = fields.Many2one('solienlac.banhoc', string='Phân ban')
 
 class banhoc(models.Model):
