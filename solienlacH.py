@@ -54,7 +54,7 @@ class truong(models.Model):
     tentruong = fields.Char('Tên trường')
     hieutruong = fields.Char('Hiệu trưởng')
     namthanhlap = fields.Date('Năm thành lập')
-    
+
     diachi = fields.Char('Địa chỉ')
     fax = fields.Char('Fax')
     email = fields.Char('Email')
@@ -102,9 +102,9 @@ class truong(models.Model):
     biengioi = fields.Boolean('Biên giới')
 
 
-    # giaovien = fields.One2many(string="Giáo viên của trường", comodel_name="solienlac.giaovien", inverse_name="truong",domain="[('truong.matruong', '=', matruong)]",})
-    # hocsinh = fields.One2many(string="Học sinh của trường", comodel_name="solienlac.hocsinh", inverse_name="truong",domain="[('truong.matruong', '=', matruong)]",})
-    # khoi = fields.One2many(string="Khối", comodel_name="solienlac.khoi", inverse_name="truong")
+    giaovien = fields.One2many(string="Giáo viên của trường", comodel_name="solienlac.giaovien", inverse_name="truong")
+    hocsinh = fields.One2many(string="Học sinh của trường", comodel_name="solienlac.hocsinh", inverse_name="truong")
+    khoi = fields.One2many(string="Khối", comodel_name="solienlac.khoi", inverse_name="truong")
 class giaovien(models.Model):
     _name = 'solienlac.giaovien'
     _rec_name = 'hoten' # optional
