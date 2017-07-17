@@ -10,14 +10,23 @@ class truong(models.Model):
     matruong = fields.Char('Mã trường', required='True')
     tentruong = fields.Char('Tên trường')
     diachi = fields.Char('Địa chỉ')
+    fax = fields.Char('Fax')
     email = fields.Char('Email')
     sodienthoai = fields.Char('Số điện thoại')
     website = fields.Char('Website')
     hieutruong = fields.Char('Hiệu trưởng')
 
+    # loailopnho
+    hangtruong = fields.Selection([
+        ('hang1', 'Hạng I'),
+        ('hang2', 'Hạng II'),
+        ('hang3', 'Hạng III'),
+    ])
+    # tinh = fields.Many2one
+
     # giaovien = fields.One2many(string="Giáo viên của trường", comodel_name="solienlac.giaovien", inverse_name="truong",domain="[('truong.matruong', '=', matruong)]",})
     # hocsinh = fields.One2many(string="Học sinh của trường", comodel_name="solienlac.hocsinh", inverse_name="truong",domain="[('truong.matruong', '=', matruong)]",})
-    khoi = fields.One2many(string="Khối", comodel_name="solienlac.khoi", inverse_name="truong")
+    # khoi = fields.One2many(string="Khối", comodel_name="solienlac.khoi", inverse_name="truong")
 class giaovien(models.Model):
     _name = 'solienlac.giaovien'
     _rec_name = 'hoten' # optional
@@ -65,6 +74,7 @@ class monhoc_has_giaovien(models.Model):
     lop = fields.Many2one('solienlac.lop', string='Lớp')
     monhoc = fields.Many2one('solienlac.monhoc', string='Môn học')
     giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên')
+    lop = fields.Many2one('solienlac.lop', string='Lớp')
     ngaybatdau = fields.Date('Ngày bắt đầu:')
     ngayketthuc = fields.Date('Ngày kết thúc: ')
 class lop_has_giaovien(models.Model):
@@ -350,7 +360,6 @@ class hocsinh(models.Model):
     ketquahoctap = fields.One2many('solienlac.ketquahoctap', 'hocsinh', string="Kết quả học tập")
     bangdiem = fields.One2many('solienlac.bangdiem', 'hocsinh', string="Bảng điểm")
     nenep = fields.One2many('solienlac.nenep', 'hocsinh', string="Nề nếp")
-    hocchuongtrinhtangcuong = fields.Boolean('Học chương trình tăng cường') #new fields
     tinhtranghocsinh = fields.Selection(
         string="Tình trạng học sinh",
         selection=[
@@ -590,23 +599,7 @@ class lop(models.Model):
                 ('9', 'Không học'),
         ],
     )
-<<<<<<< HEAD
-    chuongtrinhtangcuong = fields.Selection(
-        string="Chương trình tăng cường",
-        selection=[
-                ('1', 'Tin Học'),
-                ('2', 'Tiếng Anh'),
-                ('3', 'Tiếng Pháp'),
-                ('4', 'Tiếng Nhật/Trung'),
-                ('5', '2 Tiếng Nhật'),
-                ('6', '2 Tiếng Đức'),
-                ('7', '2 Tiếng Pháp'),
-                ('8', 'Không học'),
-        ],
-    )
-=======
     banhoc = fields.Many2one('solienlac.banhoc', string='Phân ban')
->>>>>>> origin/master
 
 class banhoc(models.Model):
     _name = 'solienlac.banhoc'
