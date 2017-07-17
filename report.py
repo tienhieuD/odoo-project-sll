@@ -38,6 +38,7 @@ class xlhkhshnkt(models.Model):
                     ('hanhkiem.xeploai','=', hanhkiem),
                     ('hanhkiem.hocky', '=', self.hocky),
                     ('hanhkiem.namhoc', '=', self.namhoc),
+                    ('tinhtranghocsinh', '=?', 'value1'),
                 ]
             )
         def layphantram_hs(x,y):
@@ -48,6 +49,7 @@ class xlhkhshnkt(models.Model):
         _tongsohs = self.env['solienlac.hocsinh'].search_count([
                 ('lop.khoi.id','=',self.khoi.id),
                 ('khuyettat','!=','value1'),
+                ('tinhtranghocsinh', '=?', 'value1'),
             ])
         _tot_sl = laysoluong_hs('tot')
         _kha_sl = laysoluong_hs('kha')
@@ -105,6 +107,7 @@ class xlhkhsdt(models.Model):
                     ('hanhkiem.xeploai','=', hanhkiem),
                     ('hanhkiem.hocky', '=', self.hocky),
                     ('hanhkiem.namhoc', '=', self.namhoc),
+                    ('tinhtranghocsinh', '=?', 'value1'),
                 ]
             )
         def layphantram_hs(x,y):
@@ -115,6 +118,7 @@ class xlhkhsdt(models.Model):
         _tongsohs = self.env['solienlac.hocsinh'].search_count([
                 ('lop.khoi.id','=',self.khoi.id),
                 ('dantoc.tendantoc','not like','Kinh'),
+                ('tinhtranghocsinh', '=?', 'value1'),
             ])
         _tot_sl = laysoluong_hs('tot')
         _kha_sl = laysoluong_hs('kha')
@@ -134,3 +138,153 @@ class xlhkhsdt(models.Model):
         self.tb_pt = _tb_pt
         self.y_sl = _y_sl
         self.y_pt = _y_pt
+
+class xlhlhshnkt(models.Model):
+    '''Xếp loại học lực học sinh hòa nhập, khuyết tật'''
+    _name = 'solienlac.baocao.xlhlhshnkt'
+    hocky = fields.Selection(
+        string="Học kỳ",
+        selection=[
+                ('i', 'Học kỳ I'),
+                ('ii', 'Học kỳ II'),
+                ('iii', 'Cả năm'),
+        ],
+    )
+    namhoc = fields.Char('Năm học')
+    khoi = fields.Many2one(
+        string="Khối",
+        comodel_name="solienlac.khoi",
+    )
+    tongsohs = fields.Integer('Tổng số học sinh')
+    tot_sl = fields.Integer('Số lượng HK Giỏi')
+    tot_pt = fields.Float('Phần trăm HK Giỏi')
+    kha_sl = fields.Integer('Số lượng HK Khá')
+    kha_pt = fields.Float('Phần trăm HK Khá')
+    tb_sl = fields.Integer('Số lượng HK Trung bình')
+    tb_pt = fields.Float('Phần trăm HK Trung bình')
+    y_sl = fields.Integer('Số lượng HK Yếu')
+    y_pt = fields.Float('Phần trăm HK Yếu')
+    k_sl = fields.Integer('Số lượng HK Kém')
+    k_pt = fields.Float('Phần trăm HK Kém')
+
+    @api.multi
+    @api.onchange('khoi')
+    def _compute_model(self):
+        def laysoluong_hs(hocluc):
+            return self.env['solienlac.hocsinh'].search_count(
+                [
+                    ('lop.khoi.id','=',self.khoi.id),
+                    ('khuyettat','!=','value1'),
+                    ('bangdiem.xeploai','=', hocluc),
+                    ('bangdiem.kyhoc', '=', self.hocky),
+                    ('bangdiem.namhoc', '=', self.namhoc),
+                    ('tinhtranghocsinh', '=?', 'value1'),
+                ]
+            )
+        def layphantram_hs(x,y):
+            try:
+                return round(float(x)/float(y)*100, 2)
+            except:
+                return 0.0
+        _tongsohs = self.env['solienlac.hocsinh'].search_count([
+                ('lop.khoi.id','=',self.khoi.id),
+                ('khuyettat','!=','value1'),
+                ('tinhtranghocsinh', '=?', 'value1'),
+            ])
+        _tot_sl = laysoluong_hs('gioi')
+        _kha_sl = laysoluong_hs('kha')
+        _tb_sl  = laysoluong_hs('tb')
+        _y_sl   = laysoluong_hs('yeu')
+        _k_sl   = laysoluong_hs('kem')
+        _tot_pt = layphantram_hs(_tot_sl,_tongsohs)
+        _kha_pt = layphantram_hs(_kha_sl,_tongsohs)
+        _tb_pt = layphantram_hs(_tb_sl,_tongsohs)
+        _y_pt = layphantram_hs(_y_sl,_tongsohs)
+        _k_pt = layphantram_hs(_k_sl,_tongsohs)
+
+        self.tongsohs = _tongsohs
+        self.tot_sl = _tot_sl
+        self.tot_pt = _tot_pt
+        self.kha_sl = _kha_sl
+        self.kha_pt = _kha_pt
+        self.tb_sl = _tb_sl
+        self.tb_pt = _tb_pt
+        self.y_sl = _y_sl
+        self.y_pt = _y_pt
+        self.k_sl = _k_sl
+        self.k_pt = _k_pt
+
+class xlhlhsdt(models.Model):
+    '''Xếp loại học lực học sinh dân tộc'''
+    _name = 'solienlac.baocao.xlhlhsdt'
+    hocky = fields.Selection(
+        string="Học kỳ",
+        selection=[
+                ('i', 'Học kỳ I'),
+                ('ii', 'Học kỳ II'),
+                ('iii', 'Cả năm'),
+        ],
+    )
+    namhoc = fields.Char('Năm học')
+    khoi = fields.Many2one(
+        string="Khối",
+        comodel_name="solienlac.khoi",
+    )
+    tongsohs = fields.Integer('Tổng số học sinh')
+    tot_sl = fields.Integer('Số lượng HK Giỏi')
+    tot_pt = fields.Float('Phần trăm HK Giỏi')
+    kha_sl = fields.Integer('Số lượng HK Khá')
+    kha_pt = fields.Float('Phần trăm HK Khá')
+    tb_sl = fields.Integer('Số lượng HK Trung bình')
+    tb_pt = fields.Float('Phần trăm HK Trung bình')
+    y_sl = fields.Integer('Số lượng HK Yếu')
+    y_pt = fields.Float('Phần trăm HK Yếu')
+    k_sl = fields.Integer('Số lượng HK Kém')
+    k_pt = fields.Float('Phần trăm HK Kém')
+
+    @api.multi
+    @api.onchange('khoi')
+    def _compute_model(self):
+        def laysoluong_hs(hocluc):
+            return self.env['solienlac.hocsinh'].search_count(
+                [
+                    ('lop.khoi.id','=',self.khoi.id),
+                    ('dantoc.tendantoc','not like','Kinh'),
+                    ('bangdiem.xeploai','=', hocluc),
+                    ('bangdiem.kyhoc', '=', self.hocky),
+                    ('bangdiem.namhoc', '=', self.namhoc),
+                    ('tinhtranghocsinh', '=?', 'value1'),
+                ]
+            )
+        def layphantram_hs(x,y):
+            try:
+                return round(float(x)/float(y)*100, 2)
+            except:
+                return 0.0
+        _tongsohs = self.env['solienlac.hocsinh'].search_count([
+                ('lop.khoi.id','=',self.khoi.id),
+                ('dantoc.tendantoc','not like','Kinh'),
+                ('tinhtranghocsinh', '=?', 'value1'),
+            ])
+        _tot_sl = laysoluong_hs('tot')
+        _kha_sl = laysoluong_hs('kha')
+        _tb_sl  = laysoluong_hs('tb')
+        _y_sl   = laysoluong_hs('yeu')
+        _k_sl   = laysoluong_hs('kem')
+        _tot_pt = layphantram_hs(_tot_sl,_tongsohs)
+        _kha_pt = layphantram_hs(_kha_sl,_tongsohs)
+        _tb_pt = layphantram_hs(_tb_sl,_tongsohs)
+        _y_pt = layphantram_hs(_y_sl,_tongsohs)
+        _k_pt = layphantram_hs(_k_sl,_tongsohs)
+
+        self.tongsohs = _tongsohs
+        self.tot_sl = _tot_sl
+        self.tot_pt = _tot_pt
+        self.kha_sl = _kha_sl
+        self.kha_pt = _kha_pt
+        self.tb_sl = _tb_sl
+        self.tb_pt = _tb_pt
+        self.y_sl = _y_sl
+        self.y_pt = _y_pt
+        self.k_sl = _k_sl
+        self.k_pt = _k_pt
