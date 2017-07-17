@@ -52,32 +52,26 @@ class truong(models.Model):
 
     matruong = fields.Integer('Mã trường', required='True')
     tentruong = fields.Char('Tên trường')
+    hieutruong = fields.Char('Hiệu trưởng')
+    namthanhlap = fields.Date('Năm thành lập')
+    
     diachi = fields.Char('Địa chỉ')
     fax = fields.Char('Fax')
     email = fields.Char('Email')
     sodienthoai = fields.Char('Số điện thoại')
     website = fields.Char('Website')
-    hieutruong = fields.Char('Hiệu trưởng')
 
-    loailopnho = fields.Integer('Loại lớp nhô')
+    tinh = fields.Many2one('solienlac.tinhthanhpho', string='Tỉnh/Thành phố')
+    huyen = fields.Many2one('solienlac.quanhuyen', string='Quận/Huyện')
+    xa = fields.Many2one('solienlac.phuongxa', string='Xã/Phường')
+
     hangtruong = fields.Selection([
         ('hang1', 'Hạng I'),
         ('hang2', 'Hạng II'),
         ('hang3', 'Hạng III'),
     ], string='Hạng trường')
-    tinh = fields.Many2one('solienlac.tinhthanhpho', string='Tỉnh/Thành phố')
-    huyen = fields.Many2one('solienlac.quanhuyen', string='Quận/Huyện')
-    xa = fields.Many2one('solienlac.phuongxa', string='Xã/Phường')
-
-    toado_x = fields.Integer('Tọa độ x')
-    toado_x = fields.Integer('Tọa độ x')
-    namthanhlap = fields.Date('Năm thành lập')
-    thanhthi = fields.Boolean('Thành thị')
-    chatluongcao = fields.Boolean('Chất lượng cao')
-    bdkk = fields.Boolean('BDKK')
-    biengioi = fields.Boolean('Biên giới')
     captruong = fields.Many2one('solienlac.captruong', string='Cấp trường ID')
-    nhomcaphoc = fields.Many2one('solienlac.caphoc', string='Cấp học ID')
+    caphoc = fields.Many2one('solienlac.caphoc', string='Cấp học ID')
     truongchuyenbiet = fields.Selection([
         ('1', 'Năng khiếu TDTT'),
         ('2', 'Khuyết tật'),
@@ -97,6 +91,17 @@ class truong(models.Model):
         ('7', 'Kỹ thuật'),
         ('8', 'Khác'),
     ],default='1', string='Trường chuyên biệt')
+
+    loailopnho = fields.Integer('Loại lớp nhô')
+    thanhthi = fields.Boolean('Thành thị')
+    chatluongcao = fields.Boolean('Chất lượng cao')
+    bdkk = fields.Boolean('BDKK')
+
+    toado_x = fields.Integer('Tọa độ x')
+    toado_y = fields.Integer('Tọa độ y')
+    biengioi = fields.Boolean('Biên giới')
+
+
     # giaovien = fields.One2many(string="Giáo viên của trường", comodel_name="solienlac.giaovien", inverse_name="truong",domain="[('truong.matruong', '=', matruong)]",})
     # hocsinh = fields.One2many(string="Học sinh của trường", comodel_name="solienlac.hocsinh", inverse_name="truong",domain="[('truong.matruong', '=', matruong)]",})
     # khoi = fields.One2many(string="Khối", comodel_name="solienlac.khoi", inverse_name="truong")
@@ -672,21 +677,6 @@ class lop(models.Model):
                 ('9', 'Không học'),
         ],
     )
-
-    chuongtrinhtangcuong = fields.Selection(
-        string="Chương trình tăng cường",
-        selection=[
-                ('1', 'Tin Học'),
-                ('2', 'Tiếng Anh'),
-                ('3', 'Tiếng Pháp'),
-                ('4', 'Tiếng Nhật/Trung'),
-                ('5', '2 Tiếng Nhật'),
-                ('6', '2 Tiếng Đức'),
-                ('7', '2 Tiếng Pháp'),
-                ('8', 'Không học'),
-        ],
-    )
-
     banhoc = fields.Many2one('solienlac.banhoc', string='Phân ban')
 
 class banhoc(models.Model):

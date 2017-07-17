@@ -588,33 +588,105 @@
       </field>
     </record>
 
+    <!-- Cấp học-->
+    <record id="caphoc_view_form" model="ir.ui.view">
+      <field name="name">solienlac.caphoc.form</field>
+      <field name="model">solienlac.caphoc</field>
+      <field name="arch" type="xml">
+        <form string="Cấp học">
+          <sheet>
+            <group colspan='4' col='4'>
+              <group colspan='2' col='2'>
+                <field name="macaphoc"/>
+                <field name="tencaphoc"/>
+              </group>
+              <group colspan='2' col='2'>
+                <field name="ghichu"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!--Cấp trường-->
+    <record id="captruong_view_form" model="ir.ui.view">
+      <field name="name">solienlac.captruong.form</field>
+      <field name="model">solienlac.captruong</field>
+      <field name="arch" type="xml">
+        <form string="Cấp trường">
+          <sheet>
+            <group colspan='4' col='4'>
+              <group colspan='2' col='2'>
+                <field name="macaptruong"/>
+                <field name="tencaptruong"/>
+              </group>
+              <group colspan='2' col='2'>
+                <field name="ghichu"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
     <!--trường-->
-    <!-- <record id="truong_view_form" model="ir.ui.view">
+    <record id="truong_view_form" model="ir.ui.view">
       <field name="name">solienlac.truong.form</field>
       <field name="model">solienlac.truong</field>
       <field name="arch" type="xml">
         <form string="Trường">
           <sheet>
-            <group colspan='4' col='4'>
-              <group colspan='2' col='2'>
+            <group colspan='6' col='6' string='Thông tin nhà trường'>
+              <group colspan='4' col='4'>
                 <field name="matruong"/>
                 <field name="tentruong"/>
+              </group>
+              <group colspan='4' col='4'>
                 <field name="hieutruong"/>
+                <field name="namthanhlap"/>
+              </group>
+            </group>
+            <group colspan='6' col='6' string='Liên hệ'>
+              <group colspan='2' col='2'>
+                <field name="email"/>
+                <field name="sodienthoai"/>
+              </group>
+              <group colspan='2' col='2'>
+                <field name="fax"/>
+                <field name="website"/>
               </group>
               <group colspan='2' col='2'>
                 <field name="diachi"/>
-                <field name="sodienthoai"/>
-                <field name="email"/>
-                <field name="website"/>
+                <field name="tinh"/>
+                <field name="huyen"/>
+                <field name="xa"/>
+              </group>
+            </group>
+            <group colspan='6' col='6' string='Thông tin bổ sung'>
+              <group colspan='2' col='2'>
+                <field name="captruong"/>
+                <field name="caphoc"/>
+                <field name="hangtruong"/>
+                <field name="truongchuyenbiet"/>
+                <field name="loaihinhtruong"/>
+              </group>
+              <group colspan='2' col='2'>
+                <field name="loailopnho"/>
+                <field name="thanhthi"/>
+                <field name="chatluongcao"/>
+                <field name="bdkk"/>
+              </group>
+              <group colspan='2' col='2'>
+                <field name="toado_x"/>
+                <field name="toado_y"/>
+                <field name="biengioi"/>
               </group>
             </group>
           </sheet>
-            <field name="khoi" options="{'no_create': True}"/>
-            <field name="giaovien" options="{'no_create': True}"/>
-            <field name="hocsinh" options="{'no_create': True}"/>
         </form>
       </field>
-    </record> -->
+    </record>
 
   </data>
 </odoo>

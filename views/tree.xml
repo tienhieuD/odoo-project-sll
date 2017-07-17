@@ -425,5 +425,64 @@
        </tree>
      </field>
    </record>
+
+   <!--caphoc-->
+   <record id="caphoc_view_tree" model="ir.ui.view">
+     <field name="name">solienlac.caphoc.tree</field>
+     <field name="model">solienlac.caphoc</field>
+     <field name="arch" type="xml">
+       <tree string="Cấp học">
+         <field name="macaphoc"/>
+         <field name="tencaphoc"/>
+         <field name="ghichu"/>
+       </tree>
+     </field>
+   </record>
+
+   <!--cấp trường-->
+   <record id="captruong_view_tree" model="ir.ui.view">
+     <field name="name">solienlac.captruong.tree</field>
+     <field name="model">solienlac.captruong</field>
+     <field name="arch" type="xml">
+       <tree string="Cấp trường">
+         <field name="macaptruong"/>
+         <field name="tencaptruong"/>
+         <field name="ghichu"/>
+       </tree>
+     </field>
+   </record>
+
+   <!--Trường -->
+   <record id="truong_view_tree" model="ir.ui.view">
+     <field name="name">solienlac.truong.tree</field>
+     <field name="model">solienlac.truong</field>
+     <field name="arch" type="xml">
+       <tree string="Trường">
+         <field name="matruong"/>
+         <field name="tentruong"/>
+         <field name="hieutruong"/>
+         <field name="namthanhlap"/>
+         <field name="diachi"/>
+         <field name="fax"/>
+         <field name="email"/>
+         <field name="sodienthoai"/>
+         <field name="website"/>
+
+         <field name="captruong"/>
+         <field name="caphoc"/>
+         <field name="hangtruong"/>
+         <field name="truongchuyenbiet"/>
+         <field name="loaihinhtruong"/>
+
+         <field name="chatluongcao"/>
+         <field name="thanhthi"/>
+         <!-- <field name="loailopnho"/>
+         <field name="bdkk"/>
+         <field name="toado_x"/>
+         <field name="toado_y"/>
+         <field name="biengioi"/> -->
+       </tree>
+     </field>
+   </record>
   </data>
 </odoo>
