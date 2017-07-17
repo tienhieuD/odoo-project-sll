@@ -503,6 +503,47 @@
       </field>
     </record>
 
+    <!--Số hiệu giáo viên giảng dạy và học sinnh khuyết tật-->
+    <record id="gvdd_hskt_action_form" model="ir.actions.act_window">
+      <field name="name">Số hiệu giáo viên giảng dạy và học sinnh khuyết tật</field>
+      <field name="res_model">solienlac.gvdd_hskt</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          <!-- Add Text Here -->
+        </p>
+        <p>
+          <!-- More details about what a user can do -->
+        </p>
+      </field>
+    </record>
+
+    <!-- Xếp loại hạnh kiểm-->
+    <record id="xeploaihanhkiem_action_form" model="ir.actions.act_window">
+      <field name="name">Xếp loại hạnh kiểm</field>
+      <field name="res_model">solienlac.xeploaihanhkiem</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+        </p>
+        <p>
+        </p>
+      </field>
+    </record>
+
+    <!-- Xếp loại học lực-->
+    <record id="xeploaihocluc_action_form" model="ir.actions.act_window">
+      <field name="name">Xếp loại học lực</field>
+      <field name="res_model">solienlac.xeploaihocluc</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+        </p>
+        <p>
+        </p>
+      </field>
+    </record>
+
     <!--Menu-->
     <menuitem id="menu_danhmuchanhchinh" name="Danh mục hành chính" sequence=""/>
       <menuitem id="menu_phuongxa" name="Phường/xã" parent="menu_danhmuchanhchinh" action="phuongxa_action_form" sequence=""/>
@@ -535,9 +576,10 @@
           <menuitem id="menu_xlhkhsdt" name="Học sinh dân tộc" parent="menu_xeploaihanhkiem" action="xlhkhsdt_action_form" sequence=""/>
           <menuitem id="menu_xlhkhshnkt" name="Học sinh hòa nhập, khuyết tật" parent="menu_xeploaihanhkiem" action="xlhkhshnkt_action_form" sequence=""/>
         <menuitem id="menu_tinhhinhhocsinhthoihoc" name="Tình hình học sinh thôi học" parent="menu_baocao" action="tinhhinhhocsinhthoihoc_action_form" sequence=""/>
-          <!-- <menuitem id="menu_gvdd_hskt" name="Số hiệu giáo viên giảng dạy và học sinnh khuyết tật" parent="menu_baocao" action="gvdd_hskt_action_form" sequence=""/> -->
-          <menuitem id="menu_xlhlhshnkt" name="(1f) XL HL HS hòa nhập khuyết tật" parent="menu_baocao" action="xlhlhshnkt_action_form" sequence=""/>
-          <menuitem id="menu_xlhlhsdt" name="(1g) XL HL HS dân tộc" parent="menu_baocao" action="xlhlhsdt_action_form" sequence=""/>
-
+        <menuitem id="menu_gvdd_hskt" name="Số hiệu giáo viên giảng dạy và học sinnh khuyết tật" parent="menu_baocao" action="gvdd_hskt_action_form" sequence=""/>
+        <menuitem id="menu_xeploaihanhkiem_hocsinh" name="Xếp loại hạnh kiểm" parent="menu_baocao" action="xeploaihanhkiem_action_form" sequence=""/>
+        <menuitem id="menu_xeploaihocluc" name="Xếp loại học lực" parent="menu_baocao" action="xeploaihocluc_action_form" sequence=""/>
+        <menuitem id="menu_xlhlhshnkt" name="(1f) XL HL HS hòa nhập khuyết tật" parent="menu_baocao" action="xlhlhshnkt_action_form" sequence=""/>
+        <menuitem id="menu_xlhlhsdt" name="(1g) XL HL HS dân tộc" parent="menu_baocao" action="xlhlhsdt_action_form" sequence=""/>
   </data>
 </odoo>

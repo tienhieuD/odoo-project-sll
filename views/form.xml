@@ -333,6 +333,7 @@
               </group>
               <group colspan="2" col="2" string='Niên Khóa'>
                 <field name="khoi"/>
+                <field name="banhoc"/>
                 <field name="nienkhoa"/>
               </group>
             </group>
@@ -508,6 +509,7 @@
                 <field name="lydothoihoc"/> --> -->
                 <group colspan="2" col="2">
                   <field name="nguongochocsinh"/>
+                  <field name="khuyettat"/>
                 </group>
                 <group colspan="2" col="2">
                   <field name="tinhtranghocsinh"/>
@@ -551,8 +553,6 @@
               <field name="kythi"/>
               <field name="namhoc"/>
               <field name="kyhoc"/>
-              <field name="diemtongket"/>
-              <field name="xeploai"/>
               <field name="giaovien"/>
               <field name="ykiengiaovien"/>
               <field name="ghichu"/>
@@ -588,38 +588,33 @@
       </field>
     </record>
 
-    <record id="tinhhinhhocsinhthoihoc_view_form" model="ir.ui.view">
-      <field name="name">tinhhinhhocsinhthoihoc.form</field>
-      <field name="model">solienlac.tinhhinhhocsinhthoihoc</field>
+    <!--trường-->
+    <!-- <record id="truong_view_form" model="ir.ui.view">
+      <field name="name">solienlac.truong.form</field>
+      <field name="model">solienlac.truong</field>
       <field name="arch" type="xml">
-        <form string="Tình hình học sinh thôi học">
+        <form string="Trường">
           <sheet>
-              <group colspan='6' col='6'>
-                <group colspan='2' col='2'>
-                  <field name="namhoc"/>
-                  <!-- <field name="hocky"/> -->
-                  <field name="khoi"/>
-                </group>
-                <group colspan='2' col='2'>
-                  <field name="tongsohocsinhdaunam"/>
-                  <field name="tongsohocsinhcuoinam"/>
-                  <field name="tongsohocsinhthoihoc"/>
-                  <field name="sohocsinhchuyenden"/>
-                  <field name="sohocsinhchuyendi"/>
-                </group>
-                <group colspan='2' col='2'>
-                  <field name="kyluatbuocthoihoc1nam"/>
-                  <field name="dohoclucyeukem"/>
-                  <field name="dohoancanhkhokhan"/>
-                  <field name="doxanha"/>
-                  <field name="lydokhac"/>
-                </group>
+            <group colspan='4' col='4'>
+              <group colspan='2' col='2'>
+                <field name="matruong"/>
+                <field name="tentruong"/>
+                <field name="hieutruong"/>
               </group>
+              <group colspan='2' col='2'>
+                <field name="diachi"/>
+                <field name="sodienthoai"/>
+                <field name="email"/>
+                <field name="website"/>
+              </group>
+            </group>
           </sheet>
+            <field name="khoi" options="{'no_create': True}"/>
+            <field name="giaovien" options="{'no_create': True}"/>
+            <field name="hocsinh" options="{'no_create': True}"/>
         </form>
       </field>
-    </record>
-
+    </record> -->
 
   </data>
 </odoo>
