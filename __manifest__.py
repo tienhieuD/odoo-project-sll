@@ -28,6 +28,6 @@
         'views/giaoanchinhsua.xml',
         'views/form.xml',
         'views/tree.xml',
-        # 'views/treeH.xml',
+        'views/baocao.xml',
     ],
 }

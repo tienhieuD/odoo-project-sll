@@ -2,7 +2,104 @@
 import datetime
 import time
 from odoo import models, fields, api
+class caphoc(models.Model):
+    _name = 'solienlac.caphoc'
+    _rec_name = 'tencaphoc'
 
+    macaphoc = fields.Integer('Mã cấp học', required='True')
+    tencaphoc = fields.Selection([
+        ('1', 'Nhà trẻ'),
+        ('2', 'Mẫu giáo'),
+        ('3', 'Tiểu học'),
+        ('4', 'Trung học cơ sở'),
+        ('5', 'Trung học phổ thông'),
+        ('6', 'Trung cấp chuyên nghiệp'),
+        ('7', 'Cao đẳng'),
+        ('8', 'Đại học'),
+        ('9', 'Sau đại học'),
+    ],default='1', string='Tên cấp học')
+    ghichu = fields.Char('Ghi chú')
+
+class captruong(models.Model):
+    _name = 'solienlac.captruong'
+    _rec_name = 'tencaptruong'
+
+    macaptruong = fields.Integer('Mã cấp trường', required='True')
+    tencaptruong = fields.Selection([
+        ('1', 'Nhà trẻ'),
+        ('2', 'Trường Mẫu giáo'),
+        ('3', 'Trường Mầm non'),
+        ('4', 'Trường Tiểu học'),
+        ('5', 'Trường Trung học cơ sở'),
+        ('6', 'Trường Trung học phổ thông'),
+        ('7', 'Trường đa cấp (Tiểu học và THCS)'),
+        ('8', 'Trường đa cấp (THCS và THPT)'),
+        ('9', 'Trường đa cấp (Tiểu học,THCS và THPT)'),
+        ('10', 'Trung tâm Giáo dục thường xuyên'),
+        ('11', 'Trung tâm Kỹ thuật tổng hợp - Hướng nghiệp'),
+        ('12', 'Trung cấp chuyên nghiệp'),
+        ('13', 'Cao đẳng'),
+        ('14', 'Đại học'),
+        ('15', 'Nhóm trẻ độc lập'),
+        ('16', 'Lớp mẫu giáo độc lập'),
+        ('17', 'Lớp mầm non độc lập'),
+    ],default='1', string='Tên cấp trường')
+    ghichu = fields.Char('Ghi chú')
+
+class truong(models.Model):
+    _name = 'solienlac.truong'
+    _rec_name = 'tentruong'
+
+    matruong = fields.Integer('Mã trường', required='True')
+    tentruong = fields.Char('Tên trường')
+    diachi = fields.Char('Địa chỉ')
+    fax = fields.Char('Fax')
+    email = fields.Char('Email')
+    sodienthoai = fields.Char('Số điện thoại')
+    website = fields.Char('Website')
+    hieutruong = fields.Char('Hiệu trưởng')
+
+    loailopnho = fields.Integer('Loại lớp nhô')
+    hangtruong = fields.Selection([
+        ('hang1', 'Hạng I'),
+        ('hang2', 'Hạng II'),
+        ('hang3', 'Hạng III'),
+    ], string='Hạng trường')
+    tinh = fields.Many2one('solienlac.tinhthanhpho', string='Tỉnh/Thành phố')
+    huyen = fields.Many2one('solienlac.quanhuyen', string='Quận/Huyện')
+    xa = fields.Many2one('solienlac.phuongxa', string='Xã/Phường')
+
+    toado_x = fields.Integer('Tọa độ x')
+    toado_x = fields.Integer('Tọa độ x')
+    namthanhlap = fields.Date('Năm thành lập')
+    thanhthi = fields.Boolean('Thành thị')
+    chatluongcao = fields.Boolean('Chất lượng cao')
+    bdkk = fields.Boolean('BDKK')
+    biengioi = fields.Boolean('Biên giới')
+    captruong = fields.Many2one('solienlac.captruong', string='Cấp trường ID')
+    nhomcaphoc = fields.Many2one('solienlac.caphoc', string='Cấp học ID')
+    truongchuyenbiet = fields.Selection([
+        ('1', 'Năng khiếu TDTT'),
+        ('2', 'Khuyết tật'),
+        ('3', 'Năng khiếu nghệ thuật'),
+        ('4', 'Chuyên'),
+        ('5', 'Dân tộc nội trú'),
+        ('6', 'THPT Kỹ thuật'),
+        ('7', 'Dự bị đại học'),
+    ],default='4', string='Trường chuyên biệt')
+    loaihinhtruong = fields.Selection([
+        ('1', 'Công lập'),
+        ('2', 'Bán công'),
+        ('3', 'Dân lập'),
+        ('4', 'Tư thục'),
+        ('5', 'Chuyên'),
+        ('6', 'Chuyên ban'),
+        ('7', 'Kỹ thuật'),
+        ('8', 'Khác'),
+    ],default='1', string='Trường chuyên biệt')
+    # giaovien = fields.One2many(string="Giáo viên của trường", comodel_name="solienlac.giaovien", inverse_name="truong",domain="[('truong.matruong', '=', matruong)]",})
+    # hocsinh = fields.One2many(string="Học sinh của trường", comodel_name="solienlac.hocsinh", inverse_name="truong",domain="[('truong.matruong', '=', matruong)]",})
+    # khoi = fields.One2many(string="Khối", comodel_name="solienlac.khoi", inverse_name="truong")
 class giaovien(models.Model):
     _name = 'solienlac.giaovien'
     _rec_name = 'hoten' # optional
@@ -33,8 +130,8 @@ class giaovien(models.Model):
     phongban = fields.Many2one('solienlac.phongban', string = "Phòng ban")
     bomon = fields.Many2many('solienlac.bomon', string = "Bộ môn")
     monhoc = fields.One2many('solienlac.monhoc_has_giaovien', 'giaovien', string = "Lớp")
-    lop = fields.One2many(string="Lớp", comodel_name="solienlac.lop_has_giaovien", inverse_name="giaovien")
-
+    lops = fields.One2many(string="Lớp", comodel_name="solienlac.monhoc_has_giaovien", inverse_name="giaovien")
+    truong = fields.Many2one('solienlac.truong', string = "Trường")
 class monhoc_has_giaovien(models.Model):
     _name = 'solienlac.monhoc_has_giaovien'
     _rec_name = 'lop'
@@ -50,7 +147,9 @@ class monhoc_has_giaovien(models.Model):
     lop = fields.Many2one('solienlac.lop', string='Lớp')
     monhoc = fields.Many2one('solienlac.monhoc', string='Môn học')
     giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên')
-
+    lop = fields.Many2one('solienlac.lop', string='Lớp')
+    ngaybatdau = fields.Date('Ngày bắt đầu:')
+    ngayketthuc = fields.Date('Ngày kết thúc: ')
 class lop_has_giaovien(models.Model):
     _name = 'solienlac.lop_has_giaovien'
     _rec_name = 'giaovien'
@@ -116,7 +215,7 @@ class tinhthanhpho(models.Model):
 class dantoc(models.Model):
     _name = 'solienlac.dantoc'
     _rec_name = 'tendantoc' # optional
-    madantoc = fields.Char("Mã dân tộc")
+    madantoc = fields.Integer("Mã dân tộc")
     tendantoc = fields.Char("Tên dân tộc")
     ghichu = fields.Char("Ghi chú")
 
@@ -215,6 +314,7 @@ class khoi(models.Model):
     makhoi = fields.Integer(string='Mã Khối', )
     tenkhoi = fields.Char(string='Tên Khối')
     ghichu = fields.Char('Ghi Chú')
+    truong = fields.Many2one('solienlac.truong', string = "Trường")
 
 class hanhkiem(models.Model):
     _name = 'solienlac.hanhkiem'
@@ -235,7 +335,7 @@ class hanhkiem(models.Model):
                 ('kha', 'Khá'),
                 ('tb', 'Trung bình'),
                 ('yeu', 'Yếu'),
-                ('kem', 'Kém'),
+                # ('kem', 'Kém'),
         ],
     )
     nhanxetcuagiaovien = fields.Char('Nhận Xét Của Giáo Viên')
@@ -320,6 +420,7 @@ class hocsinh(models.Model):
     noisinh = fields.Char('Nơi sinh')
     quequan = fields.Char('Quê quán')
     lop = fields.Many2one('solienlac.lop', string='Lớp')
+    truong = fields.Many2one('solienlac.truong', string = "Trường")
     tuyenhoc = fields.Many2one('solienlac.tuyenhoc', string='Tuyến học')
     phuongxa = fields.Many2one('solienlac.phuongxa', string='Phường Xã')
     dantoc = fields.Many2one('solienlac.dantoc', string='Dân tộc')
@@ -336,24 +437,10 @@ class hocsinh(models.Model):
         string="Tình trạng học sinh",
         selection=[
                 ('value1', 'Học bình thường'),
-                ('value2', 'Bỏ học'),
-                ('value3', 'Ốm dài hạn'),
-                ('value4', 'Ốm dài hạn'),
-                ('value5', 'Bị buộc thôi học'),
-                ('value6', 'Du học'),
-                ('value7', 'Chết'),
-                ('value8', 'Dự thính'),
+                ('value2', 'Đã nghỉ học'),
         ],default='value1'
     )
-    nguongochocsinh = fields.Selection(
-        string="Nguồn gốc học sinh",
-        selection=[
-                ('value1', 'Tuyển sinh'),
-                ('value2', 'Được lên lớp'),
-                ('value3', 'Ở lại lớp'),
-                ('value4', 'Chuyển đến'),
-        ],default='value1',
-    )
+    nguongochocsinh = fields.Many2one('solienlac.nguongochocsinh', string='Nguồn gốc học sinh')
     nangkhieu = fields.Selection(
         string="Năng khiếu",
         selection=[
@@ -378,17 +465,6 @@ class hocsinh(models.Model):
         ],default='value1',
     )
     monhocnghe = fields.Many2one(string="Môn học nghề",comodel_name="solienlac.monhocnghe")
-    lydothoihoc = fields.Selection(
-        string="Lý do thôi học",
-        selection=[
-                ('value1', 'Không'),
-                ('value2', 'Chuyển đi'),
-                ('value3', 'Nghỉ học chữa bệnh dài hạn'),
-                ('value4', 'Kỷ luật buộc thôi học 1 năm'),
-                ('value5', 'Tự bỏ học'),
-        ],default='value1'
-    )
-
     loaihocsinhnhaptruong = fields.Selection(
         string="Loại học sinh nhập trường",
         selection=[
@@ -417,7 +493,7 @@ class hocsinh(models.Model):
     )
     tochucdoanthe = fields.Many2one('solienlac.tochucdoanthe', string='Tổ chức')
     thoihoc = fields.Selection(
-        string="Field name",
+        string="Thôi học",
         selection=[
                 ('value1', 'Không'),
                 ('value2', 'Khiếm thính'),
@@ -429,6 +505,59 @@ class hocsinh(models.Model):
                 ('value8', 'Không xác định'),
         ],
     )
+    lydothoihoc = fields.Many2one(string="Lý do thôi học",comodel_name="solienlac.lydothoihoc")
+class lydothoihoc(models.Model):
+    _name = 'solienlac.lydothoihoc'
+    _rec_name = 'lydothoihoc'
+    lydothoihoc = fields.Selection(
+        string="Lý do thôi học",
+        selection=[
+                ('value1', 'Không'),
+                ('value2', 'Chuyển đi'),
+                ('value3', 'Kỷ luật buộc thôi học 1 năm'),
+                ('value4', 'Học lực yếu kém'),
+                ('value5', 'Xa nhà'),
+                ('value6', 'Gia đình hoàn cảnh khó khăn'),
+                ('value7', 'Lý do khác: tai nạn, ốm đau'),
+        ],default='value1'
+    )
+    thoidiemthoihoc = fields.Date('Thời điểm thôi học')
+    hocky = fields.Selection(
+        string="Học kỳ",
+        selection=[
+                ('i', 'Học kỳ I'),
+                ('ii', 'Học kỳ II'),
+                ('iii', 'Cả năm'),
+        ],
+    )
+    namhoc = fields.Char('Năm học')
+    ghichu = fields.Char('Ghi chú')
+    hocsinh = fields.One2many('solienlac.hocsinh', 'lydothoihoc', string='Học sinh')
+
+class nguongochocsinh(models.Model):
+    _name = 'solienlac.nguongochocsinh'
+    _rec_name = 'nguongochocsinh'
+    nguongochocsinh = fields.Selection(
+        string="Nguồn gốc học sinh",
+        selection=[
+                ('value1', 'Tuyển sinh'),
+                ('value2', 'Được lên lớp'),
+                ('value3', 'Ở lại lớp'),
+                ('value4', 'Chuyển đến'),
+        ],default='value1',
+    )
+    hocky = fields.Selection(
+        string="Học kỳ",
+        selection=[
+                ('i', 'Học kỳ I'),
+                ('ii', 'Học kỳ II'),
+                ('iii', 'Cả năm'),
+        ],
+    )
+    namhoc = fields.Char('Năm học')
+    thoidiemnhaptruong = fields.Date('Thời điểm nhập trường')
+    hocsinh = fields.One2many('solienlac.hocsinh', 'nguongochocsinh', string='Học sinh')
+    ghichu = fields.Char('Ghi chú')
 class monhocnghe(models.Model):
     _name = 'solienlac.monhocnghe'
     _rec_name = 'tenmonhocnghe'
@@ -492,9 +621,11 @@ class lop(models.Model):
     nienkhoa = fields.Char('Niên khóa')
     ghichu = fields.Char('Ghi chú')
     khoi = fields.Many2one('solienlac.khoi', string='Khối')
+    # truong = fields.Many2one('solienlac.truong', string = "Trường")
     hocsinh = fields.One2many('solienlac.hocsinh', 'lop', string='Học sinh')
     monhoc = fields.One2many('solienlac.monhoc_has_giaovien', 'lop', string='Môn học')
     giaovien = fields.One2many('solienlac.lop_has_giaovien', 'lop', string='Giáo viên')
+
     siso = fields.Integer(string='Sĩ số')
     lopdacbiet = fields.Selection(
         string="Lớp đặc biệt",
@@ -542,12 +673,36 @@ class lop(models.Model):
         ],
     )
 
+    chuongtrinhtangcuong = fields.Selection(
+        string="Chương trình tăng cường",
+        selection=[
+                ('1', 'Tin Học'),
+                ('2', 'Tiếng Anh'),
+                ('3', 'Tiếng Pháp'),
+                ('4', 'Tiếng Nhật/Trung'),
+                ('5', '2 Tiếng Nhật'),
+                ('6', '2 Tiếng Đức'),
+                ('7', '2 Tiếng Pháp'),
+                ('8', 'Không học'),
+        ],
+    )
+
+    banhoc = fields.Many2one('solienlac.banhoc', string='Phân ban')
 
 class banhoc(models.Model):
     _name = 'solienlac.banhoc'
     _rec_name = 'tenban' # optional
     maban = fields.Char('Mã ban', required='True')
-    tenban = fields.Char('Tên ban')
+    tenban = fields.Selection([
+        ('tunhien', 'Ban tự nhiên'),
+        ('xahoi', 'Ban xã hội'),
+        ('coban_kpb', 'Ban cơ bản(Không phân ban)'),
+        ('coban_a', 'Ban cơ bản(A)'),
+        ('coban_b', 'Ban cơ bản(B)'),
+        ('coban_c', 'Ban cơ bản(C)'),
+        ('coban_d', 'Ban cơ bản(D)'),
+    ], default = 'coban_kpb' ,string='Phân ban')
+    lop = fields.One2many('solienlac.lop', 'banhoc', string='Lớp')
     ghichu = fields.Char('Ghi chú')
 
 class monhoc(models.Model):
@@ -677,7 +832,13 @@ class bangdiem(models.Model):
     )
     bangdiem_thanhphan = fields.One2many("solienlac.bangdiem_thanhphan", "bangdiem", string="Bảng điểm thành phần")
     diemtongket = fields.Float('Điểm tổng kết')
-    xeploai = fields.Char(string="Xếp loại học lực")
+    xeploai = fields.Selection([
+        ('tot', 'Tốt'),
+        ('kha', 'Khá'),
+        ('tb', 'Trung bình'),
+        ('yeu', 'Yếu'),
+        # ('kem', 'Kém'),
+    ],string='Xếp loại học lực')
     giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên')
     ykiengiaovien = fields.Char('Ý kiến giáo viên')
     hocsinh = fields.Many2one('solienlac.hocsinh', string='Học sinh')
