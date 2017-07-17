@@ -33,7 +33,7 @@ class giaovien(models.Model):
     phongban = fields.Many2one('solienlac.phongban', string = "Phòng ban")
     bomon = fields.Many2many('solienlac.bomon', string = "Bộ môn")
     monhoc = fields.One2many('solienlac.monhoc_has_giaovien', 'giaovien', string = "Lớp")
-    lop = fields.One2many(string="Lớp", comodel_name="solienlac.lop_has_giaovien", inverse_name="giaovien")
+    lops = fields.One2many(string="Lớp", comodel_name="solienlac.lop_has_giaovien", inverse_name="giaovien")
 
 class monhoc_has_giaovien(models.Model):
     _name = 'solienlac.monhoc_has_giaovien'
@@ -50,6 +50,8 @@ class monhoc_has_giaovien(models.Model):
     lop = fields.Many2one('solienlac.lop', string='Lớp')
     monhoc = fields.Many2one('solienlac.monhoc', string='Môn học')
     giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên')
+    ngaybatdau = fields.Date('Ngày bắt đầu:')
+    ngayketthuc = fields.Date('Ngày kết thúc: ')
 
 class lop_has_giaovien(models.Model):
     _name = 'solienlac.lop_has_giaovien'
@@ -332,6 +334,7 @@ class hocsinh(models.Model):
     ketquahoctap = fields.One2many('solienlac.ketquahoctap', 'hocsinh', string="Kết quả học tập")
     bangdiem = fields.One2many('solienlac.bangdiem', 'hocsinh', string="Bảng điểm")
     nenep = fields.One2many('solienlac.nenep', 'hocsinh', string="Nề nếp")
+    hocchuongtrinhtangcuong = fields.Boolean('Học chương trình tăng cường') #new fields
     tinhtranghocsinh = fields.Selection(
         string="Tình trạng học sinh",
         selection=[
@@ -569,7 +572,19 @@ class lop(models.Model):
                 ('9', 'Không học'),
         ],
     )
-
+    chuongtrinhtangcuong = fields.Selection(
+        string="Chương trình tăng cường",
+        selection=[
+                ('1', 'Tin Học'),
+                ('2', 'Tiếng Anh'),
+                ('3', 'Tiếng Pháp'),
+                ('4', 'Tiếng Nhật/Trung'),
+                ('5', '2 Tiếng Nhật'),
+                ('6', '2 Tiếng Đức'),
+                ('7', '2 Tiếng Pháp'),
+                ('8', 'Không học'),
+        ],
+    )
 
 class banhoc(models.Model):
     _name = 'solienlac.banhoc'
