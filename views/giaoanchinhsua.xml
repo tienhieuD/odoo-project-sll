@@ -433,6 +433,20 @@
         </p>
       </field>
     </record>
+    <!--nhapdiemchitiet-->
+    <record id="nhapdiemchitiet_action_form" model="ir.actions.act_window">
+      <field name="name">Nhập điểm chi tiết</field>
+      <field name="res_model">solienlac.nhapdiemchitiet</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          <!-- Add Text Here -->
+        </p>
+        <p>
+          <!-- More details about what a user can do -->
+        </p>
+      </field>
+    </record>
 
     <!--baocao-->
     <!--Xếp loại hạnh kiểm học sinh hòa nhập, khuyết tật-->
@@ -620,6 +634,7 @@
       <menuitem id="menu_quanlyhocsinh" name="Quản lý học sinh" parent="menu_truongquanly" sequence=""/>
         <menuitem id="menu_hocsinh" name="Học sinh" parent="menu_quanlyhocsinh" action="hocsinh_action_form" sequence=""/>
         <menuitem id="menu_nhapdiemhocsinh" name="Nhập điểm học sinh" parent="menu_quanlyhocsinh" action="nhapdiemhocsinh_action_form" sequence=""/>
+        <menuitem id="menu_nhapdiemchitiet" name="Nhập điểm CT" parent="menu_quanlyhocsinh" action="nhapdiemchitiet_action_form" sequence=""/>
         <menuitem id="menu_bangdiemdanh" name="Bảng điểm danh" parent="menu_quanlyhocsinh" action="bangdiemdanh_action_form" sequence=""/>
         <menuitem id="menu_chucvu" name="Chức vụ học sinh" parent="menu_quanlyhocsinh" action="chucvu_action_form" sequence=""/>
         <menuitem id="menu_khenthuong_hocsinh" name="Khen thưởng học sinh" parent="menu_quanlyhocsinh" action="khenthuonghocsinh_action_form" sequence=""/>
