@@ -402,7 +402,7 @@
      <field name="name">solienlac.nhapdiemchitiet.tree</field>
      <field name="model">solienlac.nhapdiemchitiet</field>
      <field name="arch" type="xml">
-       <tree string="Nhập điểm chi tiết" create="false">
+       <tree string="Nhập điểm chi tiết" editable='bottom' create="false">
          <field name="hocsinh" readonly="1"/>
          <field name="diemmieng1"/>
          <field name="diemmieng2"/>

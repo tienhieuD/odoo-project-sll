@@ -876,6 +876,8 @@ class nhapdiemhocsinh(models.Model):
         if now.month <= 9:
             year -= 1
         return str(year) + "-" + str(year+1)
+
+    napdulieu = fields.Boolean('Nạp lại dữ liệu')
     giaovien = fields.Many2one(
         string="Giáo viên",
         comodel_name="solienlac.giaovien",
@@ -901,34 +903,87 @@ class nhapdiemhocsinh(models.Model):
         string="Môn học",
         comodel_name="solienlac.monhoc",
     )
-    nhapdiemchitiet = fields.Many2many('solienlac.nhapdiemchitiet', string='Chi tiết')
+    nhapdiemchitiet = fields.Many2many(
+        comodel_name='solienlac.nhapdiemchitiet',
+        string='Chi tiết',
+        store=True,
+    )
+
     @api.multi
-    @api.onchange('lop','namhoc','hocky','monhoc')
+    @api.onchange('lop','namhoc','hocky','monhoc','napdulieu')
     def _compute_model(self):
-        '''Ahjhj d0 ng0k
-        self.nhapdiemchitiet = self.env['solienlac.nhapdiemchitiet'].search(
-            [('hocsinh.lop.id', '=', self.lop.id),
-            ]
-        )'''
+        '''My defining function'''
+        # Get hocsinh object
+        def get_hs(self, id):
+            return self.env['solienlac.hocsinh'].search([('id','=',id)])[0]
+
+        '''Sumany'''
+        # Load data
+        self.napdulieu = False
+
+        # Get (hocsinh object list)
         lst_hs = self.env['solienlac.hocsinh'].search([
             ('tinhtranghocsinh', '=', 'value1'), #value1 = học bình thường
             ('lop.id', '=', self.lop.id),
         ])
+
+        # Get (nhapdiemchitiet object list)
         lst_hs_nhapdiem = self.env['solienlac.nhapdiemchitiet'].search([
             ('hocsinh.lop.id','=',self.lop.id),
-            ('tinhtranghocsinh', '=', 'value1'), #value1 = học bình thường
-            ('hocky','=',self.hocky), #notice
+            ('hocsinh.tinhtranghocsinh', '=', 'value1'), # value1 = học bình thường
+            ('hocky','=',self.hocky), # notice, how about a year
             ('namhoc','=',self.namhoc),
             ('monhoc.id','=',self.monhoc.id),
         ])
+
+        # Get (hocsinh object list) just hocsinh id
         lst_hs_id = map(lambda x: x.id, lst_hs)
+
+        # Get (nhapdiemchitiet object list) just hocsinh id
         lst_hs_nhapdiem_id = map(lambda x: x.hocsinh.id, lst_hs_nhapdiem)
+
+        # Get hocsinh id is not exsit in nhapdiemchitiet
         lst_hs_thieu = filter(lambda x: x not in lst_hs_nhapdiem_id, lst_hs_id)
+
         if len(lst_hs_thieu) == 0:
+            # In case the teacher wanna edit the score
+            # hocsinh(s) are created before (at the else case)
             self.nhapdiemchitiet = lst_hs_nhapdiem
         else:
-            #false
-            self.nhapdiemchitiet = lst_hs_nhapdiem
+            # Adding hocsinh at lst_hs_thieu into nhapdiemchitiet and show it
+            self.nhapdiemchitiet = [] # important
+            flag = True
+
+            # Create list for checking null value
+            lst_chk = [self.hocky, self.namhoc, self.monhoc, self.lop, self.giaovien] # notice: how about self.giaovien
+
+            # Check for all fields are inputed
+            for item in lst_chk:
+                if str(item) == '':
+                    flag = False
+
+            if flag:
+                # Create objects nhapdiemchitiet
+                for id in lst_hs_thieu:
+                    vals = {
+                        'hocsinh'     : id,
+                        'giaovien'    : self.giaovien.id,
+                        'hocky'       : self.hocky,
+                        'namhoc'      : self.namhoc,
+                        'monhoc'      : self.monhoc.id,
+                    }
+                    self.env['solienlac.nhapdiemchitiet'].sudo().create(vals)
+
+                # Reload lst_hs_nhapdiem
+                lst_hs_nhapdiem = self.env['solienlac.nhapdiemchitiet'].search([
+                    ('hocsinh.lop.id','=',self.lop.id),
+                    ('hocsinh.tinhtranghocsinh', '=', 'value1'), # value1 = học bình thường
+                    ('hocky','=',self.hocky), # notice, how about a year
+                    ('namhoc','=',self.namhoc),
+                    ('monhoc.id','=',self.monhoc.id),
+                ])
+                # Show objects nhapdiemchitiet has just created
+                self.nhapdiemchitiet = lst_hs_nhapdiem
 
 class nhapdiemchitiet(models.Model):
     _name = 'solienlac.nhapdiemchitiet'
