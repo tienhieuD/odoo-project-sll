@@ -1313,5 +1313,42 @@ class nhapdiemchitiet(models.Model):
     diem1tiet4 = fields.Char('[HS2]')
     diem1tiet5 = fields.Char('[HS2]')
     diemhocky = fields.Char('[HK]')
-    diemtongket = fields.Char('Tổng kểt')
+    diemtongket = fields.Char(string='Tổng kểt', compute='_compute_final')
     xephang = fields.Integer('#')
+    @api.depends('diemhocky')
+    def _compute_final(self):
+        def convert_to_float(n):
+            try:
+                n = str(n)
+                n = n.replace(',','.')
+                return float(n)
+            except:
+                return -1.0
+
+        for record in self:
+            lst_diem_mieng = [
+                record.diemmieng1, record.diemmieng2,
+                record.diemmieng3, record.diemmieng4, record.diemmieng5
+            ]
+            lst_diem_15 = [
+                record.diem15phut1, record.diem15phut2,
+                record.diem15phut3, record.diem15phut4, record.diem15phut5
+            ]
+            lst_diem_1t = [
+                record.diem1tiet1, record.diem1tiet2,
+                record.diem1tiet3, record.diem1tiet4, record.diem1tiet5
+            ]
+
+            lst_diem_mieng = [convert_to_float(x) for x in lst_diem_mieng]
+            lst_diem_mieng = filter(lambda x: x != -1.0, lst_diem_mieng)
+            lst_diem_15 = [convert_to_float(x) for x in lst_diem_15]
+            lst_diem_15 = filter(lambda x: x != -1.0, lst_diem_15)
+            lst_diem_1t = [convert_to_float(x) for x in lst_diem_1t]
+            lst_diem_1t = filter(lambda x: x != -1.0, lst_diem_1t)
+            diemhk = convert_to_float(record.diemhocky) if convert_to_float(record.diemhocky) != -1.0 else 0
+
+            he_so = len(lst_diem_mieng) + len(lst_diem_15) + 2*len(lst_diem_1t) + 3
+            tong  = sum(lst_diem_mieng) + sum(lst_diem_15) + 2*sum(lst_diem_1t) + 3*convert_to_float(record.diemhocky)
+            diemtk = float(tong)/float(he_so)
+
+            record.diemtongket = diemtk
