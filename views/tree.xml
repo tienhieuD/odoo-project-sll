@@ -138,8 +138,15 @@
       <field name="model">solienlac.phuongxa</field>
       <field name="arch" type="xml">
         <tree string="Phường/Xã Tree">
-          <field name="maphuongxa"/>
+          <field name="PhuongXaID"/>
           <field name="tenphuongxa"/>
+          <field name="QuanHuyenID"/>
+          <field name="TinhID"/>
+          <field name="VungDiaLyID"/>
+          <field name="KhoKhan"/>
+          <field name="BienGioi"/>
+          <field name="HspcKvuc"/>
+          <field name="ghichu"/>
         </tree>
       </field>
     </record>
@@ -153,6 +160,11 @@
         <tree string="Dân tộc Tree">
           <field name="maquanhuyen"/>
           <field name="tenquanhuyen"/>
+          <field name="tenquanhuyenVT"/>
+          <field name="vungdialy"/>
+          <field name="maquanhuyen"/>
+          <field name="matinhthanhpho"/>
+          <field name="ghichu"/>
         </tree>
       </field>
     </record>
@@ -166,6 +178,10 @@
         <tree string="Tỉnh/Thành phố">
           <field name="matinhthanhpho"/>
           <field name="tentinhthanhpho"/>
+          <field name="tentinhviettat"/>
+          <field name="vungdialy"/>
+          <field name="vungkinhte"/>
+          <field name="ghichu"/>
         </tree>
       </field>
     </record>
