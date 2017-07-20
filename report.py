@@ -1,5 +1,6 @@
 ﻿# -*- coding: utf-8 -*-
 from odoo import models, fields, api
+import datetime
 
 class xlhkhshnkt(models.Model):
     '''Xếp loại hạnh kiểm học sinh hòa nhập, khuyết tật'''
@@ -288,3 +289,52 @@ class xlhlhsdt(models.Model):
         self.y_pt = _y_pt
         self.k_sl = _k_sl
         self.k_pt = _k_pt
+
+class thhsth(models.Model):
+    '''Tình hình HS thôi học'''
+    _name = 'solienlac.baocao.thhsth'
+
+    @api.model
+    def _get_list_namhoc(self):
+        lst_namhoc=[]
+        for year in range(1990,2050):
+            item = str(year) + "-" + str(year+1)
+            lst_namhoc.append( (item, item) )
+        return lst_namhoc
+
+    @api.model
+    def _get_namhoc_now(self):
+        now = datetime.datetime.now()
+        year = now.year
+        if now.month <= 9:
+            year -= 1
+        return str(year) + "-" + str(year+1)
+
+    namhoc = fields.Selection(
+        string="Năm học",
+        selection= _get_list_namhoc,
+        default = _get_namhoc_now,
+    )
+    khoi = fields.Many2one(
+        string="Khối",
+        comodel_name="solienlac.khoi",
+    )
+    hocky = fields.Selection(
+        string="Học kỳ",
+        selection=[
+                ('i', 'Học kỳ I'),
+                ('ii', 'Học kỳ II'),
+                ('iii', 'Cả năm'),
+        ],
+        default='iii',
+    )
+
+    hs_daunam = fields.Integer(string="Tổng học sinh đầu năm", )
+    hs_cuoinam = fields.Integer(string="Tổng học sinh cuối năm", )
+    hs_chuyenden = fields.Integer(string="Tổng học sinh chuyển đến", )
+    hs_chuyendi = fields.Integer(string="Tổng học sinh chuyển đi", )
+    hs_thoihoc = fields.Integer(string="Tổng học sinh thôi học", )
+    hs_thoihoc_hocluckem = fields.Integer(string="Tổng học sinh thôi học (học lực kém)", )
+    hs_thoihoc_hoancanhkk = fields.Integer(string="Tổng học sinh thôi học (hoàn cảnh khó khăn)",)
+    hs_thoihoc_xanha = fields.Integer(string="Tổng học sinh thôi học (xa nhà)", )
+    hs_thoihoc_khac = fields.Integer(string="Tổng học sinh thôi học (lý do khác)", )

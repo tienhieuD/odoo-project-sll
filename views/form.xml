@@ -597,6 +597,7 @@
               <group colspan='2' col='2'>
                 <field name="hocky"/>
                 <field name="namhoc"/>
+                <field name="napdulieu"/>
               </group>
             </group>
           </sheet>
