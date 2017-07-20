@@ -1,110 +1,112 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
 import logging
+import time, datetime
+from datetime import date
 
-class tinhhinhhocsinhthoihoc(models.Model):
-    _name = 'solienlac.tinhhinhhocsinhthoihoc'
-    hocky = fields.Selection(
-        string="Học kỳ",
-        selection=[
-                ('i', 'Học kỳ I'),
-                ('ii', 'Học kỳ II'),
-                ('iii', 'Cả năm'),
-    ],)
-    namhoc = fields.Char('Năm học', required='True')
-    ngayhientai = fields.Date('Ngày hiện tại', required='True')
-    khoi = fields.Many2one('solienlac.khoi', string='Khối', required='True')
-    lydothoihoc = fields.Many2one('solienlac.lydothoihoc', string='Lý do thôi học')
-    dohoclucyeukem = fields.Integer(string='Do học lực yếu kém')
-    dohoancanhkhokhan = fields.Integer(string='Do hoàn cảnh khó khăn')
-    doxanha = fields.Integer(string='Do xa nhà')
-    lydokhac = fields.Integer(string='Lý do khác: tai nạn, ốm đau')
-    tongsohocsinhthoihoc = fields.Integer(string='Tổng số học sinh thôi học')
-    kyluatbuocthoihoc1nam = fields.Integer('Kỷ luật buộc thôi học 1 năm')
-    tongsohocsinhdaunam = fields.Integer('Tổng sốhọc sinh đầu năm')
-    tongsohocsinhcuoinam = fields.Integer('Tổng số học sinh cuối năm')
-    sohocsinhchuyenden = fields.Integer('Số học sinh chuyển đến')
-    sohocsinhchuyendi = fields.Integer('Số học sinh chuyển đi')
-    @api.multi
-    @api.onchange('khoi', 'hocky', 'namhoc')
-    def demsohocsinh(self):
-        def demsohocsinhhientai():
-            return self.env['solienlac.hocsinh'].search_count([
-                ('lydothoihoc.namhoc', '=', self.namhoc),
-                ('lop.khoi.id', '=', self.khoi.id),
-                ('lydothoihoc.lydothoihoc' ,'=', 'value1')
-            ])
-        def demsohocsinhchuyenden(truoc_sau):
-            if(truoc_sau == 'truoc'):
-                return self.env['solienlac.hocsinh'].search_count([
-                    ('lydothoihoc.namhoc', '=', self.namhoc),
-                    ('lop.khoi.id', '=', self.khoi.id),
-                    ('nguongochocsinh.nguongochocsinh' ,'=', 'value4'),
-                    ('nguongochocsinh.thoidiemnhaptruong', '<', self.ngayhientai),
-                ])
-            return self.env['solienlac.hocsinh'].search_count([
-                ('lydothoihoc.namhoc', '=', self.namhoc),
-                ('lop.khoi.id', '=', self.khoi.id),
-                ('nguongochocsinh.nguongochocsinh' ,'=', 'value4'),
-                ('nguongochocsinh.thoidiemnhaptruong', '>=', self.ngayhientai),
-            ])
-        def demsohocsinhchuyendi(truoc_sau):
-            if(truoc_sau == 'truoc'):
-                return self.env['solienlac.hocsinh'].search_count([
-                    ('lydothoihoc.namhoc', '=', self.namhoc),
-                    ('lop.khoi.id', '=', self.khoi.id),
-                    ('lydothoihoc.lydothoihoc' ,'=', 'value2'),
-                    ('lydothoihoc.thoidiemthoihoc', '<', self.ngayhientai),
-                ])
-            return self.env['solienlac.hocsinh'].search_count([
-                ('lydothoihoc.namhoc', '=', self.namhoc),
-                ('lop.khoi.id', '=', self.khoi.id),
-                ('lydothoihoc.lydothoihoc' ,'=', 'value2'),
-                ('lydothoihoc.thoidiemthoihoc', '>=', self.ngayhientai),
-            ])
-        def demsohocsinhthoihoc(flag, truoc_sau, lydothoihoc):
-            if flag:
-                if truoc_sau == 'truoc':
-                    return self.env['solienlac.hocsinh'].search_count([
-                        ('lydothoihoc.namhoc', '=', self.namhoc),
-                        # ('lydothoihoc.hocky', '=', self.hocky),
-                        ('lop.khoi.id', '=', self.khoi.id),
-                        ('lydothoihoc.lydothoihoc' ,'!=', lydothoihoc),
-                        ('lydothoihoc.lydothoihoc' ,'!=', 'value2'),
-                        ('lydothoihoc.thoidiemthoihoc', '<', self.ngayhientai),
-                    ])
-                return self.env['solienlac.hocsinh'].search_count([
-                    ('lydothoihoc.namhoc', '=', self.namhoc),
-                    # ('lydothoihoc.hocky', '=', self.hocky),
-                    ('lop.khoi.id', '=', self.khoi.id),
-                    ('lydothoihoc.lydothoihoc' ,'!=', lydothoihoc),
-                    ('lydothoihoc.lydothoihoc' ,'!=', 'value2'),
-                    ('lydothoihoc.thoidiemthoihoc', '>=', self.ngayhientai),
-                ])
-            return self.env['solienlac.hocsinh'].search_count([
-                    ('lydothoihoc.namhoc', '=', self.namhoc),
-                    # ('lydothoihoc.hocky', '=', self.hocky),
-                    ('lop.khoi.id', '=', self.khoi.id),
-                    ('lydothoihoc.lydothoihoc', '=', lydothoihoc),
-                ])
-
-        n_ht = demsohocsinhhientai()
-        n_den_truoc = demsohocsinhchuyenden('truoc')
-        n_di_truoc = demsohocsinhchuyendi('truoc')
-        n_thoi_truoc = demsohocsinhthoihoc(1, 'truoc', 'value1')
-        n_den_sau = demsohocsinhchuyenden('sau')
-        n_di_sau = demsohocsinhchuyendi('sau')
-        n_thoi_sau = demsohocsinhthoihoc(1, 'sau', 'value1')
-
-        self.tongsohocsinhthoihoc = demsohocsinhthoihoc(1, 'truoc', 'value1') + demsohocsinhthoihoc(1, 'sau', 'value1')
-        self.tongsohocsinhdaunam = n_ht #- n_den_truoc + n_di_truoc + n_thoi_truoc
-        self.tongsohocsinhcuoinam = n_ht + n_den_sau - n_di_sau - n_thoi_sau
-        self.sohocsinhchuyenden = n_den_truoc + n_den_sau
-        self.sohocsinhchuyendi = n_di_truoc + n_di_sau
-        self.dohoclucyeukem = demsohocsinhthoihoc(0, 'truoc', 'value4') + demsohocsinhthoihoc(0, 'sau', 'value4')
-        self.doxanha = demsohocsinhthoihoc(0, 'truoc', 'value5') + demsohocsinhthoihoc(0, 'sau', 'value4')
-        self.dohoancanhkhokhan = demsohocsinhthoihoc(0, 'truoc', 'value6') + demsohocsinhthoihoc(0, 'sau', 'value6')
-        self.lydokhac = demsohocsinhthoihoc(0, 'truoc', 'value7') + demsohocsinhthoihoc(0, 'sau', 'value7')
+# class tinhhinhhocsinhthoihoc(models.Model):
+#     _name = 'solienlac.tinhhinhhocsinhthoihoc'
+#     hocky = fields.Selection(
+#         string="Học kỳ",
+#         selection=[
+#                 ('i', 'Học kỳ I'),
+#                 ('ii', 'Học kỳ II'),
+#                 ('iii', 'Cả năm'),
+#     ],)
+#     namhoc = fields.Char('Năm học', required='True')
+#     ngayhientai = fields.Date('Ngày hiện tại', required='True')
+#     khoi = fields.Many2one('solienlac.khoi', string='Khối', required='True')
+#     lydothoihoc = fields.Many2one('solienlac.lydothoihoc', string='Lý do thôi học')
+#     dohoclucyeukem = fields.Integer(string='Do học lực yếu kém')
+#     dohoancanhkhokhan = fields.Integer(string='Do hoàn cảnh khó khăn')
+#     doxanha = fields.Integer(string='Do xa nhà')
+#     lydokhac = fields.Integer(string='Lý do khác: tai nạn, ốm đau')
+#     tongsohocsinhthoihoc = fields.Integer(string='Tổng số học sinh thôi học')
+#     kyluatbuocthoihoc1nam = fields.Integer('Kỷ luật buộc thôi học 1 năm')
+#     tongsohocsinhdaunam = fields.Integer('Tổng sốhọc sinh đầu năm')
+#     tongsohocsinhcuoinam = fields.Integer('Tổng số học sinh cuối năm')
+#     sohocsinhchuyenden = fields.Integer('Số học sinh chuyển đến')
+#     sohocsinhchuyendi = fields.Integer('Số học sinh chuyển đi')
+#     @api.multi
+#     @api.onchange('khoi', 'hocky', 'namhoc')
+#     def demsohocsinh(self):
+#         def demsohocsinhhientai():
+#             return self.env['solienlac.hocsinh'].search_count([
+#                 ('lydothoihoc.namhoc', '=', self.namhoc),
+#                 ('lop.khoi.id', '=', self.khoi.id),
+#                 ('lydothoihoc.lydothoihoc' ,'=', 'value1')
+#             ])
+#         def demsohocsinhchuyenden(truoc_sau):
+#             if(truoc_sau == 'truoc'):
+#                 return self.env['solienlac.hocsinh'].search_count([
+#                     ('lydothoihoc.namhoc', '=', self.namhoc),
+#                     ('lop.khoi.id', '=', self.khoi.id),
+#                     ('nguongochocsinh.nguongochocsinh' ,'=', 'value4'),
+#                     ('nguongochocsinh.thoidiemnhaptruong', '<', self.ngayhientai),
+#                 ])
+#             return self.env['solienlac.hocsinh'].search_count([
+#                 ('lydothoihoc.namhoc', '=', self.namhoc),
+#                 ('lop.khoi.id', '=', self.khoi.id),
+#                 ('nguongochocsinh.nguongochocsinh' ,'=', 'value4'),
+#                 ('nguongochocsinh.thoidiemnhaptruong', '>=', self.ngayhientai),
+#             ])
+#         def demsohocsinhchuyendi(truoc_sau):
+#             if(truoc_sau == 'truoc'):
+#                 return self.env['solienlac.hocsinh'].search_count([
+#                     ('lydothoihoc.namhoc', '=', self.namhoc),
+#                     ('lop.khoi.id', '=', self.khoi.id),
+#                     ('lydothoihoc.lydothoihoc' ,'=', 'value2'),
+#                     ('lydothoihoc.thoidiemthoihoc', '<', self.ngayhientai),
+#                 ])
+#             return self.env['solienlac.hocsinh'].search_count([
+#                 ('lydothoihoc.namhoc', '=', self.namhoc),
+#                 ('lop.khoi.id', '=', self.khoi.id),
+#                 ('lydothoihoc.lydothoihoc' ,'=', 'value2'),
+#                 ('lydothoihoc.thoidiemthoihoc', '>=', self.ngayhientai),
+#             ])
+#         def demsohocsinhthoihoc(flag, truoc_sau, lydothoihoc):
+#             if flag:
+#                 if truoc_sau == 'truoc':
+#                     return self.env['solienlac.hocsinh'].search_count([
+#                         ('lydothoihoc.namhoc', '=', self.namhoc),
+#                         # ('lydothoihoc.hocky', '=', self.hocky),
+#                         ('lop.khoi.id', '=', self.khoi.id),
+#                         ('lydothoihoc.lydothoihoc' ,'!=', lydothoihoc),
+#                         ('lydothoihoc.lydothoihoc' ,'!=', 'value2'),
+#                         ('lydothoihoc.thoidiemthoihoc', '<', self.ngayhientai),
+#                     ])
+#                 return self.env['solienlac.hocsinh'].search_count([
+#                     ('lydothoihoc.namhoc', '=', self.namhoc),
+#                     # ('lydothoihoc.hocky', '=', self.hocky),
+#                     ('lop.khoi.id', '=', self.khoi.id),
+#                     ('lydothoihoc.lydothoihoc' ,'!=', lydothoihoc),
+#                     ('lydothoihoc.lydothoihoc' ,'!=', 'value2'),
+#                     ('lydothoihoc.thoidiemthoihoc', '>=', self.ngayhientai),
+#                 ])
+#             return self.env['solienlac.hocsinh'].search_count([
+#                     ('lydothoihoc.namhoc', '=', self.namhoc),
+#                     # ('lydothoihoc.hocky', '=', self.hocky),
+#                     ('lop.khoi.id', '=', self.khoi.id),
+#                     ('lydothoihoc.lydothoihoc', '=', lydothoihoc),
+#                 ])
+#
+#         n_ht = demsohocsinhhientai()
+#         n_den_truoc = demsohocsinhchuyenden('truoc')
+#         n_di_truoc = demsohocsinhchuyendi('truoc')
+#         n_thoi_truoc = demsohocsinhthoihoc(1, 'truoc', 'value1')
+#         n_den_sau = demsohocsinhchuyenden('sau')
+#         n_di_sau = demsohocsinhchuyendi('sau')
+#         n_thoi_sau = demsohocsinhthoihoc(1, 'sau', 'value1')
+#
+#         self.tongsohocsinhthoihoc = demsohocsinhthoihoc(1, 'truoc', 'value1') + demsohocsinhthoihoc(1, 'sau', 'value1')
+#         self.tongsohocsinhdaunam = n_ht #- n_den_truoc + n_di_truoc + n_thoi_truoc
+#         self.tongsohocsinhcuoinam = n_ht + n_den_sau - n_di_sau - n_thoi_sau
+#         self.sohocsinhchuyenden = n_den_truoc + n_den_sau
+#         self.sohocsinhchuyendi = n_di_truoc + n_di_sau
+#         self.dohoclucyeukem = demsohocsinhthoihoc(0, 'truoc', 'value4') + demsohocsinhthoihoc(0, 'sau', 'value4')
+#         self.doxanha = demsohocsinhthoihoc(0, 'truoc', 'value5') + demsohocsinhthoihoc(0, 'sau', 'value4')
+#         self.dohoancanhkhokhan = demsohocsinhthoihoc(0, 'truoc', 'value6') + demsohocsinhthoihoc(0, 'sau', 'value6')
+#         self.lydokhac = demsohocsinhthoihoc(0, 'truoc', 'value7') + demsohocsinhthoihoc(0, 'sau', 'value7')
 
 class gvdd_hskt(models.Model):
     _name = 'solienlac.gvdd_hskt'
@@ -409,7 +411,7 @@ class xeploaihocluc(models.Model):
         self.tongbancoban_tongsohocsinh_nam = demsohocsinh('khongxeploai_phanban_coban', 'kxl', 'Nam')
         self.tongbancoban_tongsohocsinh_nu = demsohocsinh('khongxeploai_phanban_coban', 'kxl', 'Nu')
 
-        #--------------------   tổng số học sinh của khối ----------------
+        #--------------------   tổng số học sinh của khối -----------------------------------------
         self.tongkhoi_tot_nam = demsohocsinh('xeploai_khongphanban', 'tot', 'Nam')
         self.tongkhoi_tot_nu = demsohocsinh('xeploai_khongphanban', 'tot', 'Nu')
 
@@ -424,3 +426,170 @@ class xeploaihocluc(models.Model):
 
         self.tongkhoi_tongsohocsinh_nam = demsohocsinh('khongxeploai_khongphanban', 'kxl', 'Nam')
         self.tongkhoi_tongsohocsinh_nu = demsohocsinh('khongxeploai_khongphanban', 'kxl', 'Nu')
+
+#------------------------------- Tình hình giáo viên trong tổ theo môn -------------------------------
+    class tinhhinhgiaovientrongto(models.Model):
+        _name = "solienlac.tinhhinhgiaovientrongto"
+
+        monhoc = fields.Many2one('solienlac.monhoc', 'Môn học')
+        # hoten = fields.Many2one('solienlac.giaovien', string='Họ và Tên GV')
+
+        chucvu = fields.Char('Chức vụ')
+        vanbang = fields.Char('Văn bằng')
+        namvaonganh = fields.Char('Năm vào ngành')
+        # namvaonganh = fields.Date('Năm vào ngành')
+        phanconggiangday = fields.Many2many('solienlac.lop', string='Phân công giảng dạy')
+        phanconggiangday = fields.Char('Phân công giảng dạy')
+        sodienthoai = fields.Char('DTDĐ')
+        giaovien = fields.Many2one('solienlac.giaovien')
+        #@api.model
+        @api.multi
+        @api.onchange('monhoc')
+        def set_giaovien(self):
+            self.giaovien = []
+            tmp1 = self.env['solienlac.monhoc_has_giaovien'].search([
+                        ('monhoc.id', '=', self.monhoc.id),
+                    ])
+            lst = map(lambda x: x.giaovien.id, tmp1)
+            return {'domain':{'giaovien': [('id', 'in', lst)]}}
+
+        @api.multi
+        @api.onchange('monhoc', 'giaovien')
+        def tinhhinhgiaovientrongto(self):
+            tmp1 = self.env['solienlac.giaovien'].search([
+                        ('lops.monhoc.id', '=', self.monhoc.id),
+                        ('id', '=', self.giaovien.id)
+                    ])
+            def set_phanconggiangday(self):
+                temp = self.env['solienlac.monhoc_has_giaovien'].search([
+                            ('monhoc.id', '=', self.monhoc.id),
+                            ('giaovien.id', '=', self.giaovien.id)
+                        ])
+                lst = map(lambda x: x.lop.tenlop, temp)
+                s = " ,".join(str(x) for x in lst)
+                return s
+            def fomat_namvaonganh():
+                try:
+                    myyear = str(tmp1.namvaonganh)
+                    y, d, m = myyear.split('-')
+                    return y
+                except ValueError:
+                    return '0'
+            self.phanconggiangday = set_phanconggiangday(self)
+            self.chucvu = tmp1.chucvu.tenchucvu
+            self.vanbang = tmp1.vanbang
+
+            self.namvaonganh = fomat_namvaonganh()
+            self.sodienthoai = tmp1.sodienthoai
+class hocsinhtruongngoaiconglap(models.Model):
+    _name = 'solienlac.hocsinhtruongngoaiconglap'
+
+    khoi = fields.Many2one('solienlac.khoi', 'Khối')
+    solop = fields.Integer('Số lớp')
+
+    ts_hs = fields.Integer('Tổng số học sinh')
+    hs_ngoaitinh = fields.Integer('Số học sinh ngoài tỉnh')
+    tyle_hs = fields.Float('Tỷ lệ học sinh ngoài tỉnh')
+
+    ts_hs_nt = fields.Integer('Tổng số học sinh nội trú')
+    hs_ngoaitinh_nt = fields.Integer('Số học sinh ngoại tỉnh nội trú')
+    tyle_hs_nt = fields.Float('Tỷ lệ học sinh ngoài tỉnh nội trú')
+
+    @api.multi
+    @api.onchange('khoi')
+    def hocsinhtruongngoaiconglap(self):
+        def demsolop():
+            return self.env['solienlac.lop'].search_count([
+                        ('khoi.id', '=', self.khoi.id),
+                        ('khoi.truong', '=', self.khoi.id),
+                    ])
+        def demsohocsinhngoaitinh(noitru = True):
+            temp = self.env['solienlac.hocsinh'].search([
+                        ('lop.khoi.id', '=', self.khoi.id),
+                        ('noitru', '=', noitru),
+                        ('tinhtranghocsinh', '=', 'value1')
+            ])
+            dem = 0
+            for val in temp:
+                if(val.truong.matinhthanhpho != val.tinhthanhpho.matinhthanhpho):
+                    dem += 1
+            return dem
+
+        def demtongsohocsinh(noitru = True):
+                return self.env['solienlac.hocsinh'].search_count([
+                            ('lop.khoi.id', '=', self.khoi.id),
+                            ('noitru', '=', noitru),
+                            ('tinhtranghocsinh', '=', 'value1')
+                        ])
+        def tinhtyle(tongso,  ngoaitinh):
+            if(tongso > 0):
+                return (1.0*ngoaitinh/tongso)*100
+            return 0
+        self.solop = demsolop()
+
+        self.ts_hs = demtongsohocsinh() + demtongsohocsinh(False)
+        self.hs_ngoaitinh = demsohocsinhngoaitinh() + demsohocsinhngoaitinh(False)
+
+
+        self.tyle_hs =tinhtyle(self.ts_hs, self.hs_ngoaitinh)
+
+        self.ts_hs_nt = demtongsohocsinh()
+        self.hs_ngoaitinh_nt = demsohocsinhngoaitinh()
+        self.tyle_hs_nt = tinhtyle(self.ts_hs_nt, self.hs_ngoaitinh_nt)
+
+#------------------  8b  ---------------------------
+class hocsinhnutruongngoaiconglap(models.Model):
+    _name = 'solienlac.hocsinhnutruongngoaiconglap'
+
+    khoi = fields.Many2one('solienlac.khoi', 'Khối')
+    solop = fields.Integer('Số lớp')
+
+    ts_hs = fields.Integer('Tổng số học sinh nữ')
+    hs_ngoaitinh = fields.Integer('Số học sinh nữ ngoài tỉnh')
+    tyle_hs = fields.Float('Tỷ lệ học sinh nữ ngoài tỉnh')
+
+    ts_hs_nt = fields.Integer('Tổng số học sinh nữ nội trú')
+    hs_ngoaitinh_nt = fields.Integer('Số học sinh nữ ngoại tỉnh nội trú')
+    tyle_hs_nt = fields.Float('Tỷ lệ học sinh nữ ngoài tỉnh nội trú')
+
+    @api.multi
+    @api.onchange('khoi')
+    def hocsinhtruongngoaiconglap(self):
+        def demsolop():
+            return self.env['solienlac.lop'].search_count([
+                        ('khoi.id', '=', self.khoi.id),
+                    ])
+        def demsohocsinhngoaitinh(noitru = True):
+            dem = 0
+            temp = self.env['solienlac.hocsinh'].search([
+                        ('lop.khoi.id', '=', self.khoi.id),
+                        ('noitru', '=', noitru),
+                        ('gioitinh', '=', "Nu"),
+                        ('tinhtranghocsinh', '=', 'value1')
+            ])
+            for val in temp:
+                if(val.truong.matinhthanhpho != val.tinhthanhpho.matinhthanhpho):
+                    dem += 1
+            return dem
+        def demtongsohocsinh(noitru = True):
+                return self.env['solienlac.hocsinh'].search_count([
+                            ('lop.khoi.id', '=', self.khoi.id),
+                            ('noitru', '=', noitru),
+                            ('gioitinh', '=', 'Nu'),
+                            ('tinhtranghocsinh', '=', 'value1')
+                        ])
+        def tinhtyle(tongso,  ngoaitinh):
+            if(tongso > 0):
+                return (1.0*ngoaitinh/tongso)*100
+            return 0
+        self.solop = demsolop()
+
+        self.ts_hs = demtongsohocsinh() + demtongsohocsinh(False)
+        self.hs_ngoaitinh = demsohocsinhngoaitinh() + demsohocsinhngoaitinh(False)
+        self.tyle_hs =tinhtyle(self.ts_hs, self.hs_ngoaitinh)
+
+        self.ts_hs_nt = demtongsohocsinh()
+        self.hs_ngoaitinh_nt = demsohocsinhngoaitinh()
+        self.tyle_hs_nt = tinhtyle(self.ts_hs_nt, self.hs_ngoaitinh_nt)
+
+# class giaovientruongngoaiconglap

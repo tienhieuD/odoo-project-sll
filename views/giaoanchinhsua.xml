@@ -433,6 +433,20 @@
         </p>
       </field>
     </record>
+    <!--nhapdiemchitiet-->
+    <record id="nhapdiemchitiet_action_form" model="ir.actions.act_window">
+      <field name="name">Nhập điểm chi tiết</field>
+      <field name="res_model">solienlac.nhapdiemchitiet</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          <!-- Add Text Here -->
+        </p>
+        <p>
+          <!-- More details about what a user can do -->
+        </p>
+      </field>
+    </record>
 
     <!--baocao-->
     <!--Xếp loại hạnh kiểm học sinh hòa nhập, khuyết tật-->
@@ -489,19 +503,17 @@
     </record>
 
     <!--Tình hình học sinh thôi học-->
-    <record id="tinhhinhhocsinhthoihoc_action_form" model="ir.actions.act_window">
+    <!-- <record id="tinhhinhhocsinhthoihoc_action_form" model="ir.actions.act_window">
       <field name="name">Tình hình học sinh thôi học</field>
       <field name="res_model">solienlac.tinhhinhhocsinhthoihoc</field>
       <field name="view_mode">tree,form</field>
       <field name="help" type="html">
         <p class="oe_view_nocontent_create">
-          <!-- Add Text Here -->
         </p>
         <p>
-          <!-- More details about what a user can do -->
         </p>
       </field>
-    </record>
+    </record> -->
 
     <!--Số hiệu giáo viên giảng dạy và học sinnh khuyết tật-->
     <record id="gvdd_hskt_action_form" model="ir.actions.act_window">
@@ -544,6 +556,98 @@
       </field>
     </record>
 
+    <!-- Trường -->
+    <record id="truong_action_form" model="ir.actions.act_window">
+      <field name="name">Trường</field>
+      <field name="res_model">solienlac.truong</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+        </p>
+        <p>
+        </p>
+      </field>
+    </record>
+
+    <!-- Cấp học -->
+    <record id="caphoc_action_form" model="ir.actions.act_window">
+      <field name="name">Cấp học</field>
+      <field name="res_model">solienlac.caphoc</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+        </p>
+        <p>
+        </p>
+      </field>
+    </record>
+
+    <!-- Cấp trường -->
+    <record id="captruong_action_form" model="ir.actions.act_window">
+      <field name="name">Cáp trường</field>
+      <field name="res_model">solienlac.captruong</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+        </p>
+        <p>
+        </p>
+      </field>
+    </record>
+
+    <!-- Tình hình giáo viên trong tổ theo môn -->
+    <record id="tinhhinhgiaovientrongto_action_form" model="ir.actions.act_window">
+      <field name="name">solienlac.tinhhinhgiaovientrongto.form</field>
+      <field name="res_model">solienlac.tinhhinhgiaovientrongto</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+        </p>
+        <p>
+        </p>
+      </field>
+    </record>
+
+    <!-- (8a)Số liệu học sinh trường ngoài công lập -->
+    <record id="hocsinhtruongngoaiconglap_action_form" model="ir.actions.act_window">
+      <field name="name">solienlac.hocsinhtruongngoaiconglap.form</field>
+      <field name="res_model">solienlac.hocsinhtruongngoaiconglap</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+        </p>
+        <p>
+        </p>
+      </field>
+    </record>
+
+    <!-- (8b)Số liệu học sinh nữ trường ngoài công lập -->
+    <record id="hocsinhnutruongngoaiconglap_action_form" model="ir.actions.act_window">
+      <field name="name">solienlac.hocsinhnutruongngoaiconglap.form</field>
+      <field name="res_model">solienlac.hocsinhnutruongngoaiconglap</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+        </p>
+        <p>
+        </p>
+      </field>
+    </record>
+
+    <record id="thhsth_action_form" model="ir.actions.act_window">
+      <field name="name">Tình hình HS thôi học</field>
+      <field name="res_model">solienlac.baocao.thhsth</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          <!-- Add Text Here -->
+        </p>
+        <p>
+          <!-- More details about what a user can do -->
+        </p>
+      </field>
+    </record>
+
     <!--Menu-->
     <menuitem id="menu_danhmuchanhchinh" name="Danh mục hành chính" sequence=""/>
       <menuitem id="menu_phuongxa" name="Phường/xã" parent="menu_danhmuchanhchinh" action="phuongxa_action_form" sequence=""/>
@@ -553,6 +657,10 @@
       <menuitem id="menu_tongiao" name="Tôn giáo" parent="menu_danhmuchanhchinh" action="tongiao_action_form" sequence=""/>
 
     <menuitem id="menu_truongquanly" name="Danh mục trường quản lý" sequence=""/>
+      <menuitem id="menu_thongtintruong" name="Thông tin nhà trường" parent="menu_truongquanly" sequence=""/> <!--New-->
+        <menuitem id="menu_truong" name="Trường" parent="menu_thongtintruong" action="truong_action_form" sequence=""/>   <!--New-->
+        <menuitem id="menu_caphoc" name="Cấp học" parent="menu_thongtintruong" action="caphoc_action_form" sequence=""/>  <!--New-->
+        <menuitem id="menu_captruong" name="Cấp trường" parent="menu_thongtintruong" action="captruong_action_form" sequence=""/> <!--New-->
       <menuitem id="menu_noibonhatruong" name="Nội bộ nhà trường" parent="menu_truongquanly" sequence=""/>
         <menuitem id="menu_giaovien" name="Giáo viên" parent="menu_noibonhatruong" action="giaovien_action_form" sequence=""/>
         <menuitem id="menu_phongban" name="Phòng ban" parent="menu_noibonhatruong" action="phongban_action_form" sequence=""/>
@@ -564,6 +672,7 @@
       <menuitem id="menu_quanlyhocsinh" name="Quản lý học sinh" parent="menu_truongquanly" sequence=""/>
         <menuitem id="menu_hocsinh" name="Học sinh" parent="menu_quanlyhocsinh" action="hocsinh_action_form" sequence=""/>
         <menuitem id="menu_nhapdiemhocsinh" name="Nhập điểm học sinh" parent="menu_quanlyhocsinh" action="nhapdiemhocsinh_action_form" sequence=""/>
+        <menuitem id="menu_nhapdiemchitiet" name="Nhập điểm CT" parent="menu_quanlyhocsinh" action="nhapdiemchitiet_action_form" sequence=""/>
         <menuitem id="menu_bangdiemdanh" name="Bảng điểm danh" parent="menu_quanlyhocsinh" action="bangdiemdanh_action_form" sequence=""/>
         <menuitem id="menu_chucvu" name="Chức vụ học sinh" parent="menu_quanlyhocsinh" action="chucvu_action_form" sequence=""/>
         <menuitem id="menu_khenthuong_hocsinh" name="Khen thưởng học sinh" parent="menu_quanlyhocsinh" action="khenthuonghocsinh_action_form" sequence=""/>
@@ -575,11 +684,15 @@
         <menuitem id="menu_xeploaihanhkiem" name="Xếp loại hạnh kiểm" parent="menu_baocao" sequence=""/>
           <menuitem id="menu_xlhkhsdt" name="Học sinh dân tộc" parent="menu_xeploaihanhkiem" action="xlhkhsdt_action_form" sequence=""/>
           <menuitem id="menu_xlhkhshnkt" name="Học sinh hòa nhập, khuyết tật" parent="menu_xeploaihanhkiem" action="xlhkhshnkt_action_form" sequence=""/>
-        <menuitem id="menu_tinhhinhhocsinhthoihoc" name="Tình hình học sinh thôi học" parent="menu_baocao" action="tinhhinhhocsinhthoihoc_action_form" sequence=""/>
+        <!-- <menuitem id="menu_tinhhinhhocsinhthoihoc" name="Tình hình học sinh thôi học" parent="menu_baocao" action="tinhhinhhocsinhthoihoc_action_form" sequence=""/> -->
         <menuitem id="menu_gvdd_hskt" name="Số hiệu giáo viên giảng dạy và học sinnh khuyết tật" parent="menu_baocao" action="gvdd_hskt_action_form" sequence=""/>
         <menuitem id="menu_xeploaihanhkiem_hocsinh" name="Xếp loại hạnh kiểm" parent="menu_baocao" action="xeploaihanhkiem_action_form" sequence=""/>
         <menuitem id="menu_xeploaihocluc" name="Xếp loại học lực" parent="menu_baocao" action="xeploaihocluc_action_form" sequence=""/>
         <menuitem id="menu_xlhlhshnkt" name="(1f) XL HL HS hòa nhập khuyết tật" parent="menu_baocao" action="xlhlhshnkt_action_form" sequence=""/>
         <menuitem id="menu_xlhlhsdt" name="(1g) XL HL HS dân tộc" parent="menu_baocao" action="xlhlhsdt_action_form" sequence=""/>
+        <menuitem id="menu_tinhhinhgiaovientrongto" name="Tình hình giáo viên trong tổ theo môn" parent="menu_baocao" action="tinhhinhgiaovientrongto_action_form" sequence=""/>
+        <menuitem id="menu_hocsinhtruongngoaiconglap" name="(8a) HS trường ngoài công lập" parent="menu_baocao" action="hocsinhtruongngoaiconglap_action_form" sequence=""/>
+        <menuitem id="menu_hocsinhnutruongngoaiconglap" name="(8a) HS nữ trường ngoài công lập" parent="menu_baocao" action="hocsinhnutruongngoaiconglap_action_form" sequence=""/>
+        <menuitem id="menu_thhsth" name="(2a) tinh hình hs thôi học" parent="menu_baocao" action="thhsth_action_form" sequence=""/>
   </data>
 </odoo>

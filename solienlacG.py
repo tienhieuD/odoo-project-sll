@@ -2,7 +2,25 @@
 from odoo import models, fields, api
 import random, string
 
-
+# @api.multi
+# @api.onchange('tinh')
+# def set_value_huyen(self):
+#     self.huyen = []
+#     tmp1 = self.env['solienlac.quanhuyen'].search([
+#                 ('matinhthanhpho', '=', self.tinh),
+#             ])
+#     lst = map(lambda x:x.matinhthanhpho, tmp1)
+#     return {'domain':{'huyen': [('matinhthanhpho', 'in', lst)]}}
+# @api.multi
+# @api.onchange('tinh', 'huyen')
+# def set_value_xa(self):
+#     self.xa = []
+#     tmp1 = self.env['solienlac.phuongxa'].search([
+#                 ('TinhID', '=', self.tinh),
+#                 ('QuanHuyenID', '=', self.huyen),
+#             ])
+#     lst = map(lambda x: x.QuanHuyenID, tmp1)
+#     return {'domain':{'xa': [('QuanHuyenID', 'in', lst)]}}
 
 # class hocsinh(models.Model):
 #     _name = 'solienlac.hocsinh'
@@ -95,4 +113,3 @@ import random, string
 #     hocky = fields.Integer('Đồng phục')
 #     namhoc = fields.Integer('Đồng phục')
 #     hocsinh = fields.Many2one('solienlac.hocsinh', string='Học sinh')
-

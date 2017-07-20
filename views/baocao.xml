@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
   <data>
-    <record id="tinhhinhhocsinhthoihoc_view_form" model="ir.ui.view">
+    <!-- <record id="tinhhinhhocsinhthoihoc_view_form" model="ir.ui.view">
       <field name="name">tinhhinhhocsinhthoihoc.form</field>
       <field name="model">solienlac.tinhhinhhocsinhthoihoc</field>
       <field name="arch" type="xml">
@@ -31,7 +31,7 @@
           </sheet>
         </form>
       </field>
-    </record>
+    </record> -->
 
     <record id="gvdd_hskt_view_form" model="ir.ui.view">
       <field name="name">gvdd_hskt.form</field>
@@ -175,5 +175,71 @@
         </form>
       </field>
     </record>
+
+
+    <!-- (8a)Số liệu học sinh trường ngoài công lập -->
+   <record id="hocsinhtruongngoaiconglap_view_form" model="ir.ui.view">
+     <field name="name">hocsinhtruongngoaiconglap.form</field>
+     <field name="model">solienlac.hocsinhtruongngoaiconglap</field>
+     <field name="arch" type="xml">
+       <form string="Số liệu học sinh trường ngoài công lập">
+         <sheet>
+             <group colspan='4' col='4' string='Bộ lọc'>
+                 <group colspan='2' col='2'>
+                   <field name="khoi"/>
+                 </group>
+                 <group colspan='2' col='2'>
+                   <field name="solop"/>
+                 </group>
+             </group>
+             <group colspan='4' col='4' string='Dữ liệu'>
+               <group colspan='2' col='2'>
+                 <field name="ts_hs"/>
+                 <field name="hs_ngoaitinh"/>
+                 <field name="tyle_hs"/>
+               </group>
+               <group colspan='2' col='2'>
+                 <field name="ts_hs_nt"/>
+                 <field name="hs_ngoaitinh_nt"/>
+                 <field name="tyle_hs_nt"/>
+               </group>
+             </group>
+         </sheet>
+       </form>
+     </field>
+   </record>
+
+   <!-- (8b)Số liệu học sinh nữ trường ngoài công lập -->
+  <record id="hocsinhnutruongngoaiconglap_view_form" model="ir.ui.view">
+    <field name="name">hocsinhnutruongngoaiconglap.form</field>
+    <field name="model">solienlac.hocsinhnutruongngoaiconglap</field>
+    <field name="arch" type="xml">
+      <form string="Số liệu học sinh nữ trường ngoài công lập">
+        <sheet>
+            <group colspan='4' col='4' string='Bộ lọc'>
+                <group colspan='2' col='2'>
+                  <field name="khoi"/>
+                </group>
+                <group colspan='2' col='2'>
+                  <field name="solop"/>
+                </group>
+            </group>
+            <group colspan='4' col='4' string='Dữ liệu'>
+              <group colspan='2' col='2'>
+                <field name="ts_hs"/>
+                <field name="hs_ngoaitinh"/>
+                <field name="tyle_hs"/>
+              </group>
+              <group colspan='2' col='2'>
+                <field name="ts_hs_nt"/>
+                <field name="hs_ngoaitinh_nt"/>
+                <field name="tyle_hs_nt"/>
+              </group>
+            </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
   </data>
 </odoo>
