@@ -46,11 +46,71 @@ class captruong(models.Model):
     ],default='1', string='Tên cấp trường')
     ghichu = fields.Char('Ghi chú')
 
+class hangtruong(models.Model):
+    _name = 'solienlac.hangtruong'
+    _rec_name = 'tenhangtruong' # optional
+    _description = 'Hạng trường'
+
+    mahangtruong = fields.Integer('Hạng trường', required='True')
+    tenhangtruong = fields.Selection([
+        ('1', 'Hạng I'),
+        ('2', 'Hạng II'),
+        ('3', 'Hạng III'),
+    ], default='1', string='Tên hạng trường')
+    ghichu = fields.Char('Ghi chú')
+
+class loaihinhtruong(models.Model):
+    _name = 'solienlac.loaihinhtruong'
+    _rec_name = 'tenloahinhtruong' # optional
+    _description = 'Loại hình trường'
+
+    maloaihinhtruong = fields.Integer('Loại hình trường', required='True')
+    tenloahinhtruong = fields.Selection([
+        ('1',	'Công lập'),
+        ('2', 	'Bán công'),
+        ('3',	'Dân lập'),
+        ('4',	'Tư thục'),
+        ('5',	'Chuyên'),
+        ('6',	'Chuyên ban'),
+        ('7',	'Kỹ thuật'),
+        ('8',	'Khác'),
+    ], default='4', string='Tên loại hình trường')
+    ghichu = fields.Char('Ghi chú')
+
+class truongchuyenbiet(models.Model):
+    _name = 'solienlac.truongchuyenbiet'
+    _rec_name = 'tentruongchuyenbiet' # optional
+    _description = 'Trường chuyên biệt'
+
+    maloaihinhtruong = fields.Integer('Trường chuyên biệt', required='True')
+    tentruongchuyenbiet = fields.Selection([
+        ('1',	'Năng khiếu TDTT'),
+        ('2', 	'Khuyết tật'),
+        ('3',	'Năng khiếu nghệ thuật'),
+        ('4',	'Chuyên'),
+        ('5',	'Dân tộc nội trú'),
+        ('6',	'THPT Kỹ thuật'),
+        ('7',	'Dự bị đại học'),
+    ], default='4', string='Tên trường chuyên biệt')
+    ghichu = fields.Char('Ghi chú')
+class loailopnho(models.Model):
+    _name = 'solienlac.loailopnho'
+    _rec_name = 'tenloailopnho' # optional
+    _description = 'Loại lớp nhô'
+
+    maloailopnho = fields.Integer('Trường chuyên biệt', required='True')
+    tenloailopnho = fields.Selection([
+        ('khong', 'Không'),
+        ('nhotren', 'Nhô trên'),
+        ('nhoduoi', 'Nhô duoi'),
+        ('nhotrenduoi', 'Nhô trên và dưới')],default='khong',string="Lớp nhô")
+    ghichu = fields.Char('Ghi chú')
+
 class truong(models.Model):
     _name = 'solienlac.truong'
     _rec_name = 'tentruong'
 
-    matruong = fields.Char('Mã trường', required='True')
+    matruong = fields.Char('Mã trường')
     tentruong = fields.Char('Tên trường')
     hieutruong = fields.Char('Hiệu trưởng')
     namthanhlap = fields.Integer('Năm thành lập')
@@ -69,15 +129,16 @@ class truong(models.Model):
     maquanhuyen = fields.Integer('Quận/Huyện ID')
     maphuongxa = fields.Integer('Xã/Phường ID')
 
-
     hethonggiaoduc = fields.Integer('Hệ thống giáo dục ID')
-    hangtruong = fields.Integer('Hạng trường ID')
+    hangtruong = fields.Many2one('solienlac.hangtruong', string='Hạng trường')
+
     captruong = fields.Many2one('solienlac.captruong', string='Cấp trường ID')
     caphoc = fields.Many2one('solienlac.caphoc', string='Cấp học ID')
-    truongchuyenbiet = fields.Integer('Trường chuyên biệt ID')
-    loaihinhtruong = fields.Integer('Loại hình trường ID')
+    truongchuyenbiet = fields.Many2one('solienlac.truongchuyenbiet', string='Trường chuyên biệt')
+    loaihinhtruong = fields.Many2one('solienlac.loaihinhtruong', string='Loại hình trường')
 
-    loailopnho = fields.Integer('Loại lớp nhô')
+    # loailopnho = fields.Integer('Loại lớp nhô')
+    loailopnho = fields.Many2one('solienlac.loailopnho', string='Loại lớp nhô')
     donviID = fields.Integer('Đơn vị')
     thanhthi = fields.Boolean('Thành thị')
     chatluongcao = fields.Boolean('Chất lượng cao')
@@ -175,8 +236,7 @@ class monhoc_has_giaovien(models.Model):
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
-        ],
-    )
+        ],default = 'i')
     monhoc = fields.Many2one('solienlac.monhoc', string='Môn học')
     giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên')
     lop = fields.Many2one('solienlac.lop', string='Lớp')
@@ -217,8 +277,7 @@ class lop_has_giaovien(models.Model):
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
-        ],
-    )
+        ],default = 'i')
     ngaybatdau = fields.Date('Ngày bắt đầu:')
     ngayketthuc = fields.Date('Ngày kết thúc: ')
 
@@ -381,8 +440,7 @@ class hanhkiem(models.Model):
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
-        ],
-    )
+        ],default = 'i')
     # namhoc = fields.Char('Năm học')
 
     #---------- define fields namhoc ------------
@@ -636,8 +694,7 @@ class lydothoihoc(models.Model):
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
-        ],
-    )
+        ],default = 'i')
     # namhoc = fields.Char('Năm học')
 
     #---------- define fields namhoc ------------
@@ -685,8 +742,7 @@ class nguongochocsinh(models.Model):
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
-        ],
-    )
+        ],default = 'i')
     # namhoc = fields.Char('Năm học')
     #---------- define fields namhoc ------------
     @api.model
@@ -836,13 +892,17 @@ class banhoc(models.Model):
     _rec_name = 'tenban' # optional
     maban = fields.Char('Mã ban', required='True')
     tenban = fields.Selection([
+        ('coban', 'Ban cơ bản'),
         ('tunhien', 'Ban tự nhiên'),
         ('xahoi', 'Ban xã hội'),
-        ('coban_kpb', 'Ban cơ bản(Không phân ban)'),
-        ('coban_a', 'Ban cơ bản(A)'),
-        ('coban_b', 'Ban cơ bản(B)'),
-        ('coban_c', 'Ban cơ bản(C)'),
-        ('coban_d', 'Ban cơ bản(D)'),
+        ('coban_kpb', 'Không phân ban'),
+        ('coban_a', 'Ban cơ bản A'),
+        ('coban_b', 'Ban cơ bản B'),
+        ('coban_c', 'Ban cơ bản C'),
+        ('coban_d', 'Ban cơ bản D'),
+        ('coban_e', 'Ban cơ bản nâng cao 1-2 môn'),
+        ('coban_f', 'Ban cơ bản không nâng cao'),
+        ('coban_g', 'Ban cơ bản văn địa'),
     ], default = 'coban_kpb' ,string='Phân ban')
     lop = fields.One2many('solienlac.lop', 'banhoc', string='Lớp')
     ghichu = fields.Char('Ghi chú')
@@ -872,8 +932,7 @@ class ketquahoctap(models.Model):
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
-        ],
-    )
+        ],default = 'i')
     # namhoc = fields.Char('Năm học')
 
     #---------- define fields namhoc ------------
@@ -944,8 +1003,7 @@ class nenep(models.Model):
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
-        ],
-    )
+        ],default = 'i')
     # namhoc = fields.Char('Năm học')
 
     #---------- define fields namhoc ------------
@@ -1072,8 +1130,7 @@ class danhhieuhocsinh(models.Model):
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
-        ],
-    )
+        ],default = 'i')
     # namhoc = fields.Char(string="Năm học", )
 
     #---------- define fields namhoc ------------
@@ -1145,8 +1202,7 @@ class nhapdiemhocsinh(models.Model):
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
-        ],
-    )
+        ],default = 'i')
     # namhoc = fields.Char(string="Năm học", )
 
     #---------- define fields namhoc ------------
@@ -1285,8 +1341,7 @@ class nhapdiemchitiet(models.Model):
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
-        ],
-    )
+        ],default = 'i')
     namhoc = fields.Selection(
         string="Năm học",
         selection= _get_list_namhoc,

@@ -634,9 +634,25 @@
       </field>
     </record>
 
+    <!-- (2a)Tình hình học sinh thôi học -->
     <record id="thhsth_action_form" model="ir.actions.act_window">
       <field name="name">Tình hình HS thôi học</field>
       <field name="res_model">solienlac.baocao.thhsth</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          <!-- Add Text Here -->
+        </p>
+        <p>
+          <!-- More details about what a user can do -->
+        </p>
+      </field>
+    </record>
+
+    <!-- (9)Số liệu giáo viên trường ngoài công lập -->
+    <record id="giaovientruongngoaiconglap_action_form" model="ir.actions.act_window">
+      <field name="name">solienlac.giaovientruongngoaiconglap.form</field>
+      <field name="res_model">solienlac.giaovientruongngoaiconglap</field>
       <field name="view_mode">tree,form</field>
       <field name="help" type="html">
         <p class="oe_view_nocontent_create">
@@ -692,7 +708,8 @@
         <menuitem id="menu_xlhlhsdt" name="(1g) XL HL HS dân tộc" parent="menu_baocao" action="xlhlhsdt_action_form" sequence=""/>
         <menuitem id="menu_tinhhinhgiaovientrongto" name="Tình hình giáo viên trong tổ theo môn" parent="menu_baocao" action="tinhhinhgiaovientrongto_action_form" sequence=""/>
         <menuitem id="menu_hocsinhtruongngoaiconglap" name="(8a) HS trường ngoài công lập" parent="menu_baocao" action="hocsinhtruongngoaiconglap_action_form" sequence=""/>
-        <menuitem id="menu_hocsinhnutruongngoaiconglap" name="(8a) HS nữ trường ngoài công lập" parent="menu_baocao" action="hocsinhnutruongngoaiconglap_action_form" sequence=""/>
+        <menuitem id="menu_hocsinhnutruongngoaiconglap" name="(8b) HS nữ trường ngoài công lập" parent="menu_baocao" action="hocsinhnutruongngoaiconglap_action_form" sequence=""/>
+        <menuitem id="menu_giaovientruongngoaiconglap" name="(9)GV trường ngoài công lập" parent="menu_baocao" action="giaovientruongngoaiconglap_action_form" sequence=""/>
         <menuitem id="menu_thhsth" name="(2a) tinh hình hs thôi học" parent="menu_baocao" action="thhsth_action_form" sequence=""/>
   </data>
 </odoo>

@@ -1,37 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <data>
-    <!-- <record id="tinhhinhhocsinhthoihoc_view_form" model="ir.ui.view">
-      <field name="name">tinhhinhhocsinhthoihoc.form</field>
-      <field name="model">solienlac.tinhhinhhocsinhthoihoc</field>
-      <field name="arch" type="xml">
-        <form string="Tình hình học sinh thôi học">
-          <sheet>
-              <group colspan='6' col='6'>
-                <group colspan='2' col='2'>
-                  <field name="namhoc"/>
-                  <field name="khoi"/>
-                  <field name="ngayhientai"/>
-                </group>
-                <group colspan='2' col='2'>
-                  <field name="tongsohocsinhdaunam"/>
-                  <field name="tongsohocsinhcuoinam"/>
-                  <field name="tongsohocsinhthoihoc"/>
-                  <field name="sohocsinhchuyenden"/>
-                  <field name="sohocsinhchuyendi"/>
-                </group>
-                <group colspan='2' col='2'>
-                  <field name="kyluatbuocthoihoc1nam"/>
-                  <field name="dohoclucyeukem"/>
-                  <field name="dohoancanhkhokhan"/>
-                  <field name="doxanha"/>
-                  <field name="lydokhac"/>
-                </group>
-              </group>
-          </sheet>
-        </form>
-      </field>
-    </record> -->
 
     <record id="gvdd_hskt_view_form" model="ir.ui.view">
       <field name="name">gvdd_hskt.form</field>
@@ -241,5 +209,36 @@
     </field>
   </record>
 
-  </data>
+  <!-- (9)GV trường ngoài công lập -->
+ <record id="giaovientruongngoaiconglap_view_form" model="ir.ui.view">
+   <field name="name">giaovientruongngoaiconglap.form</field>
+   <field name="model">solienlac.giaovientruongngoaiconglap</field>
+   <field name="arch" type="xml">
+     <form string="Số liệu giáo viên trường ngoài công lập">
+       <sheet>
+           <group colspan='4' col='4' string='Thông tin phân loại'>
+               <group colspan='2' col='2'>
+                 <field name="monhoc"/>
+               </group>
+               <group colspan='2' col='2'>
+                 <field name="slgv"/>
+               </group>
+           </group>
+           <group colspan='4' col='4' string='Phân loại giảng viên'>
+             <group colspan='2' col='2' string='Trình độ chuyên môn'>
+               <field name="tdcm_dh"/>
+               <field name="tdcm_cd"/>
+               <field name="tdcm_tdh"/>
+               <field name="tdcm_k"/>
+             </group>
+             <group colspan='2' col='2' string='Diện giảng dạy'>
+               <field name="dien_ch"/>
+               <field name="dien_tg"/>
+               <field name="tyle"/>
+             </group>
+           </group>
+       </sheet>
+     </form>
+   </field>
+ </record>
 </odoo>
