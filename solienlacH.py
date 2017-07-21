@@ -176,6 +176,7 @@ class monhoc_has_giaovien(models.Model):
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
         ],
+        default = 'i'
     )
     monhoc = fields.Many2one('solienlac.monhoc', string='Môn học')
     giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên')
@@ -218,6 +219,7 @@ class lop_has_giaovien(models.Model):
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
         ],
+        default = 'i'
     )
     ngaybatdau = fields.Date('Ngày bắt đầu:')
     ngayketthuc = fields.Date('Ngày kết thúc: ')
@@ -382,6 +384,7 @@ class hanhkiem(models.Model):
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
         ],
+        default = 'i'
     )
     # namhoc = fields.Char('Năm học')
 
@@ -637,6 +640,7 @@ class lydothoihoc(models.Model):
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
         ],
+        default = 'i'
     )
     # namhoc = fields.Char('Năm học')
 
@@ -686,6 +690,7 @@ class nguongochocsinh(models.Model):
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
         ],
+        default = 'i'
     )
     # namhoc = fields.Char('Năm học')
     #---------- define fields namhoc ------------
@@ -873,6 +878,7 @@ class ketquahoctap(models.Model):
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
         ],
+        default = 'i'
     )
     # namhoc = fields.Char('Năm học')
 
@@ -945,6 +951,7 @@ class nenep(models.Model):
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
         ],
+        default = 'i'
     )
     # namhoc = fields.Char('Năm học')
 
@@ -1011,6 +1018,7 @@ class bangdiem(models.Model):
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
         ],
+        default = 'i'
     )
     # namhoc = fields.Char('Năm học')
     #---------- define fields namhoc ------------
@@ -1073,6 +1081,7 @@ class danhhieuhocsinh(models.Model):
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
         ],
+        default = 'i'
     )
     # namhoc = fields.Char(string="Năm học", )
 
@@ -1146,6 +1155,7 @@ class nhapdiemhocsinh(models.Model):
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
         ],
+        default = 'i'
     )
     # namhoc = fields.Char(string="Năm học", )
 
@@ -1286,6 +1296,7 @@ class nhapdiemchitiet(models.Model):
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
         ],
+        default = 'i'
     )
     namhoc = fields.Selection(
         string="Năm học",
