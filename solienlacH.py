@@ -1,7 +1,11 @@
 ﻿# -*- coding: utf-8 -*-
 import datetime
 import time
-from odoo import models, fields, api
+from odoo import models, fields, api, exceptions, _
+from odoo.http import request
+import json
+
+
 class caphoc(models.Model):
     _name = 'solienlac.caphoc'
     _rec_name = 'tencaphoc'
@@ -49,7 +53,7 @@ class captruong(models.Model):
 class hangtruong(models.Model):
     _name = 'solienlac.hangtruong'
     _rec_name = 'tenhangtruong' # optional
-    _description = 'Hạng trường'
+    # _description = 'Hạng trường'
 
     mahangtruong = fields.Integer('Hạng trường', required='True')
     tenhangtruong = fields.Selection([
@@ -62,7 +66,7 @@ class hangtruong(models.Model):
 class loaihinhtruong(models.Model):
     _name = 'solienlac.loaihinhtruong'
     _rec_name = 'tenloahinhtruong' # optional
-    _description = 'Loại hình trường'
+    # _description = 'Loại hình trường'
 
     maloaihinhtruong = fields.Integer('Loại hình trường', required='True')
     tenloahinhtruong = fields.Selection([
@@ -80,7 +84,7 @@ class loaihinhtruong(models.Model):
 class truongchuyenbiet(models.Model):
     _name = 'solienlac.truongchuyenbiet'
     _rec_name = 'tentruongchuyenbiet' # optional
-    _description = 'Trường chuyên biệt'
+    # _description = 'Trường chuyên biệt'
 
     maloaihinhtruong = fields.Integer('Trường chuyên biệt', required='True')
     tentruongchuyenbiet = fields.Selection([
@@ -96,7 +100,6 @@ class truongchuyenbiet(models.Model):
 class loailopnho(models.Model):
     _name = 'solienlac.loailopnho'
     _rec_name = 'tenloailopnho' # optional
-    _description = 'Loại lớp nhô'
 
     maloailopnho = fields.Integer('Trường chuyên biệt', required='True')
     tenloailopnho = fields.Selection([
@@ -229,20 +232,13 @@ class monhoc_has_giaovien(models.Model):
     )
     #---------- end define fields namhoc ------------
 
-
     hocky = fields.Selection(
         string="Học kỳ",
         selection=[
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
-<<<<<<< HEAD
         ],default = 'i')
-=======
-        ],
-        default = 'i'
-    )
->>>>>>> f50ba4773afb3daf2626cfdd68b820c56ac59095
     monhoc = fields.Many2one('solienlac.monhoc', string='Môn học')
     giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên')
     lop = fields.Many2one('solienlac.lop', string='Lớp')
@@ -446,13 +442,7 @@ class hanhkiem(models.Model):
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
-<<<<<<< HEAD
         ],default = 'i')
-=======
-        ],
-        default = 'i'
-    )
->>>>>>> f50ba4773afb3daf2626cfdd68b820c56ac59095
     # namhoc = fields.Char('Năm học')
 
     #---------- define fields namhoc ------------
@@ -706,13 +696,7 @@ class lydothoihoc(models.Model):
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
-<<<<<<< HEAD
         ],default = 'i')
-=======
-        ],
-        default = 'i'
-    )
->>>>>>> f50ba4773afb3daf2626cfdd68b820c56ac59095
     # namhoc = fields.Char('Năm học')
 
     #---------- define fields namhoc ------------
@@ -760,13 +744,7 @@ class nguongochocsinh(models.Model):
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
-<<<<<<< HEAD
         ],default = 'i')
-=======
-        ],
-        default = 'i'
-    )
->>>>>>> f50ba4773afb3daf2626cfdd68b820c56ac59095
     # namhoc = fields.Char('Năm học')
     #---------- define fields namhoc ------------
     @api.model
@@ -956,13 +934,7 @@ class ketquahoctap(models.Model):
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
-<<<<<<< HEAD
         ],default = 'i')
-=======
-        ],
-        default = 'i'
-    )
->>>>>>> f50ba4773afb3daf2626cfdd68b820c56ac59095
     # namhoc = fields.Char('Năm học')
 
     #---------- define fields namhoc ------------
@@ -1033,13 +1005,7 @@ class nenep(models.Model):
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
-<<<<<<< HEAD
         ],default = 'i')
-=======
-        ],
-        default = 'i'
-    )
->>>>>>> f50ba4773afb3daf2626cfdd68b820c56ac59095
     # namhoc = fields.Char('Năm học')
 
     #---------- define fields namhoc ------------
@@ -1167,13 +1133,7 @@ class danhhieuhocsinh(models.Model):
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
-<<<<<<< HEAD
         ],default = 'i')
-=======
-        ],
-        default = 'i'
-    )
->>>>>>> f50ba4773afb3daf2626cfdd68b820c56ac59095
     # namhoc = fields.Char(string="Năm học", )
 
     #---------- define fields namhoc ------------
@@ -1245,13 +1205,7 @@ class nhapdiemhocsinh(models.Model):
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
-<<<<<<< HEAD
         ],default = 'i')
-=======
-        ],
-        default = 'i'
-    )
->>>>>>> f50ba4773afb3daf2626cfdd68b820c56ac59095
     # namhoc = fields.Char(string="Năm học", )
 
     #---------- define fields namhoc ------------
@@ -1394,13 +1348,7 @@ class nhapdiemchitiet(models.Model):
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
-<<<<<<< HEAD
         ],default = 'i')
-=======
-        ],
-        default = 'i'
-    )
->>>>>>> f50ba4773afb3daf2626cfdd68b820c56ac59095
     namhoc = fields.Selection(
         string="Năm học",
         selection= _get_list_namhoc,

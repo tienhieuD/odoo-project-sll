@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data noupdate="0">
+    <record id="module_user_group" model="ir.module.category" >
+        <field name="name">QL Học sinh</field>
+        <field name="description">Nhóm phân quyền cho QL học sinh</field>
+    </record>
+    <record id="group_giaovien" model="res.groups">
+        <field name="name">Giáo viên</field>
+        <field name="category_id" ref="solienlac.module_user_group"/>
+    </record>
+    <record id="group_hieutruong" model="res.groups">
+        <field name="name">Hiệu trưởng</field>
+        <field name="category_id" ref="solienlac.module_user_group"/>
+    </record>
+</data>
+
+</odoo>

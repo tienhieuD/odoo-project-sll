@@ -22,9 +22,8 @@
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
-        # 'templates.xml',
-        # 'user_groups.xml',
+        'views/user_groups.xml',
+        'ir.model.access.csv',
         'views/giaoanchinhsua.xml',
         'views/form.xml',
         'views/tree.xml',

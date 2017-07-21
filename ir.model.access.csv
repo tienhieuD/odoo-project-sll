@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_solienlac_customer_read,solienlac read customer,model_solienlac_hocsinh,solienlac.group_giaovien,1,0,1,0
+access_solienlac_customer_all,solienlac all customer,model_solienlac_hocsinh,solienlac.group_hieutruong,1,1,1,1
