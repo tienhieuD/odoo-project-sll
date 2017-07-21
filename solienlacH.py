@@ -1340,6 +1340,10 @@ class nhapdiemhocsinh(models.Model):
             for item in lst_chk:
                 if str(item) == '':
                     flag = False
+                if str(item) == 'False':
+                    flag = False
+                if item == False:
+                    flag = False
 
             if flag:
                 # Create objects nhapdiemchitiet
