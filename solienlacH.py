@@ -47,6 +47,7 @@ class captruong(models.Model):
         ('15', 'Nhóm trẻ độc lập'),
         ('16', 'Lớp mẫu giáo độc lập'),
         ('17', 'Lớp mầm non độc lập'),
+        ('18', 'Khác'),
     ],default='1', string='Tên cấp trường')
     ghichu = fields.Char('Ghi chú')
 
