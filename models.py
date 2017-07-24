@@ -326,7 +326,7 @@ class xeploaihocluc(models.Model):
         namvaonganh = fields.Char('Năm vào ngành')
         # namvaonganh = fields.Date('Năm vào ngành')
         phanconggiangday = fields.Many2many('solienlac.lop', string='Phân công giảng dạy')
-        phanconggiangday = fields.Char('Phân công giảng dạy')
+        # phanconggiangday = fields.Char('Phân công giảng dạy')
         sodienthoai = fields.Char('DTDĐ')
         giaovien = fields.Many2one('solienlac.giaovien')
         #@api.model
