@@ -155,7 +155,7 @@ class truong(models.Model):
 
 
     giaovien = fields.One2many(string="Giáo viên của trường", comodel_name="solienlac.giaovien", inverse_name="truong")
-    hocsinh = fields.One2many(string="Học sinh của trường", comodel_name="solienlac.hocsinh", inverse_name="truong")
+    # hocsinh = fields.One2many(string="Học sinh của trường", comodel_name="solienlac.hocsinh", inverse_name="truong")
     khoi = fields.One2many(string="Khối", comodel_name="solienlac.khoi", inverse_name="truong")
 
 
@@ -562,7 +562,7 @@ class hocsinh(models.Model):
     noisinh = fields.Char('Nơi sinh')
     quequan = fields.Char('Quê quán')
     lop = fields.Many2one('solienlac.lop', string='Lớp')
-    truong = fields.Many2one('solienlac.truong', string = "Trường")
+    # truong = fields.Many2one('solienlac.truong', string = "Trường")
     tuyenhoc = fields.Many2one('solienlac.tuyenhoc', string='Tuyến học')
 
     phuongxa = fields.Many2one('solienlac.phuongxa', string='Phường\Xã')
@@ -653,6 +653,14 @@ class hocsinh(models.Model):
         ],
     )
     lydothoihoc = fields.Many2one(string="Lý do thôi học",comodel_name="solienlac.lydothoihoc")
+    # user_login = fields.Char('Login')
+    user_login = fields.Char('Login', compute='set_acc')
+
+    @api.multi
+    def set_acc(self):
+        uid = self.env.uid
+        user = self.env['res.users'].search([('uid', '=', id)])
+        self.user_login = user.login
 
     @api.multi
     @api.onchange('tinhthanhpho')
