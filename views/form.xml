@@ -3,7 +3,7 @@
   <data>
 
     <!-- Giáo viên - form view -->
-    <record id="giaovien_view_form" model="ir.ui.view">
+    <!-- <record id="giaovien_view_form" model="ir.ui.view">
       <field name="name">giaovien.form</field>
       <field name="model">solienlac.giaovien</field>
       <field name="arch" type="xml">
@@ -17,6 +17,10 @@
                 <field name="magiaovien"/>
                 <field name="hoten"/>
                 <field name="gioitinh"/>
+                <field name="name"/>
+                <field name="login"/>
+                <field name="partner_id"/>
+                <field name="company_id"/>
               </group>
               <group colspan="2" col="2">
                 <field name="ngaysinh"/>
@@ -51,7 +55,7 @@
           </sheet>
         </form>
       </field>
-    </record>
+    </record> -->
 
     <!-- tổ - form wiews -->
     <record id="to_view_form" model="ir.ui.view">
@@ -233,6 +237,7 @@
               </group>
               <group colspan="2" col="2">
                 <field name="tenkhoi"/>
+                <field name="truong"/>
               </group>
             </group>
           </sheet>
@@ -583,7 +588,7 @@
 
     <!--nhapdiemhocsinh-->
     <record id="nhapdiemhocsinh_view_form" model="ir.ui.view">
-      <field name="name">solienlac.nhapdiemhocsinh.form</field>
+      <field name="name">Nhập điểm học sinh</field>
       <field name="model">solienlac.nhapdiemhocsinh</field>
       <field name="arch" type="xml">
         <form string="Nhập điểm học sinh">
@@ -598,6 +603,7 @@
                 <field name="hocky"/>
                 <field name="namhoc"/>
                 <field name="napdulieu"/>
+                <field name="test1"/>
               </group>
             </group>
           </sheet>

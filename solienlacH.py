@@ -1,6 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 import datetime
 import time
+import random
 from odoo import models, fields, api, exceptions, _
 from odoo.http import request
 import json
@@ -1184,6 +1185,8 @@ class danhhieuhocsinh(models.Model):
 
 class nhapdiemhocsinh(models.Model):
     _name = 'solienlac.nhapdiemhocsinh'
+    _rec_name = 'giaovien' # optional
+
     @api.model
     def _get_list_namhoc(self):
         lst_namhoc=[]
@@ -1199,6 +1202,7 @@ class nhapdiemhocsinh(models.Model):
             year -= 1
         return str(year) + "-" + str(year+1)
 
+    test1 = fields.Char()
     napdulieu = fields.Boolean('Nạp lại dữ liệu')
     giaovien = fields.Many2one(
         string="Giáo viên",
@@ -1255,6 +1259,7 @@ class nhapdiemhocsinh(models.Model):
     @api.onchange('lop','namhoc','hocky','monhoc','napdulieu')
     def _compute_model(self):
         '''My defining function'''
+        self.test1 = str(self.env.uid) + str(random.randint(0,10))
         # Get hocsinh object
         def get_hs(self, id):
             return self.env['solienlac.hocsinh'].search([('id','=',id)])[0]
@@ -1423,3 +1428,29 @@ class nhapdiemchitiet(models.Model):
             diemtk = float(tong)/float(he_so)
 
             record.diemtongket = diemtk
+
+class Users(models.Model):
+    _name = 'solienlac.taikhoan'
+
+    login = fields.Char()
+    password = fields.Char()
+    quyen = fields.Many2many(
+        string="Quyền",
+        comodel_name="res.groups",
+    )
+
+    @api.model
+    def create(self, values):
+        # Code chinh day ne
+        vals = {
+            'name': values['login'],
+            'login': values['login'],
+            'company_ids': [1],
+            'company_id': 1,
+            'new_password': values['password'],
+            'groups_id': values['quyen'],
+        }
+        self.env['res.users'].sudo().create(vals)
+        # Deo lien quan dau kemeno
+        user = super(Users, self).create(values)
+        return user
