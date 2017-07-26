@@ -658,20 +658,17 @@ class hocsinh(models.Model):
         ],
     )
     lydothoihoc = fields.Many2one(string="Lý do thôi học",comodel_name="solienlac.lydothoihoc")
-    # user_login = fields.Char('Login')
+    user_login = fields.Char('Login')
     # test = fields.Char('test', compute='set_acc')
     user_login = fields.Char('Login', compute='set_acc')
-    user_id = fields.Many2one(
-        'res.users', string='User', default=lambda self:self.env.user)
-
     @api.multi
     def set_acc(self):
         uid = self.env.uid
         user = self.env['res.users'].search([('id', '=', uid)])
-        if(self.mahocsinh == user.login):
-            self.user_login = "True"
+        if(str(self.mahocsinh) == str(user.login)):
+            self.user_login = str("True")
         else:
-            self.user_login = "False"
+            self.user_login = str("False")
 
     @api.multi
     @api.onchange('tinhthanhpho')
