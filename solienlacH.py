@@ -549,10 +549,10 @@ class bangdiemdanh(models.Model):
 class hocsinh(models.Model):
     _name = 'solienlac.hocsinh'
     _rec_name = 'hoten' # optional
-    danhhieuhocsinh = fields.One2many('solienlac.danhhieuhocsinh', 'hocsinh', string = 'Danh hiệu học sinh')
-    khenthuonghocsinh = fields.Many2many('solienlac.khenthuonghocsinh', string = 'Thành tích khen thưởng')
-    kyluathocsinh = fields.Many2many('solienlac.kyluathocsinh', string = 'Kỷ luật học sinh')
+
     mahocsinh = fields.Char('Mã học sinh', required='True')
+
+
     hoten = fields.Char('Họ tên', required='True')
     gioitinh = fields.Selection([
         ('Nam', 'Nam'),
@@ -568,6 +568,10 @@ class hocsinh(models.Model):
     phuongxa = fields.Many2one('solienlac.phuongxa', string='Phường\Xã')
     quanhuyen = fields.Many2one('solienlac.quanhuyen', string='Quận\Huyện')
     tinhthanhpho = fields.Many2one('solienlac.tinhthanhpho', string='Tỉnh\Thành phố')
+
+    danhhieuhocsinh = fields.One2many('solienlac.danhhieuhocsinh', 'hocsinh', string = 'Danh hiệu học sinh')
+    khenthuonghocsinh = fields.Many2many('solienlac.khenthuonghocsinh', string = 'Thành tích khen thưởng')
+    kyluathocsinh = fields.Many2many('solienlac.kyluathocsinh', string = 'Kỷ luật học sinh')
 
     dantoc = fields.Many2one('solienlac.dantoc', string='Dân tộc')
     tongiao = fields.Many2one('solienlac.tongiao', string='Tôn giáo')
@@ -653,14 +657,17 @@ class hocsinh(models.Model):
         ],
     )
     lydothoihoc = fields.Many2one(string="Lý do thôi học",comodel_name="solienlac.lydothoihoc")
-    # user_login = fields.Char('Login')
+    user_login = fields.Char('Login')
+    # test = fields.Char('test', compute='set_acc')
     user_login = fields.Char('Login', compute='set_acc')
-
     @api.multi
     def set_acc(self):
         uid = self.env.uid
-        user = self.env['res.users'].search([('uid', '=', id)])
-        self.user_login = user.login
+        user = self.env['res.users'].search([('id', '=', uid)])
+        if(str(self.mahocsinh) == str(user.login)):
+            self.user_login = str("True")
+        else:
+            self.user_login = str("False")
 
     @api.multi
     @api.onchange('tinhthanhpho')
