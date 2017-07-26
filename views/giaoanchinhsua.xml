@@ -272,12 +272,27 @@
     </record>
 
     <!--hocsinh-->
+    <record model="ir.ui.view" id="hocsinh_action_filter">
+        <field name="name">hocsinh.action.filter</field>
+        <field name="model">solienlac.hocsinh</field>
+        <field name="arch" type="xml">
+            <search string="SLLHS Filter">
+                <field name="user_id"/>
+                <group expand="0" string="Group By">
+                    <filter string="User" domain="[]"
+                            context="{'group_by':'user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
     <record id="hocsinh_action_form" model="ir.actions.act_window">
       <field name="name">Học sinh</field>
       <field name="res_model">solienlac.hocsinh</field>
-      <field name="domain">[('user_login', '=', 'True')]</field>
+      <!-- <field name="domain">[('user_login', '=', 'True')]</field> -->
       <!-- <field name="domain">[('noitru', '=', True)]</field> -->
+      <field name="context">{'search_default_user_id': uid, 'default_user_id': uid}</field>
       <field name="view_mode">tree,form</field>
+      <field name="search_view_id" ref="hocsinh_action_filter"/>
       <field name="help" type="html">
         <p class="oe_view_nocontent_create">
           <!-- Add Text Here -->
@@ -703,7 +718,7 @@
         <menuitem id="menu_banhoc" name="Ban học" parent="menu_noibonhatruong" action="banhoc_action_form" sequence=""/>
         <menuitem id="menu_tobomon" name="Tổ bộ môn" parent="menu_noibonhatruong" action="bomon_action_form" sequence=""/>
       <menuitem id="menu_quanlyhocsinh" name="Quản lý học sinh" parent="menu_truongquanly" sequence=""/>
-        <menuitem id="menu_hocsinh" name="Học sinh" parent="menu_quanlyhocsinh" action="hocsinh_action_form" sequence="" groups="group_customer"/>
+        <menuitem id="menu_hocsinh" name="Học sinh" parent="menu_quanlyhocsinh" action="hocsinh_action_form" groups="group_customer"/>
         <menuitem id="menu_nhapdiemhocsinh" name="Nhập điểm học sinh" parent="menu_quanlyhocsinh" action="nhapdiemhocsinh_action_form" sequence=""/>
         <menuitem id="menu_nhapdiemchitiet" name="Nhập điểm CT" parent="menu_quanlyhocsinh" action="nhapdiemchitiet_action_form" sequence=""/>
         <menuitem id="menu_bangdiemdanh" name="Bảng điểm danh" parent="menu_quanlyhocsinh" action="bangdiemdanh_action_form" sequence=""/>
