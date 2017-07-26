@@ -491,20 +491,21 @@
       <field name="name">solienlac.hocsinh.form</field>
       <field name="model">solienlac.hocsinh</field>
       <field name="arch" type="xml">
-        <form string="Học sinh">
+        <form string="Học sinh" >
           <header>
             Quản lý thông tin học sinh
           </header>
           <sheet>
               <group colspan="4" col="4" string='Thông tin học sinh'>
                 <group colspan="2" col="2" >
-                  <field name="mahocsinh"/>
-                  <field name="hoten"/>
+                  <field name="mahocsinh" domain="[('user_login', '=', True)]"/>
+                  <field name="hoten" />
                   <field name="gioitinh"/>
                   <field name="ngaysinh"/>
                   <field name="noisinh"/>
                   <field name="dantoc"/>
                   <field name="tongiao"/>
+                  <field name="user_login"/>
                 </group>
                 <group colspan="2" col="2" >
                   <field name="quequan"/>
