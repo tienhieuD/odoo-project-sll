@@ -421,7 +421,7 @@
 
     <!--nhapdiemhocsinh-->
     <record id="nhapdiemhocsinh_action_form" model="ir.actions.act_window">
-      <field name="name">solienlac.nhapdiemhocsinh</field>
+      <field name="name">Nhập điểm học sinh</field>
       <field name="res_model">solienlac.nhapdiemhocsinh</field>
       <field name="view_mode">tree,form</field>
       <field name="help" type="html">
@@ -664,7 +664,22 @@
       </field>
     </record>
 
+    <record id="taikhoan_action_form" model="ir.actions.act_window">
+      <field name="name">Tài khoản</field>
+      <field name="res_model">solienlac.taikhoan</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+          <!-- Add Text Here -->
+        </p>
+        <p>
+          <!-- More details about what a user can do -->
+        </p>
+      </field>
+    </record>
+
     <!--Menu-->
+    <menuitem id="menu_taikhoan" name="Tài khoản người dùng" sequence="0" action="taikhoan_action_form"/>
     <menuitem id="menu_danhmuchanhchinh" name="Danh mục hành chính" sequence=""/>
       <menuitem id="menu_phuongxa" name="Phường/xã" parent="menu_danhmuchanhchinh" action="phuongxa_action_form" sequence=""/>
       <menuitem id="menu_quanhuyen" name="Quận huyện" parent="menu_danhmuchanhchinh" action="quanhuyen_action_form" sequence=""/>
