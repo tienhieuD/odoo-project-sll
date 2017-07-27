@@ -168,19 +168,6 @@
       </field>
     </record>
 
-    <record id="taikhoan_action_form" model="ir.actions.act_window">
-      <field name="name">Tài khoản</field>
-      <field name="res_model">solienlac.taikhoan</field>
-      <field name="view_mode">tree,form</field>
-      <field name="help" type="html">
-        <p class="oe_view_nocontent_create">
-          <!-- Add Text Here -->
-        </p>
-        <p>
-          <!-- More details about what a user can do -->
-        </p>
-      </field>
-    </record>
 
     <!--Menu-->
 	<!-- <menuitem id="menu_taikhoan" name="Tài khoản người dùng" sequence="0" action="taikhoan_action_form" groups=""/> -->

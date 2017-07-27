@@ -31,5 +31,6 @@
         'views/form.xml',
         'views/tree.xml',
         # 'views/baocao.xml',
+        'views/menu_tai_khoan.xml',
     ],
 }
