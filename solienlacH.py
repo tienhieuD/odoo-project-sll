@@ -1441,25 +1441,68 @@ class nhapdiemchitiet(models.Model):
 
 class Users(models.Model):
     _name = 'solienlac.taikhoan'
+    _rec_name = 'login'
 
-    login = fields.Char()
-    password = fields.Char()
+    @api.model
+    #get list domain
+    def _get_test(self):
+        def _contain(string, lst):
+            return any(string in item for item in lst)
+        def _get_group_id(self, name):
+            return self.env['res.groups'].sudo().search([
+                ('name', '=ilike', name),
+            ])[0].id
+
+        uid = self.env.uid
+        current_user = self.env['res.users'].sudo().search([
+            ('id','=',uid),
+        ])
+        lst_groups_id = current_user[0].groups_id
+        lst_groups_name = map(lambda x: x.name, lst_groups_id)
+        lst_quyen = []
+
+        if _contain('System Admin(level1)', lst_groups_name):
+            lst_quyen = [1,2,3,4,5,6,7,8,9,10]
+        elif _contain('System Admin(level2)', lst_groups_name):
+            item = _get_group_id(self, 'System Admin(level1)')
+            item2 = _get_group_id(self, 'System Admin(level2)')
+            lst_quyen = [1,2,3,4,5,6,7,8,9,10,item,item2]
+        elif _contain('School Admin(l1', lst_groups_name):
+            item1 = _get_group_id(self, 'System Admin(level1)')
+            item2 = _get_group_id(self, 'System Admin(level2)')
+            item3 = _get_group_id(self, 'System Admin(level3)')
+            item4 = _get_group_id(self, 'School Admin(l1')
+            lst_quyen = [1,2,3,4,5,6,7,8,9,10,item1,item2,item3]
+        return [('id', 'not in', lst_quyen)]
+# Taskkill /IM odoo-bin.exe /F
+# "C:\Program Files (x86)\Odoo 10.0\server\odoo-bin.exe -d solienlac -u solienlac"
+
+    login = fields.Char(string='Login')
+    password = fields.Char(string='Password')
     quyen = fields.Many2many(
         string="Quyền",
         comodel_name="res.groups",
+        # domain="[('id', 'not in', [1,2,3,4,5,6,7,8,9,10])]",
+        domain= _get_test,
     )
+    string = fields.Char(default=_get_test)
 
     @api.model
     def create(self, values):
+        quyen_da_chon = values['quyen'][0][2]
+        quyen_da_chon.append(1)
+
         # Code chinh day ne
         vals = {
             'name': values['login'],
             'login': values['login'],
+            'new_password': '7777777',
             'company_ids': [1],
             'company_id': 1,
-            'new_password': values['password'],
-            'groups_id': values['quyen'],
+            'groups_id': quyen_da_chon,
         }
+        # print values
+        print vals
         self.env['res.users'].sudo().create(vals)
         # Deo lien quan dau kemeno
         user = super(Users, self).create(values)

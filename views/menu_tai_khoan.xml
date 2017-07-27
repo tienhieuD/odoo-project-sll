@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record id="taikhoan_action_form" model="ir.actions.act_window">
+    <field name="name">Quản lý tài khoản</field>
+    <field name="res_model">solienlac.taikhoan</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        Chưa có tài khoản nào
+      </p>
+      <p>
+        Thêm tài khoản đăng nhập và phân quyền cho nó.
+      </p>
+    </field>
+  </record>
+
+  <record id="taikhoan_view_tree" model="ir.ui.view">
+    <field name="name">Tài khoản</field>
+    <field name="model">solienlac.taikhoan</field>
+    <field name="arch" type="xml">
+      <tree string="Quản lý tài khoản">
+        <field name="login"/>
+        <field name="password"/>
+        <field name="quyen"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="taikhoan_view_form" model="ir.ui.view">
+    <field name="name">Tài khoản</field>
+    <field name="model">solienlac.taikhoan</field>
+    <field name="arch" type="xml">
+      <form string="Tài khoản">
+        <sheet>
+          <group>
+            <field name="login"/>
+            <field name="password"/>
+            <field name="quyen"/>
+            <field name="string" invisible='1'/>
+          </group>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <menuitem id="menu_tai_khoan" name="Quản lý tài khoản" action="taikhoan_action_form"
+    groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3,group_schooladmin_l1"/>
+</odoo>
