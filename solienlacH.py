@@ -1444,20 +1444,48 @@ class Users(models.Model):
     quyen = fields.Many2many(
         string="Quyền",
         comodel_name="res.groups",
+        domain="[('id', '!=', [1,2,3,4,5,6,7,8,9,10])]",
+        required = True,
+        groups='solienlac.group_systemadmin_l1'
     )
+    # string = fields.Char('string')
 
     @api.model
     def create(self, values):
+        # values['string'] = values['quyen']
         # Code chinh day ne
+        a = values['quyen'][0][2]
+        b = [1]
+        b.extend(a)
         vals = {
             'name': values['login'],
             'login': values['login'],
             'company_ids': [1],
             'company_id': 1,
             'new_password': values['password'],
-            'groups_id': values['quyen'],
+            'password': values['password'],
+            #add user to group: employee
+            'groups_id': b
         }
         self.env['res.users'].sudo().create(vals)
         # Deo lien quan dau kemeno
         user = super(Users, self).create(values)
         return user
+    # @api.multi
+    # def write(self, values):
+    #     a = values['quyen'][0][2]
+    #     b = [1]
+    #     b.extend(a)
+    #     vals = {
+    #         # 'name': values['login'],
+    #         # 'login': values['login'],
+    #         # 'company_ids': [1],
+    #         # 'company_id': 1,
+    #         # 'new_password': values['password'],
+    #         #add user to group: employee
+    #         'groups_id': b
+    #     }
+    #     self.env['res.users'].sudo().write(vals)
+    #
+    #     res = super(Users, self).write(values)
+    #     return res
