@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!------------------- menu thông tin nhà trường ---------------------->
+  <!-- Trường -->
+  <record model="ir.ui.view" id="truong_school_admin_action_filter">
+      <field name="name">truong.action.filter</field>
+      <field name="model">solienlac.truong</field>
+      <field name="arch" type="xml">
+          <search string="Trường Filter">
+              <field name="user_id"/>
+              <group expand="0" string="Group By">
+                  <filter string="User" domain="[]"
+                          context="{'group_by':'user_id'}"/>
+              </group>
+          </search>
+      </field>
+  </record>
+  <record id="truong_school_admin_action_form" model="ir.actions.act_window">
+    <field name="name">Trường</field>
+    <field name="res_model">solienlac.truong</field>
+    <field name="context">{'search_default_user_id': uid, 'default_user_id': uid}</field>
+    <field name="view_mode">tree,form</field>
+    <field name="search_view_id" ref="truong_school_admin_action_filter"/>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+      </p>
+      <p>
+      </p>
+    </field>
+  </record>
+
+  <!--------------------- menu nội bộ nhà trường ------------------------>
+  <!--Giáo viên-->
+  <record id="giaovien_school_admin_action_form" model="ir.actions.act_window">
+    <field name="name">Giáo viên</field>
+    <field name="res_model">solienlac.giaovien</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        Chưa tạo ai.
+      </p>
+      <p>
+        Hãy tạo thêm giáo viên.
+      </p>
+    </field>
+  </record>
+
+  <!--Tổ-->
+  <record id="to_school_admin_action_form" model="ir.actions.act_window">
+    <field name="name">Tổ</field>
+    <field name="res_model">solienlac.to</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
+  <!--Phòng ban-->
+  <record id="phongban_school_admin_action_form" model="ir.actions.act_window">
+    <field name="name">Phòng ban</field>
+    <field name="res_model">solienlac.phongban</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
+  <!--Bộ môn-->
+  <record id="bomon_school_admin_action_form" model="ir.actions.act_window">
+    <field name="name">Bộ môn</field>
+    <field name="res_model">solienlac.bomon</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
+
+  <!--------------------- menu quản lý học sinh ------------------------->
+
+  <!--khenthuongkyluat-->
+  <record id="khenthuongkyluat_school_admin_action_form" model="ir.actions.act_window">
+    <field name="name">Khen thưởng kỷ luật</field>
+    <field name="res_model">solienlac.khenthuongkyluat</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
+  <!--khenthuongkyluat_hocsinh-->
+  <record id="khenthuongkyluat_school_admin_hocsinh_action_form" model="ir.actions.act_window">
+    <field name="name">Khen thưởng/Kỷ luật học sinh</field>
+    <field name="res_model">solienlac.khenthuongkyluat_hocsinh</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
+  <!--khenthuonghocsinh-->
+  <record id="khenthuonghocsinh_school_admin_action_form" model="ir.actions.act_window">
+    <field name="name">Khen thưởng học sinh</field>
+    <field name="res_model">solienlac.khenthuonghocsinh</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
+  <!--kyluathocsinh-->
+  <record id="kyluathocsinh_school_admin_action_form" model="ir.actions.act_window">
+    <field name="name">Kỷ luật học sinh</field>
+    <field name="res_model">solienlac.kyluathocsinh</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
+  <!--khoi-->
+  <record id="khoi_school_admin_action_form" model="ir.actions.act_window">
+    <field name="name">Khối học</field>
+    <field name="res_model">solienlac.khoi</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
+  <!--hanhkiem-->
+  <record id="hanhkiem_school_admin_action_form" model="ir.actions.act_window">
+    <field name="name">Hạnh kiểm</field>
+    <field name="res_model">solienlac.hanhkiem</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
+  <!--phuhuynh-->
+  <record id="phuhuynh_school_admin_action_form" model="ir.actions.act_window">
+    <field name="name">Phụ huynh</field>
+    <field name="res_model">solienlac.phuhuynh</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
+  <!--bangdiemdanh-->
+  <record id="bangdiemdanh_school_admin_action_form" model="ir.actions.act_window">
+    <field name="name">Bảng điểm danh</field>
+    <field name="res_model">solienlac.bangdiemdanh</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
+  <!--hocsinh-->
+  <record model="ir.ui.view" id="hocsinh_school_admin_action_filter">
+      <field name="name">hocsinh.action.filter</field>
+      <field name="model">solienlac.hocsinh</field>
+      <field name="arch" type="xml">
+          <search string="SLLHS Filter">
+              <field name="user_id"/>
+              <group expand="0" string="Group By">
+                  <filter string="User" domain="[]"
+                          context="{'group_by':'user_id'}"/>
+              </group>
+          </search>
+      </field>
+  </record>
+  <record id="hocsinh_school_admin_action_form" model="ir.actions.act_window">
+    <field name="name">Học sinh</field>
+    <field name="res_model">solienlac.hocsinh</field>
+    <!-- <field name="domain">[('user_login', '=', 'True')]</field> -->
+    <!-- <field name="domain">[('noitru', '=', True)]</field> -->
+    <field name="context">{'search_default_user_id': uid, 'default_user_id': uid}</field>
+    <field name="view_mode">tree,form</field>
+    <field name="search_view_id" ref="hocsinh_school_admin_action_filter"/>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
+  <!--lop-->
+  <record id="lop_school_admin_action_form" model="ir.actions.act_window">
+    <field name="name">Lớp</field>
+    <field name="res_model">solienlac.lop</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
+  <!--banhoc-->
+  <record id="banhoc_school_admin_action_form" model="ir.actions.act_window">
+    <field name="name">Ban học</field>
+    <field name="res_model">solienlac.banhoc</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
+  <!--monhoc-->
+  <record id="monhoc_school_admin_action_form" model="ir.actions.act_window">
+    <field name="name">Môn học</field>
+    <field name="res_model">solienlac.monhoc</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
+  <!--ketquahoctap-->
+  <record id="ketquahoctap_school_admin_action_form" model="ir.actions.act_window">
+    <field name="name">Kết quả học tập</field>
+    <field name="res_model">solienlac.ketquahoctap</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
+  <!--loaidiem-->
+  <record id="loaidiem_school_admin_action_form" model="ir.actions.act_window">
+    <field name="name">Loại điểm</field>
+    <field name="res_model">solienlac.loaidiem</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
+  <!--diem-->
+  <record id="diem_action_form" model="ir.actions.act_window">
+    <field name="name">Điểm</field>
+    <field name="res_model">solienlac.diem</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
+  <!--chucvu-->
+  <record id="chucvu_action_form" model="ir.actions.act_window">
+    <field name="name">Chức vụ</field>
+    <field name="res_model">solienlac.chucvu</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
+  <!--nenep-->
+  <record id="nenep_school_admin_action_form" model="ir.actions.act_window">
+    <field name="name">Nề nếp</field>
+    <field name="res_model">solienlac.nenep</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
+  <!--bangdiem-->
+  <record id="bangdiem_school_admin_action_form" model="ir.actions.act_window">
+    <field name="name">Bảng điểm</field>
+    <field name="res_model">solienlac.bangdiem</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+      </p>
+      <p>
+      </p>
+    </field>
+  </record>
+
+  <!--nhapdiemhocsinh-->
+  <record id="nhapdiemhocsinh_school_admin_action_form" model="ir.actions.act_window">
+    <field name="name">Nhập điểm học sinh</field>
+    <field name="res_model">solienlac.nhapdiemhocsinh</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+  <!--nhapdiemchitiet-->
+  <record id="nhapdiemchitiet_action_form" model="ir.actions.act_window">
+    <field name="name">Nhập điểm chi tiết</field>
+    <field name="res_model">solienlac.nhapdiemchitiet</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+  <!--------------------------- menu khác ------------------------------->
+  <!--doituongchinhsach-->
+  <record id="doituongchinhsach_action_form" model="ir.actions.act_window">
+    <field name="name">Đối tượng chính sách</field>
+    <field name="res_model">solienlac.doituongchinhsach</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
+  <menuitem id="menu_thongtintruong_school_admin" name="Thông tin nhà trường" parent="menu_truongquanly" sequence="" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/> <!--New-->
+    <menuitem id="menu_truong_school_admin" name="Trường" parent="menu_thongtintruong_school_admin" action="truong_school_admin_action_form" sequence=""/>
+  <menuitem id="menu_noibonhatruong_school_admin" name="Nội bộ nhà trường" parent="menu_truongquanly_school_admin" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/>
+    <menuitem id="menu_giaovien_school_admin" name="Giáo viên" parent="menu_noibonhatruong_school_admin" action="giaovien_school_admin_action_form" sequence=""/>
+    <menuitem id="menu_phongban_school_admin" name="Phòng ban" parent="menu_noibonhatruong_school_admin" action="phongban_school_admin_action_form" sequence=""/>
+    <menuitem id="menu_khoi_school_admin" name="Khối học" parent="menu_noibonhatruong_school_admin" action="khoi_school_admin_action_form" sequence=""/>
+    <menuitem id="menu_lop_school_admin" name="Lớp học" parent="menu_noibonhatruong_school_admin" action="lop_school_admin_action_form" sequence=""/>
+    <menuitem id="menu_monhoc_school_admin" name="Môn học" parent="menu_noibonhatruong_school_admin" action="monhoc_school_admin_action_form" sequence=""/>
+    <menuitem id="menu_banhoc_school_admin" name="Ban học" parent="menu_noibonhatruong_school_admin" action="banhoc_school_admin_action_form" sequence=""/>
+    <menuitem id="menu_tobomon_school_admin" name="Tổ bộ môn" parent="menu_noibonhatruong_school_admin" action="bomon_school_admin_action_form" sequence=""/>
+  <menuitem id="menu_quanlyhocsinh_school_admin" name="Quản lý học sinh" parent="menu_truongquanly_school_admin" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/>
+    <menuitem id="menu_hocsinh_school_admin" name="Học sinh" parent="menu_quanlyhocsinh_school_admin" action="hocsinh_school_admin_action_form"/>
+    <menuitem id="menu_nhapdiemhocsinh_school_admin" name="Nhập điểm học sinh" parent="menu_quanlyhocsinh_school_admin" action="nhapdiemhocsinh_school_admin_action_form" sequence=""/>
+    <menuitem id="menu_nhapdiemchitiet_school_admin" name="Nhập điểm CT" parent="menu_quanlyhocsinh_school_admin" action="nhapdiemchitiet_school_admin_action_form" sequence=""/>
+    <menuitem id="menu_bangdiemdanh_school_admin" name="Bảng điểm danh" parent="menu_quanlyhocsinh_school_admin" action="bangdiemdanh_school_admin_action_form" sequence=""/>
+    <menuitem id="menu_chucvu_school_admin" name="Chức vụ học sinh" parent="menu_quanlyhocsinh_school_admin" action="chucvu_school_admin_action_form" sequence=""/>
+    <menuitem id="menu_khenthuong_hocsinh_school_admin" name="Khen thưởng học sinh" parent="menu_quanlyhocsinh_school_admin" action="khenthuonghocsinh_school_admin_action_form" sequence=""/>
+    <menuitem id="menu_kyluat_hocsinh_school_admin" name="Kỷ luật học sinh" parent="menu_quanlyhocsinh_school_admin" action="kyluathocsinh_school_admin_action_form" sequence=""/>
+    <menuitem id="menu_phuhuynh_school_admin" name="Phụ huynh học sinh" parent="menu_quanlyhocsinh_school_admin" action="phuhuynh_school_admin_action_form" sequence=""/>
+  <menuitem id="menu_khac_school_admin" name="Khác" parent="menu_truongquanly_school_admin" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/>
+    <menuitem id="menu_doituongchinhsach_school_admin" name="Đối tượng chính sách" parent="menu_khac_school_admin" action="doituongchinhsach_school_admin_action_form" sequence=""/>
+</odoo>

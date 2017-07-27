@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!--hocsinh-->
+  <record model="ir.ui.view" id="hocsinh_customer_action_filter">
+      <field name="name">hocsinh.action.filter</field>
+      <field name="model">solienlac.hocsinh</field>
+      <field name="arch" type="xml">
+          <search string="SLLHS Filter">
+              <field name="user_id"/>
+              <group expand="0" string="Group By">
+                  <filter string="User" domain="[]"
+                          context="{'group_by':'user_id'}"/>
+              </group>
+          </search>
+      </field>
+  </record>
+  <record id="hocsinh_customer_action_form" model="ir.actions.act_window">
+    <field name="name">Học sinh</field>
+    <field name="res_model">solienlac.hocsinh</field>
+    <field name="context">{'search_default_user_id': uid, 'default_user_id': uid}</field>
+    <field name="view_mode">tree,form</field>
+    <field name="search_view_id" ref="hocsinh_customer_action_filter"/>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+  <menuitem id="menu_truongquanly_customer" name="Danh mục trường quản lý" groups="group_customer"/>
+    <menuitem id="menu_quanlyhocsinh_customer" name="Quản lý học sinh" parent="menu_truongquanly_customer"/>
+      <menuitem id="menu_hocsinh_customer" name="Học sinh" parent="menu_quanlyhocsinh_customer" action="hocsinh_customer_action_form"/>
+</odoo>

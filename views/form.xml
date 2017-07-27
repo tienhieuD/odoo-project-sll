@@ -498,7 +498,7 @@
           <sheet>
               <group colspan="4" col="4" string='Thông tin học sinh'>
                 <group colspan="2" col="2" >
-                  <field name="mahocsinh" domain="[('user_login', '=', True)]"/>
+                  <field name="mahocsinh"/>
                   <field name="hoten" />
                   <field name="gioitinh"/>
                   <field name="ngaysinh"/>

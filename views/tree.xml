@@ -242,7 +242,6 @@
           <field name="noisinh"/>
           <field name="lop"/>
           <field name="chucvu"/>
-          <!-- <field name="user_login"/> -->
         </tree>
       </field>
     </record>
