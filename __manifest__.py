@@ -26,7 +26,7 @@
         'security/ir.model.access.csv',
         # 'views/giaoanchinhsua.xml',
         'views/menu_system_admin.xml',
-        # 'views/menu_school_admin.xml',
+        'views/menu_school_admin.xml',
         'views/menu_customer.xml',
         'views/form.xml',
         'views/tree.xml',

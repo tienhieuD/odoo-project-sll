@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <!------------------- menu thông tin nhà trường ---------------------->
   <!-- Trường -->
-  <record model="ir.ui.view" id="truong_school_admin_action_filter">
+  <!-- <record model="ir.ui.view" id="truong_school_admin_action_filter">
       <field name="name">truong.action.filter</field>
       <field name="model">solienlac.truong</field>
       <field name="arch" type="xml">
           <search string="Trường Filter">
-              <field name="user_id"/>
+              <field name="matruong"/>
               <group expand="0" string="Group By">
                   <filter string="User" domain="[]"
-                          context="{'group_by':'user_id'}"/>
+                          context="{'group_by':'matruong'}"/>
               </group>
           </search>
       </field>
-  </record>
+  </record> -->
   <record id="truong_school_admin_action_form" model="ir.actions.act_window">
     <field name="name">Trường</field>
     <field name="res_model">solienlac.truong</field>
-    <field name="context">{'search_default_user_id': uid, 'default_user_id': uid}</field>
+    <!-- <field name="context">{'search_default_user_id': uid, 'default_user_id': uid}</field> -->
     <field name="view_mode">tree,form</field>
-    <field name="search_view_id" ref="truong_school_admin_action_filter"/>
+    <!-- <field name="search_view_id" ref="truong_school_admin_action_filter"/> -->
     <field name="help" type="html">
       <p class="oe_view_nocontent_create">
       </p>
@@ -29,7 +28,6 @@
     </field>
   </record>
 
-  <!--------------------- menu nội bộ nhà trường ------------------------>
   <!--Giáo viên-->
   <record id="giaovien_school_admin_action_form" model="ir.actions.act_window">
     <field name="name">Giáo viên</field>
@@ -91,7 +89,6 @@
   </record>
 
 
-  <!--------------------- menu quản lý học sinh ------------------------->
 
   <!--khenthuongkyluat-->
   <record id="khenthuongkyluat_school_admin_action_form" model="ir.actions.act_window">
@@ -321,7 +318,7 @@
   </record>
 
   <!--diem-->
-  <record id="diem_action_form" model="ir.actions.act_window">
+  <record id="diem_school_admin_action_form" model="ir.actions.act_window">
     <field name="name">Điểm</field>
     <field name="res_model">solienlac.diem</field>
     <field name="view_mode">tree,form</field>
@@ -336,7 +333,7 @@
   </record>
 
   <!--chucvu-->
-  <record id="chucvu_action_form" model="ir.actions.act_window">
+  <record id="chucvu_school_admin_action_form" model="ir.actions.act_window">
     <field name="name">Chức vụ</field>
     <field name="res_model">solienlac.chucvu</field>
     <field name="view_mode">tree,form</field>
@@ -393,7 +390,7 @@
     </field>
   </record>
   <!--nhapdiemchitiet-->
-  <record id="nhapdiemchitiet_action_form" model="ir.actions.act_window">
+  <record id="nhapdiemchitiet_school_admin_action_form" model="ir.actions.act_window">
     <field name="name">Nhập điểm chi tiết</field>
     <field name="res_model">solienlac.nhapdiemchitiet</field>
     <field name="view_mode">tree,form</field>
@@ -406,9 +403,9 @@
       </p>
     </field>
   </record>
-  <!--------------------------- menu khác ------------------------------->
+
   <!--doituongchinhsach-->
-  <record id="doituongchinhsach_action_form" model="ir.actions.act_window">
+  <record id="doituongchinhsach_school_admin_action_form" model="ir.actions.act_window">
     <field name="name">Đối tượng chính sách</field>
     <field name="res_model">solienlac.doituongchinhsach</field>
     <field name="view_mode">tree,form</field>
@@ -424,7 +421,7 @@
 
   <menuitem id="menu_thongtintruong_school_admin" name="Thông tin nhà trường" parent="menu_truongquanly" sequence="" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/> <!--New-->
     <menuitem id="menu_truong_school_admin" name="Trường" parent="menu_thongtintruong_school_admin" action="truong_school_admin_action_form" sequence=""/>
-  <menuitem id="menu_noibonhatruong_school_admin" name="Nội bộ nhà trường" parent="menu_truongquanly_school_admin" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/>
+  <menuitem id="menu_noibonhatruong_school_admin" name="Nội bộ nhà trường" parent="menu_truongquanly" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/>
     <menuitem id="menu_giaovien_school_admin" name="Giáo viên" parent="menu_noibonhatruong_school_admin" action="giaovien_school_admin_action_form" sequence=""/>
     <menuitem id="menu_phongban_school_admin" name="Phòng ban" parent="menu_noibonhatruong_school_admin" action="phongban_school_admin_action_form" sequence=""/>
     <menuitem id="menu_khoi_school_admin" name="Khối học" parent="menu_noibonhatruong_school_admin" action="khoi_school_admin_action_form" sequence=""/>
@@ -432,7 +429,7 @@
     <menuitem id="menu_monhoc_school_admin" name="Môn học" parent="menu_noibonhatruong_school_admin" action="monhoc_school_admin_action_form" sequence=""/>
     <menuitem id="menu_banhoc_school_admin" name="Ban học" parent="menu_noibonhatruong_school_admin" action="banhoc_school_admin_action_form" sequence=""/>
     <menuitem id="menu_tobomon_school_admin" name="Tổ bộ môn" parent="menu_noibonhatruong_school_admin" action="bomon_school_admin_action_form" sequence=""/>
-  <menuitem id="menu_quanlyhocsinh_school_admin" name="Quản lý học sinh" parent="menu_truongquanly_school_admin" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/>
+  <menuitem id="menu_quanlyhocsinh_school_admin" name="Quản lý học sinh" parent="menu_truongquanly" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/>
     <menuitem id="menu_hocsinh_school_admin" name="Học sinh" parent="menu_quanlyhocsinh_school_admin" action="hocsinh_school_admin_action_form"/>
     <menuitem id="menu_nhapdiemhocsinh_school_admin" name="Nhập điểm học sinh" parent="menu_quanlyhocsinh_school_admin" action="nhapdiemhocsinh_school_admin_action_form" sequence=""/>
     <menuitem id="menu_nhapdiemchitiet_school_admin" name="Nhập điểm CT" parent="menu_quanlyhocsinh_school_admin" action="nhapdiemchitiet_school_admin_action_form" sequence=""/>
@@ -441,6 +438,6 @@
     <menuitem id="menu_khenthuong_hocsinh_school_admin" name="Khen thưởng học sinh" parent="menu_quanlyhocsinh_school_admin" action="khenthuonghocsinh_school_admin_action_form" sequence=""/>
     <menuitem id="menu_kyluat_hocsinh_school_admin" name="Kỷ luật học sinh" parent="menu_quanlyhocsinh_school_admin" action="kyluathocsinh_school_admin_action_form" sequence=""/>
     <menuitem id="menu_phuhuynh_school_admin" name="Phụ huynh học sinh" parent="menu_quanlyhocsinh_school_admin" action="phuhuynh_school_admin_action_form" sequence=""/>
-  <menuitem id="menu_khac_school_admin" name="Khác" parent="menu_truongquanly_school_admin" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/>
+  <menuitem id="menu_khac_school_admin" name="Khác" parent="menu_truongquanly" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/>
     <menuitem id="menu_doituongchinhsach_school_admin" name="Đối tượng chính sách" parent="menu_khac_school_admin" action="doituongchinhsach_school_admin_action_form" sequence=""/>
 </odoo>
