@@ -430,11 +430,36 @@ class tuyenhoc(models.Model):
 class khoi(models.Model):
     _name = 'solienlac.khoi'
     _rec_name = 'tenkhoi' # optional
+    @api.model
+    def _get_curret_truong(self):
+        # lấy ra id trường
+        # uid = self.env.id
+        try:
+            current_user = self.env.user
+            login_name = current_user.login
+            current_magv = login_name
+            current_gv = self.env['solienlac.giaovien'].search([
+                ('magiaovien','=',current_magv),
+            ])[0]
+            current_truong_id = current_gv.truong.id
+            # trả về domain
+            print current_truong_id
+            return [('id','=',current_truong_id)]
+        except:
+            return [('id','!=',-1)]
+
     makhoi = fields.Integer(string='Mã Khối', )
     tenkhoi = fields.Char(string='Tên Khối')
     ghichu = fields.Char('Ghi Chú')
-    truong = fields.Many2one('solienlac.truong', string = "Trường")
-
+    # truong = fields.Many2one(
+    # 'solienlac.truong', string = "Trường",
+    # domain = _get_curret_truong )
+    truong = fields.Many2one(
+        string="Trường",
+        comodel_name="solienlac.truong",
+        # domain="[('field', '=', other)]",
+        domain=_get_curret_truong,
+    )
 class hanhkiem(models.Model):
     _name = 'solienlac.hanhkiem'
     _rec_name = 'xeploai' # optional
