@@ -170,7 +170,12 @@ class giaovien(models.Model):
             ('Nu', 'Nữ'),
             ('KXD', 'Không xác định')], string = "Giới tính")
     ngaysinh = fields.Date(string="Ngày sinh")
-    noisinh = fields.Char("Nơi sinh")
+    noisinh = fields.Many2one(
+        string="Nơi sinh",
+        comodel_name="solienlac.tinhthanhpho",
+        ondelete="set null",
+        help="Chọn nơi sinh là tỉnh thành phố",
+    )
     sodienthoai = fields.Char("Số điện thoại")
     socmnd = fields.Char("Số chứng minh thư/căn cước")
     email = fields.Char("Email")
@@ -178,7 +183,7 @@ class giaovien(models.Model):
     chucvu = fields.Many2one('solienlac.chucvu', "Chức vụ")
     dien = fields.Selection([
             ('cohuu', 'Cơ hữu'),
-            ('thinhgiang', 'Thỉnh giảng')], srting="Diện")
+            ('thinhgiang', 'Thỉnh giảng')], string="Diện")
     vanbang = fields.Selection([
             ('trunghoccoso', 'Trung học cơ sở'),
             ('trunghocphothong', 'Trung học phổ thông'),
@@ -186,7 +191,7 @@ class giaovien(models.Model):
             ('caodang', 'Cao đẳng'),
             ('daihoc', 'Đại học'),
             ('thacsi', 'Thạc sĩ'),
-            ('tiensi', 'Tiến sĩ')], srting="Văn bằng")
+            ('tiensi', 'Tiến sĩ')], string="Văn bằng")
     namvaonganh = fields.Date('Năm vào ngành')
     tinhtranghonnhan = fields.Selection(
         string="Tình trạng hôn nhân",
@@ -585,7 +590,13 @@ class hocsinh(models.Model):
         ('Nu', 'Nữ'),
         ('KXD', 'Không xác định')], string="Giới tính")
     ngaysinh = fields.Date(string="Ngày sinh")
-    noisinh = fields.Char('Nơi sinh')
+    # noisinh = fields.Char('Nơi sinh')
+    noisinh = fields.Many2one(
+        string="Nơi sinh",
+        comodel_name="solienlac.tinhthanhpho",
+        ondelete="set null",
+        help="Chọn nơi sinh là tỉnh thành phố",
+    )
     quequan = fields.Char('Quê quán')
     lop = fields.Many2one('solienlac.lop', string='Lớp')
     # truong = fields.Many2one('solienlac.truong', string = "Trường")
@@ -1239,9 +1250,21 @@ class nhapdiemhocsinh(models.Model):
 
     test1 = fields.Char()
     napdulieu = fields.Boolean('Nạp lại dữ liệu')
+    @api.model
+    def _get_current_gv(self):
+        #get magiaovien
+        magv = self.env.user.login
+        n = self.env['solienlac.giaovien'].search([
+            ('magiaovien', '=',magv)
+        ])
+        dmain = [('magiaovien', '=', magv)]
+        print '-----------------------------'
+        print 'magv %s n %s dmain %s' % (magv,n,dmain)
+        return dmain
     giaovien = fields.Many2one(
         string="Giáo viên",
         comodel_name="solienlac.giaovien",
+        domain= _get_current_gv,
     )
     lop = fields.Many2one(
         string="Lớp",
@@ -1343,10 +1366,12 @@ class nhapdiemhocsinh(models.Model):
             for item in lst_chk:
                 if str(item) == '':
                     flag = False
-                if str(item) == 'False':
+                elif str(item) == 'False':
                     flag = False
-                if item == False:
+                elif item == False:
                     flag = False
+
+            print '-----------------flag: %s----------------------' % self.lop
 
             if flag:
                 # Create objects nhapdiemchitiet
@@ -1387,10 +1412,12 @@ class nhapdiemchitiet(models.Model):
         if now.month <= 9:
             year -= 1
         return str(year) + "-" + str(year+1)
+
     giaovien = fields.Many2one(
         string="Giáo viên",
         comodel_name="solienlac.giaovien",
     )
+
     hocky = fields.Selection(
         string="Học kỳ",
         selection=[
@@ -1408,25 +1435,35 @@ class nhapdiemchitiet(models.Model):
         comodel_name="solienlac.monhoc",
     )
     hocsinh = fields.Many2one('solienlac.hocsinh', string='Học sinh')
-    diemmieng1 = fields.Char('[M]')
-    diemmieng2 = fields.Char('[M]')
-    diemmieng3 = fields.Char('[M]')
-    diemmieng4 = fields.Char('[M]')
-    diemmieng5 = fields.Char('[M]')
-    diem15phut1 = fields.Char('[15]')
-    diem15phut2 = fields.Char('[15]')
-    diem15phut3 = fields.Char('[15]')
-    diem15phut4 = fields.Char('[15]')
-    diem15phut5 = fields.Char('[15]')
-    diem1tiet1 = fields.Char('[HS2]')
-    diem1tiet2 = fields.Char('[HS2]')
-    diem1tiet3 = fields.Char('[HS2]')
-    diem1tiet4 = fields.Char('[HS2]')
-    diem1tiet5 = fields.Char('[HS2]')
-    diemhocky = fields.Char('[HK]')
-    diemtongket = fields.Char(string='Tổng kểt', compute='_compute_final')
+    diemmieng1 = fields.Char('Điểm miệng', readonly=True)
+    diemmieng2 = fields.Char('1')
+    diemmieng3 = fields.Char('2')
+    diemmieng4 = fields.Char('3')
+    diemmieng5 = fields.Char('4')
+    diem15phut1 = fields.Char('Điểm hệ số 1', readonly=True)
+    diem15phut2 = fields.Char('1')
+    diem15phut3 = fields.Char('2')
+    diem15phut4 = fields.Char('3')
+    diem15phut5 = fields.Char('4')
+    diem1tiet1 = fields.Char('Điểm hệ số 2', readonly=True)
+    diem1tiet2 = fields.Char('1')
+    diem1tiet3 = fields.Char('2')
+    diem1tiet4 = fields.Char('3')
+    diem1tiet5 = fields.Char('4')
+    diemhocky = fields.Char('Điểm học kỳ')
+    diemtongket = fields.Char(string='Tổng kểt', store=True, compute='_compute_final')
     xephang = fields.Integer('#')
-    @api.depends('diemhocky')
+
+    @api.onchange('diemmieng1','diem15phut1','diem1tiet1')
+    def _block_text(self):
+        self.diemmieng1 = ""
+        self.diem15phut1 = ""
+        self.diem1tiet1 = ""
+
+    @api.depends('diemhocky',
+    'diemmieng1','diemmieng2','diemmieng3','diemmieng4','diemmieng5',
+    'diem15phut1','diem15phut2','diem15phut3','diem15phut4','diem15phut5',
+    'diem1tiet1','diem1tiet2','diem1tiet3','diem1tiet4','diem1tiet5')
     def _compute_final(self):
         def convert_to_float(n):
             try:
@@ -1460,7 +1497,7 @@ class nhapdiemchitiet(models.Model):
 
             he_so = len(lst_diem_mieng) + len(lst_diem_15) + 2*len(lst_diem_1t) + 3
             tong  = sum(lst_diem_mieng) + sum(lst_diem_15) + 2*sum(lst_diem_1t) + 3*convert_to_float(record.diemhocky)
-            diemtk = float(tong)/float(he_so)
+            diemtk = str(float(tong)/float(he_so))[0:4]
 
             record.diemtongket = diemtk
 

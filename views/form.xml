@@ -3,7 +3,7 @@
   <data>
 
     <!-- Giáo viên - form view -->
-    <!-- <record id="giaovien_view_form" model="ir.ui.view">
+    <record id="giaovien_view_form" model="ir.ui.view">
       <field name="name">giaovien.form</field>
       <field name="model">solienlac.giaovien</field>
       <field name="arch" type="xml">
@@ -17,10 +17,11 @@
                 <field name="magiaovien"/>
                 <field name="hoten"/>
                 <field name="gioitinh"/>
-                <field name="name"/>
+                <field name="truong"/>
+                <!-- <field name="name"/>
                 <field name="login"/>
                 <field name="partner_id"/>
-                <field name="company_id"/>
+                <field name="company_id"/> -->
               </group>
               <group colspan="2" col="2">
                 <field name="ngaysinh"/>
@@ -40,14 +41,14 @@
               <group colspan="2" col="2" string='Thông tin quản lý'>
                 <field name="bomon" widget="many2many_tags"/>
                 <field name="phongban"/>
-                <field name="chucvu" widget="many2one_tags"/>
+                <!-- <field name="chucvu" widget="many2one_tags"/> -->
                 <field name="vanbang"/>
                 <field name="dien"/>
                 <field name="namvaonganh"/>
                 <field name="tinhtranghonnhan"/>
               </group>
               <notebook colspan="4">
-                <page string="Danh sách lớp giảng dạy">
+                <page string="Phân công giảng dạy">
                   <field name="monhoc"/>
                 </page>
               </notebook>
@@ -55,7 +56,7 @@
           </sheet>
         </form>
       </field>
-    </record> -->
+    </record>
 
     <!-- tổ - form wiews -->
     <record id="to_view_form" model="ir.ui.view">
@@ -605,7 +606,7 @@
                 <field name="hocky"/>
                 <field name="namhoc"/>
                 <field name="napdulieu"/>
-                <field name="test1"/>
+                <!-- <field name="test1"/> -->
               </group>
             </group>
           </sheet>
@@ -714,5 +715,23 @@
       </field>
     </record>
 
+    <record id="monhoc_has_giaovien_view_form" model="ir.ui.view">
+      <field name="name">solienlac.monhoc_has_giaovien.form</field>
+      <field name="model">solienlac.monhoc_has_giaovien</field>
+      <field name="arch" type="xml">
+        <form string="Phân công giảng dạy">
+          <sheet>
+            <group>
+              <field name="monhoc"/>
+              <field name="hocky"/>
+              <field name="namhoc"/>
+              <field name="lop"/>
+              <field name="ngaybatdau"/>
+              <field name="ngayketthuc"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
   </data>
 </odoo>
