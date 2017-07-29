@@ -28,7 +28,42 @@
       </p>
     </field>
   </record>
+
+  <!--nhapdiemchitiet-->
+  <record id="nhapdiemchitiet_customer_action_form" model="ir.actions.act_window">
+    <field name="name">Bảng điểm</field>
+    <field name="res_model">solienlac.nhapdiemchitiet</field>
+    <field name="view_mode">tree</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
+  <!--hanhkiem-->
+  <record id="hanhkiem_customer_action_form" model="ir.actions.act_window">
+    <field name="name">Hạnh kiểm</field>
+    <field name="res_model">solienlac.hanhkiem</field>
+    <field name="view_mode">tree</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
+
   <menuitem id="menu_truongquanly_customer" name="Danh mục trường quản lý" groups="group_customer"/>
     <menuitem id="menu_quanlyhocsinh_customer" name="Quản lý học sinh" parent="menu_truongquanly_customer"/>
-      <menuitem id="menu_hocsinh_customer" name="Học sinh" parent="menu_quanlyhocsinh_customer" action="hocsinh_customer_action_form"/>
+      <menuitem id="menu_bangdiemhocsinh_customer" name="Bảng diểm" parent="menu_quanlyhocsinh_customer" action="nhapdiemchitiet_customer_action_form"/>
+      <menuitem id="menu_hanhkiem_customer" name="Hạnh kiểm" parent="menu_quanlyhocsinh_customer" action="hanhkiem_customer_action_form"/>
+        <menuitem id="menu_diemdanh_customer" name="Điêm danh" parent="menu_quanlyhocsinh_customer" action="hocsinh_customer_action_form"/>
+          <menuitem id="menu_hocsinh_customer" name="Thông tin học sinh" parent="menu_quanlyhocsinh_customer" action="hocsinh_customer_action_form"/>
 </odoo>

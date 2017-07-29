@@ -293,7 +293,10 @@
                 <field name="tongiao"/>
               </group>
               <group colspan="2" col="2" string='Địa chỉ'>
+                <field name="tinhthanhpho"/>
+                <field name="quanhuyen"/>
                 <field name="phuongxa"/>
+                  <field name="diachi"/>
                 <field name="ghichu"/>
               </group>
             </group>
@@ -504,8 +507,8 @@
                   <field name="gioitinh"/>
                   <field name="ngaysinh"/>
                   <field name="noisinh"/>
-                  <field name="dantoc"/>
-                  <field name="tongiao"/>
+                  <field name="dantoc" options="{'no_create_edit': True}"/>
+                  <field name="tongiao" options="{'no_create_edit': True}"/>
                   <!-- <field name="user_login"/>
                   <field name="user_id"/> -->
                 </group>
@@ -514,12 +517,13 @@
                   <field name="tinhthanhpho" options="{'no_create_edit': True}"/>
                   <field name="quanhuyen" options="{'no_create_edit': True}"/>
                   <field name="phuongxa" options="{'no_create_edit': True}"/>
+                  <field name="diachi"/>
                 </group>
               <group colspan="4" string='Thông tin quản lý'>
                 <group colspan="2" col="2" >
                   <!-- <field name="truong"/> -->
                   <field name="lop"/>
-                  <field name="chucvu"/>
+                  <field name="chucvu" options="{'no_create_edit': True}" widget="many2many_tags"/>
                   <field name="noitru"/>
                 </group>
                 <group colspan="2" col="2" >
@@ -530,6 +534,10 @@
               </group>
               <group colspan="4" string='Thông tin phụ huynh'>
                 <field name="phuhuynh"/>
+              </group>
+              <group colspan="4" string='Thông tin tài khoản'>
+                <field name="username"/>
+                <field name="password"/>
               </group>
               <group colspan="4" string='Nguồn gốc và tình trạng học sinh'>
                 <group colspan="2" col="2">

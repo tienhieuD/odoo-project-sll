@@ -68,6 +68,37 @@
   - Chỉ nhìn thấy bảng nhập điểm của lớp họ dạy -->
 
 
+  <record id="rule_hocsinh_customer" model="ir.rule">
+    <field name="name">Học sinh</field>
+    <field name="model_id" ref="model_solienlac_hocsinh"/>
+    <field name="domain_force">[('mahocsinh', '=', user.login),]</field>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_unlink" eval="1"/>
+    <field name="groups" eval="[(4, ref('solienlac.group_customer'))]"/>
+  </record>
 
+  <record id="rule_nhapdiemchitiet_customer" model="ir.rule">
+    <field name="name">Nhập điểm chi tiết</field>
+    <field name="model_id" ref="model_solienlac_nhapdiemchitiet"/>
+    <field name="domain_force">[('hocsinh.mahocsinh', '=', user.login),]</field>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_unlink" eval="1"/>
+    <field name="groups" eval="[(4, ref('solienlac.group_customer'))]"/>
+  </record>
+
+  <record id="rule_hanhkiem_customer" model="ir.rule">
+    <field name="name">Nhập điểm chi tiết</field>
+    <field name="model_id" ref="model_solienlac_hanhkiem"/>
+    <field name="domain_force">[('hocsinh.mahocsinh', '=', user.login),]</field>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_unlink" eval="1"/>
+    <field name="groups" eval="[(4, ref('solienlac.group_customer'))]"/>
+  </record>
 
 </odoo>

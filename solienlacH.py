@@ -5,6 +5,7 @@ import random
 from odoo import models, fields, api, exceptions, _
 from odoo.http import request
 import json
+import re
 
 
 class caphoc(models.Model):
@@ -526,8 +527,34 @@ class phuhuynh(models.Model):
             ('KXD', 'Không xác định')], string = "Giới tính")
     ngaysinh = fields.Date('Ngày Sinh')
     sodienthoai = fields.Char('Số Điện Thoại')
+
     ghichu = fields.Char('Ghi Chú')
-    phuongxa = fields.Many2one('solienlac.phuongxa', string='Xã\Phường')
+
+    diachi = fields.Char('Địa chỉ')
+    phuongxa = fields.Many2one('solienlac.phuongxa', string='Phường\Xã')
+    quanhuyen = fields.Many2one('solienlac.quanhuyen', string='Quận\Huyện')
+    tinhthanhpho = fields.Many2one('solienlac.tinhthanhpho', string='Tỉnh\Thành phố')
+
+    @api.multi
+    @api.onchange('tinhthanhpho')
+    def set_value_huyen(self):
+        self.quanhuyen = []
+        tmp1 = self.env['solienlac.quanhuyen'].search([
+                    ('matinhthanhpho', '=', self.tinhthanhpho.matinhthanhpho),
+                ])
+        lst = map(lambda x:x.matinhthanhpho, tmp1)
+        return {'domain':{'quanhuyen': [('matinhthanhpho', 'in', lst)]}}
+    @api.multi
+    @api.onchange('tinhthanhpho', 'quanhuyen')
+    def set_value_xa(self):
+        self.phuongxa = []
+        tmp1 = self.env['solienlac.phuongxa'].search([
+                    ('TinhID', '=', self.tinhthanhpho.matinhthanhpho),
+                    ('QuanHuyenID', '=', self.quanhuyen.maquanhuyen),
+                ])
+        lst = map(lambda x: x.QuanHuyenID, tmp1)
+        return {'domain':{'phuongxa': [('QuanHuyenID', 'in', lst)]}}
+
     dantoc = fields.Many2one('solienlac.dantoc', string='Dân Tộc')
     tongiao = fields.Many2one('solienlac.tongiao', string='Tôn Giáo')
 
@@ -565,6 +592,7 @@ class bomon(models.Model):
     _rec_name = 'tenbomon' # optional
     mabomon = fields.Integer('Mã bộ môn')
     tenbomon = fields.Char('Tên bộ môn')
+    ghichu = fields.Char('Ghi chú')
     truongbomon = fields.Many2one('solienlac.giaovien', string = "Trưởng bộ môn")
 
 class bangdiemdanh(models.Model):
@@ -583,8 +611,6 @@ class hocsinh(models.Model):
     _rec_name = 'hoten' # optional
 
     mahocsinh = fields.Char('Mã học sinh', required='True')
-
-
     hoten = fields.Char('Họ tên', required='True')
     gioitinh = fields.Selection([
         ('Nam', 'Nam'),
@@ -598,6 +624,17 @@ class hocsinh(models.Model):
         ondelete="set null",
         help="Chọn nơi sinh là tỉnh thành phố",
     )
+
+    username = fields.Char('Username', compute='set_username')
+    @api.depends('mahocsinh')
+    def set_username(self):
+        self.username = self.mahocsinh
+    password = fields.Char('Password', compute='set_password')
+    @api.depends()
+    def set_password(self):
+        self.password = str(random.randint(1000000, 10000000))
+
+    diachi = fields.Char('Địa chỉ')
     quequan = fields.Char('Quê quán')
     lop = fields.Many2one('solienlac.lop', string='Lớp')
     # truong = fields.Many2one('solienlac.truong', string = "Trường")
@@ -613,7 +650,11 @@ class hocsinh(models.Model):
 
     dantoc = fields.Many2one('solienlac.dantoc', string='Dân tộc')
     tongiao = fields.Many2one('solienlac.tongiao', string='Tôn giáo')
-    chucvu = fields.Many2one('solienlac.chucvu', string='Chức vụ')
+    @api.model
+    def set_chucvu(self):
+        return self.env['solienlac.chucvu'].browse([4,19])
+    chucvu = fields.Many2many('solienlac.chucvu', string='Chức vụ', default=set_chucvu)
+
     doituongchinhsach = fields.Many2many('solienlac.doituongchinhsach', string='Đối tượng chính sách')
     doituonguutien = fields.Many2many('solienlac.doituonguutien', string='Đối tượng ưu tiên')
     phuhuynh = fields.Many2many('solienlac.phuhuynh', string='Phụ huynh')
@@ -621,7 +662,10 @@ class hocsinh(models.Model):
     ketquahoctap = fields.One2many('solienlac.ketquahoctap', 'hocsinh', string="Kết quả học tập")
     bangdiem = fields.One2many('solienlac.bangdiem', 'hocsinh', string="Bảng điểm")
     nenep = fields.One2many('solienlac.nenep', 'hocsinh', string="Nề nếp")
-    noitru = fields.Boolean('Nội trú')
+    noitru = fields.Boolean('Nội trú', default=False)
+    # @api.onchange('noitru')
+    # def set_chucvu(self):
+    #     print(self.chucvu)
     tinhtranghocsinh = fields.Selection(
         string="Tình trạng học sinh",
         selection=[
@@ -651,8 +695,7 @@ class hocsinh(models.Model):
                 ('value16', 'Hoạt động xã hội'),
                 ('value17', 'Khác'),
                 ('value18', 'Không xác định'),
-        ],default='value1',
-    )
+        ],default='value1',)
     monhocnghe = fields.Many2one(string="Môn học nghề",comodel_name="solienlac.monhocnghe")
     loaihocsinhnhaptruong = fields.Selection(
         string="Loại học sinh nhập trường",
@@ -1042,8 +1085,20 @@ class diem(models.Model):
 class chucvu(models.Model):
     _name = 'solienlac.chucvu'
     _rec_name = 'tenchucvu' # optional
-    machucvu = fields.Integer('Mã chức vụ', )
-    tenchucvu = fields.Char('Tên chức vụ', )
+    machucvu = fields.Integer('Mã chức vụ')
+    tenchucvu = fields.Selection([
+                ('value1', 'Không'),
+                ('value2', 'Liên đội trưởng'),
+                ('value3', 'Liên đội phó'),
+                ('value4', 'Bí thư đoàn trường'),
+                ('value5', 'Phó Bí thư đoàn trường'),
+                ('value6', 'Bí thư chi đoàn'),
+                ('value7', 'Phó Bí thư chi đoàn'),
+                ('value8', 'Chi đội trưởng'),
+                ('value9', 'Chi đội phó'),
+                ('value10', 'Lớp trưởng'),
+                ('value11', 'Lớp phó'),
+        ],string="Field name")
     ghichu = fields.Char('Ghi chú')
 
 class nenep(models.Model):
