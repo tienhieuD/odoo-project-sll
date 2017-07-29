@@ -36,7 +36,6 @@
     <field name="perm_create" eval="1"/>
     <field name="perm_read" eval="1"/>
     <field name="perm_unlink" eval="1"/>
-    <!-- <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l1')), (4, ref('solienlac.group_schooladmin_l21')), (4, ref('solienlac.group_schooladmin_l22')), (4, ref('solienlac.group_schooladmin_l3'))]"/> -->
     <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l1'))]"/>
   </record>
   <record id="rule_hieutruong_giaovien" model="ir.rule">
@@ -63,32 +62,12 @@
   </record>
 
   <!-- Lọc giáo viên
-  - Chỉ nhìn thấy lớp họ dạy
+  - Chỉ nhìn thấy lớp họ dạy (code)
+  - Chỉ nhìn thấy môn họ dạy (Code)
   - Chỉ nhìn thấy học sinh họ dạy
   - Chỉ nhìn thấy bảng nhập điểm của lớp họ dạy -->
-  <!-- <record id="rule_giaovien_lop" model="ir.rule">
-    <field name="name">Giáo viên nhìn thấy lớp mình dạy</field>
-    <field name="model_id" ref="model_solienlac_lop"/>
-    <field name="domain_force">[('id', '=', 10)]</field> -->
-    <!-- <field name="domain_force">[('id', 'not in', [mhg.lop.id for mhg in user.giaovien.monhoc]), ('khoi.truong.id', '=', user.truong.id)]</field> -->
-    <!-- <field name="perm_write" eval="1"/>
-    <field name="perm_create" eval="1"/>
-    <field name="perm_read" eval="1"/>
-    <field name="perm_unlink" eval="1"/> -->
-    <!-- You can attach this rule to a specific group, or make it global -->
-    <!-- <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l21')), (4, ref('solienlac.group_schooladmin_l22')), (4, ref('solienlac.group_schooladmin_l3'))]"/> -->
-    <!--<field name="global" eval="1"/> -->
-  <!-- </record> -->
-  <record id="rule_hieutruong_lop" model="ir.rule">
-    <field name="name">Giáo viên nhìn thấy lớp mình dạy</field>
-    <field name="model_id" ref="model_solienlac_lop"/>
-    <field name="domain_force">[('id', '=', 2), ]</field>
-    <field name="perm_write" eval="1"/>
-    <field name="perm_create" eval="1"/>
-    <field name="perm_read" eval="1"/>
-    <field name="perm_unlink" eval="1"/>
-    <!-- <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l1')), (4, ref('solienlac.group_schooladmin_l21')), (4, ref('solienlac.group_schooladmin_l22')), (4, ref('solienlac.group_schooladmin_l3'))]"/> -->
-    <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l21'))]"/>
-  </record>
+
+
+
 
 </odoo>

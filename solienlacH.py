@@ -448,7 +448,7 @@ class khoi(models.Model):
             ])[0]
             current_truong_id = current_gv.truong.id
             # trả về domain
-            print current_truong_id
+            # print current_truong_id
             return [('id','=',current_truong_id)]
         except:
             return [('id','!=',-1)]
@@ -1272,6 +1272,7 @@ class nhapdiemhocsinh(models.Model):
     lop = fields.Many2one(
         string="Lớp",
         comodel_name="solienlac.lop",
+        domain="[('id','=',0)]",
     )
     hocky = fields.Selection(
         string="Học kỳ",
@@ -1285,7 +1286,7 @@ class nhapdiemhocsinh(models.Model):
     #---------- define fields namhoc ------------
     @api.model
     def _get_list_namhoc(self):
-        print [mhg.lop.id for mhg in self.env.user.giaovien.monhoc]
+        # print [mhg.lop.id for mhg in self.env.user.giaovien.monhoc]
         lst_namhoc=[]
         for year in range(1990,2050):
             item = str(year) + "-" + str(year+1)
@@ -1306,10 +1307,19 @@ class nhapdiemhocsinh(models.Model):
         default = _get_namhoc_now,
     )
     #---------- end define fields namhoc ------------
+    @api.model
+    def _get_current_list_monhoc(self):
+        lst = [x.monhoc.id for x in self.env.user.giaovien.monhoc]
+        lst = list(set(lst))
+        print 'Danh sach mon dang day'
+        print lst
+        # lst = filter(lambda x: x  )
+        return [('id', 'in', lst)]
 
     monhoc = fields.Many2one(
         string="Môn học",
         comodel_name="solienlac.monhoc",
+        domain = _get_current_list_monhoc,
     )
     nhapdiemchitiet = fields.Many2many(
         comodel_name='solienlac.nhapdiemchitiet',
@@ -1318,7 +1328,23 @@ class nhapdiemhocsinh(models.Model):
     )
 
     @api.multi
-    @api.onchange('lop','namhoc','hocky','monhoc','napdulieu')
+    @api.onchange('monhoc')
+    def _get_lop(self):
+        self.lop = []
+        current_monhoc_id = self.monhoc.id
+        lst_phanban = self.env['solienlac.monhoc_has_giaovien'].search([
+            ('monhoc.id','=',current_monhoc_id),
+            ('hocky','=',self.hocky),
+            ('namhoc','=',self.namhoc),
+
+        ])
+        lst_lop = map(lambda x: x.lop.id, lst_phanban)
+        print 'id lop cua giao vien dang giang day mon nay:'
+        print lst_lop
+        return {'domain':{'lop': [('id', 'in', lst_lop)]}}
+
+    @api.multi
+    @api.onchange('lop','namhoc','hocky','napdulieu')
     def _compute_model(self):
         '''My defining function'''
         self.test1 = str(self.env.uid) + str(random.randint(0,10))
@@ -1375,7 +1401,7 @@ class nhapdiemhocsinh(models.Model):
                 elif item == False:
                     flag = False
 
-            print '-----------------flag: %s----------------------' % self.lop
+            # print '-----------------flag: %s----------------------' % self.lop
 
             if flag:
                 # Create objects nhapdiemchitiet
