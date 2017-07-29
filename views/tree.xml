@@ -427,16 +427,19 @@
          <field name="diemmieng3"/>
          <field name="diemmieng4"/>
          <field name="diemmieng5"/>
+         <field name="diemmieng6"/>
          <field name="diem15phut1"/>
          <field name="diem15phut2"/>
          <field name="diem15phut3"/>
          <field name="diem15phut4"/>
          <field name="diem15phut5"/>
+         <field name="diem15phut6"/>
          <field name="diem1tiet1"/>
          <field name="diem1tiet2"/>
          <field name="diem1tiet3"/>
          <field name="diem1tiet4"/>
          <field name="diem1tiet5"/>
+         <field name="diem1tiet6"/>
          <field name="diemhocky"/>
          <field name="diemtongket"/>
          <field name="xephang"/>
@@ -502,5 +505,42 @@
        </tree>
      </field>
    </record>
+
+
+   <!--diemdanhchitiet-->
+   <record id="diemdanhchitiet_view_tree" model="ir.ui.view">
+     <field name="name">solienlac.diemdanhchitiet.tree</field>
+     <field name="model">solienlac.diemdanhchitiet</field>
+     <field name="arch" type="xml">
+       <tree string="Nhập điểm chi tiết" editable='bottom' create="false">
+         <field name="hocsinh" readonly="1"/>
+         <field name="ngayvang" readonly="1"/>
+         <field name="vang"/>
+         <field name="ghichu"/>
+         <!-- <field name="diemmieng1"/>
+         <field name="diemmieng2"/>
+         <field name="diemmieng3"/>
+         <field name="diemmieng4"/>
+         <field name="diemmieng5"/>
+         <field name="diemmieng6"/>
+         <field name="diem15phut1"/>
+         <field name="diem15phut2"/>
+         <field name="diem15phut3"/>
+         <field name="diem15phut4"/>
+         <field name="diem15phut5"/>
+         <field name="diem15phut6"/>
+         <field name="diem1tiet1"/>
+         <field name="diem1tiet2"/>
+         <field name="diem1tiet3"/>
+         <field name="diem1tiet4"/>
+         <field name="diem1tiet5"/>
+         <field name="diem1tiet6"/>
+         <field name="diemhocky"/>
+         <field name="diemtongket"/>
+         <field name="xephang"/> -->
+       </tree>
+     </field>
+   </record>
+
   </data>
 </odoo>
