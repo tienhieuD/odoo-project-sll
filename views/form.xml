@@ -744,5 +744,34 @@
         </form>
       </field>
     </record>
+    <!-- diemdanhhocsinh -->
+    <record id="diemdanhhocsinh_view_form" model="ir.ui.view">
+      <field name="name">Điểm danh học sinh</field>
+      <field name="model">solienlac.diemdanhhocsinh</field>
+      <field name="arch" type="xml">
+        <form string="Điểm danh học sinh">
+          <sheet>
+                <h3 align='center'>Điểm danh học sinh</h3>
+            <group colspan='4' col='4'>
+              <group colspan='1' col='1'></group>
+              <group colspan='2' col='2'>
+                <field name="ngayvang"/>
+                <field name="hocky"/>
+                <field name="namhoc"/>
+                <field name="giaovien"/>
+                <field name="monhoc"/>
+                <field name="lop"/>
+                <field name="napdulieu"/>
+                <!-- <field name="test1"/> -->
+              </group>
+              <group colspan='1' col='1'></group>
+
+            </group>
+
+          </sheet>
+            <field name="diemdanhchitiet" options="{'no_create': True}"/>
+        </form>
+      </field>
+    </record>
   </data>
 </odoo>

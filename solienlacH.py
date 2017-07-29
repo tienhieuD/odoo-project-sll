@@ -1607,6 +1607,7 @@ class diemdanhhocsinh(models.Model):
     _rec_name = 'giaovien' # optional
 
     test1 = fields.Char()
+    ngayvang = fields.Date(string="Ngày", default = datetime.datetime.now())
     napdulieu = fields.Boolean('Tải danh sách học sinh')
     @api.model
     def _get_current_gv(self):
@@ -1683,7 +1684,7 @@ class diemdanhhocsinh(models.Model):
         return {'domain':{'lop': [('id', 'in', lst_lop)]}}
 
     @api.multi
-    @api.onchange('lop','namhoc','hocky','napdulieu')
+    @api.onchange('lop','namhoc','hocky','napdulieu','ngayvang')
     def _compute_model(self):
         self.test1 = str(self.env.uid) + str(random.randint(0,10))
         # Get hocsinh object
@@ -1706,6 +1707,7 @@ class diemdanhhocsinh(models.Model):
             ('hocky','=',self.hocky), # notice, how about a year
             ('namhoc','=',self.namhoc),
             ('monhoc.id','=',self.monhoc.id),
+            ('ngayvang','=',self.ngayvang),
         ])
 
         # Get (hocsinh object list) just hocsinh id
@@ -1727,7 +1729,8 @@ class diemdanhhocsinh(models.Model):
             flag = True
 
             # Create list for checking null value
-            lst_chk = [self.hocky, self.namhoc, self.monhoc, self.lop, self.giaovien] # notice: how about self.giaovien
+
+            lst_chk = [self.hocky, self.namhoc, self.monhoc, self.lop, self.giaovien, self.ngayvang] # notice: how about self.giaovien
 
             # Check for all fields are inputed
             for item in lst_chk:
@@ -1747,6 +1750,7 @@ class diemdanhhocsinh(models.Model):
                         'hocky'       : self.hocky,
                         'namhoc'      : self.namhoc,
                         'monhoc'      : self.monhoc.id,
+                        'ngayvang'    : self.ngayvang,
                     }
                     self.env['solienlac.diemdanhchitiet'].sudo().create(vals)
 
@@ -1757,12 +1761,16 @@ class diemdanhhocsinh(models.Model):
                     ('hocky','=',self.hocky), # notice, how about a year
                     ('namhoc','=',self.namhoc),
                     ('monhoc.id','=',self.monhoc.id),
+                    ('ngayvang','=',self.ngayvang),
                 ])
                 # Show objects diemdanhchitiet has just created
                 self.diemdanhchitiet = lst_hs_nhapdiem
 
 class diemdanhchitiet(models.Model):
     _name = 'solienlac.diemdanhchitiet'
+    ngayvang = fields.Date(string="Ngày", )
+    vang = fields.Boolean(string="Vắng", )
+    ghichu = fields.Char(string="Ghi chú", )
     @api.model
     def _get_list_namhoc(self):
         lst_namhoc=[]
