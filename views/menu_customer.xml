@@ -2,7 +2,7 @@
 <odoo>
 
   <!--hocsinh-->
-  <record model="ir.ui.view" id="hocsinh_customer_action_filter">
+  <!-- <record model="ir.ui.view" id="hocsinh_customer_action_filter">
       <field name="name">hocsinh.action.filter</field>
       <field name="model">solienlac.hocsinh</field>
       <field name="arch" type="xml">
@@ -14,19 +14,17 @@
               </group>
           </search>
       </field>
-  </record>
+  </record> -->
   <record id="hocsinh_customer_action_form" model="ir.actions.act_window">
     <field name="name">Học sinh</field>
     <field name="res_model">solienlac.hocsinh</field>
-    <field name="context">{'search_default_user_id': uid, 'default_user_id': uid}</field>
+    <!-- <field name="context">{'search_default_user_id': uid, 'default_user_id': uid}</field> -->
     <field name="view_mode">tree,form</field>
-    <field name="search_view_id" ref="hocsinh_customer_action_filter"/>
+    <!-- <field name="search_view_id" ref="hocsinh_customer_action_filter"/> -->
     <field name="help" type="html">
       <p class="oe_view_nocontent_create">
-        <!-- Add Text Here -->
       </p>
       <p>
-        <!-- More details about what a user can do -->
       </p>
     </field>
   </record>

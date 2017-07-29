@@ -211,7 +211,7 @@
   </record>
 
   <!--hocsinh-->
-  <record model="ir.ui.view" id="hocsinh_school_admin_action_filter">
+  <!-- <record model="ir.ui.view" id="hocsinh_school_admin_action_filter">
       <field name="name">hocsinh.action.filter</field>
       <field name="model">solienlac.hocsinh</field>
       <field name="arch" type="xml">
@@ -223,15 +223,15 @@
               </group>
           </search>
       </field>
-  </record>
+  </record> -->
   <record id="hocsinh_school_admin_action_form" model="ir.actions.act_window">
     <field name="name">Học sinh</field>
     <field name="res_model">solienlac.hocsinh</field>
     <!-- <field name="domain">[('user_login', '=', 'True')]</field> -->
     <!-- <field name="domain">[('noitru', '=', True)]</field> -->
-    <field name="context">{'search_default_user_id': uid, 'default_user_id': uid}</field>
+    <!-- <field name="context">{'search_default_user_id': uid, 'default_user_id': uid}</field> -->
     <field name="view_mode">tree,form</field>
-    <field name="search_view_id" ref="hocsinh_school_admin_action_filter"/>
+    <!-- <field name="search_view_id" ref="hocsinh_school_admin_action_filter"/> -->
     <field name="help" type="html">
       <p class="oe_view_nocontent_create">
         <!-- Add Text Here -->
@@ -432,7 +432,7 @@
   <menuitem id="menu_quanlyhocsinh_school_admin" name="Quản lý học sinh" parent="menu_truongquanly" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/>
     <menuitem id="menu_hocsinh_school_admin" name="Học sinh" parent="menu_quanlyhocsinh_school_admin" action="hocsinh_school_admin_action_form"/>
     <menuitem id="menu_nhapdiemhocsinh_school_admin" name="Nhập điểm học sinh" parent="menu_quanlyhocsinh_school_admin" action="nhapdiemhocsinh_school_admin_action_form" sequence=""/>
-    <menuitem id="menu_nhapdiemchitiet_school_admin" name="Nhập điểm CT" parent="menu_quanlyhocsinh_school_admin" action="nhapdiemchitiet_school_admin_action_form" sequence=""/>
+    <!-- <menuitem id="menu_nhapdiemchitiet_school_admin" name="Nhập điểm CT" parent="menu_quanlyhocsinh_school_admin" action="nhapdiemchitiet_school_admin_action_form" sequence=""/> -->
     <menuitem id="menu_bangdiemdanh_school_admin" name="Bảng điểm danh" parent="menu_quanlyhocsinh_school_admin" action="bangdiemdanh_school_admin_action_form" sequence=""/>
     <menuitem id="menu_chucvu_school_admin" name="Chức vụ học sinh" parent="menu_quanlyhocsinh_school_admin" action="chucvu_school_admin_action_form" sequence=""/>
     <menuitem id="menu_khenthuong_hocsinh_school_admin" name="Khen thưởng học sinh" parent="menu_quanlyhocsinh_school_admin" action="khenthuonghocsinh_school_admin_action_form" sequence=""/>

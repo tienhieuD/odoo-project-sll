@@ -209,7 +209,7 @@ class giaovien(models.Model):
     bomon = fields.Many2many('solienlac.bomon', string = "Bộ môn")
     monhoc = fields.One2many('solienlac.monhoc_has_giaovien', 'giaovien', string = "Lớp")
     lops = fields.One2many(string="Lớp", comodel_name="solienlac.monhoc_has_giaovien", inverse_name="giaovien")
-    truong = fields.Many2one('solienlac.truong', string = "Trường")
+    truong = fields.Many2one('solienlac.truong', string = "Trường", readonly = False, default=lambda self: self.env.user.truong.id)
 class monhoc_has_giaovien(models.Model):
     _name = 'solienlac.monhoc_has_giaovien'
     _rec_name = 'lop'
@@ -465,6 +465,7 @@ class khoi(models.Model):
         # domain="[('field', '=', other)]",
         domain=_get_curret_truong,
     )
+
 class hanhkiem(models.Model):
     _name = 'solienlac.hanhkiem'
     _rec_name = 'xeploai' # optional
@@ -696,9 +697,9 @@ class hocsinh(models.Model):
     lydothoihoc = fields.Many2one(string="Lý do thôi học",comodel_name="solienlac.lydothoihoc")
     # user_login = fields.Char('Login')
     # test = fields.Char('test', compute='set_acc')
-    user_login = fields.Char('Login', compute='set_acc')
-    user_id = fields.Many2one(
-        'res.users', string='User', default=lambda self:self.env.user)
+    # user_login = fields.Char('Login', compute='set_acc')
+    # user_id = fields.Many2one(
+    #     'res.users', string='User', default=lambda self:self.env.user)
 
     @api.multi
     def set_acc(self):
@@ -1233,38 +1234,40 @@ class nhapdiemhocsinh(models.Model):
     _name = 'solienlac.nhapdiemhocsinh'
     _rec_name = 'giaovien' # optional
 
-    @api.model
-    def _get_list_namhoc(self):
-        lst_namhoc=[]
-        for year in range(1990,2050):
-            item = str(year) + "-" + str(year+1)
-            lst_namhoc.append( (item, item) )
-        return lst_namhoc
-    @api.model
-    def _get_namhoc_now(self):
-        now = datetime.datetime.now()
-        year = now.year
-        if now.month <= 9:
-            year -= 1
-        return str(year) + "-" + str(year+1)
+    # @api.model
+    # def _get_list_namhoc(self):
+    #     lst_namhoc=[]
+    #     for year in range(1990,2050):
+    #         item = str(year) + "-" + str(year+1)
+    #         lst_namhoc.append( (item, item) )
+    #     return lst_namhoc
+    # @api.model
+    # def _get_namhoc_now(self):
+    #     now = datetime.datetime.now()
+    #     year = now.year
+    #     if now.month <= 9:
+    #         year -= 1
+    #     return str(year) + "-" + str(year+1)
 
     test1 = fields.Char()
     napdulieu = fields.Boolean('Nạp lại dữ liệu')
     @api.model
     def _get_current_gv(self):
         #get magiaovien
-        magv = self.env.user.login
-        n = self.env['solienlac.giaovien'].search([
-            ('magiaovien', '=',magv)
-        ])
-        dmain = [('magiaovien', '=', magv)]
-        print '-----------------------------'
-        print 'magv %s n %s dmain %s' % (magv,n,dmain)
+        # magv = self.env.user.login
+        # n = self.env['solienlac.giaovien'].search([
+        #     ('magiaovien', '=',magv)
+        # ])
+        dmain = [('id', '=', self.env.user.giaovien.id)]
+        # print '-----------------------------'
+        # print 'magv %s n %s dmain %s' % (magv,n,dmain)
+        # print self.env.user.password
         return dmain
     giaovien = fields.Many2one(
         string="Giáo viên",
         comodel_name="solienlac.giaovien",
-        domain= _get_current_gv,
+        # domain = _get_current_gv,
+        default = lambda self: self.env.user.giaovien
     )
     lop = fields.Many2one(
         string="Lớp",
@@ -1282,6 +1285,7 @@ class nhapdiemhocsinh(models.Model):
     #---------- define fields namhoc ------------
     @api.model
     def _get_list_namhoc(self):
+        print [mhg.lop.id for mhg in self.env.user.giaovien.monhoc]
         lst_namhoc=[]
         for year in range(1990,2050):
             item = str(year) + "-" + str(year+1)
@@ -1538,16 +1542,29 @@ class Users(models.Model):
         return [('id', 'not in', lst_quyen)]
 # Taskkill /IM odoo-bin.exe /F
 # "C:\Program Files (x86)\Odoo 10.0\server\odoo-bin.exe -d solienlac -u solienlac"
-
-    login = fields.Char(string='Login')
-    password = fields.Char(string='Password')
+    name = fields.Char(string="Họ tên người dùng", )
+    login = fields.Char(string='Tài khoản đăng nhập')
+    password = fields.Char(string='Mật khẩu đăng nhập')
     quyen = fields.Many2many(
         string="Quyền",
         comodel_name="res.groups",
         # domain="[('id', 'not in', [1,2,3,4,5,6,7,8,9,10])]",
         domain= _get_test,
     )
+    truong = fields.Many2one(
+        string="Trường",
+        comodel_name="solienlac.truong",
+    )
     string = fields.Char(default=_get_test)
+    giaovien = fields.Many2one(
+        string="Giáo viên",
+        comodel_name="solienlac.giaovien",
+        # domain= [('truong.id', '=', lambda)],
+    )
+    @api.multi
+    @api.onchange('truong')
+    def _get_id_truong(self):
+        return {'domain':{'giaovien': [('truong.id', '=', self.truong.id)]}}
 
     @api.model
     def create(self, values):
@@ -1556,16 +1573,33 @@ class Users(models.Model):
 
         # Code chinh day ne
         vals = {
-            'name': values['login'],
+            'name': values['name'],
             'login': values['login'],
-            'new_password': '7777777',
+            'new_password': values['password'],
             'company_ids': [1],
             'company_id': 1,
             'groups_id': quyen_da_chon,
+            'truong' : values['truong'],
+            'giaovien' : values['giaovien'],
         }
+        # print values['giaovien']
         # print values
-        print vals
+        # print vals
         self.env['res.users'].sudo().create(vals)
         # Deo lien quan dau kemeno
         user = super(Users, self).create(values)
         return user
+
+#taikhoan test ke thua.
+class taikhoannguoidung(models.Model):
+    # _name = 'solienlac.taikhoannguoidung' # optional
+    _inherit = 'res.users'
+    truong = fields.Many2one(
+        string="Trường học",
+        comodel_name="solienlac.truong",
+    )
+    giaovien = fields.Many2one(
+        string="Giáo viên",
+        comodel_name="solienlac.giaovien",
+        # domain= [('truong.id', '=', lambda)],
+    )

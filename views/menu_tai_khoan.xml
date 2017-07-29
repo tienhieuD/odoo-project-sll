@@ -20,7 +20,7 @@
     <field name="arch" type="xml">
       <tree string="Quản lý tài khoản">
         <field name="login"/>
-        <field name="password"/>
+        <field name="truong"/>
         <field name="quyen"/>
       </tree>
     </field>
@@ -37,6 +37,9 @@
             <field name="password"/>
             <field name="quyen"/>
             <field name="string" invisible='1'/>
+            <field name="truong"/>
+            <field name="giaovien"/>
+            <field name="name"/>
           </group>
         </sheet>
       </form>

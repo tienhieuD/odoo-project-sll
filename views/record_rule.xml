@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- Lọc record cho quyền hiệu trưởng, giáo viên trong trường
+  - Chỉ nhìn thấy khối trường mình
+  - Chỉ nhìn thấy lớp trường mình
+  - Chỉ nhìn thấy giáo viên trường mình
+  - Chỉ nhìn thấy học sinh trường mình -->
+  <record id="rule_hieutruong_truong" model="ir.rule">
+    <field name="name">Hiệu trưởng nhìn trường</field>
+    <field name="model_id" ref="model_solienlac_truong"/>
+    <field name="domain_force">[('id', '=', user.truong.id), ]</field>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_unlink" eval="1"/>
+    <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l1')), (4, ref('solienlac.group_schooladmin_l21')), (4, ref('solienlac.group_schooladmin_l22')), (4, ref('solienlac.group_schooladmin_l3'))]"/>
+    <!-- (4, ref('solienlac.group_schooladmin_l22') -->
+    <!-- [(4, ref('solienlac.group_schooladmin_l21')), (4, ref('base.group_public'))] -->
+  </record>
+  <record id="rule_hieutruong_khoi" model="ir.rule">
+    <field name="name">Hiệu trưởng nhìn khối</field>
+    <field name="model_id" ref="model_solienlac_khoi"/>
+    <field name="domain_force">[('truong.id', '=', user.truong.id), ]</field>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_unlink" eval="1"/>
+    <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l1')), (4, ref('solienlac.group_schooladmin_l21')), (4, ref('solienlac.group_schooladmin_l22')), (4, ref('solienlac.group_schooladmin_l3'))]"/>
+    <!-- <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l1'))]"/> -->
+  </record>
+  <record id="rule_hieutruong_lop" model="ir.rule">
+    <field name="name">Hiệu trưởng nhìn lớp</field>
+    <field name="model_id" ref="model_solienlac_lop"/>
+    <field name="domain_force">[('khoi.truong.id', '=', user.truong.id), ]</field>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_unlink" eval="1"/>
+    <!-- <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l1')), (4, ref('solienlac.group_schooladmin_l21')), (4, ref('solienlac.group_schooladmin_l22')), (4, ref('solienlac.group_schooladmin_l3'))]"/> -->
+    <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l1'))]"/>
+  </record>
+  <record id="rule_hieutruong_giaovien" model="ir.rule">
+    <field name="name">Hiệu trưởng nhìn giáo viên</field>
+    <field name="model_id" ref="model_solienlac_giaovien"/>
+    <field name="domain_force">[('truong.id', '=', user.truong.id), ]</field>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_unlink" eval="1"/>
+    <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l1')), (4, ref('solienlac.group_schooladmin_l21')), (4, ref('solienlac.group_schooladmin_l22')), (4, ref('solienlac.group_schooladmin_l3'))]"/>
+    <!-- <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l1'))]"/> -->
+  </record>
+  <record id="rule_hieutruong_hocsinh" model="ir.rule">
+    <field name="name">Hiệu trưởng nhìn học sinh của trường</field>
+    <field name="model_id" ref="model_solienlac_hocsinh"/>
+    <field name="domain_force">[('lop.khoi.truong.id', '=', user.truong.id), ]</field>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_unlink" eval="1"/>
+    <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l1')), (4, ref('solienlac.group_schooladmin_l21')), (4, ref('solienlac.group_schooladmin_l22')), (4, ref('solienlac.group_schooladmin_l3'))]"/>
+    <!-- <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l1'))]"/> -->
+  </record>
+
+  <!-- Lọc giáo viên
+  - Chỉ nhìn thấy lớp họ dạy
+  - Chỉ nhìn thấy học sinh họ dạy
+  - Chỉ nhìn thấy bảng nhập điểm của lớp họ dạy -->
+  <!-- <record id="rule_giaovien_lop" model="ir.rule">
+    <field name="name">Giáo viên nhìn thấy lớp mình dạy</field>
+    <field name="model_id" ref="model_solienlac_lop"/>
+    <field name="domain_force">[('id', '=', 10)]</field> -->
+    <!-- <field name="domain_force">[('id', 'not in', [mhg.lop.id for mhg in user.giaovien.monhoc]), ('khoi.truong.id', '=', user.truong.id)]</field> -->
+    <!-- <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_unlink" eval="1"/> -->
+    <!-- You can attach this rule to a specific group, or make it global -->
+    <!-- <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l21')), (4, ref('solienlac.group_schooladmin_l22')), (4, ref('solienlac.group_schooladmin_l3'))]"/> -->
+    <!--<field name="global" eval="1"/> -->
+  <!-- </record> -->
+  <record id="rule_hieutruong_lop" model="ir.rule">
+    <field name="name">Giáo viên nhìn thấy lớp mình dạy</field>
+    <field name="model_id" ref="model_solienlac_lop"/>
+    <field name="domain_force">[('id', '=', 2), ]</field>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_unlink" eval="1"/>
+    <!-- <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l1')), (4, ref('solienlac.group_schooladmin_l21')), (4, ref('solienlac.group_schooladmin_l22')), (4, ref('solienlac.group_schooladmin_l3'))]"/> -->
+    <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l21'))]"/>
+  </record>
+
+</odoo>

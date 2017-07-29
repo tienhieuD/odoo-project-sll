@@ -32,5 +32,6 @@
         'views/tree.xml',
         # 'views/baocao.xml',
         'views/menu_tai_khoan.xml',
+        'views/record_rule.xml',
     ],
 }
