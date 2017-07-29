@@ -1250,7 +1250,7 @@ class nhapdiemhocsinh(models.Model):
     #     return str(year) + "-" + str(year+1)
 
     test1 = fields.Char()
-    napdulieu = fields.Boolean('Nạp lại dữ liệu')
+    napdulieu = fields.Boolean('Tải danh sách học sinh')
     @api.model
     def _get_current_gv(self):
         #get magiaovien
@@ -1470,16 +1470,19 @@ class nhapdiemchitiet(models.Model):
     diemmieng3 = fields.Char('2')
     diemmieng4 = fields.Char('3')
     diemmieng5 = fields.Char('4')
+    diemmieng6 = fields.Char('5')
     diem15phut1 = fields.Char('Điểm hệ số 1', readonly=True)
     diem15phut2 = fields.Char('1')
     diem15phut3 = fields.Char('2')
     diem15phut4 = fields.Char('3')
     diem15phut5 = fields.Char('4')
+    diem15phut6 = fields.Char('5')
     diem1tiet1 = fields.Char('Điểm hệ số 2', readonly=True)
     diem1tiet2 = fields.Char('1')
     diem1tiet3 = fields.Char('2')
     diem1tiet4 = fields.Char('3')
     diem1tiet5 = fields.Char('4')
+    diem1tiet6 = fields.Char('5')
     diemhocky = fields.Char('Điểm học kỳ')
     diemtongket = fields.Char(string='Tổng kểt', store=True, compute='_compute_final')
     xephang = fields.Integer('#')
@@ -1491,9 +1494,9 @@ class nhapdiemchitiet(models.Model):
         self.diem1tiet1 = ""
 
     @api.depends('diemhocky',
-    'diemmieng1','diemmieng2','diemmieng3','diemmieng4','diemmieng5',
-    'diem15phut1','diem15phut2','diem15phut3','diem15phut4','diem15phut5',
-    'diem1tiet1','diem1tiet2','diem1tiet3','diem1tiet4','diem1tiet5')
+    'diemmieng1','diemmieng2','diemmieng3','diemmieng4','diemmieng5','diemmieng6',
+    'diem15phut1','diem15phut2','diem15phut3','diem15phut4','diem15phut5','diem15phut6',
+    'diem1tiet1','diem1tiet2','diem1tiet3','diem1tiet4','diem1tiet5','diem1tiet6')
     def _compute_final(self):
         def convert_to_float(n):
             try:
@@ -1505,15 +1508,15 @@ class nhapdiemchitiet(models.Model):
 
         for record in self:
             lst_diem_mieng = [
-                record.diemmieng1, record.diemmieng2,
+                record.diemmieng1, record.diemmieng2, record.diemmieng6,
                 record.diemmieng3, record.diemmieng4, record.diemmieng5
             ]
             lst_diem_15 = [
-                record.diem15phut1, record.diem15phut2,
+                record.diem15phut1, record.diem15phut2, record.diem15phut6,
                 record.diem15phut3, record.diem15phut4, record.diem15phut5
             ]
             lst_diem_1t = [
-                record.diem1tiet1, record.diem1tiet2,
+                record.diem1tiet1, record.diem1tiet2, record.diem1tiet6,
                 record.diem1tiet3, record.diem1tiet4, record.diem1tiet5
             ]
 

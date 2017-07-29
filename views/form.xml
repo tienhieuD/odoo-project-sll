@@ -595,20 +595,31 @@
       <field name="model">solienlac.nhapdiemhocsinh</field>
       <field name="arch" type="xml">
         <form string="Nhập điểm học sinh">
+
           <sheet>
+
+                <h3 align='center'>Nhập điểm học sinh</h3>
+
             <group colspan='4' col='4'>
               <group colspan='1' col='1'></group>
               <group colspan='2' col='2'>
+
+
                 <field name="hocky"/>
                 <field name="namhoc"/>
                 <field name="giaovien"/>
                 <field name="monhoc"/>
                 <field name="lop"/>
                 <field name="napdulieu"/>
+                <script type="text/javascript">
+                  document.getElementsByName("napdulieu").checked = true;
+                </script>
                 <!-- <field name="test1"/> -->
               </group>
               <group colspan='1' col='1'></group>
+
             </group>
+
           </sheet>
             <field name="nhapdiemchitiet" options="{'no_create': True}"/>
         </form>
