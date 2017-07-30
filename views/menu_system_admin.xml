@@ -528,9 +528,9 @@
       <menuitem id="menu_tobomon" name="Tổ bộ môn" parent="menu_noibonhatruong" action="bomon_action_form" sequence=""/>
     <menuitem id="menu_quanlyhocsinh" name="Quản lý học sinh" parent="menu_truongquanly" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"/>
       <menuitem id="menu_hocsinh" name="Học sinh" parent="menu_quanlyhocsinh" action="hocsinh_action_form" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"/>
-      <menuitem id="menu_nhapdiemhocsinh" name="Nhập điểm học sinh" parent="menu_quanlyhocsinh" action="diemdanhhocsinh_action_form_sa" sequence=""/>
+      <menuitem id="menu_nhapdiemhocsinh" name="Nhập điểm học sinh" parent="menu_quanlyhocsinh" action="nhapdiemhocsinh_action_form" sequence=""/>
       <!-- <menuitem id="menu_nhapdiemchitiet" name="Nhập điểm CT" parent="menu_quanlyhocsinh" action="nhapdiemchitiet_action_form" sequence=""/> -->
-      <menuitem id="menu_bangdiemdanh" name="Bảng điểm danh" parent="menu_quanlyhocsinh" action="bangdiemdanh_action_form" sequence=""/>
+      <menuitem id="menu_bangdiemdanh" name="Bảng điểm danh" parent="menu_quanlyhocsinh" action="diemdanhhocsinh_action_form_sa" sequence=""/>
       <menuitem id="menu_chucvu" name="Chức vụ học sinh" parent="menu_quanlyhocsinh" action="chucvu_action_form" sequence=""/>
       <menuitem id="menu_khenthuong_hocsinh" name="Khen thưởng học sinh" parent="menu_quanlyhocsinh" action="khenthuonghocsinh_action_form" sequence=""/>
       <menuitem id="menu_kyluat_hocsinh" name="Kỷ luật học sinh" parent="menu_quanlyhocsinh" action="kyluathocsinh_action_form" sequence=""/>
