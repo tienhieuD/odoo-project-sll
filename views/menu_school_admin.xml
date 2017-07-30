@@ -456,7 +456,6 @@
     <!-- <menuitem id="menu_chucvu_school_admin" name="Chức vụ học sinh" parent="menu_quanlyhocsinh_school_admin" action="chucvu_school_admin_action_form" sequence=""/> -->
     <menuitem id="menu_khenthuong_hocsinh_school_admin" name="Khen thưởng học sinh" parent="menu_quanlyhocsinh_school_admin" action="khenthuonghocsinh_school_admin_action_form" groups="group_schooladmin_l1,group_schooladmin_l21"  sequence=""/>
     <menuitem id="menu_kyluat_hocsinh_school_admin" name="Kỷ luật học sinh" parent="menu_quanlyhocsinh_school_admin" action="kyluathocsinh_school_admin_action_form"  groups="group_schooladmin_l1,group_schooladmin_l21" sequence=""/>
-    <menuitem id="menu_phuhuynh_school_admin" name="Phụ huynh học sinh" parent="menu_quanlyhocsinh_school_admin" action="phuhuynh_school_admin_action_form" groups="group_schooladmin_l1,group_schooladmin_l21" sequence=""/>
   <!-- <menuitem id="menu_khac_school_admin" name="Khác" parent="menu_truongquanly" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/> -->
     <!-- <menuitem id="menu_doituongchinhsach_school_admin" name="Đối tượng chính sách" parent="menu_khac_school_admin" action="doituongchinhsach_school_admin_action_form" sequence=""/> -->
 </odoo>
