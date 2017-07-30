@@ -505,6 +505,24 @@
     <field name="view_mode">tree,form</field>
   </record>
 
+  <record id="hangtruong_action_form_sa" model="ir.actions.act_window">
+    <field name="name">Hạng trường</field>
+    <field name="res_model">solienlac.hangtruong</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <record id="loaihinhtruong_action_form_sa" model="ir.actions.act_window">
+    <field name="name">Loại hình trường</field>
+    <field name="res_model">solienlac.loaihinhtruong</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <record id="truongchuyenbiet_action_form_sa" model="ir.actions.act_window">
+    <field name="name">Trường chuyên biệt</field>
+    <field name="res_model">solienlac.truongchuyenbiet</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
   <menuitem id="menu_danhmuchanhchinh" name="Danh mục hành chính" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"/>
     <menuitem id="menu_phuongxa" name="Phường/xã" parent="menu_danhmuchanhchinh" action="phuongxa_action_form"/>
     <menuitem id="menu_quanhuyen" name="Quận huyện" parent="menu_danhmuchanhchinh" action="quanhuyen_action_form"/>
@@ -517,6 +535,9 @@
       <menuitem id="menu_truong" name="Trường học" parent="menu_thongtintruong" action="truong_action_form"/>   <!--New-->
       <menuitem id="menu_caphoc" name="Cấp học" parent="menu_thongtintruong" action="caphoc_action_form"/>  <!--New-->
       <menuitem id="menu_captruong" name="Cấp trường" parent="menu_thongtintruong" action="captruong_action_form"/> <!--New-->
+      <menuitem id="menu_hangtruong" name="Hạng trường" parent="menu_thongtintruong" action="hangtruong_action_form_sa" groups="group_systemadmin_l1,group_systemadmin_l2"/>   <!--New-->
+      <menuitem id="menu_truongchuyenbiet" name="Trường chuyên biệt" parent="menu_thongtintruong" action="truongchuyenbiet_action_form_sa" groups="group_systemadmin_l1,group_systemadmin_l2"/>  <!--New-->
+      <menuitem id="menu_loaihinhtruong" name="Loại hình trường" parent="menu_thongtintruong" action="loaihinhtruong_action_form_sa" groups="group_systemadmin_l1,group_systemadmin_l2"/> <!--New-->
     <menuitem id="menu_noibonhatruong" name="Nội bộ nhà trường" parent="menu_truongquanly" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"/>
       <menuitem id="menu_hocky" name="Tạo học kỳ mới" parent="menu_noibonhatruong" action="hocky_action_form_sca" sequence="0"/>
       <menuitem id="menu_giaovien" name="Giáo viên" parent="menu_noibonhatruong" action="giaovien_action_form" sequence=""/>

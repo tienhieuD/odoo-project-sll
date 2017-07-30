@@ -5,7 +5,7 @@ import random
 from odoo import models, fields, api, exceptions, _
 from odoo.http import request
 import json
-import re
+import hashlib
 
 class hocky(models.Model):
     _name = 'solienlac.hocky'
@@ -100,6 +100,7 @@ class hangtruong(models.Model):
         ('1', 'Hạng I'),
         ('2', 'Hạng II'),
         ('3', 'Hạng III'),
+        ('4', 'Hạng IV'),
     ], default='1', string='Tên hạng trường')
     ghichu = fields.Char('Ghi chú')
 
@@ -242,6 +243,25 @@ class giaovien(models.Model):
     phuongxa = fields.Many2one('solienlac.phuongxa', string='Phường\Xã')
     quanhuyen = fields.Many2one('solienlac.quanhuyen', string='Quận\Huyện')
     tinhthanhpho = fields.Many2one('solienlac.tinhthanhpho', string='Tỉnh\Thành phố')
+    @api.multi
+    @api.onchange('tinhthanhpho')
+    def set_value_huyen(self):
+        self.quanhuyen = []
+        tmp1 = self.env['solienlac.quanhuyen'].search([
+                    ('matinhthanhpho', '=', self.tinhthanhpho.matinhthanhpho),
+                ])
+        lst = map(lambda x:x.matinhthanhpho, tmp1)
+        return {'domain':{'quanhuyen': [('matinhthanhpho', 'in', lst)]}}
+    @api.multi
+    @api.onchange('tinhthanhpho', 'quanhuyen')
+    def set_value_xa(self):
+        self.phuongxa = []
+        tmp1 = self.env['solienlac.phuongxa'].search([
+                    ('TinhID', '=', self.tinhthanhpho.matinhthanhpho),
+                    ('QuanHuyenID', '=', self.quanhuyen.maquanhuyen),
+                ])
+        lst = map(lambda x: x.QuanHuyenID, tmp1)
+        return {'domain':{'phuongxa': [('QuanHuyenID', 'in', lst)]}}
     diachi = fields.Char('Địa chỉ')
     dantoc = fields.Many2one('solienlac.dantoc', string = "Dân tộc")
     tongiao = fields.Many2one('solienlac.tongiao', string = "Tôn giáo")
@@ -387,7 +407,7 @@ class dantoc(models.Model):
 class tongiao(models.Model):
     _name = 'solienlac.tongiao'
     _rec_name = 'tentongiao' # optional
-    matongiao = fields.Char("Mã tôn giáo")
+    matongiao = fields.Integer("Mã tôn giáo")
     tentongiao = fields.Char("Tên tôn giáo")
     ghichu = fields.Char("Ghi chú")
 
@@ -690,9 +710,9 @@ class hocsinh(models.Model):
     def set_username(self):
         self.username = self.mahocsinh
     password = fields.Char('Password', compute='set_password')
-    @api.depends()
+    @api.depends('mahocsinh')
     def set_password(self):
-        self.password = str(random.randint(1000000, 10000000))
+        self.password = hashlib.sha224(self.mahocsinh).hexdigest()[0:10]
 
     diachi = fields.Char('Địa chỉ')
     quequan = fields.Char('Quê quán')
@@ -712,7 +732,7 @@ class hocsinh(models.Model):
     tongiao = fields.Many2one('solienlac.tongiao', string='Tôn giáo')
     @api.model
     def set_chucvu(self):
-        return self.env['solienlac.chucvu'].browse([4,19])
+        return self.env['solienlac.chucvu'].browse([4,])
     chucvu = fields.Many2many('solienlac.chucvu', string='Chức vụ', default=set_chucvu)
 
     doituongchinhsach = fields.Many2many('solienlac.doituongchinhsach', string='Đối tượng chính sách')

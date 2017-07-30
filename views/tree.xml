@@ -102,6 +102,7 @@
         <tree string="Khối Tree">
           <field name="makhoi"/>
           <field name="tenkhoi"/>
+          <field name="truong"/>
         </tree>
       </field>
     </record>
@@ -510,8 +511,8 @@
 
          <field name="captruong"/>
          <field name="caphoc"/>
-         <field name="hangtruong"/>
-         <field name="truongchuyenbiet"/>
+         <!-- <field name="hangtruong"/>
+         <field name="truongchuyenbiet"/> -->
          <field name="loaihinhtruong"/>
 
          <field name="chatluongcao"/>

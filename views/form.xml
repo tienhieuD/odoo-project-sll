@@ -357,11 +357,12 @@
                 <field name="khoi"/>
                 <field name="banhoc"/>
                 <field name="nienkhoa"/>
+                <field name="gvcn"/>
               </group>
             </group>
-            <group colspan="4" string='Học sinh'>
-              <field name="hocsinh"/>
-            </group>
+            <!-- <group colspan="4" string='Học sinh'>
+              <field name="hocsinh"/> -->
+            <!-- </group> -->
           </sheet>
         </form>
       </field>
@@ -648,7 +649,7 @@
               <group colspan='2' col='2'>
                 <field name="namhoc"/>
                 <field name="hocky"/>
-                <field name="truong"/>
+                <field name="truong" options="{'no_create_edit': True}"/>
               </group>
               <group colspan='2' col='2'>
                 <field name="trangthai"/>
@@ -737,14 +738,14 @@
             </group>
             <group colspan='6' col='6' string='Thông tin bổ sung'>
               <group colspan='2' col='2'>
-                <field name="captruong"/>
-                <field name="caphoc"/>
-                <field name="hangtruong"/>
-                <field name="truongchuyenbiet"/>
-                <field name="loaihinhtruong"/>
+                <field name="captruong" options="{'no_create_edit': True}"/>
+                <field name="caphoc" options="{'no_create_edit': True}"/>
+                <field name="hangtruong" options="{'no_create_edit': True}"/>
+                <field name="truongchuyenbiet" options="{'no_create_edit': True}"/>
+                <field name="loaihinhtruong" options="{'no_create_edit': True}"/>
               </group>
               <group colspan='2' col='2'>
-                <field name="loailopnho"/>
+                <field name="loailopnho" options="{'no_create_edit': True}"/>
                 <field name="thanhthi"/>
                 <field name="chatluongcao"/>
                 <field name="bdkk"/>
