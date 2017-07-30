@@ -255,6 +255,8 @@
         <tree string="Lớp">
           <field name="malop"/>
           <field name="tenlop"/>
+          <field name="khoi"/>
+          <field name="gvcn"/>
         </tree>
       </field>
     </record>
@@ -268,7 +270,11 @@
         <tree string="Môn học">
           <field name="mamonhoc"/>
           <field name="tenmonhoc"/>
-          <field name="heso"/>
+          <field name="bomon"/>
+          <field name="banhoc"/>
+          <!-- <field name="heso"/> -->
+          <field name="ghichu"/>
+          <!-- <field name="heso"/> -->
         </tree>
       </field>
     </record>
@@ -419,9 +425,7 @@
      <field name="model">solienlac.nhapdiemchitiet</field>
      <field name="arch" type="xml">
        <tree string="Nhập điểm chi tiết" editable='bottom' create="false">
-         <field name="hocsinh" readonly="1" groups="solienlac.group_systemadmin_l1,solienlac.group_systemadmin_l2,solienlac.group_systemadmin_l3"/>
-         <field name="hocsinh" readonly="1" groups="solienlac.group_schooladmin_l1,solienlac.group_schooladmin_l21,solienlac.group_schooladmin_l22,solienlac.group_schooladmin_l3"/>
-         <field name="monhoc" groups="solienlac.group_customer"/>
+         <field name="hocsinh" readonly="1"/>
          <field name="diemmieng1"/>
          <field name="diemmieng2"/>
          <field name="diemmieng3"/>
@@ -512,7 +516,7 @@
      <field name="name">solienlac.diemdanhchitiet.tree</field>
      <field name="model">solienlac.diemdanhchitiet</field>
      <field name="arch" type="xml">
-       <tree string="Nhập điểm chi tiết" editable='bottom' create="false">
+       <tree string="Điểm danh chi tiết" editable='bottom' create="false">
          <field name="hocsinh" readonly="1"/>
          <field name="ngayvang" readonly="1"/>
          <field name="vang"/>
@@ -527,7 +531,8 @@
      <field name="model">solienlac.khenthuongchitiet</field>
      <field name="arch" type="xml">
        <tree string="Nhập điểm chi tiết" editable='bottom' create="false">
-         <field name="hocsinh" readonly="1"/>
+         <field name="hocsinh" readonly="1" groups="solienlac.group_schooladmin_l1,solienlac.group_schooladmin_l21,solienlac.group_schooladmin_l22,solienlac.group_schooladmin_l3"/>
+         <field name="monhoc" groups="solienlac.group_customer"/>
          <field name="ngaykhenthuong" readonly="1"/>
          <field name="lydokhenthuong"/>
          <field name="hinhthuckhenthuong"/>

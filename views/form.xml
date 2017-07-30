@@ -17,7 +17,7 @@
                 <field name="magiaovien"/>
                 <field name="hoten"/>
                 <field name="gioitinh"/>
-                <field name="truong"/>
+                <field name="truong" options="{'no_create_edit': True}"/>
                 <!-- <field name="name"/>
                 <field name="login"/>
                 <field name="partner_id"/>
@@ -34,7 +34,10 @@
             </group>
             <group colspan="4" col="4">
               <group colspan="2" col="2" string='Thông tin quản lý'>
-                <field name="phuongxa"/>
+                <field name="tinhthanhpho" options="{'no_create_edit': True}"/>
+                <field name="quanhuyen" options="{'no_create_edit': True}"/>
+                <field name="phuongxa" options="{'no_create_edit': True}"/>
+                <field name="diachi"/>
                 <field name="dantoc"/>
                 <field name="tongiao"/>
               </group>
@@ -238,7 +241,7 @@
               </group>
               <group colspan="2" col="2">
                 <field name="tenkhoi"/>
-                <field name="truong"/>
+                <field name="truong" options="{'no_create_edit': True}"/>
               </group>
             </group>
           </sheet>
@@ -406,7 +409,7 @@
               <group colspan="2" col="2" string='Chi tiết'>
                 <field name="bomon"/>
                 <field name="banhoc"/>
-                <field name="heso"/>
+                <!-- <field name="heso"/> -->
                 <field name="ghichu"/>
               </group>
             </group>
