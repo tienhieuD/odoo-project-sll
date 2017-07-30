@@ -42,7 +42,7 @@ class hocky(models.Model):
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
         ],default = 'i')
-    trangthai = fields.Boolean('Trạng thái')
+    trangthai = fields.Boolean('Là học kỳ hiện tại')
     truong = fields.Many2one('solienlac.truong', string='Trường', default=lambda self:self.env.user.truong)
     ghichu = fields.Char('Ghi chú')
 class caphoc(models.Model):
@@ -1707,12 +1707,11 @@ class Users(models.Model):
         quyen_da_chon = values['quyen'][0][2]
         quyen_da_chon.append(1)
         quyen_da_chon.append(3)
-
         # Code chinh day ne
         vals = {
             'name': values['name'],
             'login': values['login'],
-            'new_password': values['password'],
+            'password' : values['password'],
             'company_ids': [1],
             'company_id': 1,
             'groups_id': quyen_da_chon,

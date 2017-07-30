@@ -12,6 +12,20 @@
     <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l21')), (4, ref('solienlac.group_schooladmin_l22'))]"/>
     <!--<field name="global" eval="1"/> -->
   </record>
+
+  <record id="rule_hieutrong_nhin_nhapdiemcuatruongho" model="ir.rule">
+    <field name="name">hiệu trưởng nhìn các lần nhập điểm của trường họ</field>
+    <field name="model_id" ref="model_solienlac_nhapdiemhocsinh"/>
+    <field name="domain_force">[('giaovien.truong.id', '=', user.truong.id ), ]</field>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_unlink" eval="1"/>
+    <!-- You can attach this rule to a specific group, or make it global -->
+    <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l1'))]"/>
+    <!--<field name="global" eval="1"/> -->
+  </record>
+
   <!-- Lọc record cho quyền hiệu trưởng, giáo viên trong trường
   - Chỉ nhìn thấy khối trường mình
   - Chỉ nhìn thấy lớp trường mình
@@ -153,7 +167,7 @@
   <record id="rule_hocky" model="ir.rule">
     <field name="name">Tạo học kỳ mới</field>
     <field name="model_id" ref="model_solienlac_hocky"/>
-    <field name="domain_force">[('truong', '=', user.truong),]</field>
+    <field name="domain_force">[('truong.id', '=', user.truong.id),]</field>
     <field name="perm_write" eval="1"/>
     <field name="perm_create" eval="1"/>
     <field name="perm_read" eval="1"/>
