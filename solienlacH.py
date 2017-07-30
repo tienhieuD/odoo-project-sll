@@ -7,7 +7,44 @@ from odoo.http import request
 import json
 import re
 
+class hocky(models.Model):
+    _name = 'solienlac.hocky'
+    _rec_name = 'hocky' # optional
+    # _order = 'namhoc, hocky, ' # optional
 
+    @api.model
+    def _get_list_namhoc(self):
+        lst_namhoc=[]
+        for year in range(1990,2050):
+            item = str(year) + "-" + str(year+1)
+            lst_namhoc.append( (item, item) )
+        return lst_namhoc
+
+    @api.model
+    def _get_namhoc_now(self):
+        now = datetime.datetime.now()
+        year = now.year
+        if now.month <= 9:
+            year -= 1
+        return str(year) + "-" + str(year+1)
+
+    namhoc = fields.Selection(
+        string="Năm học",
+        selection= _get_list_namhoc,
+        default = _get_namhoc_now,
+    )
+    #---------- end define fields namhoc ------------
+
+    hocky = fields.Selection(
+        string="Học kỳ",
+        selection=[
+                ('i', 'Học kỳ I'),
+                ('ii', 'Học kỳ II'),
+                ('iii', 'Cả năm'),
+        ],default = 'i')
+    trangthai = fields.Boolean('Trạng thái')
+    truong = fields.Many2one('solienlac.truong', string='Trường')
+    ghichu = fields.Char('Ghi chú')
 class caphoc(models.Model):
     _name = 'solienlac.caphoc'
     _rec_name = 'tencaphoc'
