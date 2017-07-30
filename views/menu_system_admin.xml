@@ -514,7 +514,7 @@
 
   <menuitem id="menu_truongquanly" name="Danh mục trường quản lý" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3,group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3,group_customer"/>
     <menuitem id="menu_thongtintruong" name="Thông tin nhà trường" parent="menu_truongquanly" sequence="" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"/> <!--New-->
-      <menuitem id="menu_truong" name="Trường" parent="menu_thongtintruong" action="truong_action_form"/>   <!--New-->
+      <menuitem id="menu_truong" name="Trường học" parent="menu_thongtintruong" action="truong_action_form"/>   <!--New-->
       <menuitem id="menu_caphoc" name="Cấp học" parent="menu_thongtintruong" action="caphoc_action_form"/>  <!--New-->
       <menuitem id="menu_captruong" name="Cấp trường" parent="menu_thongtintruong" action="captruong_action_form"/> <!--New-->
     <menuitem id="menu_noibonhatruong" name="Nội bộ nhà trường" parent="menu_truongquanly" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"/>

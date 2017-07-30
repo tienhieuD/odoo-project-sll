@@ -703,10 +703,10 @@
                 <field name="website"/>
               </group>
               <group colspan='2' col='2'>
-                <field name="diachi"/>
                 <field name="matinhthanhpho" options="{'no_create_edit': True}"/>
                 <field name="maquanhuyen" options="{'no_create_edit': True}"/>
                 <field name="maphuongxa" options="{'no_create_edit': True}"/>
+                <field name="diachi"/>
               </group>
             </group>
             <group colspan='6' col='6' string='Thông tin bổ sung'>

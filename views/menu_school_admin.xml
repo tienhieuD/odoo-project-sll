@@ -445,7 +445,7 @@
     <menuitem id="menu_hocsinh_school_admin" name="Học sinh" parent="menu_quanlyhocsinh_school_admin" action="hocsinh_school_admin_action_form"/>
     <menuitem id="menu_nhapdiemhocsinh_school_admin" name="Nhập điểm học sinh" parent="menu_quanlyhocsinh_school_admin" action="nhapdiemhocsinh_school_admin_action_form" sequence=""/>
     <!-- <menuitem id="menu_nhapdiemchitiet_school_admin" name="Nhập điểm CT" parent="menu_quanlyhocsinh_school_admin" action="nhapdiemchitiet_school_admin_action_form" sequence=""/> -->
-    <menuitem id="menu_bangdiemdanh_school_admin" name="Bảng điểm danh" parent="menu_quanlyhocsinh_school_admin" action="diemdanhhocsinh_action_form_sca" sequence=""/>
+    <menuitem id="menu_bangdiemdanh_school_admin_" name="Bảng điểm danh" parent="menu_quanlyhocsinh_school_admin" action="diemdanhhocsinh_action_form_sca" sequence=""/>
     <!-- <menuitem id="menu_chucvu_school_admin" name="Chức vụ học sinh" parent="menu_quanlyhocsinh_school_admin" action="chucvu_school_admin_action_form" sequence=""/> -->
     <menuitem id="menu_khenthuong_hocsinh_school_admin" name="Khen thưởng học sinh" parent="menu_quanlyhocsinh_school_admin" action="khenthuonghocsinh_school_admin_action_form" groups="group_schooladmin_l1,group_schooladmin_l21"  sequence=""/>
     <menuitem id="menu_kyluat_hocsinh_school_admin" name="Kỷ luật học sinh" parent="menu_quanlyhocsinh_school_admin" action="kyluathocsinh_school_admin_action_form"  groups="group_schooladmin_l1,group_schooladmin_l21" sequence=""/>

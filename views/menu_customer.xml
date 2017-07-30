@@ -59,11 +59,16 @@
     </field>
   </record>
 
+  <record id="diemdanhchitiet_action_form_customer" model="ir.actions.act_window">
+    <field name="name">Điểm danh chi tiết</field>
+    <field name="res_model">solienlac.diemdanhchitiet</field>
+    <field name="view_mode">tree</field>
+  </record>
 
   <menuitem id="menu_truongquanly_customer" name="Danh mục trường quản lý" groups="group_customer"/>
     <menuitem id="menu_quanlyhocsinh_customer" name="Quản lý học sinh" parent="menu_truongquanly_customer"/>
-      <menuitem id="menu_bangdiemhocsinh_customer" name="Bảng diểm" parent="menu_quanlyhocsinh_customer" action="nhapdiemchitiet_customer_action_form"/>
-      <menuitem id="menu_hanhkiem_customer" name="Hạnh kiểm" parent="menu_quanlyhocsinh_customer" action="hanhkiem_customer_action_form"/>
-        <menuitem id="menu_diemdanh_customer" name="Điêm danh" parent="menu_quanlyhocsinh_customer" action="hocsinh_customer_action_form"/>
-          <menuitem id="menu_hocsinh_customer" name="Thông tin học sinh" parent="menu_quanlyhocsinh_customer" action="hocsinh_customer_action_form"/>
+      <menuitem id="menu_bangdiemhocsinh_customer" name="Bảng diểm" parent="menu_quanlyhocsinh_customer" action="nhapdiemchitiet_customer_action_form" sequence="0"/>
+      <menuitem id="menu_hanhkiem_customer" name="Hạnh kiểm" parent="menu_quanlyhocsinh_customer" action="hanhkiem_customer_action_form" sequence="1"/>
+      <menuitem id="menu_diemdanh_customer" name="Điêm danh" parent="menu_quanlyhocsinh_customer" action="diemdanhchitiet_action_form_customer" sequence="2"/>
+      <menuitem id="menu_hocsinh_customer" name="Thông tin học sinh" parent="menu_quanlyhocsinh_customer" action="hocsinh_customer_action_form" sequence="3"/>
 </odoo>
