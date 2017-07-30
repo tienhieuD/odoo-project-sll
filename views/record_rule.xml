@@ -114,14 +114,17 @@
     <field name="groups" eval="[(4, ref('solienlac.group_customer'))]"/>
   </record>
 
-  <record id="rule_hanhkiem_customer" model="ir.rule">
-    <field name="name">Nhập điểm chi tiết</field>
-    <field name="model_id" ref="model_solienlac_diemdanhchitiet"/>
-    <field name="domain_force">[('hocsinh.mahocsinh', '=', user.login),]</field>
+  <record id="rule_taikhoan" model="ir.rule">
+    <field name="name">Tài khoản của trường</field>
+    <field name="model_id" ref="model_solienlac_taikhoan"/>
+    <field name="domain_force">[('truong.id', '=', user.truong.id), ]</field>
     <field name="perm_write" eval="1"/>
     <field name="perm_create" eval="1"/>
     <field name="perm_read" eval="1"/>
     <field name="perm_unlink" eval="1"/>
-    <field name="groups" eval="[(4, ref('solienlac.group_customer'))]"/>
+    <!-- You can attach this rule to a specific group, or make it global -->
+    <field name="groups" eval="[(4, ref('group_schooladmin_l1'))]"/>
+    <!--<field name="global" eval="1"/> -->
   </record>
+
 </odoo>
