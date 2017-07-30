@@ -431,9 +431,16 @@
     <field name="view_mode">tree,form</field>
   </record>
 
+  <record id="hocky_action_form_sca" model="ir.actions.act_window">
+    <field name="name">Thông tin kỳ học</field>
+    <field name="res_model">solienlac.hocky</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
   <menuitem id="menu_thongtintruong_school_admin" name="Thông tin nhà trường" parent="menu_truongquanly" sequence="" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/> <!--New-->
     <menuitem id="menu_truong_school_admin" name="Thông tin trường" parent="menu_thongtintruong_school_admin" action="truong_school_admin_action_form" sequence=""/>
   <menuitem id="menu_noibonhatruong_school_admin" name="Nội bộ nhà trường" parent="menu_truongquanly" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/>
+    <menuitem id="menu_hocky_school_admin_" name="Tạo học kỳ mới" parent="menu_noibonhatruong_school_admin" action="hocky_action_form_sca" sequence="0" groups="group_schooladmin_l1"/>
     <menuitem id="menu_giaovien_school_admin" name="Giáo viên" parent="menu_noibonhatruong_school_admin" action="giaovien_school_admin_action_form" sequence=""/>
     <menuitem id="menu_phongban_school_admin" name="Phòng ban" parent="menu_noibonhatruong_school_admin" action="phongban_school_admin_action_form" sequence=""/>
     <menuitem id="menu_khoi_school_admin" name="Khối học" parent="menu_noibonhatruong_school_admin" action="khoi_school_admin_action_form" sequence=""/>

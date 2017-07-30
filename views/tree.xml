@@ -451,6 +451,21 @@
      </field>
    </record>
 
+   <!--hocky-->
+   <record id="hocky_view_tree" model="ir.ui.view">
+     <field name="name">solienlac.hocky.tree</field>
+     <field name="model">solienlac.hocky</field>
+     <field name="arch" type="xml">
+       <tree string="Học kỳ">
+         <field name="namhoc"/>
+         <field name="hocky"/>
+         <field name="trangthai"/>
+         <field name="truong"/>
+         <field name="ghichu"/>
+       </tree>
+     </field>
+   </record>
+
    <!--caphoc-->
    <record id="caphoc_view_tree" model="ir.ui.view">
      <field name="name">solienlac.caphoc.tree</field>

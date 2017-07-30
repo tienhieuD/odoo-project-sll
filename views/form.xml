@@ -637,6 +637,29 @@
       </field>
     </record>
 
+    <!-- Học kỳ-->
+    <record id="hocky_view_form" model="ir.ui.view">
+      <field name="name">solienlac.hocky.form</field>
+      <field name="model">solienlac.hocky</field>
+      <field name="arch" type="xml">
+        <form string="Thông tin học kỳ">
+          <sheet>
+            <group colspan='4' col='4'>
+              <group colspan='2' col='2'>
+                <field name="namhoc"/>
+                <field name="hocky"/>
+                <field name="truong"/>
+              </group>
+              <group colspan='2' col='2'>
+                <field name="trangthai"/>
+                <field name="ghichu"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
     <!-- Cấp học-->
     <record id="caphoc_view_form" model="ir.ui.view">
       <field name="name">solienlac.caphoc.form</field>
