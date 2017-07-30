@@ -645,6 +645,7 @@
               <group colspan='2' col='2'>
                 <field name="namhoc"/>
                 <field name="hocky"/>
+                <field name="truong"/>
               </group>
               <group colspan='2' col='2'>
                 <field name="trangthai"/>

@@ -518,7 +518,7 @@
       <menuitem id="menu_caphoc" name="Cấp học" parent="menu_thongtintruong" action="caphoc_action_form"/>  <!--New-->
       <menuitem id="menu_captruong" name="Cấp trường" parent="menu_thongtintruong" action="captruong_action_form"/> <!--New-->
     <menuitem id="menu_noibonhatruong" name="Nội bộ nhà trường" parent="menu_truongquanly" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"/>
-      <menuitem id="menu_hocky" name="Tạo học kỳ mới" parent="menu_noibonhatruong" action="hocky_action_form_sca" sequence=""/>
+      <menuitem id="menu_hocky" name="Tạo học kỳ mới" parent="menu_noibonhatruong" action="hocky_action_form_sca" sequence="0"/>
       <menuitem id="menu_giaovien" name="Giáo viên" parent="menu_noibonhatruong" action="giaovien_action_form" sequence=""/>
       <menuitem id="menu_phongban" name="Phòng ban" parent="menu_noibonhatruong" action="phongban_action_form" sequence=""/>
       <menuitem id="menu_khoi" name="Khối học" parent="menu_noibonhatruong" action="khoi_action_form" sequence=""/>

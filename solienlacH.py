@@ -43,7 +43,7 @@ class hocky(models.Model):
                 ('iii', 'Cả năm'),
         ],default = 'i')
     trangthai = fields.Boolean('Trạng thái')
-    truong = fields.Many2one('solienlac.truong', string='Trường')
+    truong = fields.Many2one('solienlac.truong', string='Trường', default=lambda self:self.env.user.truong)
     ghichu = fields.Char('Ghi chú')
 class caphoc(models.Model):
     _name = 'solienlac.caphoc'

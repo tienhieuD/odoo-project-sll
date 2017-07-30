@@ -456,6 +456,7 @@
          <field name="namhoc"/>
          <field name="hocky"/>
          <field name="trangthai"/>
+         <field name="truong"/>
          <field name="ghichu"/>
        </tree>
      </field>
