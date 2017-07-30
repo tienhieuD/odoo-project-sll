@@ -401,23 +401,42 @@ class kyluathocsinh(models.Model):
     ghichu = fields.Char(string='Ghi Chú')
     hocsinh = fields.Many2many("solienlac.hocsinh",string="Học sinh")
 
-class khenthuonghocsinh(models.Model):
-    _name = 'solienlac.khenthuonghocsinh'
-    _rec_name = 'lydokhenthuong' # optional
-    lydokhenthuong = fields.Char(string="Lý do khen thưởng", )
-    hinhthuckhenthuong = fields.Selection(
-        string="Hình thức khen thưởng",
-        selection=[
-                ('1', 'Khen trước lớp, trước trường'),
-                ('2', 'Được tặng danh hiệu'),
-                ('3', 'Được ghi tên vào bảng danh dự của trường'),
-                ('4', 'Được khen thưởng đặc biệt'),
-                ('5', 'Khác'),
-        ],
-    )
-    ngaykhenthuong = fields.Date(string="Ngày khen thưởng", )
-    ghichu = fields.Char(string="Ghi chú", )
-    hocsinh = fields.Many2many("solienlac.hocsinh",string="Học sinh")
+# class khenthuonghocsinh(models.Model):
+#     _name = 'solienlac.khenthuonghocsinh'
+#     _rec_name = 'lydokhenthuong' # optional
+#     lydokhenthuong = fields.Char(string="Lý do khen thưởng", )
+#     hinhthuckhenthuong = fields.Selection(
+#         string="Hình thức khen thưởng",
+#         selection=[
+#                 ('1', 'Khen trước lớp, trước trường'),
+#                 ('2', 'Được tặng danh hiệu'),
+#                 ('3', 'Được ghi tên vào bảng danh dự của trường'),
+#                 ('4', 'Được khen thưởng đặc biệt'),
+#                 ('5', 'Khác'),
+#         ],
+#     )
+#     ghichu = fields.Char(string="Ghi chú", )
+#
+#     ngaykhenthuong = fields.Date(string="Ngày khen thưởng", )
+#     lop = fields.Many2many("solienlac.lop", string="Học sinh")
+#
+# class chitietkhenthuong(models.Model):
+#     _name = 'solienlac.chitietkhenthuong'
+#     lydokhenthuong = fields.Char(string="Lý do khen thưởng", )
+#     hinhthuckhenthuong = fields.Selection(
+#         string="Hình thức khen thưởng",
+#         selection=[
+#                 ('1', 'Khen trước lớp, trước trường'),
+#                 ('2', 'Được tặng danh hiệu'),
+#                 ('3', 'Được ghi tên vào bảng danh dự của trường'),
+#                 ('4', 'Được khen thưởng đặc biệt'),
+#                 ('5', 'Khác'),
+#         ],
+#     )
+#     ghichu = fields.Char(string="Ghi chú", )
+#
+#     ngaykhenthuong = fields.Date(string="Ngày khen thưởng", )
+#     lop = fields.Many2many("solienlac.lop", string="Học sinh")
 
 class khenthuongkyluat_hocsinh(models.Model):
     _name = 'solienlac.khenthuongkyluat_hocsinh'
@@ -1823,6 +1842,306 @@ class diemdanhhocsinh(models.Model):
 
 class diemdanhchitiet(models.Model):
     _name = 'solienlac.diemdanhchitiet'
+    ngayvang = fields.Date(string="Ngày", )
+    vang = fields.Boolean(string="Vắng", )
+    ghichu = fields.Char(string="Ghi chú", )
+    @api.model
+    def _get_list_namhoc(self):
+        lst_namhoc=[]
+        for year in range(1990,2050):
+            item = str(year) + "-" + str(year+1)
+            lst_namhoc.append( (item, item) )
+        return lst_namhoc
+    @api.model
+    def _get_namhoc_now(self):
+        now = datetime.datetime.now()
+        year = now.year
+        if now.month <= 9:
+            year -= 1
+        return str(year) + "-" + str(year+1)
+
+    giaovien = fields.Many2one(
+        string="Giáo viên",
+        comodel_name="solienlac.giaovien",
+    )
+
+    hocky = fields.Selection(
+        string="Học kỳ",
+        selection=[
+                ('i', 'Học kỳ I'),
+                ('ii', 'Học kỳ II'),
+                ('iii', 'Cả năm'),
+        ],default = 'i')
+    namhoc = fields.Selection(
+        string="Năm học",
+        selection= _get_list_namhoc,
+        default = _get_namhoc_now,
+    )
+    monhoc = fields.Many2one(
+        string="Môn học",
+        comodel_name="solienlac.monhoc",
+    )
+    hocsinh = fields.Many2one('solienlac.hocsinh', string='Học sinh')
+    diemmieng1 = fields.Char('Điểm miệng', readonly=True)
+    diemmieng2 = fields.Char('1')
+    diemmieng3 = fields.Char('2')
+    diemmieng4 = fields.Char('3')
+    diemmieng5 = fields.Char('4')
+    diemmieng6 = fields.Char('5')
+    diem15phut1 = fields.Char('Điểm hệ số 1', readonly=True)
+    diem15phut2 = fields.Char('1')
+    diem15phut3 = fields.Char('2')
+    diem15phut4 = fields.Char('3')
+    diem15phut5 = fields.Char('4')
+    diem15phut6 = fields.Char('5')
+    diem1tiet1 = fields.Char('Điểm hệ số 2', readonly=True)
+    diem1tiet2 = fields.Char('1')
+    diem1tiet3 = fields.Char('2')
+    diem1tiet4 = fields.Char('3')
+    diem1tiet5 = fields.Char('4')
+    diem1tiet6 = fields.Char('5')
+    diemhocky = fields.Char('Điểm học kỳ')
+    diemtongket = fields.Char(string='Tổng kểt', store=True, compute='_compute_final')
+    xephang = fields.Integer('#')
+
+    @api.onchange('diemmieng1','diem15phut1','diem1tiet1')
+    def _block_text(self):
+        self.diemmieng1 = ""
+        self.diem15phut1 = ""
+        self.diem1tiet1 = ""
+
+    @api.depends('diemhocky',
+    'diemmieng1','diemmieng2','diemmieng3','diemmieng4','diemmieng5','diemmieng6',
+    'diem15phut1','diem15phut2','diem15phut3','diem15phut4','diem15phut5','diem15phut6',
+    'diem1tiet1','diem1tiet2','diem1tiet3','diem1tiet4','diem1tiet5','diem1tiet6')
+    def _compute_final(self):
+        def convert_to_float(n):
+            try:
+                n = str(n)
+                n = n.replace(',','.')
+                return float(n)
+            except:
+                return -1.0
+
+        for record in self:
+            lst_diem_mieng = [
+                record.diemmieng1, record.diemmieng2, record.diemmieng6,
+                record.diemmieng3, record.diemmieng4, record.diemmieng5
+            ]
+            lst_diem_15 = [
+                record.diem15phut1, record.diem15phut2, record.diem15phut6,
+                record.diem15phut3, record.diem15phut4, record.diem15phut5
+            ]
+            lst_diem_1t = [
+                record.diem1tiet1, record.diem1tiet2, record.diem1tiet6,
+                record.diem1tiet3, record.diem1tiet4, record.diem1tiet5
+            ]
+
+            lst_diem_mieng = [convert_to_float(x) for x in lst_diem_mieng]
+            lst_diem_mieng = filter(lambda x: x != -1.0, lst_diem_mieng)
+            lst_diem_15 = [convert_to_float(x) for x in lst_diem_15]
+            lst_diem_15 = filter(lambda x: x != -1.0, lst_diem_15)
+            lst_diem_1t = [convert_to_float(x) for x in lst_diem_1t]
+            lst_diem_1t = filter(lambda x: x != -1.0, lst_diem_1t)
+            diemhk = convert_to_float(record.diemhocky) if convert_to_float(record.diemhocky) != -1.0 else 0
+
+            he_so = len(lst_diem_mieng) + len(lst_diem_15) + 2*len(lst_diem_1t) + 3
+            tong  = sum(lst_diem_mieng) + sum(lst_diem_15) + 2*sum(lst_diem_1t) + 3*convert_to_float(record.diemhocky)
+            diemtk = str(float(tong)/float(he_so))[0:4]
+
+            record.diemtongket = diemtk
+
+################################################################################
+# khenthuonghocsinh renew ######################################################
+################################################################################
+################################################################################
+
+class khenthuonghocsinh(models.Model):
+    _name = 'solienlac.khenthuonghocsinh'
+    _rec_name = 'giaovien' # optional
+
+    ngaykhenthuong = fields.Date(string="Ngày khen thưởng", default = datetime.datetime.now())
+    lop = fields.Many2many("solienlac.lop", string="Học sinh")
+
+    test1 = fields.Char()
+    ngayvang = fields.Date(string="Ngày", default = datetime.datetime.now())
+    napdulieu = fields.Boolean('Tải danh sách học sinh')
+    @api.model
+    def _get_current_gv(self):
+        dmain = [('id', '=', self.env.user.giaovien.id)]
+        return dmain
+    giaovien = fields.Many2one(
+        string="Giáo viên",
+        comodel_name="solienlac.giaovien",
+        default = lambda self: self.env.user.giaovien
+    )
+    lop = fields.Many2one(
+        string="Lớp",
+        comodel_name="solienlac.lop",
+        # domain=[('id','in',[l.lop.id for l in [lambda self: self.env.user.giaovien.monhoc]])],
+    )
+
+
+    #---------- define fields namhoc ------------
+    @api.model
+    def _get_list_namhoc(self):
+        lst_namhoc=[]
+        for year in range(1990,2050):
+            item = str(year) + "-" + str(year+1)
+            lst_namhoc.append( (item, item) )
+        return lst_namhoc
+
+    @api.model
+    def _get_namhoc_now(self):
+        now = datetime.datetime.now()
+        year = now.year
+        if now.month <= 9:
+            year -= 1
+        return str(year) + "-" + str(year+1)
+
+    namhoc = fields.Selection(
+        string="Năm học",
+        selection= _get_list_namhoc,
+        default = _get_namhoc_now,)
+    hocky = fields.Selection(
+        string="Học kỳ",
+        selection=[
+                ('i', 'Học kỳ I'),
+                ('ii', 'Học kỳ II'),
+                ('iii', 'Cả năm'),
+        ],default = 'i')
+
+    #---------- end define fields namhoc ------------
+    @api.model
+    def _get_current_list_monhoc(self):
+        lst = [x.monhoc.id for x in self.env.user.giaovien.monhoc]
+        lst = list(set(lst))
+        return [('id', 'in', lst)]
+
+    monhoc = fields.Many2one(
+        string="Môn học",
+        comodel_name="solienlac.monhoc",
+        domain = _get_current_list_monhoc,)
+
+    khenthuongchitiet = fields.Many2many(
+        comodel_name='solienlac.khenthuongchitiet',
+        string='Chi tiết',
+        store=True,)
+
+    @api.multi
+    @api.onchange('monhoc')
+    def _get_lop(self):
+        self.lop = []
+        current_monhoc_id = self.monhoc.id
+        lst_phanban = self.env['solienlac.monhoc_has_giaovien'].search([
+            ('monhoc.id','=',current_monhoc_id),
+            ('hocky','=',self.hocky),
+            ('namhoc','=',self.namhoc),
+        ])
+        lst_lop = map(lambda x: x.lop.id, lst_phanban)
+        return {'domain':{'lop': [('id', 'in', lst_lop)]}}
+
+    @api.multi
+    @api.onchange('lop', 'ngaykhenthuong','napdulieu')
+    def _compute_model(self):
+        self.test1 = str(self.env.uid) + str(random.randint(0,10))
+        # Get hocsinh object
+        def get_hs(self, id):
+            return self.env['solienlac.hocsinh'].search([('id','=',id)])[0]
+
+        # Load data
+        self.napdulieu = False
+
+        # Get (hocsinh object list)
+        lst_hs = self.env['solienlac.hocsinh'].search([
+            ('tinhtranghocsinh', '=', 'value1'), #value1 = học bình thường
+            ('lop.id', '=', self.lop.id),
+        ])
+        print 'lst_hs'
+        print lst_hs
+
+        # Get (khenthuongchitiet object list)
+        lst_hs_nhapdiem = self.env['solienlac.khenthuongchitiet'].search([
+            ('hocsinh.lop.id','=',self.lop.id),
+            ('hocsinh.tinhtranghocsinh', '=', 'value1'), # value1 = học bình thường
+            ('ngaykhenthuong','=',self.ngaykhenthuong),
+        ])
+
+        print 'lst_hs_nhapdiem'
+        print lst_hs_nhapdiem
+
+        # Get (hocsinh object list) just hocsinh id
+        lst_hs_id = map(lambda x: x.id, lst_hs)
+
+        # Get (khenthuongchitiet object list) just hocsinh id
+        lst_hs_nhapdiem_id = map(lambda x: x.hocsinh.id, lst_hs_nhapdiem)
+
+        # Get hocsinh id is not exsit in khenthuongchitiet
+        lst_hs_thieu = filter(lambda x: x not in lst_hs_nhapdiem_id, lst_hs_id)
+
+        print 'lst_hs_thieu'
+        print lst_hs_thieu
+
+        if len(lst_hs_thieu) == 0:
+            # In case the teacher wanna edit the score
+            # hocsinh(s) are created before (at the else case)
+            self.khenthuongchitiet = lst_hs_nhapdiem
+        else:
+            # Adding hocsinh at lst_hs_thieu into khenthuongchitiet and show it
+            self.khenthuongchitiet = [] # important
+            flag = True
+
+            # Create list for checking null value
+
+            lst_chk = [self.lop, self.ngaykhenthuong] # notice: how about self.giaovien
+
+            # Check for all fields are inputed
+            for item in lst_chk:
+                if str(item) == '':
+                    flag = False
+                elif str(item) == 'False':
+                    flag = False
+                elif item == False:
+                    flag = False
+
+            print 'flag'
+            print flag
+
+            if flag:
+                # Create objects khenthuongchitiet
+                for id in lst_hs_thieu:
+                    vals = {
+                        'hocsinh'     : id,
+                        'ngaykhenthuong'    : self.ngaykhenthuong,
+                    }
+                    self.env['solienlac.khenthuongchitiet'].sudo().create(vals)
+
+                # Reload lst_hs_nhapdiem
+                lst_hs_nhapdiem = self.env['solienlac.khenthuongchitiet'].search([
+                    ('hocsinh.lop.id','=',self.lop.id),
+                    ('hocsinh.tinhtranghocsinh', '=', 'value1'), # value1 = học bình thường
+                    ('ngaykhenthuong','=',self.ngaykhenthuong),
+                ])
+                # Show objects khenthuongchitiet has just created
+                self.khenthuongchitiet = lst_hs_nhapdiem
+
+class khenthuongchitiet(models.Model):
+    _name = 'solienlac.khenthuongchitiet'
+
+    lydokhenthuong = fields.Char(string="Lý do khen thưởng", )
+    hinhthuckhenthuong = fields.Selection(
+        string="Hình thức khen thưởng",
+        selection=[
+                ('1', 'Khen trước lớp, trước trường'),
+                ('2', 'Được tặng danh hiệu'),
+                ('3', 'Được ghi tên vào bảng danh dự của trường'),
+                ('4', 'Được khen thưởng đặc biệt'),
+                ('5', 'Khác'),
+        ],
+    )
+    ngaykhenthuong = fields.Date(string="Ngày khen thưởng", )
+
+
     ngayvang = fields.Date(string="Ngày", )
     vang = fields.Boolean(string="Vắng", )
     ghichu = fields.Char(string="Ghi chú", )
