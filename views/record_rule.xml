@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <odoo>
   <!-- Lọc record cho quyền hiệu trưởng, giáo viên trong trường
   - Chỉ nhìn thấy khối trường mình
@@ -125,6 +125,17 @@
     <!-- You can attach this rule to a specific group, or make it global -->
     <field name="groups" eval="[(4, ref('group_schooladmin_l1'))]"/>
     <!--<field name="global" eval="1"/> -->
+  </record>
+
+  <record id="rule_hocky" model="ir.rule">
+    <field name="name">Tạo học kỳ mới</field>
+    <field name="model_id" ref="model_solienlac_diemdanhchitiet"/>
+    <field name="domain_force">[('truong', '=', user.truong),]</field>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_unlink" eval="1"/>
+    <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l1'))]"/>
   </record>
 
 </odoo>
