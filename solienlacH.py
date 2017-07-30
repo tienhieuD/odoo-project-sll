@@ -239,7 +239,10 @@ class giaovien(models.Model):
                 ('lyhon', 'Ly hôn'),
         ],
     )
-    phuongxa = fields.Many2one('solienlac.phuongxa', string = "Phường/Xã")
+    phuongxa = fields.Many2one('solienlac.phuongxa', string='Phường\Xã')
+    quanhuyen = fields.Many2one('solienlac.quanhuyen', string='Quận\Huyện')
+    tinhthanhpho = fields.Many2one('solienlac.tinhthanhpho', string='Tỉnh\Thành phố')
+    diachi = fields.Char('Địa chỉ')
     dantoc = fields.Many2one('solienlac.dantoc', string = "Dân tộc")
     tongiao = fields.Many2one('solienlac.tongiao', string = "Tôn giáo")
     to = fields.Many2one('solienlac.to', string = "Tổ")
@@ -521,6 +524,7 @@ class khoi(models.Model):
         comodel_name="solienlac.truong",
         # domain="[('field', '=', other)]",
         domain=_get_curret_truong,
+        default= lambda self: self.env.user.truong,
     )
 
 class hanhkiem(models.Model):
@@ -992,6 +996,10 @@ class lop(models.Model):
     nienkhoa = fields.Char('Niên khóa')
     ghichu = fields.Char('Ghi chú')
     khoi = fields.Many2one('solienlac.khoi', string='Khối')
+    gvcn = fields.Many2one(
+        string="Giáo viên chủ nhiệm",
+        comodel_name="solienlac.giaovien",
+    )
     # truong = fields.Many2one('solienlac.truong', string = "Trường")
     hocsinh = fields.One2many('solienlac.hocsinh', 'lop', string='Học sinh')
     monhoc = fields.One2many('solienlac.monhoc_has_giaovien', 'lop', string='Môn học')
@@ -1619,34 +1627,35 @@ class Users(models.Model):
     @api.model
     #get list domain
     def _get_test(self):
-        def _contain(string, lst):
-            return any(string in item for item in lst)
-        def _get_group_id(self, name):
-            return self.env['res.groups'].sudo().search([
-                ('name', '=ilike', name),
-            ])[0].id
-
-        uid = self.env.uid
-        current_user = self.env['res.users'].sudo().search([
-            ('id','=',uid),
-        ])
-        lst_groups_id = current_user[0].groups_id
-        lst_groups_name = map(lambda x: x.name, lst_groups_id)
+        # def _contain(string, lst):
+        #     return any(string in item for item in lst)
+        # def _get_group_id(self, name):
+        #     return self.env['res.groups'].sudo().search([
+        #         ('name', '=ilike', name),
+        #     ])[0].id
+        #
+        # uid = self.env.uid
+        # current_user = self.env['res.users'].sudo().search([
+        #     ('id','=',uid),
+        # ])
+        # lst_groups_id = current_user[0].groups_id
+        # lst_groups_name = map(lambda x: x.name, lst_groups_id)
         lst_quyen = []
-
-        if _contain('System Admin(level1)', lst_groups_name):
-            lst_quyen = [1,2,3,4,5,6,7,8,9,10]
-        elif _contain('System Admin(level2)', lst_groups_name):
-            item = _get_group_id(self, 'System Admin(level1)')
-            item2 = _get_group_id(self, 'System Admin(level2)')
-            lst_quyen = [1,2,3,4,5,6,7,8,9,10,item,item2]
-        elif _contain('School Admin(l1', lst_groups_name):
-            item1 = _get_group_id(self, 'System Admin(level1)')
-            item2 = _get_group_id(self, 'System Admin(level2)')
-            item3 = _get_group_id(self, 'System Admin(level3)')
-            item4 = _get_group_id(self, 'School Admin(l1')
-            lst_quyen = [1,2,3,4,5,6,7,8,9,10,item1,item2,item3]
+        #
+        # if _contain('System Admin(level1)', lst_groups_name):
+        #     lst_quyen = [1,2,3,4,5,6,7,8,9,10]
+        # elif _contain('System Admin(level2)', lst_groups_name):
+        #     item = _get_group_id(self, 'System Admin(level1)')
+        #     item2 = _get_group_id(self, 'System Admin(level2)')
+        #     lst_quyen = [1,2,3,4,5,6,7,8,9,10,item,item2]
+        # elif _contain('School Admin(l1', lst_groups_name):
+        #     item1 = _get_group_id(self, 'System Admin(level1)')
+        #     item2 = _get_group_id(self, 'System Admin(level2)')
+        #     item3 = _get_group_id(self, 'System Admin(level3)')
+        #     item4 = _get_group_id(self, 'School Admin(l1')
+        #     lst_quyen = [1,2,3,4,5,6,7,8,9,10,item1,item2,item3]
         return [('id', 'not in', lst_quyen)]
+        # return [('id', 'not in', lst_quyen)]
 # Taskkill /IM odoo-bin.exe /F
 # "C:\Program Files (x86)\Odoo 10.0\server\odoo-bin.exe -d solienlac -u solienlac"
     name = fields.Char(string="Họ tên người dùng", )
@@ -1656,7 +1665,7 @@ class Users(models.Model):
         string="Quyền",
         comodel_name="res.groups",
         # domain="[('id', 'not in', [1,2,3,4,5,6,7,8,9,10])]",
-        domain= _get_test,
+        # domain= _get_test,
     )
     truong = fields.Many2one(
         string="Trường",
@@ -1677,6 +1686,7 @@ class Users(models.Model):
     def create(self, values):
         quyen_da_chon = values['quyen'][0][2]
         quyen_da_chon.append(1)
+        quyen_da_chon.append(3)
 
         # Code chinh day ne
         vals = {
