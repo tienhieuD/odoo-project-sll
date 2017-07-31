@@ -22,11 +22,11 @@
         <field name="category_id" ref="solienlac.module_user_group"/>
     </record>
     <record id="group_schooladmin_l21" model="res.groups">
-        <field name="name">School Admin(l21_Giáo viên chủ nhiệm)</field>
+        <field name="name">School Admin(l21_Giáo viên bộ môn)</field>
         <field name="category_id" ref="solienlac.module_user_group"/>
     </record>
     <record id="group_schooladmin_l22" model="res.groups">
-        <field name="name">School Admin(l22_Giáo viên bộ môn)</field>
+        <field name="name">School Admin(l22_Giáo viên chủ nhiệm)</field>
         <field name="category_id" ref="solienlac.module_user_group"/>
     </record>
     <record id="group_schooladmin_l3" model="res.groups">
