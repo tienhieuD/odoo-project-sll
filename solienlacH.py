@@ -1389,10 +1389,16 @@ class nhapdiemhocsinh(models.Model):
     def _get_current_gv(self):
         dmain = [('id', '=', self.env.user.giaovien.id)]
         return dmain
+
+    @api.model
+    def _read_ol(self):
+        return True
+
     giaovien = fields.Many2one(
         string="Giáo viên",
         comodel_name="solienlac.giaovien",
-        default = lambda self: self.env.user.giaovien
+        default = lambda self: self.env.user.giaovien,
+        readonly = _read_ol,
     )
     lop = fields.Many2one(
         string="Lớp",
