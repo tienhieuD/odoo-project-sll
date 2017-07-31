@@ -42,9 +42,17 @@ class hocky(models.Model):
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
         ],default = 'i')
-    trangthai = fields.Boolean('Là học kỳ hiện tại')
+    trangthai = fields.Boolean('Là học kỳ hiện tại' ,)
     truong = fields.Many2one('solienlac.truong', string='Trường', default=lambda self:self.env.user.truong)
     ghichu = fields.Char('Ghi chú')
+
+    @api.onchange('trangthai')
+    def _kich_hoat_duy_nhat(self):
+        if self.trangthai == True:
+            hocky = self.env['solienlac.hocky'].search([])
+            for hk in hocky:
+                hk.trangthai = False
+
 class caphoc(models.Model):
     _name = 'solienlac.caphoc'
     _rec_name = 'tencaphoc'
@@ -709,10 +717,12 @@ class hocsinh(models.Model):
     @api.depends('mahocsinh')
     def set_username(self):
         self.username = self.mahocsinh
+
     password = fields.Char('Password', compute='set_password')
     @api.depends('mahocsinh')
     def set_password(self):
-        self.password = hashlib.sha224(self.mahocsinh).hexdigest()[0:10]
+        self.password = '1234567890'
+        # self.password = hashlib.sha224(self.mahocsinh).hexdigest()[0:10]
 
     diachi = fields.Char('Địa chỉ')
     quequan = fields.Char('Quê quán')
@@ -733,7 +743,7 @@ class hocsinh(models.Model):
     @api.model
     def set_chucvu(self):
         return self.env['solienlac.chucvu'].browse([4,])
-    chucvu = fields.Many2many('solienlac.chucvu', string='Chức vụ', default=set_chucvu)
+    chucvu = fields.Many2many('solienlac.chucvu', string='Chức vụ')#, default=set_chucvu
 
     doituongchinhsach = fields.Many2many('solienlac.doituongchinhsach', string='Đối tượng chính sách')
     doituonguutien = fields.Many2many('solienlac.doituonguutien', string='Đối tượng ưu tiên')
@@ -1389,13 +1399,28 @@ class nhapdiemhocsinh(models.Model):
         comodel_name="solienlac.lop",
         domain="[('id','=',0)]",
     )
+    @api.model
+    def _get_current_hocky(self):
+        try:
+            hocky = self.env['solienlac.hocky'].search([
+                ('trangthai' , '=', True),
+            ])[-1]
+            return hocky.hocky
+        except:
+            now = datetime.datetime.now()
+            month = now.month
+            if month in [1,2,3,4,5,6,7]:
+                return 'ii'
+            else:
+                return 'i'
+
     hocky = fields.Selection(
         string="Học kỳ",
         selection=[
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
-        ],default = 'i')
+        ],default = _get_current_hocky, readonly=True)
 
     #---------- define fields namhoc ------------
     @api.model
@@ -1407,25 +1432,32 @@ class nhapdiemhocsinh(models.Model):
         return lst_namhoc
 
     @api.model
-    def _get_namhoc_now(self):
-        now = datetime.datetime.now()
-        year = now.year
-        if now.month <= 9:
-            year -= 1
-        return str(year) + "-" + str(year+1)
+    def _get_current_namhoc(self):
+        try:
+            namhoc = self.env['solienlac.hocky'].search([
+                ('trangthai' , '=', True),
+            ])[-1]
+            return namhoc.namhoc
+        except:
+            now = datetime.datetime.now()
+            year = now.year
+            if now.month <= 9:
+                year -= 1
+            return str(year) + "-" + str(year+1)
 
     namhoc = fields.Selection(
         string="Năm học",
         selection= _get_list_namhoc,
-        default = _get_namhoc_now,)
+        default = _get_current_namhoc,
+        readonly = True)
 
     #---------- end define fields namhoc ------------
     @api.model
     def _get_current_list_monhoc(self):
         lst = [x.monhoc.id for x in self.env.user.giaovien.monhoc]
         lst = list(set(lst))
-        print 'Danh sach mon dang day'
-        print lst
+        # print 'Danh sach mon dang day'
+        # print lst
         return [('id', 'in', lst)]
 
     monhoc = fields.Many2one(
