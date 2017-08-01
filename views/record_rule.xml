@@ -94,15 +94,28 @@
   - Chỉ nhìn thấy học sinh họ dạy
   - Chỉ nhìn thấy bảng nhập điểm của lớp họ dạy -->
   <record id="rule_giaovien_hocsinh1" model="ir.rule">
-    <field name="name">Giáo viên thấy học sinh </field>
+    <field name="name">Giáo viên thấy học sinh lớp họ dạy</field>
     <field name="model_id" ref="model_solienlac_hocsinh"/>
     <field name="domain_force">[('lop.id', 'in', [l.lop.id for l in user.giaovien.monhoc]), ]</field>
+    <field name="perm_write" eval="0"/>
+    <field name="perm_create" eval="0"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_unlink" eval="0"/>
+    <!-- You can attach this rule to a specific group, or make it global -->
+    <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l21')), (4, ref('solienlac.group_schooladmin_l22')), ]"/>
+    <!--<field name="global" eval="1"/> -->
+  </record>
+
+  <record id="rule_giaovien_sua_lopchunhiem" model="ir.rule">
+    <field name="name">Giáo viên sửa đưuọc thông tin lớp họ chủ nhiệm</field>
+    <field name="model_id" ref="model_solienlac_hocsinh"/>
+    <field name="domain_force">[('lop.gvcn.id', '=', user.giaovien.id), ]</field>
     <field name="perm_write" eval="1"/>
     <field name="perm_create" eval="1"/>
     <field name="perm_read" eval="1"/>
     <field name="perm_unlink" eval="1"/>
     <!-- You can attach this rule to a specific group, or make it global -->
-    <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l21')), (4, ref('solienlac.group_schooladmin_l22')), ]"/>
+    <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l22'))]"/>
     <!--<field name="global" eval="1"/> -->
   </record>
 

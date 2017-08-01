@@ -529,14 +529,19 @@
     <field name="view_mode">tree,form</field>
   </record>
 
-  <menuitem id="menu_danhmuchanhchinh" name="Danh mục hành chính" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"/>
+  <menuitem id="menu_danhmuchanhchinh" name="Danh mục hành chính" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"
+    icon="fa-usd"
+    web_icon="account,static/description/icon.png" />
     <menuitem id="menu_phuongxa" name="Phường/xã" parent="menu_danhmuchanhchinh" action="phuongxa_action_form"/>
     <menuitem id="menu_quanhuyen" name="Quận huyện" parent="menu_danhmuchanhchinh" action="quanhuyen_action_form"/>
     <menuitem id="menu_tinhthanhpho" name="Tỉnh/Thành phố" parent="menu_danhmuchanhchinh" action="tinhthanhpho_action_form"/>
     <menuitem id="menu_dantoc" name="Dân tộc" parent="menu_danhmuchanhchinh" action="dantoc_action_form"/>
     <menuitem id="menu_tongiao" name="Tôn giáo" parent="menu_danhmuchanhchinh" action="tongiao_action_form"/>
 
-  <menuitem id="menu_truongquanly" name="Danh mục trường quản lý" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3,group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3,group_customer"/>
+  <menuitem id="menu_truongquanly" name="Danh mục trường quản lý"
+    icon="fa-usd"
+    web_icon="stock,static/description/icon.png" 
+    groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3,group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3,group_customer"/>
     <menuitem id="menu_thongtintruong" name="Thông tin nhà trường" parent="menu_truongquanly" sequence="" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"/> <!--New-->
       <menuitem id="menu_truong" name="Trường học" parent="menu_thongtintruong" action="truong_action_form"/>   <!--New-->
       <menuitem id="menu_caphoc" name="Cấp học" parent="menu_thongtintruong" action="caphoc_action_form"/>  <!--New-->

@@ -47,5 +47,7 @@
   </record>
 
   <menuitem id="menu_tai_khoan" name="Quản lý tài khoản" action="taikhoan_action_form"
+    icon="fa-usd"
+    web_icon="website_customer,static/description/icon.png"
     groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3,group_schooladmin_l1"/>
 </odoo>
