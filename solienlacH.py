@@ -922,7 +922,7 @@ class nguongochocsinh(models.Model):
     nguongochocsinh = fields.Selection(
         string="Nguồn gốc học sinh",
         selection=[
-                ('Tuyển sinh', 'Tuyển sinh'),
+                ('value1', 'Tuyển sinh'),
                 ('value2', 'Được lên lớp'),
                 ('value3', 'Ở lại lớp'),
                 ('value4', 'Chuyển đến'),
