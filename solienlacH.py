@@ -1691,7 +1691,12 @@ class nhapdiemchitiet(models.Model):
             try:
                 n = str(n)
                 n = n.replace(',','.')
-                return float(n)
+                num = float(n)
+                if num <0.0:
+                    num = 0.0
+                if num > 10.0:
+                    num = 10.0
+                return num
             except:
                 return -1.0
 
