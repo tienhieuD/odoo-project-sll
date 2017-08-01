@@ -1410,6 +1410,20 @@ class danhhieuhocsinh(models.Model):
     ghichu = fields.Char('Ghi chú')
     hocsinh = fields.Many2one('solienlac.hocsinh', string='Học sinh')
 
+    @api.constrains('hocky','namhoc','hocsinh')
+    def _validate_1_ky_1_danhhieu(self):
+        n = self.env['solienlac.danhhieuhocsinh'].search_count([
+            ('hocky','=',self.hocky),
+            ('namhoc','=',self.namhoc),
+            ('hocsinh.id','=',self.hocsinh.id),
+        ])
+        # lst_macv = map(lambda cv : cv.machucvu, lst_macv)
+        print '(%s,%s,%s,%s)' % (self.hocky,self.namhoc,self.hocsinh.id,n)
+        if n>1:
+            raise exceptions.ValidationError("Học sinh không thể nhận 2 danh hiệu trong kỳ này")
+        else:
+            pass
+
 class nhapdiemhocsinh(models.Model):
     _name = 'solienlac.nhapdiemhocsinh'
     _rec_name = 'giaovien' # optional
