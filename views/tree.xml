@@ -427,6 +427,7 @@
      <field name="arch" type="xml">
        <tree string="Nhập điểm chi tiết" editable='bottom' create="false">
          <field name="hocsinh" readonly="1"/>
+         <field name="monhoc" groups="solienlac.group_customer"/>
          <field name="diemmieng1"/>
          <field name="diemmieng2"/>
          <field name="diemmieng3"/>
