@@ -1354,8 +1354,8 @@ class bangdiem(models.Model):
         ('yeu', 'Yếu'),
         # ('kem', 'Kém'),
     ],string='Xếp loại học lực')
-    giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên')
-    ykiengiaovien = fields.Char('Ý kiến giáo viên')
+    giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên chủ nhiệm')
+    ykiengiaovien = fields.Char('Ý kiến giáo viên chủ nhiệm')
     hocsinh = fields.Many2one('solienlac.hocsinh', string='Học sinh')
     ghichu = fields.Char(string="Ghi chú", )
     ngaycapnhat = fields.Date('Ngày cập nhật')

@@ -365,7 +365,7 @@
      <field name="name">solienlac.bangdiem_thanhphan.tree</field>
      <field name="model">solienlac.bangdiem_thanhphan</field>
      <field name="arch" type="xml">
-       <tree string="Bảng điểm thành phần">
+       <tree string="Bảng điểm thành phần" editable='bottom' >
          <field name="monhoc"/>
          <field name="diemtongket"/>
          <field name="ykiengiaovien"/>
