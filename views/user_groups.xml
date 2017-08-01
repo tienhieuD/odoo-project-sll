@@ -2,39 +2,39 @@
 <odoo>
 <data noupdate="0">
     <record id="module_user_group" model="ir.module.category" >
-        <field name="name">Sổ liên lạc điện tử</field>
+        <field name="name">solienlac</field>
         <field name="description">Nhóm phân quyền cho QL học sinh</field>
     </record>
     <record id="group_systemadmin_l1" model="res.groups">
-        <field name="name">System Admin(level1)</field>
+        <field name="name">system_admin_level_1</field>
         <field name="category_id" ref="solienlac.module_user_group"/>
     </record>
     <record id="group_systemadmin_l2" model="res.groups">
-        <field name="name">System Admin(level2)</field>
+        <field name="name">system_admin_level_2</field>
         <field name="category_id" ref="solienlac.module_user_group"/>
     </record>
     <record id="group_systemadmin_l3" model="res.groups">
-        <field name="name">System Admin(level3)</field>
+        <field name="name">system_admin_level_3</field>
         <field name="category_id" ref="solienlac.module_user_group"/>
     </record>
     <record id="group_schooladmin_l1" model="res.groups">
-        <field name="name">School Admin(l1_Hiệu trưởng)</field>
+        <field name="name">school_admin_level_1_hieu_truong</field>
         <field name="category_id" ref="solienlac.module_user_group"/>
     </record>
     <record id="group_schooladmin_l21" model="res.groups">
-        <field name="name">School Admin(l21_Giáo viên bộ môn)</field>
+        <field name="name">school_admin_level_21_giao_vien_bo_mon</field>
         <field name="category_id" ref="solienlac.module_user_group"/>
     </record>
     <record id="group_schooladmin_l22" model="res.groups">
-        <field name="name">School Admin(l22_Giáo viên chủ nhiệm)</field>
+        <field name="name">school_admin_level_22_giao_vien_chu_nhiem</field>
         <field name="category_id" ref="solienlac.module_user_group"/>
     </record>
     <record id="group_schooladmin_l3" model="res.groups">
-        <field name="name">School Admin(l3_Giáo viên dự thính)</field>
+        <field name="name">school_admin_level_3_giao_vien_du_thinh</field>
         <field name="category_id" ref="solienlac.module_user_group"/>
     </record>
     <record id="group_customer" model="res.groups">
-        <field name="name">Customer</field>
+        <field name="name">customer_tai_khoan_hoc_sinh</field>
         <field name="category_id" ref="solienlac.module_user_group"/>
     </record>
 
