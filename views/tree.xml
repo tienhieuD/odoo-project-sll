@@ -122,12 +122,13 @@
 
     <!-- Chức vụ - tree views -->
     <record id="chucvu_view_tree" model="ir.ui.view">
-      <field name="name">chucvu.tree</field>
+      <field name="name">solienlac.chucvu.tree</field>
       <field name="model">solienlac.chucvu</field>
       <field name="arch" type="xml">
-        <tree string="Chức vụ Tree">
+        <tree string="Chức vụ">
           <field name="machucvu"/>
-          <field name="tenchucvu"/>
+          <!-- <field name="tenchucvu"/> -->
+          <field name="ghichu"/>
         </tree>
       </field>
     </record>
@@ -396,7 +397,7 @@
      <field name="arch" type="xml">
        <tree string="Danh hiệu học sinh">
          <field name="namhoc"/>
-         <field name="namhoc"/>
+         <field name="hocky"/>
          <field name="danhhieu"/>
          <field name="ykiengiaovien"/>
          <field name="ghichu"/>

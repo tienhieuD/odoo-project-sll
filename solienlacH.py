@@ -1178,7 +1178,7 @@ class diem(models.Model):
 
 class chucvu(models.Model):
     _name = 'solienlac.chucvu'
-    _rec_name = 'tenchucvu' # optional
+    _rec_name = 'ghichu' # optional
     machucvu = fields.Integer('Mã chức vụ')
     tenchucvu = fields.Selection([
                 ('value1', 'Không'),
@@ -1192,8 +1192,39 @@ class chucvu(models.Model):
                 ('value9', 'Chi đội phó'),
                 ('value10', 'Lớp trưởng'),
                 ('value11', 'Lớp phó'),
-        ],string="Field name")
-    ghichu = fields.Char('Ghi chú')
+        ],string="Tên chức vụ")
+    ghichu = fields.Char('Chức vụ')
+
+    @api.constrains('machucvu')
+    def _validate_machucvu(self):
+        lst_macv = self.env['solienlac.chucvu'].search([])
+        lst_macv = map(lambda cv : cv.machucvu, lst_macv)
+        print lst_macv
+        if self.machucvu in lst_macv[0:-1]:
+            raise exceptions.ValidationError("Mã chức vụ đã tồn tại")
+        else:
+            pass
+
+    @api.onchange('tenchucvu')
+    def _get_tencv(self):
+        def f(x):
+            return {
+                'value1': 'Không',
+                'value2': 'Liên đội trưởng',
+                'value3': 'Liên đội phó',
+                'value4': 'Bí thư đoàn trường',
+                'value5': 'Phó Bí thư đoàn trường',
+                'value6': 'Bí thư chi đoàn',
+                'value7': 'Phó Bí thư chi đoàn',
+                'value8': 'Chi đội trưởng',
+                'value9': 'Chi đội phó',
+                'value10': 'Lớp trưởng',
+                'value11': 'Lớp phó',
+            }[x]
+        try:
+            self.ghichu = f(self.tenchucvu)
+        except:
+            self.ghichu = 'Không'
 
 class nenep(models.Model):
     _name = 'solienlac.nenep'
@@ -1690,9 +1721,9 @@ class Users(models.Model):
         solienlac_groups = map(lambda x: x.id, solienlac_groups)
         return [('id', 'in', solienlac_groups)]
 
-    name = fields.Char(string="Họ tên người dùng", )
-    login = fields.Char(string='Tài khoản đăng nhập')
-    password = fields.Char(string='Mật khẩu đăng nhập')
+    name = fields.Char(string="Họ tên người dùng", required = True)
+    login = fields.Char(string='Tài khoản đăng nhập',required = True)
+    password = fields.Char(string='Mật khẩu đăng nhập',required = True)
     quyen = fields.Many2many(
         string="Quyền",
         comodel_name="res.groups",
