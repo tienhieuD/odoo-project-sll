@@ -2,6 +2,23 @@
 <odoo>
   <data>
 
+    <record id="khenthuongchitiet_view_form" model="ir.ui.view">
+      <field name="name">solienlac.khenthuongchitiet.form</field>
+      <field name="model">solienlac.khenthuongchitiet</field>
+      <field name="arch" type="xml">
+        <form string="Khen thưởng chi tiết">
+          <sheet>
+            <group>
+              <field name="ngaykhenthuong" readonly="1"/>
+              <field name="lydokhenthuong"/>
+              <field name="hinhthuckhenthuong"/>
+              <field name="ghichu"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
     <record id="danhhieuhocsinh_view_form" model="ir.ui.view">
       <field name="name">solienlac.danhhieuhocsinh.form</field>
       <field name="model">solienlac.danhhieuhocsinh</field>
@@ -294,7 +311,7 @@
           <sheet>
             <group colspan="4" col="4">
               <group colspan="2" col="2" string='Thông tin học sinh'>
-                <field name="hocsinh"/>
+                <!-- <field name="hocsinh"/> -->
                 <field name="namhoc"/>
                 <field name="hocky"/>
               </group>
@@ -505,10 +522,10 @@
       <field name="arch" type="xml">
         <form string="Nề nếp">
           <sheet>
-            <group colspan="6" col="6">
-              <group colspan="2" col="2" string='Thông tin học sinh'>
+            <group colspan="4" col="4">
+              <!-- <group colspan="2" col="2" string='Thông tin học sinh'>
                 <field name="hocsinh"/>
-              </group>
+              </group> -->
               <group colspan="2" col="2" string='Thông tin năm học'>
                 <field name="namhoc"/>
                 <field name="hocky"/>

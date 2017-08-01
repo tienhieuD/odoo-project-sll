@@ -735,7 +735,7 @@ class hocsinh(models.Model):
     tinhthanhpho = fields.Many2one('solienlac.tinhthanhpho', string='Tỉnh\Thành phố')
 
     danhhieuhocsinh = fields.One2many('solienlac.danhhieuhocsinh', 'hocsinh', string = 'Danh hiệu học sinh')
-    khenthuonghocsinh = fields.Many2many('solienlac.khenthuonghocsinh', string = 'Thành tích khen thưởng')
+    khenthuonghocsinh = fields.One2many('solienlac.khenthuongchitiet', 'hocsinh', string = 'Thành tích khen thưởng')
     kyluathocsinh = fields.Many2many('solienlac.kyluathocsinh', string = 'Kỷ luật học sinh')
 
     dantoc = fields.Many2one('solienlac.dantoc', string='Dân tộc')

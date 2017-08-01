@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
   <data>
+
+    <record id="kyluathocsinh_view_tree" model="ir.ui.view">
+      <field name="name">solienlac.kyluathocsinh.tree</field>
+      <field name="model">solienlac.kyluathocsinh</field>
+      <field name="arch" type="xml">
+        <tree string="Kỷ luật học sinh">
+          <field name="lydokyluat"/>
+          <field name="hinhthuckyluat"/>
+          <field name="thoihantu"/>
+          <field name="thoihanden"/>
+          <field name="ghichu"/>
+        </tree>
+      </field>
+    </record>
+
     <!-- Giáo viên - tree views -->
     <record id="giaovien_view_tree" model="ir.ui.view">
       <field name="name">giaovien.tree</field>
@@ -543,14 +558,14 @@
      </field>
    </record>
 
-   <!--diemdanhchitiet-->
+   <!--khenthuongchitiet-->
    <record id="khenthuongchitiet_view_tree" model="ir.ui.view">
      <field name="name">solienlac.khenthuongchitiet.tree</field>
      <field name="model">solienlac.khenthuongchitiet</field>
      <field name="arch" type="xml">
        <tree string="Nhập điểm chi tiết" editable='bottom' create="false">
-         <field name="hocsinh" readonly="1" groups="solienlac.group_schooladmin_l1,solienlac.group_schooladmin_l21,solienlac.group_schooladmin_l22,solienlac.group_schooladmin_l3"/>
-         <field name="monhoc" groups="solienlac.group_customer"/>
+         <field name="hocsinh" readonly="1" groups="solienlac.group_systemadmin_l1,solienlac.group_schooladmin_l1,solienlac.group_schooladmin_l21,solienlac.group_schooladmin_l22,solienlac.group_schooladmin_l3"/>
+         <!-- <field name="monhoc" groups="solienlac.group_customer"/> -->
          <field name="ngaykhenthuong" readonly="1"/>
          <field name="lydokhenthuong"/>
          <field name="hinhthuckhenthuong"/>
