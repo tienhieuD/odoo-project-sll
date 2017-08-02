@@ -803,6 +803,22 @@ class hanhkiem(models.Model):
     ghichu = fields.Char('Ghi Chú')
     hocsinh = fields.Many2one('solienlac.hocsinh', string='Học Sinh')
 
+    @api.constrains('namhoc', 'hocky', 'hocsinh')
+    def _validate_hanhkiem(self):
+        obj = self.env['solienlac.hanhkiem'].search([
+            ('hocky','=',self.hocky),
+            ('namhoc','=',self.namhoc),
+            ('hocsinh','=',self.hocsinh.id),
+        ])
+        n = len(obj)
+        if n>1:
+            # obj = map(lambda x: x.giaovien, obj)
+            # obj.remove(self.giaovien)
+            s=u'Đã xét hạnh kiểm cho học sinh vào kỳ học này rồi'
+            raise exceptions.ValidationError(s)
+        else:
+            pass
+
 class phuhuynh(models.Model):
     _name = 'solienlac.phuhuynh'
     _rec_name = 'hoten' # optional
