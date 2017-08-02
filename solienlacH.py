@@ -713,15 +713,15 @@ class hocsinh(models.Model):
         help="Chọn nơi sinh là tỉnh thành phố",
     )
 
-    username = fields.Char('Username', compute='set_username')
-    @api.depends('mahocsinh')
+    username = fields.Char('Username')
+    @api.onchange('mahocsinh')
     def set_username(self):
         self.username = self.mahocsinh
 
-    password = fields.Char('Password', compute='set_password')
-    @api.depends('mahocsinh')
-    def set_password(self):
-        self.password = '1234567890'
+    password = fields.Char('Password', default='1234567890')
+    # @api.onchange('mahocsinh')
+    # def set_password(self):
+    #     self.password = '1234567890'
         # self.password = hashlib.sha224(self.mahocsinh).hexdigest()[0:10]
 
     diachi = fields.Char('Địa chỉ')
@@ -863,6 +863,33 @@ class hocsinh(models.Model):
         lst = map(lambda x: x.QuanHuyenID, tmp1)
         return {'domain':{'phuongxa': [('QuanHuyenID', 'in', lst)]}}
 
+    @api.model
+    def create(self, values):
+        groups1 = self.env['res.groups'].search([
+            ('name','ilike','customer_tai_khoan_hoc_sinh'),
+        ])[0].id
+        lop_id = values['lop']
+        truong_id = self.env['solienlac.lop'].search([
+            ('id','=',lop_id),
+        ])[0].khoi.truong.id
+        quyen_da_chon = []
+        quyen_da_chon.append(1)
+        quyen_da_chon.append(groups1)
+        vals = {
+            'name': values['hoten'],
+            'login': values['username'],
+            'password' : values['password'],
+            'company_ids': [1],
+            'company_id': 1,
+            'groups_id': quyen_da_chon,
+            'truong':truong_id,
+        }
+        print vals
+        self.env['res.users'].sudo().create(vals)
+
+        user = super(hocsinh, self).create(values)
+        return user
+
 
 class lydothoihoc(models.Model):
     _name = 'solienlac.lydothoihoc'
@@ -922,10 +949,10 @@ class nguongochocsinh(models.Model):
     nguongochocsinh = fields.Selection(
         string="Nguồn gốc học sinh",
         selection=[
-                ('value1', 'Tuyển sinh'),
-                ('value2', 'Được lên lớp'),
-                ('value3', 'Ở lại lớp'),
-                ('value4', 'Chuyển đến'),
+                ('TuyenSinh', 'Tuyển sinh'),
+                ('DuocLenLop', 'Được lên lớp'),
+                ('OlaiLop', 'Ở lại lớp'),
+                ('ChuyenDen', 'Chuyển đến'),
         ],default='value1',
     )
     hocky = fields.Selection(
