@@ -104,6 +104,9 @@
                 <page string="Phân công giảng dạy">
                   <field name="monhoc"/>
                 </page>
+                <page string="Lớp chủ nhiệm">
+                  <field name="lop"/>
+                </page>
               </notebook>
             </group>
           </sheet>
@@ -410,9 +413,9 @@
                 <field name="gvcn"/>
               </group>
             </group>
-            <!-- <group colspan="4" string='Học sinh'>
-              <field name="hocsinh"/> -->
-            <!-- </group> -->
+            <group colspan="4" string='Danh sách học sinh trong lớp'>
+              <field name="hocsinh" options="{'no_create_edit': True}"/>
+            </group>
           </sheet>
         </form>
       </field>
@@ -671,9 +674,9 @@
 
                 <field name="hocky"/>
                 <field name="namhoc"/>
-                <field name="giaovien"/>
-                <field name="monhoc"/>
-                <field name="lop"/>
+                <field name="giaovien" options="{'no_create_edit': True}"/>
+                <field name="monhoc" options="{'no_create_edit': True}"/>
+                <field name="lop" options="{'no_create_edit': True}"/>
                 <field name="napdulieu"/>
                 <script type="text/javascript">
                   document.getElementsByName("napdulieu").checked = true;
@@ -845,9 +848,9 @@
                 <field name="ngayvang"/>
                 <field name="hocky"/>
                 <field name="namhoc"/>
-                <field name="giaovien"/>
-                <field name="monhoc"/>
-                <field name="lop"/>
+                <field name="giaovien" options="{'no_create_edit': True}"/>
+                <field name="monhoc" options="{'no_create_edit': True}"/>
+                <field name="lop" options="{'no_create_edit': True}"/>
                 <field name="napdulieu"/>
                 <!-- <field name="test1"/> -->
               </group>

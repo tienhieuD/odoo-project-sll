@@ -277,6 +277,7 @@ class truong(models.Model):
 class giaovien(models.Model):
     _name = 'solienlac.giaovien'
     _rec_name = 'hoten' # optional
+    lop = fields.One2many(string="Lớp", comodel_name="solienlac.lop", inverse_name="gvcn")
     magiaovien = fields.Char("Mã giáo viên", required=True)
     hoten = fields.Char("Họ tên", required=True)
     gioitinh = fields.Selection([
@@ -2065,6 +2066,18 @@ class diemdanhhocsinh(models.Model):
 
     test1 = fields.Char()
     ngayvang = fields.Date(string="Ngày", default = datetime.datetime.now())
+    @api.onchange('ngayvang')
+    def _validate_ngay(self):
+        mindate = datetime.datetime(int(self.namhoc[0:4]), 8, 1, 0, 0, 0, 0)
+        maxdate = datetime.datetime(int(self.namhoc[-4:]), 7, 31, 0, 0, 0, 0)
+        current_date = datetime.datetime.strptime(self.ngayvang,'%Y-%m-%d')
+        # print self.ngayvang
+        if current_date < mindate:
+            current_date = mindate
+        elif current_date > maxdate:
+            current_date = maxdate
+        self.ngayvang = current_date
+
     napdulieu = fields.Boolean('Tải danh sách học sinh')
     @api.model
     def _get_current_gv(self):
@@ -2073,20 +2086,37 @@ class diemdanhhocsinh(models.Model):
     giaovien = fields.Many2one(
         string="Giáo viên",
         comodel_name="solienlac.giaovien",
-        default = lambda self: self.env.user.giaovien
+        default = lambda self: self.env.user.giaovien,
+        readonly = True,
     )
     lop = fields.Many2one(
         string="Lớp",
         comodel_name="solienlac.lop",
         domain="[('id','=',0)]",
     )
+
+    @api.model
+    def _get_current_hocky(self):
+        try:
+            hocky = self.env['solienlac.hocky'].search([
+                ('trangthai' , '=', True),
+            ])[-1]
+            return hocky.hocky
+        except:
+            now = datetime.datetime.now()
+            month = now.month
+            if month in [1,2,3,4,5,6,7]:
+                return 'ii'
+            else:
+                return 'i'
+
     hocky = fields.Selection(
         string="Học kỳ",
         selection=[
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
-        ],default = 'i')
+        ],default = _get_current_hocky, readonly=True)
 
     #---------- define fields namhoc ------------
     @api.model
@@ -2098,17 +2128,24 @@ class diemdanhhocsinh(models.Model):
         return lst_namhoc
 
     @api.model
-    def _get_namhoc_now(self):
-        now = datetime.datetime.now()
-        year = now.year
-        if now.month <= 9:
-            year -= 1
-        return str(year) + "-" + str(year+1)
+    def _get_current_namhoc(self):
+        try:
+            namhoc = self.env['solienlac.hocky'].search([
+                ('trangthai' , '=', True),
+            ])[-1]
+            return namhoc.namhoc
+        except:
+            now = datetime.datetime.now()
+            year = now.year
+            if now.month <= 9:
+                year -= 1
+            return str(year) + "-" + str(year+1)
 
     namhoc = fields.Selection(
         string="Năm học",
         selection= _get_list_namhoc,
-        default = _get_namhoc_now,)
+        default = _get_current_namhoc,
+        readonly = True)
 
     #---------- end define fields namhoc ------------
     @api.model
@@ -2116,11 +2153,17 @@ class diemdanhhocsinh(models.Model):
         lst = [x.monhoc.id for x in self.env.user.giaovien.monhoc]
         lst = list(set(lst))
         return [('id', 'in', lst)]
+    @api.multi
+    @api.onchange('giaovien')
+    def _get_monhoc(self):
+        lst = [x.monhoc.id for x in self.giaovien.monhoc]
+        return {'domain':{'monhoc': [('id', 'in', lst)]}}
 
     monhoc = fields.Many2one(
         string="Môn học",
         comodel_name="solienlac.monhoc",
-        domain = _get_current_list_monhoc,)
+        # domain = _get_current_list_monhoc,
+    )
 
     diemdanhchitiet = fields.Many2many(
         comodel_name='solienlac.diemdanhchitiet',

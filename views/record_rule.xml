@@ -1,5 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+  <record id="rule_giaovien_nhin_bangdiemdanh" model="ir.rule">
+    <field name="name">Giáo viên bộ môn chỉ thấy bảng điểm danh lớp mình dạy</field>
+    <field name="model_id" ref="model_solienlac_diemdanhhocsinh"/>
+    <field name="domain_force">[('giaovien.id', '=', user.giaovien.id), ]</field>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_unlink" eval="1"/>
+    <!-- You can attach this rule to a specific group, or make it global -->
+    <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l21'))]"/>
+    <!--<field name="global" eval="1"/> -->
+  </record>
+
+  <record id="rule_giaoviencn_nhin_bangdiemdanh_lopminh" model="ir.rule">
+    <field name="name">Giáo viên chủ nhiệm nhìn được bảng điểm danh của lớp mình</field>
+    <field name="model_id" ref="model_solienlac_diemdanhhocsinh"/>
+    <field name="domain_force">[('lop.id', 'in', [i.id for i in user.giaovien.lop]), ]</field>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_unlink" eval="1"/>
+    <!-- You can attach this rule to a specific group, or make it global -->
+    <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l22'))]"/>
+    <!--<field name="global" eval="1"/> -->
+  </record>
+
   <record id="rule_giaovien_nhin_nhapdiem" model="ir.rule">
     <field name="name">Giáo viên nhìn nhập điểm</field>
     <field name="model_id" ref="model_solienlac_nhapdiemhocsinh"/>
