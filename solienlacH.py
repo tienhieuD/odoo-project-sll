@@ -6,6 +6,7 @@ from odoo import models, fields, api, exceptions, _
 from odoo.http import request
 import json
 import hashlib
+import re
 
 class hocky(models.Model):
     _name = 'solienlac.hocky'
@@ -210,8 +211,8 @@ class truong(models.Model):
 class giaovien(models.Model):
     _name = 'solienlac.giaovien'
     _rec_name = 'hoten' # optional
-    magiaovien = fields.Char("Mã giáo viên")
-    hoten = fields.Char("Họ tên")
+    magiaovien = fields.Char("Mã giáo viên", required=True)
+    hoten = fields.Char("Họ tên", required=True)
     gioitinh = fields.Selection([
             ('Nam', 'Nam'),
             ('Nu', 'Nữ'),
@@ -225,7 +226,7 @@ class giaovien(models.Model):
     )
     sodienthoai = fields.Char("Số điện thoại")
     socmnd = fields.Char("Số chứng minh thư/căn cước")
-    email = fields.Char("Email")
+    email = fields.Char("Email",required=True)
     matkhau = fields.Char("Mật khẩu")
     chucvu = fields.Many2one('solienlac.chucvu', "Chức vụ")
     dien = fields.Selection([
@@ -278,7 +279,26 @@ class giaovien(models.Model):
     bomon = fields.Many2many('solienlac.bomon', string = "Bộ môn")
     monhoc = fields.One2many('solienlac.monhoc_has_giaovien', 'giaovien', string = "Lớp")
     lops = fields.One2many(string="Lớp", comodel_name="solienlac.monhoc_has_giaovien", inverse_name="giaovien")
-    truong = fields.Many2one('solienlac.truong', string = "Trường", readonly = False, default=lambda self: self.env.user.truong.id)
+    truong = fields.Many2one('solienlac.truong', string = "Trường", required=True, readonly = False, default=lambda self: self.env.user.truong.id)
+    @api.constrains('magiaovien')
+    def _validate_magiaovien(self):
+        lst_magiaovien = self.env['solienlac.giaovien'].search([])
+        lst_magiaovien = map(lambda x : x.magiaovien, lst_magiaovien)
+        lst_magiaovien.remove(self.magiaovien)
+        print lst_magiaovien
+        if self.magiaovien in lst_magiaovien:
+            raise exceptions.ValidationError("Mã giáo viên đã tồn tại")
+        else:
+            pass
+    @api.constrains('email')
+    def _validate_email(self):
+        if re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", self.email) != None:
+            # return True
+            pass
+        else:
+            raise exceptions.ValidationError("Email không hợp lệ!")
+
+
 class monhoc_has_giaovien(models.Model):
     _name = 'solienlac.monhoc_has_giaovien'
     _rec_name = 'lop'
@@ -305,6 +325,7 @@ class monhoc_has_giaovien(models.Model):
         string="Năm học",
         selection= _get_list_namhoc,
         default = _get_namhoc_now,
+        required=True,
     )
     #---------- end define fields namhoc ------------
 
@@ -314,12 +335,30 @@ class monhoc_has_giaovien(models.Model):
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
-        ],default = 'i')
-    monhoc = fields.Many2one('solienlac.monhoc', string='Môn học')
+        ],default = 'i',required=True)
+    monhoc = fields.Many2one('solienlac.monhoc', string='Môn học',required=True)
     giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên')
-    lop = fields.Many2one('solienlac.lop', string='Lớp')
+    lop = fields.Many2one('solienlac.lop', string='Lớp',required=True)
     ngaybatdau = fields.Date('Ngày bắt đầu:')
     ngayketthuc = fields.Date('Ngày kết thúc: ')
+
+    @api.constrains('hocky','namhoc','lop','monhoc')
+    def _validate_phancong(self):
+        obj = self.env['solienlac.monhoc_has_giaovien'].search([
+            ('hocky','=',self.hocky),
+            ('namhoc','=',self.namhoc),
+            ('lop.id','=',self.lop.id),
+            ('monhoc.id','=',self.monhoc.id),
+        ])
+        n = len(obj)
+        if n>1:
+            obj = map(lambda x: x.giaovien, obj)
+            obj.remove(self.giaovien)
+            s=u'Môn học này đã được phân công cho giáo viên ' + obj[0].hoten + " ("+obj[0].magiaovien+")"
+            raise exceptions.ValidationError(s)
+        else:
+            pass
+
 class lop_has_giaovien(models.Model):
     _name = 'solienlac.lop_has_giaovien'
     _rec_name = 'giaovien'
@@ -882,7 +921,7 @@ class hocsinh(models.Model):
             'company_ids': [1],
             'company_id': 1,
             'groups_id': quyen_da_chon,
-            'truong':truong_id,
+            'truong' : truong_id,
         }
         print vals
         self.env['res.users'].sudo().create(vals)
