@@ -53,7 +53,7 @@
       </field>
     </record>
     <!-- Giáo viên - form view -->
-    <record id="giaovien_view_form" model="ir.ui.view">
+    <record id="giaovien1_view_form" model="ir.ui.view">
       <field name="name">giaovien.form</field>
       <field name="model">solienlac.giaovien</field>
       <field name="arch" type="xml">
@@ -88,8 +88,8 @@
                 <field name="quanhuyen" options="{'no_create_edit': True}"/>
                 <field name="phuongxa" options="{'no_create_edit': True}"/>
                 <field name="diachi"/>
-                <field name="dantoc"/>
-                <field name="tongiao"/>
+                <field name="dantoc" options="{'no_create_edit': True}"/>
+                <field name="tongiao" options="{'no_create_edit': True}"/>
               </group>
               <group colspan="2" col="2" string='Thông tin quản lý'>
                 <field name="bomon" widget="many2many_tags"/>
@@ -342,8 +342,8 @@
                 <field name="gioitinh"/>
                 <field name="ngaysinh"/>
                 <field name="sodienthoai"/>
-                <field name="dantoc"/>
-                <field name="tongiao"/>
+                <field name="dantoc" options="{'no_create_edit': True}"/>
+                <field name="tongiao" options="{'no_create_edit': True}"/>
               </group>
               <group colspan="2" col="2" string='Địa chỉ'>
                 <field name="tinhthanhpho"/>

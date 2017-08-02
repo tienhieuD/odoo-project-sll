@@ -42,7 +42,7 @@ class hocky(models.Model):
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
         ],default = 'i')
-    trangthai = fields.Boolean('Là học kỳ hiện tại' ,)
+    trangthai = fields.Boolean('Là học kỳ hiện tại' , required=True)
     truong = fields.Many2one('solienlac.truong', string='Trường', default=lambda self:self.env.user.truong)
     ghichu = fields.Char('Ghi chú')
 
@@ -57,7 +57,7 @@ class caphoc(models.Model):
     _name = 'solienlac.caphoc'
     _rec_name = 'tencaphoc'
 
-    macaphoc = fields.Integer('Mã cấp học', required='True')
+    macaphoc = fields.Integer('Mã cấp học', required=True, translate=True)
     tencaphoc = fields.Selection([
         ('1', 'Nhà trẻ'),
         ('2', 'Mẫu giáo'),
@@ -70,6 +70,20 @@ class caphoc(models.Model):
         ('9', 'Sau đại học'),
     ],default='1', string='Tên cấp học')
     ghichu = fields.Char('Ghi chú')
+    # _sql_constraints = [
+    #     ('macaphoc_uniq', 'unique(macaphoc)', ' Mã cấp học đã tồn tại.'),
+    # ]
+    @api.constrains('macaphoc')
+    def _macaphoc_uniq(self):
+        lst_mach = self.env['solienlac.caphoc'].search([])
+        lst_mach = map(lambda x : x.macaphoc, lst_mach)
+        lst_mach.pop(len(lst_mach)-1)
+        print lst_mach
+        if self.macaphoc in lst_mach:
+            raise exceptions.ValidationError("Mã cấp học đã tồn tại")
+        else:
+            pass
+    print('OK')
 
 class captruong(models.Model):
     _name = 'solienlac.captruong'
@@ -98,6 +112,16 @@ class captruong(models.Model):
     ],default='1', string='Tên cấp trường')
     ghichu = fields.Char('Ghi chú')
 
+    @api.constrains('macaptruong')
+    def _macaptruong_uniq(self):
+        lst = self.env['solienlac.captruong'].search([])
+        lst = map(lambda x : x.macaptruong, lst)
+        lst.pop(len(lst)-1)
+        print lst
+        if self.macaptruong in lst:
+            raise exceptions.ValidationError("Mã cấp trường đã tồn tại")
+        else:
+            pass
 class hangtruong(models.Model):
     _name = 'solienlac.hangtruong'
     _rec_name = 'tenhangtruong' # optional
@@ -112,6 +136,16 @@ class hangtruong(models.Model):
     ], default='1', string='Tên hạng trường')
     ghichu = fields.Char('Ghi chú')
 
+    @api.constrains('mahangtruong')
+    def _mahangtruong_uniq(self):
+        lst = self.env['solienlac.hangtruong'].search([])
+        lst = map(lambda x : x.mahangtruong, lst)
+        lst.pop(len(lst)-1)
+        print lst
+        if self.mahangtruong in lst:
+            raise exceptions.ValidationError("Mã hạng trường đã tồn tại")
+        else:
+            pass
 class loaihinhtruong(models.Model):
     _name = 'solienlac.loaihinhtruong'
     _rec_name = 'tenloahinhtruong' # optional
@@ -130,12 +164,23 @@ class loaihinhtruong(models.Model):
     ], default='4', string='Tên loại hình trường')
     ghichu = fields.Char('Ghi chú')
 
+    @api.constrains('maloaihinhtruong')
+    def _maloaihinhtruong_uniq(self):
+        lst = self.env['solienlac.tenloaihinhtruong'].search([])
+        lst = map(lambda x : x.maloaihinhtruong, lst)
+        lst.pop(len(lst)-1)
+        print lst
+        if self.maloaihinhtruong in lst:
+            raise exceptions.ValidationError("Mã loại hình trường đã tồn tại")
+        else:
+            pass
+
 class truongchuyenbiet(models.Model):
     _name = 'solienlac.truongchuyenbiet'
     _rec_name = 'tentruongchuyenbiet' # optional
     # _description = 'Trường chuyên biệt'
 
-    maloaihinhtruong = fields.Integer('Trường chuyên biệt', required='True')
+    matruongchuyenbiet = fields.Integer('Trường chuyên biệt', required='True')
     tentruongchuyenbiet = fields.Selection([
         ('1',	'Năng khiếu TDTT'),
         ('2', 	'Khuyết tật'),
@@ -146,6 +191,17 @@ class truongchuyenbiet(models.Model):
         ('7',	'Dự bị đại học'),
     ], default='4', string='Tên trường chuyên biệt')
     ghichu = fields.Char('Ghi chú')
+
+    @api.constrains('matruongchuyenbiet')
+    def _truongchuyenbiet_uniq(self):
+        lst = self.env['solienlac.truongchuyenbiet'].search([])
+        lst = map(lambda x : x.matruongchuyenbiet, lst)
+        lst.pop(len(lst)-1)
+        print lst
+        if self.matruongchuyenbiet in lst:
+            raise exceptions.ValidationError("Mã trường chuyên biệt đã tồn tại")
+        else:
+            pass
 class loailopnho(models.Model):
     _name = 'solienlac.loailopnho'
     _rec_name = 'tenloailopnho' # optional
@@ -206,6 +262,16 @@ class truong(models.Model):
     # hocsinh = fields.One2many(string="Học sinh của trường", comodel_name="solienlac.hocsinh", inverse_name="truong")
     khoi = fields.One2many(string="Khối", comodel_name="solienlac.khoi", inverse_name="truong")
 
+    @api.constrains('matruong')
+    def _truong_uniq(self):
+        lst = self.env['solienlac.truong'].search([])
+        lst = map(lambda x : x.matruong, lst)
+        lst.pop(len(lst)-1)
+        print lst
+        if self.matruong in lst:
+            raise exceptions.ValidationError("Mã trường đã tồn tại")
+        else:
+            pass
 
 class giaovien(models.Model):
     _name = 'solienlac.giaovien'
@@ -217,12 +283,7 @@ class giaovien(models.Model):
             ('Nu', 'Nữ'),
             ('KXD', 'Không xác định')], string = "Giới tính")
     ngaysinh = fields.Date(string="Ngày sinh")
-    noisinh = fields.Many2one(
-        string="Nơi sinh",
-        comodel_name="solienlac.tinhthanhpho",
-        ondelete="set null",
-        help="Chọn nơi sinh là tỉnh thành phố",
-    )
+    noisinh = fields.Char('Nơi sinh')
     sodienthoai = fields.Char("Số điện thoại")
     socmnd = fields.Char("Số chứng minh thư/căn cước")
     email = fields.Char("Email")
@@ -367,80 +428,158 @@ class to(models.Model):
     ghichu = fields.Char("Ghi chú")
     totruong = fields.Many2one('solienlac.giaovien', string = "Tổ trưởng")
 
+    @api.constrains('mato')
+    def _to_uniq(self):
+        lst = self.env['solienlac.to'].search([])
+        lst = map(lambda x : x.mato, lst)
+        lst.pop(len(lst)-1)
+        print lst
+        if self.mato in lst:
+            raise exceptions.ValidationError("Mã tổ đã tồn tại")
+        else:
+            pass
+
 class phuongxa(models.Model):
     _name = 'solienlac.phuongxa'
     _rec_name = 'tenphuongxa' # optional
     # maphuongxa = fields.Char("Mã phường/xã")
-    tenphuongxa = fields.Char("Tên phường/xã")
+    tenphuongxa = fields.Char("Tên phường/xã", required=True)
     ghichu = fields.Char("Ghi chú")
     # quanhuyen = fields.Many2one('solienlac.quanhuyen', string = "Quận/Huyện")
-    TinhID = fields.Integer('Tỉnh ID')
-    QuanHuyenID = fields.Integer('Quận huyện ID')
-    PhuongXaID = fields.Integer('Phường xã ID')
+    TinhID = fields.Integer('Tỉnh ID', required=True)
+    QuanHuyenID = fields.Integer('Quận huyện ID', required=True)
+    PhuongXaID = fields.Integer('Phường xã ID', required=True)
     VungDiaLyID = fields.Integer('Vùng địa lý ID')
     TenPhuongXa_VT=fields.Integer('Tên phường xã VT')
     KhoKhan=fields.Boolean('Khó khăn')
     BienGioi =fields.Boolean('Biên giới')
     HspcKvuc=fields.Char('Hệ số phụ cấp khu vực')
 
+    @api.constrains('PhuongXaID')
+    def _phuong_xa_uniq(self):
+        lst = self.env['solienlac.phuongxa'].search([])
+        lst = map(lambda x : x.PhuongXaID, lst)
+        lst.pop(len(lst)-1)
+        print lst
+        if self.PhuongXaID in lst:
+            raise exceptions.ValidationError("Mã phường/xã đã tồn tại")
+        else:
+            pass
+
 class quanhuyen(models.Model):
     _name = 'solienlac.quanhuyen'
     _rec_name = 'tenquanhuyen' # optional
     _description = 'Module description'
-    maquanhuyen = fields.Integer("Mã quận/huyện")
-    tenquanhuyen = fields.Char("Tên quận/huyện")
+    maquanhuyen = fields.Integer("Mã quận/huyện", required=True)
+    tenquanhuyen = fields.Char("Tên quận/huyện", required=True)
     ghichu = fields.Char("Ghi chú")
     # tinhthanhpho = fields.Many2one('solienlac.tinhthanhpho', string = "Tỉnh/Thành phố")
     tenquanhuyenVT=fields.Integer("Tên quận/huyện viết tắt")
     vungdialy = fields.Integer(string="Vùng địa lý")
-    matinhthanhpho = fields.Integer(string="Mã tỉnh/thành phố")
+    matinhthanhpho = fields.Integer(string="Mã tỉnh/thành phố", required=True)
+
+    @api.constrains('maquanhuyen')
+    def _quan_huyen_uniq(self):
+        lst = self.env['solienlac.quanhuyen'].search([])
+        lst = map(lambda x : x.maquanhuyen, lst)
+        lst.pop(len(lst)-1)
+        print lst
+        if self.maquanhuyen in lst:
+            raise exceptions.ValidationError("Mã Quận/Huyện đã tồn tại")
+        else:
+            pass
+
 
 class tinhthanhpho(models.Model):
     _name = 'solienlac.tinhthanhpho'
     _rec_name = 'tentinhthanhpho' # optional
-    matinhthanhpho = fields.Integer("Mã tỉnh/thành phố")
-    tentinhthanhpho = fields.Char("Tên tỉnh/thành phố")
+    matinhthanhpho = fields.Integer("Mã tỉnh/thành phố", required=True)
+    tentinhthanhpho = fields.Char("Tên tỉnh/thành phố", required=True)
     tentinhviettat = fields.Char('Tên tỉnh viết tắt')
     vungdialy = fields.Integer("Vùng địa lý")
     vungkinhte = fields.Integer("Vùng kinh tế")
     ghichu = fields.Char("Ghi chú")
 
+    @api.constrains('matinhthanhpho')
+    def _tinh_thanhpho_uniq(self):
+        lst = self.env['solienlac.tinhthanhpho'].search([])
+        lst = map(lambda x : x.matinhthanhpho, lst)
+        lst.pop(len(lst)-1)
+        print lst
+        if self.matinhthanhpho in lst:
+            raise exceptions.ValidationError("Mã Tỉnh/Thành phố đã tồn tại")
+        else:
+            pass
+
 class dantoc(models.Model):
     _name = 'solienlac.dantoc'
     _rec_name = 'tendantoc' # optional
-    madantoc = fields.Integer("Mã dân tộc")
-    tendantoc = fields.Char("Tên dân tộc")
+    madantoc = fields.Integer("Mã dân tộc", required=True)
+    tendantoc = fields.Char("Tên dân tộc", required=True)
     ghichu = fields.Char("Ghi chú")
 
+    @api.constrains('madantoc')
+    def _dantoc_uniq(self):
+        lst = self.env['solienlac.dantoc'].search([])
+        lst = map(lambda x : x.madantoc, lst)
+        lst.pop(len(lst)-1)
+        print lst
+        if self.madantoc in lst:
+            raise exceptions.ValidationError("Mã dân tộc đã tồn tại")
+        else:
+            pass
 class tongiao(models.Model):
     _name = 'solienlac.tongiao'
     _rec_name = 'tentongiao' # optional
-    matongiao = fields.Integer("Mã tôn giáo")
-    tentongiao = fields.Char("Tên tôn giáo")
+    matongiao = fields.Integer("Mã tôn giáo", required=True)
+    tentongiao = fields.Char("Tên tôn giáo", required=True)
     ghichu = fields.Char("Ghi chú")
+
+    @api.constrains('matongiao')
+    def _tongiao_uniq(self):
+        lst = self.env['solienlac.tongiao'].search([])
+        lst = map(lambda x : x.matongiao, lst)
+        lst.pop(len(lst)-1)
+        print lst
+        if self.matongiao in lst:
+            raise exceptions.ValidationError("Mã tôn giáo đã tồn tại")
+        else:
+            pass
 
 class phongban(models.Model):
     """docstring for phongban."""
     _name = 'solienlac.phongban'
     _rec_name = 'tenphongban' # optional
-    maphongban = fields.Char("Mã phòng ban")
-    tenphongban = fields.Char("Tên phòng ban")
+    maphongban = fields.Char("Mã phòng ban", required=True)
+    tenphongban = fields.Char("Tên phòng ban", required=True)
     sodienthoai = fields.Char("Số điện thoại")
     ghichu = fields.Char("Ghi chú")
     truongphong = fields.Many2one('solienlac.giaovien', string = "Trưởng phòng")
 
+    @api.constrains('maphongban')
+    def _dantoc_uniq(self):
+        lst = self.env['solienlac.phongban'].search([])
+        lst = map(lambda x : x.maphongban, lst)
+        lst.pop(len(lst)-1)
+        print lst
+        if self.maphongban in lst:
+            raise exceptions.ValidationError("Mã phòng ban đã tồn tại")
+        else:
+            pass
+
 class doituongchinhsach(models.Model):
     _name = 'solienlac.doituongchinhsach'
     _rec_name = 'tendoituongchinhsach' # optional
-    tendoituongchinhsach = fields.Char(string='Tên Đối Tượng Chinh Sách')
+    madoituongchinhsach = fields.Integer('Mã đối tượng chính sách')
+    tendoituongchinhsach = fields.Char(string='Tên đối tượng chính sách', required=True)
     miengiam = fields.Float(string='Miễn Giảm')
     ghichu = fields.Char(string='Ghi Chú')
 
 class doituonguutien(models.Model):
     _name = 'solienlac.doituonguutien'
     _rec_name = 'tendoituonguutien' # optional
-    tendoituonguutien = fields.Char(string='Tên Đối Tượng Ưu tiên')
-    madoituonguutien = fields.Char(string='Mã Đối Tượng Ưu tiên')
+    madoituonguutien = fields.Integer(string='Mã đối tượng ưu tiên', required=True)
+    tendoituonguutien = fields.Char(string='Tên đối tượng ưu tiên')
     ghichu = fields.Char(string='Ghi Chú')
 
 class khenthuongkyluat(models.Model):
@@ -516,10 +655,19 @@ class khenthuongkyluat_hocsinh(models.Model):
 class tuyenhoc(models.Model):
     _name = 'solienlac.tuyenhoc'
     _rec_name = 'tentuyen' # optional
-    matuyen = fields.Char(string='Mã Tuyến')
-    tentuyen = fields.Char(string='Tên Tuyến')
+    matuyen = fields.Char(string='Mã Tuyến', required=True)
+    tentuyen = fields.Char(string='Tên Tuyến', required=True)
     ghichu = fields.Char(string='Ghi Chú')
 
+    @api.constrains('matuyen')
+    def _tuyenhoc_uinq(self):
+        lst = self.env['solienlac.tuyenhoc'].search([])
+        lst = map(lambda x: x.matuyen, lst)
+        lst.pop(len(lst)-1)
+        if self.matuyen in lst:
+            raise exceptions.ValidationError(' Mã tuyến học đã tồn tại. ')
+        else:
+            pass
 class khoi(models.Model):
     _name = 'solienlac.khoi'
     _rec_name = 'tenkhoi' # optional
@@ -541,8 +689,8 @@ class khoi(models.Model):
         except:
             return [('id','!=',-1)]
 
-    makhoi = fields.Integer(string='Mã Khối', )
-    tenkhoi = fields.Char(string='Tên Khối')
+    makhoi = fields.Integer(string='Mã Khối', required=True)
+    tenkhoi = fields.Char(string='Tên Khối', required=True)
     ghichu = fields.Char('Ghi Chú')
     # truong = fields.Many2one(
     # 'solienlac.truong', string = "Trường",
@@ -554,6 +702,16 @@ class khoi(models.Model):
         domain=_get_curret_truong,
         default= lambda self: self.env.user.truong,
     )
+
+    @api.constrains('makhoi')
+    def _khoi_uinq(self):
+        lst = self.env['solienlac.khoi'].search([])
+        lst = map(lambda x: x.makhoi, lst)
+        lst.pop(len(lst)-1)
+        if self.makhoi in lst:
+            raise exceptions.ValidationError(' Mã khối học đã tồn tại.')
+        else:
+            pass
 
 class hanhkiem(models.Model):
     _name = 'solienlac.hanhkiem'
@@ -608,7 +766,7 @@ class hanhkiem(models.Model):
 class phuhuynh(models.Model):
     _name = 'solienlac.phuhuynh'
     _rec_name = 'hoten' # optional
-    hoten = fields.Char('Họ Tên')
+    hoten = fields.Char('Họ Tên', required=True)
     gioitinh = fields.Selection([
             ('Nam', 'Nam'),
             ('Nu', 'Nữ'),
@@ -675,18 +833,28 @@ class phuhuynh(models.Model):
 
     hocsinh = fields.Many2one('solienlac.hocsinh', string='Học Sinh')
 
+
 class bomon(models.Model):
     _name = 'solienlac.bomon'
     _rec_name = 'tenbomon' # optional
-    mabomon = fields.Integer('Mã bộ môn')
-    tenbomon = fields.Char('Tên bộ môn')
+    mabomon = fields.Integer('Mã bộ môn', required=True)
+    tenbomon = fields.Char('Tên bộ môn', required=True)
     ghichu = fields.Char('Ghi chú')
     truongbomon = fields.Many2one('solienlac.giaovien', string = "Trưởng bộ môn")
 
+    @api.constrains('mabomon')
+    def _bomon_uinq(self):
+        lst = self.env['solienlac.bomon'].search([])
+        lst = map(lambda x: x.mabomon, lst)
+        lst.pop(len(lst)-1)
+        if self.mabomon in lst:
+            raise exceptions.ValidationError(' Mã bộ môn đã tồn tại.')
+        else:
+            pass
 class bangdiemdanh(models.Model):
     _name = 'solienlac.bangdiemdanh'
     _rec_name = 'mabangdiemdanh' # optional
-    mabangdiemdanh= fields.Char('Mã bảng điểm danh')
+    mabangdiemdanh= fields.Char('Mã bảng điểm danh', required=True)
     ngayvang= fields.Date('Ngày vắng')
     tietvang= fields.Integer('Tiết vắng')
     ghichu= fields.Char('Ghi chú')
@@ -694,11 +862,29 @@ class bangdiemdanh(models.Model):
     monhoc= fields.Many2one('solienlac.monhoc', string = 'Môn học')
     giaoviendiemdanh= fields.Many2one('solienlac.giaovien', string = 'Giáo viên điểm danh')
 
+    @api.constrains('mabangdiemdanh')
+    def _bangdiemdanh_uinq(self):
+        lst = self.env['solienlac.bangdiemdanh'].search([])
+        lst = map(lambda x: x.mabangdiemdanh, lst)
+        lst.pop(len(lst)-1)
+        if self.mabangdiemdanh in lst:
+            raise exceptions.ValidationError(' Mã bảng điểm danh đã tồn tại.')
+        else:
+            pass
 class hocsinh(models.Model):
     _name = 'solienlac.hocsinh'
     _rec_name = 'hoten' # optional
 
     mahocsinh = fields.Char('Mã học sinh', required='True')
+    @api.constrains('mahocsinh')
+    def _hocsinh_uinq(self):
+        lst = self.env['solienlac.hocsinh'].search([])
+        lst = map(lambda x: x.mahocsinh, lst)
+        lst.pop(len(lst)-1)
+        if self.mahocsinh in lst:
+            raise exceptions.ValidationError(' Mã học sinh đã tồn tại.')
+        else:
+            pass
     hoten = fields.Char('Họ tên', required='True')
     gioitinh = fields.Selection([
         ('Nam', 'Nam'),
@@ -706,12 +892,7 @@ class hocsinh(models.Model):
         ('KXD', 'Không xác định')], string="Giới tính")
     ngaysinh = fields.Date(string="Ngày sinh")
     # noisinh = fields.Char('Nơi sinh')
-    noisinh = fields.Many2one(
-        string="Nơi sinh",
-        comodel_name="solienlac.tinhthanhpho",
-        ondelete="set null",
-        help="Chọn nơi sinh là tỉnh thành phố",
-    )
+    noisinh = fields.Char('Nơi sinh')
 
     username = fields.Char('Username', compute='set_username')
     @api.depends('mahocsinh')
@@ -862,8 +1043,6 @@ class hocsinh(models.Model):
                 ])
         lst = map(lambda x: x.QuanHuyenID, tmp1)
         return {'domain':{'phuongxa': [('QuanHuyenID', 'in', lst)]}}
-
-
 class lydothoihoc(models.Model):
     _name = 'solienlac.lydothoihoc'
     _rec_name = 'lydothoihoc'
@@ -915,7 +1094,6 @@ class lydothoihoc(models.Model):
 
     ghichu = fields.Char('Ghi chú')
     hocsinh = fields.One2many('solienlac.hocsinh', 'lydothoihoc', string='Học sinh')
-
 class nguongochocsinh(models.Model):
     _name = 'solienlac.nguongochocsinh'
     _rec_name = 'nguongochocsinh'
@@ -986,7 +1164,6 @@ class monhocnghe(models.Model):
         ],default='value1'
     )
     ghichu = fields.Char('Ghi chú')
-
 class tochucdoanthe(models.Model):
     _name = 'solienlac.tochucdoanthe'
     _rec_name = 'vitridoanthe'
@@ -1081,7 +1258,17 @@ class lop(models.Model):
                 ('9', 'Không học'),
         ],
     )
-    banhoc = fields.Many2one('solienlac.banhoc', string='Phân ban')
+    banhoc = fields.Many2one('solienlac.banhoc', string='Phân ban', required=True)
+
+    @api.constrains('malop')
+    def _lop_uinq(self):
+        lst = self.env['solienlac.lop'].search([])
+        lst = map(lambda x: x.mabangdiemdanh, lst)
+        lst.pop(len(lst)-1)
+        if self.mabangdiemdanh in lst:
+            raise exceptions.ValidationError(' Mã bảng điểm danh đã tồn tại.')
+        else:
+            pass
 
 class banhoc(models.Model):
     _name = 'solienlac.banhoc'
