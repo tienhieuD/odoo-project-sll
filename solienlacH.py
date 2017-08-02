@@ -1989,12 +1989,45 @@ class Users(models.Model):
     _rec_name = 'login'
 
     @api.model
-    #get list domain
     def _get_test(self):
-        idc = self.env['ir.module.category'].search([('name','like','solienlac')])[0].id
-        solienlac_groups = self.env['res.groups'].search([('category_id','=',idc)])
-        solienlac_groups = map(lambda x: x.id, solienlac_groups)
-        return [('id', 'in', solienlac_groups)]
+        #get list domain
+        idc = self.env['ir.module.category'].sudo().search([('name','like','solienlac')])[0].id
+        solienlac_groups = self.env['res.groups'].sudo().search([('category_id','=',idc)])
+        solienlac_groups_name = map(lambda x: x.name, solienlac_groups)
+        solienlac_groups_id = map(lambda x: x.id, solienlac_groups)
+
+        user_groups_id = self.env.user.groups_id
+        user_groups_id = map(lambda x: x.id, user_groups_id)
+
+        system_admin_level_1_id = self.env['res.groups'].sudo().search([('name','like','system_admin_level_1')])[0].id
+        system_admin_level_2_id = self.env['res.groups'].sudo().search([('name','like','system_admin_level_2')])[0].id
+        system_admin_level_3_id = self.env['res.groups'].sudo().search([('name','like','system_admin_level_3')])[0].id
+        school_admin_level_1_hieu_truong_id = self.env['res.groups'].sudo().search([('name','like','school_admin_level_1_hieu_truong')])[0].id
+
+        result = solienlac_groups_id
+
+        print 'system_admin_level_1_id'
+        print system_admin_level_1_id
+        print user_groups_id
+
+        if (system_admin_level_1_id in user_groups_id):
+            result = solienlac_groups_id
+
+        if (system_admin_level_2_id in user_groups_id):
+            result.remove(system_admin_level_1_id)
+
+        if (system_admin_level_3_id in user_groups_id):
+            result.remove(system_admin_level_1_id)
+            result.remove(system_admin_level_2_id)
+
+        if (school_admin_level_1_hieu_truong_id in user_groups_id):
+            result.remove(system_admin_level_1_id)
+            result.remove(system_admin_level_2_id)
+            result.remove(system_admin_level_3_id)
+            result.remove(school_admin_level_1_hieu_truong_id)
+
+        return [('id', 'in', result)]
+
 
     name = fields.Char(string="Họ tên người dùng", required = True)
     login = fields.Char(string='Tài khoản đăng nhập',required = True)
@@ -2025,7 +2058,6 @@ class Users(models.Model):
         quyen_da_chon = values['quyen'][0][2]
         quyen_da_chon.append(1)
         quyen_da_chon.append(3)
-        # Code chinh day ne
         vals = {
             'name': values['name'],
             'login': values['login'],
@@ -2036,11 +2068,7 @@ class Users(models.Model):
             'truong' : values['truong'],
             'giaovien' : values['giaovien'],
         }
-        # print values['giaovien']
-        # print values
-        # print vals
         self.env['res.users'].sudo().create(vals)
-        # Deo lien quan dau kemeno
         user = super(Users, self).create(values)
         return user
 
