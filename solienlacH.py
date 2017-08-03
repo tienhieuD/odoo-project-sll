@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# ﻿# -*- coding: utf-8 -*-
 import datetime
 import time
 import random
@@ -25,35 +25,91 @@ class hocky(models.Model):
     def _get_namhoc_now(self):
         now = datetime.datetime.now()
         year = now.year
-        if now.month <= 9:
+        if now.month < 8:
             year -= 1
         return str(year) + "-" + str(year+1)
+    @api.onchange('trangthai')
+    @api.constrains('namhoc')
+    def _namhoc_cont(self):
+        if self.trangthai:
+            now = datetime.datetime.now()
+            in_year = now.year
+            in_month = now.month
+            # ---- lấy năm học vừa nhập
+            s = self.namhoc
+            lst = s.split('-')
+            my_first_year = lst[0]
+            # ----- Tính năm học hiện tại
+            if in_month >= 8 & in_month <= 12:
+                first_year = in_year
+            else:
+                first_year = in_year - 1
+            # ----- Xu ly rang buộc
+            print my_first_year
+            print first_year
+            if int(my_first_year) !=  int(first_year):
+                raise exceptions.ValidationError("Giá trị năm học không phải năm hiện tại!")
+        # else:
+        #     pass
+
 
     namhoc = fields.Selection(
         string="Năm học",
         selection= _get_list_namhoc,
         default = _get_namhoc_now,
+        required=True
     )
     #---------- end define fields namhoc ------------
 
     hocky = fields.Selection(
+        required=True,
         string="Học kỳ",
         selection=[
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
-                ('iii', 'Cả năm'),
         ],default = 'i')
-    trangthai = fields.Boolean('Là học kỳ hiện tại' , required=True)
-    truong = fields.Many2one('solienlac.truong', string='Trường', default=lambda self:self.env.user.truong)
+    trangthai = fields.Selection([
+        ('HienTai', 'Hiện tại'),
+        ('DaKetThuc', 'Đã kết thúc')
+    ],string='Trạng thái', default='HienTai')
+    ketthuchocky = fields.Boolean('Kết thúc học kỳ', default=False)
+    truong = fields.Many2one('solienlac.truong', string='Trường', default=lambda self:self.env.user.truong, required=True,)
+    # groups='solienlac.group_schooladmin_l1'
+    # truong_sa = fields.Many2one('solienlac.truong', string='Trường', required=True)
     ghichu = fields.Char('Ghi chú')
 
     @api.onchange('trangthai')
-    def _kich_hoat_duy_nhat(self):
-        if self.trangthai == True:
-            hocky = self.env['solienlac.hocky'].search([])
-            for hk in hocky:
-                hk.trangthai = False
+    def _fomat_ketthuchocky(self):
+        if self.trangthai == 'HienTai':
+            self.ketthuchocky = False
 
+    @api.onchange('ketthuchocky')
+    def _fomat_trangthai(self):
+        if self.ketthuchocky:
+            if self.trangthai == 'DaKetThuc':
+                raise exceptions.ValidationError("Học kỳ đã kết thúc!")
+            else:
+                self.trangthai = 'DaKetThuc'
+    @api.constrains('trangthai')
+    def _trangthai_cont(self):
+        lst = self.env['solienlac.hocky'].search([
+            ('trangthai', '=', 'HienTai'),
+            ('namhoc', '=', self.namhoc),
+            ('truong.id', '=', self.truong.id),
+        ])
+        if(len(lst) > 1):
+            # print(lst[0].truong.tentruong, lst[0].namhoc, lst[0].hocky)
+            raise exceptions.ValidationError("Có 1 học kỳ đang ở trạng thái 'Hiện tại', hãy kết thúc nó trước khi tạo học kỳ mới")
+
+    @api.constrains('truong', 'namhoc', 'hocky')
+    def hocky_cont(self):
+        count_record = self.env['solienlac.hocky'].search_count([
+            ('namhoc', '=', self.namhoc),
+            ('hocky', '=', self.hocky),
+            ('truong.id', '=', self.truong.id),
+        ])
+        if(count_record > 1):
+            raise exceptions.ValidationError("Học kỳ đã tồn tại!")
 class caphoc(models.Model):
     _name = 'solienlac.caphoc'
     _rec_name = 'tencaphoc'
@@ -228,6 +284,15 @@ class truong(models.Model):
     fax = fields.Char('Fax')
     email = fields.Char('Email')
     sodienthoai = fields.Char('Số điện thoại')
+
+    @api.constrains('sodienthoai')
+    def check_number(self):
+        if (len(self.sodienthoai) < 10):
+            raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
+        try:
+          int(self.sodienthoai)
+        except ValueError:
+          raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
     website = fields.Char('Website')
 
     # matinhthanhpho = fields.Many2one('solienlac.tinhthanhpho', string='Tỉnh/Thành phố')
@@ -286,6 +351,14 @@ class giaovien(models.Model):
     ngaysinh = fields.Date(string="Ngày sinh")
     noisinh = fields.Char('Nơi sinh')
     sodienthoai = fields.Char("Số điện thoại")
+    @api.constrains('sodienthoai')
+    def check_number(self):
+        if (len(self.sodienthoai) < 10):
+            raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
+        try:
+          int(self.sodienthoai)
+        except ValueError:
+          raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
     socmnd = fields.Char("Số chứng minh thư/căn cước")
     email = fields.Char("Email",required=True)
     matkhau = fields.Char("Mật khẩu")
@@ -454,7 +527,7 @@ class lop_has_giaovien(models.Model):
         selection=[
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
-                ('iii', 'Cả năm'),
+                # ('iii', 'Cả năm'),
         ],default = 'i')
     ngaybatdau = fields.Date('Ngày bắt đầu:')
     ngayketthuc = fields.Date('Ngày kết thúc: ')
@@ -592,6 +665,14 @@ class phongban(models.Model):
     maphongban = fields.Char("Mã phòng ban", required=True)
     tenphongban = fields.Char("Tên phòng ban", required=True)
     sodienthoai = fields.Char("Số điện thoại")
+    @api.constrains('sodienthoai')
+    def check_number(self):
+        if (len(self.sodienthoai) < 10):
+            raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
+        try:
+          int(self.sodienthoai)
+        except ValueError:
+          raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
     ghichu = fields.Char("Ghi chú")
     truongphong = fields.Many2one('solienlac.giaovien', string = "Trưởng phòng")
 
@@ -631,7 +712,7 @@ class khenthuongkyluat(models.Model):
 class kyluathocsinh(models.Model):
     _name = 'solienlac.kyluathocsinh'
     _rec_name = 'lydokyluat' # optional
-    lydokyluat = fields.Char(string='Lý do kỷ luật')
+    lydokyluat = fields.Char(string='Lý do kỷ luật', required=True)
     hinhthuckyluat = fields.Selection(
         string="Hình thức kỷ luật",
         selection=[
@@ -640,13 +721,16 @@ class kyluathocsinh(models.Model):
                 ('3', 'Cảnh cáo, ghi học bạ'),
                 ('4', 'Buộc thôi học có thời hạn'),
                 ('5', 'Khác'),
-        ],
-    )
+        ], required=True)
     thoihantu = fields.Date(string="Thời hạn từ", )
     thoihanden = fields.Date(string="Thời hạn đến", )
     ghichu = fields.Char(string='Ghi Chú')
     hocsinh = fields.Many2many("solienlac.hocsinh",string="Học sinh")
 
+    @api.constrains('hocsinh')
+    def _kyluat_constrains(self):
+        if(len(self.hocsinh) <= 0):
+            raise exceptions.ValidationError('Hãy thêm ít nhất một học sinh!')
 # class khenthuonghocsinh(models.Model):
 #     _name = 'solienlac.khenthuonghocsinh'
 #     _rec_name = 'lydokhenthuong' # optional
@@ -811,14 +895,21 @@ class phuhuynh(models.Model):
             ('Nu', 'Nữ'),
             ('KXD', 'Không xác định')], string = "Giới tính")
     ngaysinh = fields.Date('Ngày Sinh')
-    sodienthoai = fields.Char('Số Điện Thoại')
-
+    sodienthoai = fields.Char('Số Điện Thoại', required=True)
+    @api.constrains('sodienthoai')
+    def check_number(self):
+        if (len(self.sodienthoai) < 10):
+            raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
+        try:
+          int(self.sodienthoai)
+        except ValueError:
+          raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
     ghichu = fields.Char('Ghi Chú')
 
-    diachi = fields.Char('Địa chỉ')
-    phuongxa = fields.Many2one('solienlac.phuongxa', string='Phường\Xã')
-    quanhuyen = fields.Many2one('solienlac.quanhuyen', string='Quận\Huyện')
-    tinhthanhpho = fields.Many2one('solienlac.tinhthanhpho', string='Tỉnh\Thành phố')
+    diachi = fields.Char('Địa chỉ', required=True)
+    phuongxa = fields.Many2one('solienlac.phuongxa', string='Phường\Xã', required=True)
+    quanhuyen = fields.Many2one('solienlac.quanhuyen', string='Quận\Huyện', required=True)
+    tinhthanhpho = fields.Many2one('solienlac.tinhthanhpho', string='Tỉnh\Thành phố', required=True)
 
     @api.multi
     @api.onchange('tinhthanhpho')
@@ -1697,7 +1788,7 @@ class nhapdiemhocsinh(models.Model):
     giaovien = fields.Many2one(
         string="Giáo viên",
         comodel_name="solienlac.giaovien",
-        default = lambda self: self.env.user.giaovien,
+        # default = lambda self: self.env.user.giaovien,
         readonly = _read_ol,
     )
     lop = fields.Many2one(
@@ -1709,7 +1800,7 @@ class nhapdiemhocsinh(models.Model):
     def _get_current_hocky(self):
         try:
             hocky = self.env['solienlac.hocky'].search([
-                ('trangthai' , '=', True),
+                ('trangthai' , '=', 'HienTai'),
             ])[-1]
             return hocky.hocky
         except:
@@ -1724,8 +1815,7 @@ class nhapdiemhocsinh(models.Model):
         string="Học kỳ",
         selection=[
                 ('i', 'Học kỳ I'),
-                ('ii', 'Học kỳ II'),
-                ('iii', 'Cả năm'),
+                ('ii', 'Học kỳ II')
         ],default = _get_current_hocky, readonly=True)
 
     #---------- define fields namhoc ------------
@@ -1741,7 +1831,7 @@ class nhapdiemhocsinh(models.Model):
     def _get_current_namhoc(self):
         try:
             namhoc = self.env['solienlac.hocky'].search([
-                ('trangthai' , '=', True),
+                ('trangthai' , '=', 'HienTai'),
             ])[-1]
             return namhoc.namhoc
         except:
@@ -1952,7 +2042,7 @@ class nhapdiemchitiet(models.Model):
                 if num > 10.0:
                     num = 10.0
                 return num
-            except:
+            except ValueError:
                 return -1.0
 
         for record in self:
@@ -2357,6 +2447,15 @@ class khenthuonghocsinh(models.Model):
         string="Giáo viên",
         comodel_name="solienlac.giaovien",
         default = lambda self: self.env.user.giaovien
+    )
+    @api.model
+    def _set_gvcn(self):
+        l = self.env['solienlac.lop'].search([('id', '=', self.lop.id)])
+        return l.gvcn
+    gvcn = fields.Many2one(
+        string="Giáo viên chủ nhiệm",
+        comodel_name="solienlac.giaovien",
+        default = 'set_gvcn'
     )
     lop = fields.Many2one(
         string="Lớp",
