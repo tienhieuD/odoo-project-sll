@@ -674,11 +674,7 @@
 
                 <field name="hocky"/>
                 <field name="namhoc"/>
-<<<<<<< HEAD
-                <field name="giaovien"/>
-=======
                 <field name="giaovien" options="{'no_create_edit': True}"/>
->>>>>>> 4195c664ac472e864e5ca9ddf3401595a7eee1d2
                 <field name="monhoc" options="{'no_create_edit': True}"/>
                 <field name="lop" options="{'no_create_edit': True}"/>
                 <field name="napdulieu"/>
