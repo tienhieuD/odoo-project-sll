@@ -28,30 +28,27 @@ class hocky(models.Model):
         if now.month < 8:
             year -= 1
         return str(year) + "-" + str(year+1)
-    @api.onchange('trangthai')
-    @api.constrains('namhoc')
-    def _namhoc_cont(self):
-        if self.trangthai:
-            now = datetime.datetime.now()
-            in_year = now.year
-            in_month = now.month
-            # ---- lấy năm học vừa nhập
-            s = self.namhoc
-            lst = s.split('-')
-            my_first_year = lst[0]
-            # ----- Tính năm học hiện tại
-            if in_month >= 8 & in_month <= 12:
-                first_year = in_year
-            else:
-                first_year = in_year - 1
-            # ----- Xu ly rang buộc
-            print my_first_year
-            print first_year
-            if int(my_first_year) !=  int(first_year):
-                raise exceptions.ValidationError("Giá trị năm học không phải năm hiện tại!")
-        # else:
-        #     pass
-
+    # @api.onchange('trangthai')
+    # @api.constrains('namhoc')
+    # def _namhoc_cont(self):
+    #     if self.trangthai:
+    #         now = datetime.datetime.now()
+    #         in_year = now.year
+    #         in_month = now.month
+    #         # ---- lấy năm học vừa nhập
+    #         s = self.namhoc
+    #         lst = s.split('-')
+    #         my_first_year = lst[0]
+    #         # ----- Tính năm học hiện tại
+    #         if in_month >= 8 & in_month <= 12:
+    #             first_year = in_year
+    #         else:
+    #             first_year = in_year - 1
+    #         # ----- Xu ly rang buộc
+    #         print my_first_year
+    #         print first_year
+    #         if int(my_first_year) !=  int(first_year):
+    #             raise exceptions.ValidationError("Giá trị năm học không phải năm hiện tại!")
 
     namhoc = fields.Selection(
         string="Năm học",
