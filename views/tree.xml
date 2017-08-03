@@ -11,6 +11,7 @@
           <field name="hinhthuckyluat"/>
           <field name="thoihantu"/>
           <field name="thoihanden"/>
+          <field name="hocsinh"/>
           <field name="ghichu"/>
         </tree>
       </field>

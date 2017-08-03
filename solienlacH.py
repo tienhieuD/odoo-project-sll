@@ -1070,7 +1070,7 @@ class hocsinh(models.Model):
 
     diachi = fields.Char('Địa chỉ')
     quequan = fields.Char('Quê quán')
-    lop = fields.Many2one('solienlac.lop', string='Lớp')
+    lop = fields.Many2one('solienlac.lop', string='Lớp', required='True')
     # truong = fields.Many2one('solienlac.truong', string = "Trường")
     tuyenhoc = fields.Many2one('solienlac.tuyenhoc', string='Tuyến học')
 
