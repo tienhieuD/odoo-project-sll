@@ -2,6 +2,25 @@
 <odoo>
   <data>
 
+    <record id="kyluathocsinh_view_form" model="ir.ui.view">
+      <field name="name">solienlac.kyluathocsinh.form</field>
+      <field name="model">solienlac.kyluathocsinh</field>
+      <field name="arch" type="xml">
+        <form string="Kỷ luật học sinh">
+          <sheet>
+            <group>
+              <field name="lydokyluat"/>
+              <field name="hinhthuckyluat"/>
+              <field name="thoihantu"/>
+              <field name="thoihanden"/>
+              <field name="hocsinh"/>
+              <field name="ghichu"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
     <record id="khenthuongchitiet_view_form" model="ir.ui.view">
       <field name="name">solienlac.khenthuongchitiet.form</field>
       <field name="model">solienlac.khenthuongchitiet</field>
@@ -296,6 +315,7 @@
                 <field name="tenkhoi"/>
                 <field name="truong" options="{'no_create_edit': True}"/>
               </group>
+              <field name="lop"  options="{'no_create_edit': True}"/>
             </group>
           </sheet>
         </form>
