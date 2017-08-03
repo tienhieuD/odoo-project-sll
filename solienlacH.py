@@ -843,6 +843,12 @@ class khoi(models.Model):
         default= lambda self: self.env.user.truong,
     )
 
+    lop = fields.One2many(
+        string="Lớp trong khối",
+        comodel_name="solienlac.lop",
+        inverse_name="khoi",
+    )
+
     @api.constrains('makhoi')
     def _khoi_uinq(self):
         lst = self.env['solienlac.khoi'].search([])

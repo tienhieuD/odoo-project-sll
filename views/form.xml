@@ -315,6 +315,7 @@
                 <field name="tenkhoi"/>
                 <field name="truong" options="{'no_create_edit': True}"/>
               </group>
+              <field name="lop"  options="{'no_create_edit': True}"/>
             </group>
           </sheet>
         </form>
