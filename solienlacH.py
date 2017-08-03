@@ -342,6 +342,7 @@ class truong(models.Model):
 class giaovien(models.Model):
     _name = 'solienlac.giaovien'
     _rec_name = 'hoten' # optional
+    lop = fields.One2many(string="Lớp", comodel_name="solienlac.lop", inverse_name="gvcn")
     magiaovien = fields.Char("Mã giáo viên", required=True)
     hoten = fields.Char("Họ tên", required=True)
     gioitinh = fields.Selection([
@@ -886,6 +887,22 @@ class hanhkiem(models.Model):
     ghichu = fields.Char('Ghi Chú')
     hocsinh = fields.Many2one('solienlac.hocsinh', string='Học Sinh')
 
+    @api.constrains('namhoc', 'hocky', 'hocsinh')
+    def _validate_hanhkiem(self):
+        obj = self.env['solienlac.hanhkiem'].search([
+            ('hocky','=',self.hocky),
+            ('namhoc','=',self.namhoc),
+            ('hocsinh','=',self.hocsinh.id),
+        ])
+        n = len(obj)
+        if n>1:
+            # obj = map(lambda x: x.giaovien, obj)
+            # obj.remove(self.giaovien)
+            s=u'Đã xét hạnh kiểm cho học sinh vào kỳ học này rồi'
+            raise exceptions.ValidationError(s)
+        else:
+            pass
+
 class phuhuynh(models.Model):
     _name = 'solienlac.phuhuynh'
     _rec_name = 'hoten' # optional
@@ -893,7 +910,7 @@ class phuhuynh(models.Model):
     gioitinh = fields.Selection([
             ('Nam', 'Nam'),
             ('Nu', 'Nữ'),
-            ('KXD', 'Không xác định')], string = "Giới tính")
+            ('KXD', 'Không xác định')], string = "Giới tính", required=True)
     ngaysinh = fields.Date('Ngày Sinh')
     sodienthoai = fields.Char('Số Điện Thoại', required=True)
     @api.constrains('sodienthoai')
@@ -1801,6 +1818,7 @@ class nhapdiemhocsinh(models.Model):
         try:
             hocky = self.env['solienlac.hocky'].search([
                 ('trangthai' , '=', 'HienTai'),
+                ('truong.id', '=', self.env.user.truong.id)
             ])[-1]
             return hocky.hocky
         except:
@@ -1831,7 +1849,12 @@ class nhapdiemhocsinh(models.Model):
     def _get_current_namhoc(self):
         try:
             namhoc = self.env['solienlac.hocky'].search([
+<<<<<<< HEAD
                 ('trangthai' , '=', 'HienTai'),
+=======
+                ('trangthai' , '=', True),
+                ('truong.id', '=', self.env.user.truong.id)
+>>>>>>> 4195c664ac472e864e5ca9ddf3401595a7eee1d2
             ])[-1]
             return namhoc.namhoc
         except:
@@ -2027,6 +2050,45 @@ class nhapdiemchitiet(models.Model):
         self.diem15phut1 = ""
         self.diem1tiet1 = ""
 
+    @api.onchange('diemhocky',
+    'diemmieng1','diemmieng2','diemmieng3','diemmieng4','diemmieng5','diemmieng6',
+    'diem15phut1','diem15phut2','diem15phut3','diem15phut4','diem15phut5','diem15phut6',
+    'diem1tiet1','diem1tiet2','diem1tiet3','diem1tiet4','diem1tiet5','diem1tiet6')
+    def _check_diem(self):
+        def _validate_diem(n):
+            try:
+                diem = n
+                str_diem = diem.replace(',','.')
+                float_diem = float(str_diem)
+                rs = ''
+
+                if float_diem>10 or float_diem<0:
+                    rs = ''
+                else:
+                    rs = float_diem
+                return rs
+            except:
+                return ''
+        self.diemhocky = _validate_diem(self.diemhocky)
+        self.diemmieng1 = _validate_diem(self.diemmieng1)
+        self.diemmieng2 = _validate_diem(self.diemmieng2)
+        self.diemmieng3 = _validate_diem(self.diemmieng3)
+        self.diemmieng4 = _validate_diem(self.diemmieng4)
+        self.diemmieng5 = _validate_diem(self.diemmieng5)
+        self.diemmieng6 = _validate_diem(self.diemmieng6)
+        self.diem15phut1 = _validate_diem(self.diem15phut1)
+        self.diem15phut2 = _validate_diem(self.diem15phut2)
+        self.diem15phut3 = _validate_diem(self.diem15phut3)
+        self.diem15phut4 = _validate_diem(self.diem15phut4)
+        self.diem15phut5 = _validate_diem(self.diem15phut5)
+        self.diem15phut6 = _validate_diem(self.diem15phut6)
+        self.diem1tiet1 = _validate_diem(self.diem1tiet1)
+        self.diem1tiet2 = _validate_diem(self.diem1tiet2)
+        self.diem1tiet3 = _validate_diem(self.diem1tiet3)
+        self.diem1tiet4 = _validate_diem(self.diem1tiet4)
+        self.diem1tiet5 = _validate_diem(self.diem1tiet5)
+        self.diem1tiet6 = _validate_diem(self.diem1tiet6)
+
     @api.depends('diemhocky',
     'diemmieng1','diemmieng2','diemmieng3','diemmieng4','diemmieng5','diemmieng6',
     'diem15phut1','diem15phut2','diem15phut3','diem15phut4','diem15phut5','diem15phut6',
@@ -2078,12 +2140,45 @@ class Users(models.Model):
     _rec_name = 'login'
 
     @api.model
-    #get list domain
     def _get_test(self):
-        idc = self.env['ir.module.category'].search([('name','like','solienlac')])[0].id
-        solienlac_groups = self.env['res.groups'].search([('category_id','=',idc)])
-        solienlac_groups = map(lambda x: x.id, solienlac_groups)
-        return [('id', 'in', solienlac_groups)]
+        #get list domain
+        idc = self.env['ir.module.category'].sudo().search([('name','like','solienlac')])[0].id
+        solienlac_groups = self.env['res.groups'].sudo().search([('category_id','=',idc)])
+        solienlac_groups_name = map(lambda x: x.name, solienlac_groups)
+        solienlac_groups_id = map(lambda x: x.id, solienlac_groups)
+
+        user_groups_id = self.env.user.groups_id
+        user_groups_id = map(lambda x: x.id, user_groups_id)
+
+        system_admin_level_1_id = self.env['res.groups'].sudo().search([('name','like','system_admin_level_1')])[0].id
+        system_admin_level_2_id = self.env['res.groups'].sudo().search([('name','like','system_admin_level_2')])[0].id
+        system_admin_level_3_id = self.env['res.groups'].sudo().search([('name','like','system_admin_level_3')])[0].id
+        school_admin_level_1_hieu_truong_id = self.env['res.groups'].sudo().search([('name','like','school_admin_level_1_hieu_truong')])[0].id
+
+        result = solienlac_groups_id
+
+        print 'system_admin_level_1_id'
+        print system_admin_level_1_id
+        print user_groups_id
+
+        if (system_admin_level_1_id in user_groups_id):
+            result = solienlac_groups_id
+
+        if (system_admin_level_2_id in user_groups_id):
+            result.remove(system_admin_level_1_id)
+
+        if (system_admin_level_3_id in user_groups_id):
+            result.remove(system_admin_level_1_id)
+            result.remove(system_admin_level_2_id)
+
+        if (school_admin_level_1_hieu_truong_id in user_groups_id):
+            result.remove(system_admin_level_1_id)
+            result.remove(system_admin_level_2_id)
+            result.remove(system_admin_level_3_id)
+            result.remove(school_admin_level_1_hieu_truong_id)
+
+        return [('id', 'in', result)]
+
 
     name = fields.Char(string="Họ tên người dùng", required = True)
     login = fields.Char(string='Tài khoản đăng nhập',required = True)
@@ -2114,7 +2209,6 @@ class Users(models.Model):
         quyen_da_chon = values['quyen'][0][2]
         quyen_da_chon.append(1)
         quyen_da_chon.append(3)
-        # Code chinh day ne
         vals = {
             'name': values['name'],
             'login': values['login'],
@@ -2125,11 +2219,7 @@ class Users(models.Model):
             'truong' : values['truong'],
             'giaovien' : values['giaovien'],
         }
-        # print values['giaovien']
-        # print values
-        # print vals
         self.env['res.users'].sudo().create(vals)
-        # Deo lien quan dau kemeno
         user = super(Users, self).create(values)
         return user
 
@@ -2155,6 +2245,18 @@ class diemdanhhocsinh(models.Model):
 
     test1 = fields.Char()
     ngayvang = fields.Date(string="Ngày", default = datetime.datetime.now())
+    @api.onchange('ngayvang')
+    def _validate_ngay(self):
+        mindate = datetime.datetime(int(self.namhoc[0:4]), 8, 1, 0, 0, 0, 0)
+        maxdate = datetime.datetime(int(self.namhoc[-4:]), 7, 31, 0, 0, 0, 0)
+        current_date = datetime.datetime.strptime(self.ngayvang,'%Y-%m-%d')
+        # print self.ngayvang
+        if current_date < mindate:
+            current_date = mindate
+        elif current_date > maxdate:
+            current_date = maxdate
+        self.ngayvang = current_date
+
     napdulieu = fields.Boolean('Tải danh sách học sinh')
     @api.model
     def _get_current_gv(self):
@@ -2163,20 +2265,38 @@ class diemdanhhocsinh(models.Model):
     giaovien = fields.Many2one(
         string="Giáo viên",
         comodel_name="solienlac.giaovien",
-        default = lambda self: self.env.user.giaovien
+        default = lambda self: self.env.user.giaovien,
+        readonly = True,
     )
     lop = fields.Many2one(
         string="Lớp",
         comodel_name="solienlac.lop",
         domain="[('id','=',0)]",
     )
+
+    @api.model
+    def _get_current_hocky(self):
+        try:
+            hocky = self.env['solienlac.hocky'].search([
+                ('trangthai' , '=', True),
+                ('truong.id', '=', self.env.user.truong.id)
+            ])[-1]
+            return hocky.hocky
+        except:
+            now = datetime.datetime.now()
+            month = now.month
+            if month in [1,2,3,4,5,6,7]:
+                return 'ii'
+            else:
+                return 'i'
+
     hocky = fields.Selection(
         string="Học kỳ",
         selection=[
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
                 ('iii', 'Cả năm'),
-        ],default = 'i')
+        ],default = _get_current_hocky, readonly=True)
 
     #---------- define fields namhoc ------------
     @api.model
@@ -2188,17 +2308,25 @@ class diemdanhhocsinh(models.Model):
         return lst_namhoc
 
     @api.model
-    def _get_namhoc_now(self):
-        now = datetime.datetime.now()
-        year = now.year
-        if now.month <= 9:
-            year -= 1
-        return str(year) + "-" + str(year+1)
+    def _get_current_namhoc(self):
+        try:
+            namhoc = self.env['solienlac.hocky'].search([
+                ('trangthai' , '=', True),
+                ('truong.id', '=', self.env.user.truong.id)
+            ])[-1]
+            return namhoc.namhoc
+        except:
+            now = datetime.datetime.now()
+            year = now.year
+            if now.month <= 9:
+                year -= 1
+            return str(year) + "-" + str(year+1)
 
     namhoc = fields.Selection(
         string="Năm học",
         selection= _get_list_namhoc,
-        default = _get_namhoc_now,)
+        default = _get_current_namhoc,
+        readonly = True)
 
     #---------- end define fields namhoc ------------
     @api.model
@@ -2206,11 +2334,17 @@ class diemdanhhocsinh(models.Model):
         lst = [x.monhoc.id for x in self.env.user.giaovien.monhoc]
         lst = list(set(lst))
         return [('id', 'in', lst)]
+    @api.multi
+    @api.onchange('giaovien')
+    def _get_monhoc(self):
+        lst = [x.monhoc.id for x in self.giaovien.monhoc]
+        return {'domain':{'monhoc': [('id', 'in', lst)]}}
 
     monhoc = fields.Many2one(
         string="Môn học",
         comodel_name="solienlac.monhoc",
-        domain = _get_current_list_monhoc,)
+        # domain = _get_current_list_monhoc,
+    )
 
     diemdanhchitiet = fields.Many2many(
         comodel_name='solienlac.diemdanhchitiet',
@@ -2435,6 +2569,7 @@ class khenthuonghocsinh(models.Model):
 
     ngaykhenthuong = fields.Date(string="Ngày khen thưởng", default = datetime.datetime.now())
     lop = fields.Many2many("solienlac.lop", string="Học sinh")
+    ghichukhenthuong = fields.Char('Ghi chú khen thưởng')
 
     test1 = fields.Char()
     ngayvang = fields.Date(string="Ngày", default = datetime.datetime.now())

@@ -104,6 +104,9 @@
                 <page string="Phân công giảng dạy">
                   <field name="monhoc"/>
                 </page>
+                <page string="Lớp chủ nhiệm">
+                  <field name="lop"/>
+                </page>
               </notebook>
             </group>
           </sheet>
@@ -410,9 +413,9 @@
                 <field name="gvcn"/>
               </group>
             </group>
-            <!-- <group colspan="4" string='Học sinh'>
-              <field name="hocsinh"/> -->
-            <!-- </group> -->
+            <group colspan="4" string='Danh sách học sinh trong lớp'>
+              <field name="hocsinh" options="{'no_create_edit': True}"/>
+            </group>
           </sheet>
         </form>
       </field>
@@ -671,7 +674,11 @@
 
                 <field name="hocky"/>
                 <field name="namhoc"/>
+<<<<<<< HEAD
                 <field name="giaovien"/>
+=======
+                <field name="giaovien" options="{'no_create_edit': True}"/>
+>>>>>>> 4195c664ac472e864e5ca9ddf3401595a7eee1d2
                 <field name="monhoc" options="{'no_create_edit': True}"/>
                 <field name="lop" options="{'no_create_edit': True}"/>
                 <field name="napdulieu"/>
@@ -846,9 +853,9 @@
                 <field name="ngayvang"/>
                 <field name="hocky"/>
                 <field name="namhoc"/>
-                <field name="giaovien"/>
-                <field name="monhoc"/>
-                <field name="lop"/>
+                <field name="giaovien" options="{'no_create_edit': True}"/>
+                <field name="monhoc" options="{'no_create_edit': True}"/>
+                <field name="lop" options="{'no_create_edit': True}"/>
                 <field name="napdulieu"/>
                 <!-- <field name="test1"/> -->
               </group>
@@ -875,6 +882,7 @@
               <group colspan='2' col='2'>
                 <field name="ngaykhenthuong"/>
                 <field name="lop" options="{'no_create_edit': True}"/>
+                <field name="ghichukhenthuong"/>
                 <field name="napdulieu"/>
                 <!-- <field name="test1"/> -->
               </group>
