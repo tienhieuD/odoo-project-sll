@@ -602,18 +602,18 @@
    </record>
 
    <!--khenthuongchitiet-->
-   <record id="khenthuonghocsinh_view_tree" model="ir.ui.view">
+   <!-- <record id="khenthuonghocsinh_view_tree" model="ir.ui.view">
      <field name="name">solienlac.khenthuonghocsinh.tree</field>
      <field name="model">solienlac.khenthuonghocsinh</field>
      <field name="arch" type="xml">
        <tree string="Khen thưởng học sinh">
          <field name="lop"/>
-         <!-- <field name="giaovienchunhiem"/> -->
+         <field name="giaovienchunhiem"/>
          <field name="hocky"/>
          <field name="namhoc"/>
        </tree>
      </field>
-   </record>
+   </record> -->
 
   </data>
 </odoo>

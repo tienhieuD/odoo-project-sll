@@ -2601,7 +2601,7 @@ class khenthuonghocsinh(models.Model):
     gvcn = fields.Many2one(
         string="Giáo viên chủ nhiệm",
         comodel_name="solienlac.giaovien",
-        default = 'set_gvcn'
+        default = _set_gvcn
     )
     lop = fields.Many2one(
         string="Lớp",
