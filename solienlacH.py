@@ -279,7 +279,6 @@ class truong(models.Model):
     hieutruong = fields.Char('Hiệu trưởng')
     namthanhlap = fields.Integer('Năm thành lập')
 
-    diachi = fields.Char('Địa chỉ')
     fax = fields.Char('Fax')
     email = fields.Char('Email')
     sodienthoai = fields.Char('Số điện thoại')
@@ -294,13 +293,31 @@ class truong(models.Model):
           raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
     website = fields.Char('Website')
 
-    # matinhthanhpho = fields.Many2one('solienlac.tinhthanhpho', string='Tỉnh/Thành phố')
-    # maquanhuyen = fields.Many2one('solienlac.quanhuyen', string='Quận/Huyện')
-    # maphuongxa = fields.Many2one('solienlac.phuongxa', string='Xã/Phường')
+    tinhthanhpho = fields.Many2one('solienlac.tinhthanhpho', string='Tỉnh/Thành phố')
+    quanhuyen = fields.Many2one('solienlac.quanhuyen', string='Quận/Huyện')
+    phuongxa = fields.Many2one('solienlac.phuongxa', string='Xã/Phường')
+    @api.onchange('tinhthanhpho')
+    def set_value_huyen(self):
+        self.quanhuyen = []
+        tmp1 = self.env['solienlac.quanhuyen'].search([
+                    ('matinhthanhpho', '=', self.tinhthanhpho.matinhthanhpho),
+                ])
+        lst = map(lambda x:x.matinhthanhpho, tmp1)
+        return {'domain':{'quanhuyen': [('matinhthanhpho', 'in', lst)]}}
 
-    matinhthanhpho = fields.Integer('Tỉnh/Thành phố ID')
-    maquanhuyen = fields.Integer('Quận/Huyện ID')
-    maphuongxa = fields.Integer('Xã/Phường ID')
+    @api.onchange('tinhthanhpho', 'quanhuyen')
+    def set_value_xa(self):
+        self.phuongxa = []
+        tmp1 = self.env['solienlac.phuongxa'].search([
+                    ('TinhID', '=', self.tinhthanhpho.matinhthanhpho),
+                    ('QuanHuyenID', '=', self.quanhuyen.maquanhuyen),
+                ])
+        lst = map(lambda x: x.QuanHuyenID, tmp1)
+        return {'domain':{'phuongxa': [('QuanHuyenID', 'in', lst)]}}
+    # matinhthanhpho = fields.Integer('Tỉnh/Thành phố ID')
+    # maquanhuyen = fields.Integer('Quận/Huyện ID')
+    # maphuongxa = fields.Integer('Xã/Phường ID')
+    diachi = fields.Char('Địa chỉ')
 
     hethonggiaoduc = fields.Integer('Hệ thống giáo dục ID')
     hangtruong = fields.Many2one('solienlac.hangtruong', string='Hạng trường')
@@ -1286,7 +1303,6 @@ class nguongochocsinh(models.Model):
         selection=[
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
-                ('iii', 'Cả năm'),
         ],default = 'i')
     # namhoc = fields.Char('Năm học')
     #---------- define fields namhoc ------------
@@ -2273,7 +2289,7 @@ class diemdanhhocsinh(models.Model):
     def _get_current_hocky(self):
         try:
             hocky = self.env['solienlac.hocky'].search([
-                ('trangthai' , '=', True),
+                ('trangthai' , '=', 'HienTai'),
                 ('truong.id', '=', self.env.user.truong.id)
             ])[-1]
             return hocky.hocky
@@ -2306,7 +2322,7 @@ class diemdanhhocsinh(models.Model):
     def _get_current_namhoc(self):
         try:
             namhoc = self.env['solienlac.hocky'].search([
-                ('trangthai' , '=', True),
+                ('trangthai' , '=', 'HienTai'),
                 ('truong.id', '=', self.env.user.truong.id)
             ])[-1]
             return namhoc.namhoc
