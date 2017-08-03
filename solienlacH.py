@@ -98,7 +98,6 @@ class hocky(models.Model):
             ('truong.id', '=', self.truong.id),
         ])
         if(len(lst) > 1):
-            # print(lst[0].truong.tentruong, lst[0].namhoc, lst[0].hocky)
             raise exceptions.ValidationError("Có 1 học kỳ đang ở trạng thái 'Hiện tại', hãy kết thúc nó trước khi tạo học kỳ mới")
 
     @api.constrains('truong', 'namhoc', 'hocky')
@@ -1805,7 +1804,7 @@ class nhapdiemhocsinh(models.Model):
     giaovien = fields.Many2one(
         string="Giáo viên",
         comodel_name="solienlac.giaovien",
-        # default = lambda self: self.env.user.giaovien,
+        default = lambda self: self.env.user.giaovien,
         readonly = _read_ol,
     )
     lop = fields.Many2one(
@@ -1849,12 +1848,8 @@ class nhapdiemhocsinh(models.Model):
     def _get_current_namhoc(self):
         try:
             namhoc = self.env['solienlac.hocky'].search([
-<<<<<<< HEAD
                 ('trangthai' , '=', 'HienTai'),
-=======
-                ('trangthai' , '=', True),
                 ('truong.id', '=', self.env.user.truong.id)
->>>>>>> 4195c664ac472e864e5ca9ddf3401595a7eee1d2
             ])[-1]
             return namhoc.namhoc
         except:
