@@ -877,6 +877,7 @@
               <group colspan='2' col='2'>
                 <field name="ngaykhenthuong"/>
                 <field name="lop"/>
+                <field name="ghichukhenthuong"/>
                 <field name="napdulieu"/>
                 <!-- <field name="test1"/> -->
               </group>

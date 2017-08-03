@@ -246,6 +246,33 @@
     </record>
 
 
+    <record id="diemdanhhocsinh_view_tree" model="ir.ui.view">
+      <field name="name">solienlac.diemdanhhocsinh.tree</field>
+      <field name="model">solienlac.diemdanhhocsinh</field>
+      <field name="arch" type="xml">
+        <tree string="Điểm danh học sinh">
+          <field name="giaovien"/>
+          <field name="lop"/>
+          <field name="ngayvang"/>
+          <field name="hocky"/>
+          <field name="namhoc"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="khenthuonghocsinh_view_tree" model="ir.ui.view">
+      <field name="name">solienlac.khenthuonghocsinh.tree</field>
+      <field name="model">solienlac.khenthuonghocsinh</field>
+      <field name="arch" type="xml">
+        <tree string="Khen thưởng học sinh">
+          <field name="lop"/>
+          <field name="ngaykhenthuong"/>
+          <field name="ghichukhenthuong"/>
+        </tree>
+      </field>
+    </record>
+
+
     <!-- Học sinh - tree views -->
     <record id="hocsinh_view_tree" model="ir.ui.view">
       <field name="name">hocsinh.tree</field>

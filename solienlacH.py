@@ -826,9 +826,9 @@ class phuhuynh(models.Model):
     gioitinh = fields.Selection([
             ('Nam', 'Nam'),
             ('Nu', 'Nữ'),
-            ('KXD', 'Không xác định')], string = "Giới tính")
+            ('KXD', 'Không xác định')], string = "Giới tính", required=True)
     ngaysinh = fields.Date('Ngày Sinh')
-    sodienthoai = fields.Char('Số Điện Thoại')
+    sodienthoai = fields.Char('Số Điện Thoại', required=True)
 
     ghichu = fields.Char('Ghi Chú')
 
@@ -1727,6 +1727,7 @@ class nhapdiemhocsinh(models.Model):
         try:
             hocky = self.env['solienlac.hocky'].search([
                 ('trangthai' , '=', True),
+                ('truong.id', '=', self.env.user.truong.id)
             ])[-1]
             return hocky.hocky
         except:
@@ -1759,6 +1760,7 @@ class nhapdiemhocsinh(models.Model):
         try:
             namhoc = self.env['solienlac.hocky'].search([
                 ('trangthai' , '=', True),
+                ('truong.id', '=', self.env.user.truong.id)
             ])[-1]
             return namhoc.namhoc
         except:
@@ -1954,6 +1956,45 @@ class nhapdiemchitiet(models.Model):
         self.diem15phut1 = ""
         self.diem1tiet1 = ""
 
+    @api.onchange('diemhocky',
+    'diemmieng1','diemmieng2','diemmieng3','diemmieng4','diemmieng5','diemmieng6',
+    'diem15phut1','diem15phut2','diem15phut3','diem15phut4','diem15phut5','diem15phut6',
+    'diem1tiet1','diem1tiet2','diem1tiet3','diem1tiet4','diem1tiet5','diem1tiet6')
+    def _check_diem(self):
+        def _validate_diem(n):
+            try:
+                diem = n
+                str_diem = diem.replace(',','.')
+                float_diem = float(str_diem)
+                rs = ''
+
+                if float_diem>10 or float_diem<0:
+                    rs = ''
+                else:
+                    rs = float_diem
+                return rs
+            except:
+                return ''
+        self.diemhocky = _validate_diem(self.diemhocky)
+        self.diemmieng1 = _validate_diem(self.diemmieng1)
+        self.diemmieng2 = _validate_diem(self.diemmieng2)
+        self.diemmieng3 = _validate_diem(self.diemmieng3)
+        self.diemmieng4 = _validate_diem(self.diemmieng4)
+        self.diemmieng5 = _validate_diem(self.diemmieng5)
+        self.diemmieng6 = _validate_diem(self.diemmieng6)
+        self.diem15phut1 = _validate_diem(self.diem15phut1)
+        self.diem15phut2 = _validate_diem(self.diem15phut2)
+        self.diem15phut3 = _validate_diem(self.diem15phut3)
+        self.diem15phut4 = _validate_diem(self.diem15phut4)
+        self.diem15phut5 = _validate_diem(self.diem15phut5)
+        self.diem15phut6 = _validate_diem(self.diem15phut6)
+        self.diem1tiet1 = _validate_diem(self.diem1tiet1)
+        self.diem1tiet2 = _validate_diem(self.diem1tiet2)
+        self.diem1tiet3 = _validate_diem(self.diem1tiet3)
+        self.diem1tiet4 = _validate_diem(self.diem1tiet4)
+        self.diem1tiet5 = _validate_diem(self.diem1tiet5)
+        self.diem1tiet6 = _validate_diem(self.diem1tiet6)
+
     @api.depends('diemhocky',
     'diemmieng1','diemmieng2','diemmieng3','diemmieng4','diemmieng5','diemmieng6',
     'diem15phut1','diem15phut2','diem15phut3','diem15phut4','diem15phut5','diem15phut6',
@@ -2144,6 +2185,7 @@ class diemdanhhocsinh(models.Model):
         try:
             hocky = self.env['solienlac.hocky'].search([
                 ('trangthai' , '=', True),
+                ('truong.id', '=', self.env.user.truong.id)
             ])[-1]
             return hocky.hocky
         except:
@@ -2176,6 +2218,7 @@ class diemdanhhocsinh(models.Model):
         try:
             namhoc = self.env['solienlac.hocky'].search([
                 ('trangthai' , '=', True),
+                ('truong.id', '=', self.env.user.truong.id)
             ])[-1]
             return namhoc.namhoc
         except:
@@ -2432,6 +2475,7 @@ class khenthuonghocsinh(models.Model):
 
     ngaykhenthuong = fields.Date(string="Ngày khen thưởng", default = datetime.datetime.now())
     lop = fields.Many2many("solienlac.lop", string="Học sinh")
+    ghichukhenthuong = fields.Char('Ghi chú khen thưởng')
 
     test1 = fields.Char()
     ngayvang = fields.Date(string="Ngày", default = datetime.datetime.now())
