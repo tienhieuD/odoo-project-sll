@@ -942,10 +942,10 @@ class phuhuynh(models.Model):
           raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
     ghichu = fields.Char('Ghi Chú')
 
-    diachi = fields.Char('Địa chỉ', required=True)
-    phuongxa = fields.Many2one('solienlac.phuongxa', string='Phường\Xã', required=True)
-    quanhuyen = fields.Many2one('solienlac.quanhuyen', string='Quận\Huyện', required=True)
-    tinhthanhpho = fields.Many2one('solienlac.tinhthanhpho', string='Tỉnh\Thành phố', required=True)
+    diachi = fields.Char('Địa chỉ', )
+    phuongxa = fields.Many2one('solienlac.phuongxa', string='Phường\Xã')
+    quanhuyen = fields.Many2one('solienlac.quanhuyen', string='Quận\Huyện',)
+    tinhthanhpho = fields.Many2one('solienlac.tinhthanhpho', string='Tỉnh\Thành phố', )
 
     @api.multi
     @api.onchange('tinhthanhpho')
@@ -1457,10 +1457,10 @@ class lop(models.Model):
     @api.constrains('malop')
     def _lop_uinq(self):
         lst = self.env['solienlac.lop'].search([])
-        lst = map(lambda x: x.mabangdiemdanh, lst)
-        lst.pop(len(lst)-1)
-        if self.mabangdiemdanh in lst:
-            raise exceptions.ValidationError(' Mã bảng điểm danh đã tồn tại.')
+        lst = map(lambda x: x.malop, lst)
+        lst.remove(self.malop)
+        if self.malop in lst:
+            raise exceptions.ValidationError('Mã lớp đã tồn tại.')
         else:
             pass
 
@@ -2220,9 +2220,18 @@ class Users(models.Model):
 
     @api.model
     def create(self, values):
+        system_admin_level_1_id = self.env['res.groups'].sudo().search([('name','like','system_admin_level_1')])[0].id
+        system_admin_level_2_id = self.env['res.groups'].sudo().search([('name','like','system_admin_level_2')])[0].id
+        system_admin_level_3_id = self.env['res.groups'].sudo().search([('name','like','system_admin_level_3')])[0].id
+        school_admin_level_1_hieu_truong_id = self.env['res.groups'].sudo().search([('name','like','school_admin_level_1_hieu_truong')])[0].id
+
+        # user_groups_id = self.env.user.groups_id
+        # user_groups_id = map(lambda x: x.id, user_groups_id)
+
         quyen_da_chon = values['quyen'][0][2]
         quyen_da_chon.append(1)
-        quyen_da_chon.append(3)
+        if (system_admin_level_1_id in quyen_da_chon) or (system_admin_level_2_id in quyen_da_chon) or (system_admin_level_3_id in quyen_da_chon) or (school_admin_level_1_hieu_truong_id in quyen_da_chon):
+            quyen_da_chon.append(3)
         vals = {
             'name': values['name'],
             'login': values['login'],
