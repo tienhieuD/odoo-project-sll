@@ -183,7 +183,7 @@ class captruong(models.Model):
     def _macaptruong_uniq(self):
         lst = self.env['solienlac.captruong'].search([])
         lst = map(lambda x : x.macaptruong, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.macaptruong)
         print lst
         if self.macaptruong in lst:
             raise exceptions.ValidationError("Mã cấp trường đã tồn tại")
@@ -207,7 +207,7 @@ class hangtruong(models.Model):
     def _mahangtruong_uniq(self):
         lst = self.env['solienlac.hangtruong'].search([])
         lst = map(lambda x : x.mahangtruong, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.mahangtruong)
         print lst
         if self.mahangtruong in lst:
             raise exceptions.ValidationError("Mã hạng trường đã tồn tại")
@@ -235,7 +235,7 @@ class loaihinhtruong(models.Model):
     def _maloaihinhtruong_uniq(self):
         lst = self.env['solienlac.tenloaihinhtruong'].search([])
         lst = map(lambda x : x.maloaihinhtruong, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.maloaihinhtruong)
         print lst
         if self.maloaihinhtruong in lst:
             raise exceptions.ValidationError("Mã loại hình trường đã tồn tại")
@@ -263,7 +263,7 @@ class truongchuyenbiet(models.Model):
     def _truongchuyenbiet_uniq(self):
         lst = self.env['solienlac.truongchuyenbiet'].search([])
         lst = map(lambda x : x.matruongchuyenbiet, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.matruongchuyenbiet)
         print lst
         if self.matruongchuyenbiet in lst:
             raise exceptions.ValidationError("Mã trường chuyên biệt đã tồn tại")
@@ -359,7 +359,7 @@ class truong(models.Model):
     def _truong_uniq(self):
         lst = self.env['solienlac.truong'].search([])
         lst = map(lambda x : x.matruong, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.matruong)
         print lst
         if self.matruong in lst:
             raise exceptions.ValidationError("Mã trường đã tồn tại")
@@ -572,7 +572,7 @@ class to(models.Model):
     def _to_uniq(self):
         lst = self.env['solienlac.to'].search([])
         lst = map(lambda x : x.mato, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.mato)
         print lst
         if self.mato in lst:
             raise exceptions.ValidationError("Mã tổ đã tồn tại")
@@ -599,7 +599,7 @@ class phuongxa(models.Model):
     def _phuong_xa_uniq(self):
         lst = self.env['solienlac.phuongxa'].search([])
         lst = map(lambda x : x.PhuongXaID, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.PhuongXaID)
         print lst
         if self.PhuongXaID in lst:
             raise exceptions.ValidationError("Mã phường/xã đã tồn tại")
@@ -622,7 +622,7 @@ class quanhuyen(models.Model):
     def _quan_huyen_uniq(self):
         lst = self.env['solienlac.quanhuyen'].search([])
         lst = map(lambda x : x.maquanhuyen, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.maquanhuyen)
         print lst
         if self.maquanhuyen in lst:
             raise exceptions.ValidationError("Mã Quận/Huyện đã tồn tại")
@@ -644,7 +644,7 @@ class tinhthanhpho(models.Model):
     def _tinh_thanhpho_uniq(self):
         lst = self.env['solienlac.tinhthanhpho'].search([])
         lst = map(lambda x : x.matinhthanhpho, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.matinhthanhpho)
         print lst
         if self.matinhthanhpho in lst:
             raise exceptions.ValidationError("Mã Tỉnh/Thành phố đã tồn tại")
@@ -662,7 +662,7 @@ class dantoc(models.Model):
     def _dantoc_uniq(self):
         lst = self.env['solienlac.dantoc'].search([])
         lst = map(lambda x : x.madantoc, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.madantoc)
         print lst
         if self.madantoc in lst:
             raise exceptions.ValidationError("Mã dân tộc đã tồn tại")
@@ -679,7 +679,7 @@ class tongiao(models.Model):
     def _tongiao_uniq(self):
         lst = self.env['solienlac.tongiao'].search([])
         lst = map(lambda x : x.matongiao, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.matongiao)
         print lst
         if self.matongiao in lst:
             raise exceptions.ValidationError("Mã tôn giáo đã tồn tại")
@@ -708,7 +708,7 @@ class phongban(models.Model):
     def _dantoc_uniq(self):
         lst = self.env['solienlac.phongban'].search([])
         lst = map(lambda x : x.maphongban, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.maphongban)
         print lst
         if self.maphongban in lst:
             raise exceptions.ValidationError("Mã phòng ban đã tồn tại")
@@ -814,7 +814,7 @@ class tuyenhoc(models.Model):
     def _tuyenhoc_uinq(self):
         lst = self.env['solienlac.tuyenhoc'].search([])
         lst = map(lambda x: x.matuyen, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.matuyen)
         if self.matuyen in lst:
             raise exceptions.ValidationError(' Mã tuyến học đã tồn tại. ')
         else:
@@ -864,7 +864,7 @@ class khoi(models.Model):
     def _khoi_uinq(self):
         lst = self.env['solienlac.khoi'].search([])
         lst = map(lambda x: x.makhoi, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.makhoi)
         if self.makhoi in lst:
             raise exceptions.ValidationError(' Mã khối học đã tồn tại.')
         else:
@@ -1026,7 +1026,7 @@ class bomon(models.Model):
     def _bomon_uinq(self):
         lst = self.env['solienlac.bomon'].search([])
         lst = map(lambda x: x.mabomon, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.mabomon)
         if self.mabomon in lst:
             raise exceptions.ValidationError(' Mã bộ môn đã tồn tại.')
         else:
@@ -1046,7 +1046,7 @@ class bangdiemdanh(models.Model):
     def _bangdiemdanh_uinq(self):
         lst = self.env['solienlac.bangdiemdanh'].search([])
         lst = map(lambda x: x.mabangdiemdanh, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.mabangdiemdanh)
         if self.mabangdiemdanh in lst:
             raise exceptions.ValidationError(' Mã bảng điểm danh đã tồn tại.')
         else:
