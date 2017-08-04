@@ -23,7 +23,7 @@
     # always loaded
     'data': [
         'views/user_groups.xml',
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         # 'views/giaoanchinhsua.xml',
         'views/menu_system_admin.xml',
         'views/menu_school_admin.xml',
