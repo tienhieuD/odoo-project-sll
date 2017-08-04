@@ -8,6 +8,20 @@ import json
 import hashlib
 import re
 
+def _validate_diem(n):
+    try:
+        diem = n
+        str_diem = diem.replace(',','.')
+        float_diem = float(str_diem)
+        if float_diem>10 or float_diem<0:
+            return False
+        else:
+            return True
+    except:
+        # raise exceptions.ValidationError("Giá trị năm học không phải năm hiện tại!")
+        # raise exceptions.Warning("Giá trị điểm vừa nhập không hợp lệ. Điểm tổng kết sẽ bỏ qua giá trị này!")
+        return False
+
 class hocky(models.Model):
     _name = 'solienlac.hocky'
     _rec_name = 'hocky' # optional
@@ -169,7 +183,7 @@ class captruong(models.Model):
     def _macaptruong_uniq(self):
         lst = self.env['solienlac.captruong'].search([])
         lst = map(lambda x : x.macaptruong, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.macaptruong)
         print lst
         if self.macaptruong in lst:
             raise exceptions.ValidationError("Mã cấp trường đã tồn tại")
@@ -193,7 +207,7 @@ class hangtruong(models.Model):
     def _mahangtruong_uniq(self):
         lst = self.env['solienlac.hangtruong'].search([])
         lst = map(lambda x : x.mahangtruong, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.mahangtruong)
         print lst
         if self.mahangtruong in lst:
             raise exceptions.ValidationError("Mã hạng trường đã tồn tại")
@@ -221,7 +235,7 @@ class loaihinhtruong(models.Model):
     def _maloaihinhtruong_uniq(self):
         lst = self.env['solienlac.tenloaihinhtruong'].search([])
         lst = map(lambda x : x.maloaihinhtruong, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.maloaihinhtruong)
         print lst
         if self.maloaihinhtruong in lst:
             raise exceptions.ValidationError("Mã loại hình trường đã tồn tại")
@@ -249,7 +263,7 @@ class truongchuyenbiet(models.Model):
     def _truongchuyenbiet_uniq(self):
         lst = self.env['solienlac.truongchuyenbiet'].search([])
         lst = map(lambda x : x.matruongchuyenbiet, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.matruongchuyenbiet)
         print lst
         if self.matruongchuyenbiet in lst:
             raise exceptions.ValidationError("Mã trường chuyên biệt đã tồn tại")
@@ -345,7 +359,7 @@ class truong(models.Model):
     def _truong_uniq(self):
         lst = self.env['solienlac.truong'].search([])
         lst = map(lambda x : x.matruong, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.matruong)
         print lst
         if self.matruong in lst:
             raise exceptions.ValidationError("Mã trường đã tồn tại")
@@ -558,7 +572,7 @@ class to(models.Model):
     def _to_uniq(self):
         lst = self.env['solienlac.to'].search([])
         lst = map(lambda x : x.mato, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.mato)
         print lst
         if self.mato in lst:
             raise exceptions.ValidationError("Mã tổ đã tồn tại")
@@ -585,7 +599,7 @@ class phuongxa(models.Model):
     def _phuong_xa_uniq(self):
         lst = self.env['solienlac.phuongxa'].search([])
         lst = map(lambda x : x.PhuongXaID, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.PhuongXaID)
         print lst
         if self.PhuongXaID in lst:
             raise exceptions.ValidationError("Mã phường/xã đã tồn tại")
@@ -608,7 +622,7 @@ class quanhuyen(models.Model):
     def _quan_huyen_uniq(self):
         lst = self.env['solienlac.quanhuyen'].search([])
         lst = map(lambda x : x.maquanhuyen, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.maquanhuyen)
         print lst
         if self.maquanhuyen in lst:
             raise exceptions.ValidationError("Mã Quận/Huyện đã tồn tại")
@@ -630,7 +644,7 @@ class tinhthanhpho(models.Model):
     def _tinh_thanhpho_uniq(self):
         lst = self.env['solienlac.tinhthanhpho'].search([])
         lst = map(lambda x : x.matinhthanhpho, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.matinhthanhpho)
         print lst
         if self.matinhthanhpho in lst:
             raise exceptions.ValidationError("Mã Tỉnh/Thành phố đã tồn tại")
@@ -648,7 +662,7 @@ class dantoc(models.Model):
     def _dantoc_uniq(self):
         lst = self.env['solienlac.dantoc'].search([])
         lst = map(lambda x : x.madantoc, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.madantoc)
         print lst
         if self.madantoc in lst:
             raise exceptions.ValidationError("Mã dân tộc đã tồn tại")
@@ -665,7 +679,7 @@ class tongiao(models.Model):
     def _tongiao_uniq(self):
         lst = self.env['solienlac.tongiao'].search([])
         lst = map(lambda x : x.matongiao, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.matongiao)
         print lst
         if self.matongiao in lst:
             raise exceptions.ValidationError("Mã tôn giáo đã tồn tại")
@@ -694,7 +708,7 @@ class phongban(models.Model):
     def _dantoc_uniq(self):
         lst = self.env['solienlac.phongban'].search([])
         lst = map(lambda x : x.maphongban, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.maphongban)
         print lst
         if self.maphongban in lst:
             raise exceptions.ValidationError("Mã phòng ban đã tồn tại")
@@ -800,7 +814,7 @@ class tuyenhoc(models.Model):
     def _tuyenhoc_uinq(self):
         lst = self.env['solienlac.tuyenhoc'].search([])
         lst = map(lambda x: x.matuyen, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.matuyen)
         if self.matuyen in lst:
             raise exceptions.ValidationError(' Mã tuyến học đã tồn tại. ')
         else:
@@ -850,7 +864,7 @@ class khoi(models.Model):
     def _khoi_uinq(self):
         lst = self.env['solienlac.khoi'].search([])
         lst = map(lambda x: x.makhoi, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.makhoi)
         if self.makhoi in lst:
             raise exceptions.ValidationError(' Mã khối học đã tồn tại.')
         else:
@@ -1012,7 +1026,7 @@ class bomon(models.Model):
     def _bomon_uinq(self):
         lst = self.env['solienlac.bomon'].search([])
         lst = map(lambda x: x.mabomon, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.mabomon)
         if self.mabomon in lst:
             raise exceptions.ValidationError(' Mã bộ môn đã tồn tại.')
         else:
@@ -1032,7 +1046,7 @@ class bangdiemdanh(models.Model):
     def _bangdiemdanh_uinq(self):
         lst = self.env['solienlac.bangdiemdanh'].search([])
         lst = map(lambda x: x.mabangdiemdanh, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.mabangdiemdanh)
         if self.mabangdiemdanh in lst:
             raise exceptions.ValidationError(' Mã bảng điểm danh đã tồn tại.')
         else:
@@ -1046,7 +1060,7 @@ class hocsinh(models.Model):
     def _hocsinh_uinq(self):
         lst = self.env['solienlac.hocsinh'].search([])
         lst = map(lambda x: x.mahocsinh, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.mahocsinh)
         if self.mahocsinh in lst:
             raise exceptions.ValidationError(' Mã học sinh đã tồn tại.')
         else:
@@ -2058,55 +2072,142 @@ class nhapdiemchitiet(models.Model):
     diemtongket = fields.Char(string='Tổng kểt', store=True, compute='_compute_final')
     xephang = fields.Integer('#')
 
-    @api.onchange('diemmieng1','diem15phut1','diem1tiet1')
-    def _block_text(self):
-        self.diemmieng1 = ""
-        self.diem15phut1 = ""
-        self.diem1tiet1 = ""
+    @api.onchange('diemhocky',)
+    @api.multi
+    def _check_diem1(self):
+        tmp = _validate_diem(self.diemhocky)
+        if not tmp:
+            self.diemhocky = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diemmieng2',)
+    def _check_diem2(self):
+        tmp = _validate_diem(self.diemmieng2)
+        if not tmp:
+            self.diemmieng2 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diemmieng3',)
+    def _check_diem3(self):
+        tmp = _validate_diem(self.diemmieng3)
+        if not tmp:
+            self.diemmieng3 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diemmieng4',)
+    def _check_diem4(self):
+        tmp = _validate_diem(self.diemmieng4)
+        if not tmp:
+            self.diemmieng4 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diemmieng5',)
+    def _check_diem5(self):
+        tmp = _validate_diem(self.diemmieng5)
+        if not tmp:
+            self.diemmieng5 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diemmieng6',)
+    def _check_diem6(self):
+        tmp = _validate_diem(self.diemmieng6)
+        if not tmp:
+            self.diemmieng6 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diem15phut2',)
+    def _check_diem7(self):
+        tmp = _validate_diem(self.diem15phut2)
+        if not tmp:
+            self.diem15phut2 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diem15phut3',)
+    def _check_diem8(self):
+        tmp = _validate_diem(self.diem15phut3)
+        if not tmp:
+            self.diem15phut3 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diem15phut4',)
+    def _check_diem9(self):
+        tmp = _validate_diem(self.diem15phut4)
+        if not tmp:
+            self.diem15phut4 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diem15phut5',)
+    def _check_diem10(self):
+        tmp = _validate_diem(self.diem15phut5)
+        if not tmp:
+            self.diem15phut5 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diem15phut6',)
+    def _check_diem11(self):
+        tmp = _validate_diem(self.diem15phut6)
+        if not tmp:
+            self.diem15phut6 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diem1tiet2',)
+    def _check_diem12(self):
+        tmp = _validate_diem(self.diem1tiet2)
+        if not tmp:
+            self.diem1tiet2 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diem1tiet3',)
+    def _check_diem13(self):
+        tmp = _validate_diem(self.diem1tiet3)
+        if not tmp:
+            self.diem1tiet3 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diem1tiet4',)
+    def _check_diem14(self):
+        tmp = _validate_diem(self.diem1tiet4)
+        if not tmp:
+            self.diem1tiet4 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diem1tiet5',)
+    def _check_diem15(self):
+        tmp = _validate_diem(self.diem1tiet5)
+        if not tmp:
+            self.diem1tiet5 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diem1tiet6',)
+    def _check_diem16(self):
+        tmp = _validate_diem(self.diem1tiet6)
+        if not tmp:
+            self.diem1tiet6 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
 
-    @api.onchange('diemhocky',
+    @api.depends(
+    'diemhocky',
     'diemmieng1','diemmieng2','diemmieng3','diemmieng4','diemmieng5','diemmieng6',
     'diem15phut1','diem15phut2','diem15phut3','diem15phut4','diem15phut5','diem15phut6',
-    'diem1tiet1','diem1tiet2','diem1tiet3','diem1tiet4','diem1tiet5','diem1tiet6')
-    def _check_diem(self):
-        def _validate_diem(n):
-            try:
-                diem = n
-                str_diem = diem.replace(',','.')
-                float_diem = float(str_diem)
-                rs = ''
-
-                if float_diem>10 or float_diem<0:
-                    rs = ''
-                else:
-                    rs = float_diem
-                return rs
-            except:
-                return ''
-        self.diemhocky = _validate_diem(self.diemhocky)
-        self.diemmieng1 = _validate_diem(self.diemmieng1)
-        self.diemmieng2 = _validate_diem(self.diemmieng2)
-        self.diemmieng3 = _validate_diem(self.diemmieng3)
-        self.diemmieng4 = _validate_diem(self.diemmieng4)
-        self.diemmieng5 = _validate_diem(self.diemmieng5)
-        self.diemmieng6 = _validate_diem(self.diemmieng6)
-        self.diem15phut1 = _validate_diem(self.diem15phut1)
-        self.diem15phut2 = _validate_diem(self.diem15phut2)
-        self.diem15phut3 = _validate_diem(self.diem15phut3)
-        self.diem15phut4 = _validate_diem(self.diem15phut4)
-        self.diem15phut5 = _validate_diem(self.diem15phut5)
-        self.diem15phut6 = _validate_diem(self.diem15phut6)
-        self.diem1tiet1 = _validate_diem(self.diem1tiet1)
-        self.diem1tiet2 = _validate_diem(self.diem1tiet2)
-        self.diem1tiet3 = _validate_diem(self.diem1tiet3)
-        self.diem1tiet4 = _validate_diem(self.diem1tiet4)
-        self.diem1tiet5 = _validate_diem(self.diem1tiet5)
-        self.diem1tiet6 = _validate_diem(self.diem1tiet6)
-
-    @api.depends('diemhocky',
-    'diemmieng1','diemmieng2','diemmieng3','diemmieng4','diemmieng5','diemmieng6',
-    'diem15phut1','diem15phut2','diem15phut3','diem15phut4','diem15phut5','diem15phut6',
-    'diem1tiet1','diem1tiet2','diem1tiet3','diem1tiet4','diem1tiet5','diem1tiet6')
+    'diem1tiet1','diem1tiet2','diem1tiet3','diem1tiet4','diem1tiet5','diem1tiet6'
+    )
     def _compute_final(self):
         def convert_to_float(n):
             try:
