@@ -8,6 +8,20 @@ import json
 import hashlib
 import re
 
+def _validate_diem(n):
+    try:
+        diem = n
+        str_diem = diem.replace(',','.')
+        float_diem = float(str_diem)
+        if float_diem>10 or float_diem<0:
+            return False
+        else:
+            return True
+    except:
+        # raise exceptions.ValidationError("Giá trị năm học không phải năm hiện tại!")
+        # raise exceptions.Warning("Giá trị điểm vừa nhập không hợp lệ. Điểm tổng kết sẽ bỏ qua giá trị này!")
+        return False
+
 class hocky(models.Model):
     _name = 'solienlac.hocky'
     _rec_name = 'hocky' # optional
@@ -2064,44 +2078,55 @@ class nhapdiemchitiet(models.Model):
         self.diem15phut1 = ""
         self.diem1tiet1 = ""
 
-    @api.onchange('diemhocky',
-    'diemmieng1','diemmieng2','diemmieng3','diemmieng4','diemmieng5','diemmieng6',
-    'diem15phut1','diem15phut2','diem15phut3','diem15phut4','diem15phut5','diem15phut6',
-    'diem1tiet1','diem1tiet2','diem1tiet3','diem1tiet4','diem1tiet5','diem1tiet6')
-    def _check_diem(self):
-        def _validate_diem(n):
-            try:
-                diem = n
-                str_diem = diem.replace(',','.')
-                float_diem = float(str_diem)
-                rs = ''
+    @api.onchange('diemhocky',)
 
-                if float_diem>10 or float_diem<0:
-                    rs = ''
-                else:
-                    rs = float_diem
-                return rs
-            except:
-                return ''
-        self.diemhocky = _validate_diem(self.diemhocky)
-        self.diemmieng1 = _validate_diem(self.diemmieng1)
-        self.diemmieng2 = _validate_diem(self.diemmieng2)
-        self.diemmieng3 = _validate_diem(self.diemmieng3)
-        self.diemmieng4 = _validate_diem(self.diemmieng4)
-        self.diemmieng5 = _validate_diem(self.diemmieng5)
-        self.diemmieng6 = _validate_diem(self.diemmieng6)
-        self.diem15phut1 = _validate_diem(self.diem15phut1)
-        self.diem15phut2 = _validate_diem(self.diem15phut2)
-        self.diem15phut3 = _validate_diem(self.diem15phut3)
-        self.diem15phut4 = _validate_diem(self.diem15phut4)
-        self.diem15phut5 = _validate_diem(self.diem15phut5)
-        self.diem15phut6 = _validate_diem(self.diem15phut6)
-        self.diem1tiet1 = _validate_diem(self.diem1tiet1)
-        self.diem1tiet2 = _validate_diem(self.diem1tiet2)
-        self.diem1tiet3 = _validate_diem(self.diem1tiet3)
-        self.diem1tiet4 = _validate_diem(self.diem1tiet4)
-        self.diem1tiet5 = _validate_diem(self.diem1tiet5)
-        self.diem1tiet6 = _validate_diem(self.diem1tiet6)
+    '''diemmieng1','diemmieng2','diemmieng3','diemmieng4','diemmieng5','diemmieng6',
+    'diem15phut1','diem15phut2','diem15phut3','diem15phut4','diem15phut5','diem15phut6',
+    'diem1tiet1','diem1tiet2','diem1tiet3','diem1tiet4','diem1tiet5','diem1tiet6')'''
+
+    def _check_diem(self):
+        tmp = _validate_diem(self.diemhocky)
+
+        if not tmp:
+            print("*"*20)
+            print self.diemhocky
+            self.diemhocky = ''
+            print self.diemhocky
+            print type(self.diemhocky)
+            print("*"*20)
+            return {'value':{},'warning':{'title':'warning','message':'Your message'}}
+
+        return ''
+        # print(tmp)
+        # if not tmp:
+        #     print(self.diemhocky)
+        #     raise exceptions.Warning("Giá trị điểm vừa nhập không hợp lệ.")
+    # @api.onchange('diemhocky')
+    # def _check_diem2(self):
+    #     tmp = _validate_diem(self.diemhocky)
+    #     if not tmp:
+    #         raise exceptions.Warning("Giá trị điểm vừa nhập không hợp lệ.")
+
+        # if not _validate_diem(self.diemhocky):
+            # pass
+        # self.diemmieng1 = _validate_diem(self.diemmieng1)
+        # self.diemmieng2 = _validate_diem(self.diemmieng2)
+        # self.diemmieng3 = _validate_diem(self.diemmieng3)
+        # self.diemmieng4 = _validate_diem(self.diemmieng4)
+        # self.diemmieng5 = _validate_diem(self.diemmieng5)
+        # self.diemmieng6 = _validate_diem(self.diemmieng6)
+        # self.diem15phut1 = _validate_diem(self.diem15phut1)
+        # self.diem15phut2 = _validate_diem(self.diem15phut2)
+        # self.diem15phut3 = _validate_diem(self.diem15phut3)
+        # self.diem15phut4 = _validate_diem(self.diem15phut4)
+        # self.diem15phut5 = _validate_diem(self.diem15phut5)
+        # self.diem15phut6 = _validate_diem(self.diem15phut6)
+        # self.diem1tiet1 = _validate_diem(self.diem1tiet1)
+        # self.diem1tiet2 = _validate_diem(self.diem1tiet2)
+        # self.diem1tiet3 = _validate_diem(self.diem1tiet3)
+        # self.diem1tiet4 = _validate_diem(self.diem1tiet4)
+        # self.diem1tiet5 = _validate_diem(self.diem1tiet5)
+        # self.diem1tiet6 = _validate_diem(self.diem1tiet6)
 
     @api.depends('diemhocky',
     'diemmieng1','diemmieng2','diemmieng3','diemmieng4','diemmieng5','diemmieng6',
