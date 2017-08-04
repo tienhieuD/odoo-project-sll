@@ -1060,7 +1060,7 @@ class hocsinh(models.Model):
     def _hocsinh_uinq(self):
         lst = self.env['solienlac.hocsinh'].search([])
         lst = map(lambda x: x.mahocsinh, lst)
-        lst.pop(len(lst)-1)
+        lst.remove(self.mahocsinh)
         if self.mahocsinh in lst:
             raise exceptions.ValidationError(' Mã học sinh đã tồn tại.')
         else:
@@ -2072,66 +2072,142 @@ class nhapdiemchitiet(models.Model):
     diemtongket = fields.Char(string='Tổng kểt', store=True, compute='_compute_final')
     xephang = fields.Integer('#')
 
-    @api.onchange('diemmieng1','diem15phut1','diem1tiet1')
-    def _block_text(self):
-        self.diemmieng1 = ""
-        self.diem15phut1 = ""
-        self.diem1tiet1 = ""
-
     @api.onchange('diemhocky',)
-
-    '''diemmieng1','diemmieng2','diemmieng3','diemmieng4','diemmieng5','diemmieng6',
-    'diem15phut1','diem15phut2','diem15phut3','diem15phut4','diem15phut5','diem15phut6',
-    'diem1tiet1','diem1tiet2','diem1tiet3','diem1tiet4','diem1tiet5','diem1tiet6')'''
-
-    def _check_diem(self):
+    @api.multi
+    def _check_diem1(self):
         tmp = _validate_diem(self.diemhocky)
-
         if not tmp:
-            print("*"*20)
-            print self.diemhocky
             self.diemhocky = ''
-            print self.diemhocky
-            print type(self.diemhocky)
-            print("*"*20)
-            return {'value':{},'warning':{'title':'warning','message':'Your message'}}
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diemmieng2',)
+    def _check_diem2(self):
+        tmp = _validate_diem(self.diemmieng2)
+        if not tmp:
+            self.diemmieng2 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diemmieng3',)
+    def _check_diem3(self):
+        tmp = _validate_diem(self.diemmieng3)
+        if not tmp:
+            self.diemmieng3 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diemmieng4',)
+    def _check_diem4(self):
+        tmp = _validate_diem(self.diemmieng4)
+        if not tmp:
+            self.diemmieng4 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diemmieng5',)
+    def _check_diem5(self):
+        tmp = _validate_diem(self.diemmieng5)
+        if not tmp:
+            self.diemmieng5 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diemmieng6',)
+    def _check_diem6(self):
+        tmp = _validate_diem(self.diemmieng6)
+        if not tmp:
+            self.diemmieng6 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diem15phut2',)
+    def _check_diem7(self):
+        tmp = _validate_diem(self.diem15phut2)
+        if not tmp:
+            self.diem15phut2 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diem15phut3',)
+    def _check_diem8(self):
+        tmp = _validate_diem(self.diem15phut3)
+        if not tmp:
+            self.diem15phut3 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diem15phut4',)
+    def _check_diem9(self):
+        tmp = _validate_diem(self.diem15phut4)
+        if not tmp:
+            self.diem15phut4 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diem15phut5',)
+    def _check_diem10(self):
+        tmp = _validate_diem(self.diem15phut5)
+        if not tmp:
+            self.diem15phut5 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diem15phut6',)
+    def _check_diem11(self):
+        tmp = _validate_diem(self.diem15phut6)
+        if not tmp:
+            self.diem15phut6 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diem1tiet2',)
+    def _check_diem12(self):
+        tmp = _validate_diem(self.diem1tiet2)
+        if not tmp:
+            self.diem1tiet2 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diem1tiet3',)
+    def _check_diem13(self):
+        tmp = _validate_diem(self.diem1tiet3)
+        if not tmp:
+            self.diem1tiet3 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diem1tiet4',)
+    def _check_diem14(self):
+        tmp = _validate_diem(self.diem1tiet4)
+        if not tmp:
+            self.diem1tiet4 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diem1tiet5',)
+    def _check_diem15(self):
+        tmp = _validate_diem(self.diem1tiet5)
+        if not tmp:
+            self.diem1tiet5 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
+    @api.onchange('diem1tiet6',)
+    def _check_diem16(self):
+        tmp = _validate_diem(self.diem1tiet6)
+        if not tmp:
+            self.diem1tiet6 = ''
+            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
+        else:
+            pass
 
-        return ''
-        # print(tmp)
-        # if not tmp:
-        #     print(self.diemhocky)
-        #     raise exceptions.Warning("Giá trị điểm vừa nhập không hợp lệ.")
-    # @api.onchange('diemhocky')
-    # def _check_diem2(self):
-    #     tmp = _validate_diem(self.diemhocky)
-    #     if not tmp:
-    #         raise exceptions.Warning("Giá trị điểm vừa nhập không hợp lệ.")
-
-        # if not _validate_diem(self.diemhocky):
-            # pass
-        # self.diemmieng1 = _validate_diem(self.diemmieng1)
-        # self.diemmieng2 = _validate_diem(self.diemmieng2)
-        # self.diemmieng3 = _validate_diem(self.diemmieng3)
-        # self.diemmieng4 = _validate_diem(self.diemmieng4)
-        # self.diemmieng5 = _validate_diem(self.diemmieng5)
-        # self.diemmieng6 = _validate_diem(self.diemmieng6)
-        # self.diem15phut1 = _validate_diem(self.diem15phut1)
-        # self.diem15phut2 = _validate_diem(self.diem15phut2)
-        # self.diem15phut3 = _validate_diem(self.diem15phut3)
-        # self.diem15phut4 = _validate_diem(self.diem15phut4)
-        # self.diem15phut5 = _validate_diem(self.diem15phut5)
-        # self.diem15phut6 = _validate_diem(self.diem15phut6)
-        # self.diem1tiet1 = _validate_diem(self.diem1tiet1)
-        # self.diem1tiet2 = _validate_diem(self.diem1tiet2)
-        # self.diem1tiet3 = _validate_diem(self.diem1tiet3)
-        # self.diem1tiet4 = _validate_diem(self.diem1tiet4)
-        # self.diem1tiet5 = _validate_diem(self.diem1tiet5)
-        # self.diem1tiet6 = _validate_diem(self.diem1tiet6)
-
-    @api.depends('diemhocky',
+    @api.depends(
+    'diemhocky',
     'diemmieng1','diemmieng2','diemmieng3','diemmieng4','diemmieng5','diemmieng6',
     'diem15phut1','diem15phut2','diem15phut3','diem15phut4','diem15phut5','diem15phut6',
-    'diem1tiet1','diem1tiet2','diem1tiet3','diem1tiet4','diem1tiet5','diem1tiet6')
+    'diem1tiet1','diem1tiet2','diem1tiet3','diem1tiet4','diem1tiet5','diem1tiet6'
+    )
     def _compute_final(self):
         def convert_to_float(n):
             try:
