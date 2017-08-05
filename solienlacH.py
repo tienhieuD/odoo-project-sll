@@ -233,7 +233,7 @@ class loaihinhtruong(models.Model):
 
     @api.constrains('maloaihinhtruong')
     def _maloaihinhtruong_uniq(self):
-        lst = self.env['solienlac.tenloaihinhtruong'].search([])
+        lst = self.env['solienlac.loaihinhtruong'].search([])
         lst = map(lambda x : x.maloaihinhtruong, lst)
         lst.remove(self.maloaihinhtruong)
         print lst
