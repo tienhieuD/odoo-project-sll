@@ -1952,8 +1952,8 @@ class nhapdiemhocsinh(models.Model):
         return {'domain':{'lop': [('id', 'in', lst_lop)]}}
 
     @api.multi
-    @api.onchange('lop','namhoc','hocky','napdulieu')
-    def _compute_model(self):
+    # @api.onchange('lop','namhoc','hocky','napdulieu')
+    def compute_model(self):
         self.test1 = str(self.env.uid) + str(random.randint(0,10))
         # Get hocsinh object
         def get_hs(self, id):
@@ -2284,10 +2284,11 @@ class Users(models.Model):
         user_groups_id = self.env.user.groups_id
         user_groups_id = map(lambda x: x.id, user_groups_id)
 
-        system_admin_level_1_id = self.env['res.groups'].sudo().search([('name','like','system_admin_level_1')])[0].id
-        system_admin_level_2_id = self.env['res.groups'].sudo().search([('name','like','system_admin_level_2')])[0].id
-        system_admin_level_3_id = self.env['res.groups'].sudo().search([('name','like','system_admin_level_3')])[0].id
-        school_admin_level_1_hieu_truong_id = self.env['res.groups'].sudo().search([('name','like','school_admin_level_1_hieu_truong')])[0].id
+        system_admin_level_1_id = self.env['res.groups'].sudo().search([('name','like','SYA1:')])[0].id
+        system_admin_level_2_id = self.env['res.groups'].sudo().search([('name','like','SYA2:')])[0].id
+        system_admin_level_3_id = self.env['res.groups'].sudo().search([('name','like','SYA3:')])[0].id
+        school_admin_level_1_hieu_truong_id = self.env['res.groups'].sudo().search([('name','like','SCA1:')])[0].id
+        cus = self.env['res.groups'].sudo().search([('name','like','CUST:')])[0].id
 
         result = solienlac_groups_id
 
@@ -2296,8 +2297,8 @@ class Users(models.Model):
         print user_groups_id
 
         if (system_admin_level_1_id in user_groups_id):
-            result = solienlac_groups_id
-
+            pass
+            
         if (system_admin_level_2_id in user_groups_id):
             result.remove(system_admin_level_1_id)
 
@@ -2340,10 +2341,10 @@ class Users(models.Model):
 
     @api.model
     def create(self, values):
-        system_admin_level_1_id = self.env['res.groups'].sudo().search([('name','like','system_admin_level_1')])[0].id
-        system_admin_level_2_id = self.env['res.groups'].sudo().search([('name','like','system_admin_level_2')])[0].id
-        system_admin_level_3_id = self.env['res.groups'].sudo().search([('name','like','system_admin_level_3')])[0].id
-        school_admin_level_1_hieu_truong_id = self.env['res.groups'].sudo().search([('name','like','school_admin_level_1_hieu_truong')])[0].id
+        system_admin_level_1_id = self.env['res.groups'].sudo().search([('name','like','SYA1:')])[0].id
+        system_admin_level_2_id = self.env['res.groups'].sudo().search([('name','like','SYA2:')])[0].id
+        system_admin_level_3_id = self.env['res.groups'].sudo().search([('name','like','SYA3:')])[0].id
+        school_admin_level_1_hieu_truong_id = self.env['res.groups'].sudo().search([('name','like','SCA1:')])[0].id
 
         # user_groups_id = self.env.user.groups_id
         # user_groups_id = map(lambda x: x.id, user_groups_id)

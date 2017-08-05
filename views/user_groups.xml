@@ -6,35 +6,35 @@
         <field name="description">Nhóm phân quyền cho QL học sinh</field>
     </record>
     <record id="group_systemadmin_l1" model="res.groups">
-        <field name="name">system_admin_level_1</field>
+        <field name="name">SYA1: Quản trị hệ thống cấp 1</field>
         <field name="category_id" ref="solienlac.module_user_group"/>
     </record>
     <record id="group_systemadmin_l2" model="res.groups">
-        <field name="name">system_admin_level_2</field>
+        <field name="name">SYA2: Quản trị hệ thống cấp 2</field>
         <field name="category_id" ref="solienlac.module_user_group"/>
     </record>
     <record id="group_systemadmin_l3" model="res.groups">
-        <field name="name">system_admin_level_3</field>
+        <field name="name">SYA3: Quản trị hệ thống cấp 3</field>
         <field name="category_id" ref="solienlac.module_user_group"/>
     </record>
     <record id="group_schooladmin_l1" model="res.groups">
-        <field name="name">school_admin_level_1_hieu_truong</field>
+        <field name="name">SCA1: Hiệu trưởng</field>
         <field name="category_id" ref="solienlac.module_user_group"/>
     </record>
     <record id="group_schooladmin_l21" model="res.groups">
-        <field name="name">school_admin_level_21_giao_vien_bo_mon</field>
+        <field name="name">SCA21: Giáo viên bộ môn</field>
         <field name="category_id" ref="solienlac.module_user_group"/>
     </record>
     <record id="group_schooladmin_l22" model="res.groups">
-        <field name="name">school_admin_level_22_giao_vien_chu_nhiem</field>
+        <field name="name">SCA22: Giáo viên chủ nhiệm</field>
         <field name="category_id" ref="solienlac.module_user_group"/>
     </record>
     <record id="group_schooladmin_l3" model="res.groups">
-        <field name="name">school_admin_level_3_giao_vien_du_thinh</field>
+        <field name="name">SCA3: Giáo viên dự thính</field>
         <field name="category_id" ref="solienlac.module_user_group"/>
     </record>
     <record id="group_customer" model="res.groups">
-        <field name="name">customer_tai_khoan_hoc_sinh</field>
+        <field name="name">CUST: Học sinh/Phụ huynh học sinh</field>
         <field name="category_id" ref="solienlac.module_user_group"/>
     </record>
 
