@@ -459,7 +459,7 @@
          <field name="hocky"/>
          <field name="namhoc"/>
          <field name="monhoc"/>
-         <field name="nhapdiemchitiet"/>
+         <!-- <field name="nhapdiemchitiet"/> -->
        </tree>
      </field>
    </record>

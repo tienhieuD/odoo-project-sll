@@ -451,7 +451,7 @@
     <menuitem id="menu_tobomon_school_admin" name="Tổ bộ môn" parent="menu_noibonhatruong_school_admin" action="bomon_school_admin_action_form" sequence=""/>
   <menuitem sequence="0" id="menu_quanlyhocsinh_school_admin" name="Quản lý học sinh" parent="menu_truongquanly" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/>
     <menuitem id="menu_hocsinh_school_admin" name="Học sinh" parent="menu_quanlyhocsinh_school_admin" action="hocsinh_school_admin_action_form"/>
-    <menuitem id="menu_nhapdiemhocsinh_school_admin" name="Nhập điểm học sinh" parent="menu_quanlyhocsinh_school_admin" action="nhapdiemhocsinh_school_admin_action_form" sequence=""/>
+    <menuitem id="menu_nhapdiemhocsinh_school_admin" name="Xem và nhập điểm học sinh" parent="menu_quanlyhocsinh_school_admin" action="nhapdiemhocsinh_school_admin_action_form" sequence=""/>
     <!-- <menuitem id="menu_nhapdiemchitiet_school_admin" name="Nhập điểm CT" parent="menu_quanlyhocsinh_school_admin" action="nhapdiemchitiet_school_admin_action_form" sequence=""/> -->
     <menuitem id="menu_bangdiemdanh_school_admin_" name="Bảng điểm danh" parent="menu_quanlyhocsinh_school_admin" action="diemdanhhocsinh_action_form_sca" sequence=""/>
     <!-- <menuitem id="menu_chucvu_school_admin" name="Chức vụ học sinh" parent="menu_quanlyhocsinh_school_admin" action="chucvu_school_admin_action_form" sequence=""/> -->
