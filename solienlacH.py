@@ -124,18 +124,19 @@ class caphoc(models.Model):
     _name = 'solienlac.caphoc'
     _rec_name = 'tencaphoc'
 
-    macaphoc = fields.Integer('Mã cấp học', required=True, translate=True)
-    tencaphoc = fields.Selection([
-        ('1', 'Nhà trẻ'),
-        ('2', 'Mẫu giáo'),
-        ('3', 'Tiểu học'),
-        ('4', 'Trung học cơ sở'),
-        ('5', 'Trung học phổ thông'),
-        ('6', 'Trung cấp chuyên nghiệp'),
-        ('7', 'Cao đẳng'),
-        ('8', 'Đại học'),
-        ('9', 'Sau đại học'),
-    ],default='1', string='Tên cấp học')
+    macaphoc = fields.Integer('Mã cấp học', required=True,)
+    tencaphoc = fields.Char('Tên cấp học', required=True,)
+    # tencaphoc = fields.Selection([
+    #     ('1', 'Nhà trẻ'),
+    #     ('2', 'Mẫu giáo'),
+    #     ('3', 'Tiểu học'),
+    #     ('4', 'Trung học cơ sở'),
+    #     ('5', 'Trung học phổ thông'),
+    #     ('6', 'Trung cấp chuyên nghiệp'),
+    #     ('7', 'Cao đẳng'),
+    #     ('8', 'Đại học'),
+    #     ('9', 'Sau đại học'),
+    # ],default='1', string='Tên cấp học')
     ghichu = fields.Char('Ghi chú')
     # _sql_constraints = [
     #     ('macaphoc_uniq', 'unique(macaphoc)', ' Mã cấp học đã tồn tại.'),
@@ -144,39 +145,40 @@ class caphoc(models.Model):
     def _macaphoc_uniq(self):
         lst_mach = self.env['solienlac.caphoc'].search([])
         lst_mach = map(lambda x : x.macaphoc, lst_mach)
-        lst_mach.pop(len(lst_mach)-1)
+        lst_mach.remove(self.macaphoc)
         print lst_mach
         if self.macaphoc in lst_mach:
             raise exceptions.ValidationError("Mã cấp học đã tồn tại")
         else:
             pass
-    print('OK')
+    # print('OK')
 
 class captruong(models.Model):
     _name = 'solienlac.captruong'
     _rec_name = 'tencaptruong'
 
     macaptruong = fields.Integer('Mã cấp trường', required='True')
-    tencaptruong = fields.Selection([
-        ('1', 'Nhà trẻ'),
-        ('2', 'Trường Mẫu giáo'),
-        ('3', 'Trường Mầm non'),
-        ('4', 'Trường Tiểu học'),
-        ('5', 'Trường Trung học cơ sở'),
-        ('6', 'Trường Trung học phổ thông'),
-        ('7', 'Trường đa cấp (Tiểu học và THCS)'),
-        ('8', 'Trường đa cấp (THCS và THPT)'),
-        ('9', 'Trường đa cấp (Tiểu học,THCS và THPT)'),
-        ('10', 'Trung tâm Giáo dục thường xuyên'),
-        ('11', 'Trung tâm Kỹ thuật tổng hợp - Hướng nghiệp'),
-        ('12', 'Trung cấp chuyên nghiệp'),
-        ('13', 'Cao đẳng'),
-        ('14', 'Đại học'),
-        ('15', 'Nhóm trẻ độc lập'),
-        ('16', 'Lớp mẫu giáo độc lập'),
-        ('17', 'Lớp mầm non độc lập'),
-        ('18', 'Khác'),
-    ],default='1', string='Tên cấp trường')
+    tencaptruong = fields.Char(string="Tên cấp trường", required='True')
+    # tencaptruong = fields.Selection([
+    #     ('1', 'Nhà trẻ'),
+    #     ('2', 'Trường Mẫu giáo'),
+    #     ('3', 'Trường Mầm non'),
+    #     ('4', 'Trường Tiểu học'),
+    #     ('5', 'Trường Trung học cơ sở'),
+    #     ('6', 'Trường Trung học phổ thông'),
+    #     ('7', 'Trường đa cấp (Tiểu học và THCS)'),
+    #     ('8', 'Trường đa cấp (THCS và THPT)'),
+    #     ('9', 'Trường đa cấp (Tiểu học,THCS và THPT)'),
+    #     ('10', 'Trung tâm Giáo dục thường xuyên'),
+    #     ('11', 'Trung tâm Kỹ thuật tổng hợp - Hướng nghiệp'),
+    #     ('12', 'Trung cấp chuyên nghiệp'),
+    #     ('13', 'Cao đẳng'),
+    #     ('14', 'Đại học'),
+    #     ('15', 'Nhóm trẻ độc lập'),
+    #     ('16', 'Lớp mẫu giáo độc lập'),
+    #     ('17', 'Lớp mầm non độc lập'),
+    #     ('18', 'Khác'),
+    # ],default='1', string='Tên cấp trường')
     ghichu = fields.Char('Ghi chú')
 
     @api.constrains('macaptruong')
@@ -194,13 +196,14 @@ class hangtruong(models.Model):
     _rec_name = 'tenhangtruong' # optional
     # _description = 'Hạng trường'
 
-    mahangtruong = fields.Integer('Hạng trường', required='True')
-    tenhangtruong = fields.Selection([
-        ('1', 'Hạng I'),
-        ('2', 'Hạng II'),
-        ('3', 'Hạng III'),
-        ('4', 'Hạng IV'),
-    ], default='1', string='Tên hạng trường')
+    mahangtruong = fields.Integer('Mã hạng trường', required='True')
+    tenhangtruong = fields.Char(string="Tên hạng trường",  required='True')
+    # tenhangtruong = fields.Selection([
+    #     ('1', 'Hạng I'),
+    #     ('2', 'Hạng II'),
+    #     ('3', 'Hạng III'),
+    #     ('4', 'Hạng IV'),
+    # ], default='1', string='Tên hạng trường')
     ghichu = fields.Char('Ghi chú')
 
     @api.constrains('mahangtruong')
@@ -247,16 +250,17 @@ class truongchuyenbiet(models.Model):
     _rec_name = 'tentruongchuyenbiet' # optional
     # _description = 'Trường chuyên biệt'
 
-    matruongchuyenbiet = fields.Integer('Trường chuyên biệt', required='True')
-    tentruongchuyenbiet = fields.Selection([
-        ('1',	'Năng khiếu TDTT'),
-        ('2', 	'Khuyết tật'),
-        ('3',	'Năng khiếu nghệ thuật'),
-        ('4',	'Chuyên'),
-        ('5',	'Dân tộc nội trú'),
-        ('6',	'THPT Kỹ thuật'),
-        ('7',	'Dự bị đại học'),
-    ], default='4', string='Tên trường chuyên biệt')
+    matruongchuyenbiet = fields.Integer('Mã trường chuyên biệt', required='True')
+    tentruongchuyenbiet = fields.Char('Tên trường chuyên biệt', required='True')
+    # tentruongchuyenbiet = fields.Selection([
+    #     ('1',	'Năng khiếu TDTT'),
+    #     ('2', 	'Khuyết tật'),
+    #     ('3',	'Năng khiếu nghệ thuật'),
+    #     ('4',	'Chuyên'),
+    #     ('5',	'Dân tộc nội trú'),
+    #     ('6',	'THPT Kỹ thuật'),
+    #     ('7',	'Dự bị đại học'),
+    # ], default='4', string='Tên trường chuyên biệt')
     ghichu = fields.Char('Ghi chú')
 
     @api.constrains('matruongchuyenbiet')
@@ -273,29 +277,31 @@ class loailopnho(models.Model):
     _name = 'solienlac.loailopnho'
     _rec_name = 'tenloailopnho' # optional
 
-    maloailopnho = fields.Integer('Trường chuyên biệt', required='True')
-    tenloailopnho = fields.Selection([
-        ('khong', 'Không'),
-        ('nhotren', 'Nhô trên'),
-        ('nhoduoi', 'Nhô duoi'),
-        ('nhotrenduoi', 'Nhô trên và dưới')],default='khong',string="Lớp nhô")
+    maloailopnho = fields.Integer('Mã loại lớp nhô', required='True')
+    tenloailopnho = fields.Char('Tên loại lớp nhô', required='True')
+    # tenloailopnho = fields.Selection([
+    #     ('khong', 'Không'),
+    #     ('nhotren', 'Nhô trên'),
+    #     ('nhoduoi', 'Nhô duoi'),
+    #     ('nhotrenduoi', 'Nhô trên và dưới')],default='khong',string="Lớp nhô")
     ghichu = fields.Char('Ghi chú')
 
 class truong(models.Model):
     _name = 'solienlac.truong'
     _rec_name = 'tentruong'
 
-    matruong = fields.Char('Mã trường')
-    tentruong = fields.Char('Tên trường')
+    matruong = fields.Char('Mã trường', required=True)
+    tentruong = fields.Char('Tên trường', required=True)
     hieutruong = fields.Char('Hiệu trưởng')
     namthanhlap = fields.Integer('Năm thành lập')
 
     fax = fields.Char('Fax')
     email = fields.Char('Email')
     sodienthoai = fields.Char('Số điện thoại')
-
     @api.constrains('sodienthoai')
     def check_number(self):
+        if self.sodienthoai == False:
+            return
         if (len(self.sodienthoai) < 10):
             raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
         try:
