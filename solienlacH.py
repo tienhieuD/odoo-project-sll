@@ -1612,8 +1612,8 @@ class chucvu(models.Model):
     def _validate_machucvu(self):
         lst_macv = self.env['solienlac.chucvu'].search([])
         lst_macv = map(lambda cv : cv.machucvu, lst_macv)
-        print lst_macv
-        if self.machucvu in lst_macv[0:-1]:
+        lst_macv.remove(self.machucvu)
+        if self.machucvu in lst_macv:
             raise exceptions.ValidationError("Mã chức vụ đã tồn tại")
         else:
             pass
