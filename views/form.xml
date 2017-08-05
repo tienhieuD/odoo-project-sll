@@ -600,6 +600,8 @@
                 <group colspan="2" col="2" >
                   <!-- <field name="truong"/> -->
                   <field name="lop" options="{'no_create_edit': True}"/>
+                  <field name="khoi"/>
+                  <field name="truong"/>
                   <field name="chucvu" options="{'no_create_edit': True}" widget="many2many_tags"/>
                   <field name="noitru"/>
                 </group>

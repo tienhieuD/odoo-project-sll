@@ -230,6 +230,7 @@
     <!-- <field name="domain">[('user_login', '=', 'True')]</field> -->
     <!-- <field name="domain">[('noitru', '=', True)]</field> -->
     <!-- <field name="context">{'search_default_user_id': uid, 'default_user_id': uid}</field> -->
+    <field name="context">{'group_by':['khoi','lop',]}</field>
     <field name="view_mode">tree,form</field>
     <!-- <field name="search_view_id" ref="hocsinh_school_admin_action_filter"/> -->
     <field name="help" type="html">

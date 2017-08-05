@@ -1224,6 +1224,18 @@ class hocsinh(models.Model):
         lst = map(lambda x: x.QuanHuyenID, tmp1)
         return {'domain':{'phuongxa': [('QuanHuyenID', 'in', lst)]}}
 
+    khoi = fields.Many2one(store = True,readonly = True , string="Khối học", comodel_name="solienlac.khoi", compute='_get_khoi')
+    @api.depends('lop')
+    def _get_khoi(self):
+        for r in self:
+            r.khoi = r.lop.khoi
+
+    truong = fields.Many2one(store = True,readonly = True , string="Trường học", comodel_name="solienlac.truong", compute='_get_truong')
+    @api.depends('lop')
+    def _get_truong(self):
+        for r in self:
+            r.truong = r.lop.khoi.truong
+
     @api.model
     def create(self, values):
         groups1 = self.env['res.groups'].search([
