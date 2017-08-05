@@ -1944,6 +1944,7 @@ class nhapdiemhocsinh(models.Model):
             ('monhoc.id','=',current_monhoc_id),
             ('hocky','=',self.hocky),
             ('namhoc','=',self.namhoc),
+            ('giaovien.id','=',self.env.user.giaovien.id)
         ])
         lst_lop = map(lambda x: x.lop.id, lst_phanban)
         print 'id lop cua giao vien dang giang day mon nay:'
