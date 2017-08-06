@@ -42,27 +42,6 @@ class hocky(models.Model):
         if now.month < 8:
             year -= 1
         return str(year) + "-" + str(year+1)
-    # @api.onchange('trangthai')
-    # @api.constrains('namhoc')
-    # def _namhoc_cont(self):
-    #     if self.trangthai:
-    #         now = datetime.datetime.now()
-    #         in_year = now.year
-    #         in_month = now.month
-    #         # ---- lấy năm học vừa nhập
-    #         s = self.namhoc
-    #         lst = s.split('-')
-    #         my_first_year = lst[0]
-    #         # ----- Tính năm học hiện tại
-    #         if in_month >= 8 & in_month <= 12:
-    #             first_year = in_year
-    #         else:
-    #             first_year = in_year - 1
-    #         # ----- Xu ly rang buộc
-    #         print my_first_year
-    #         print first_year
-    #         if int(my_first_year) !=  int(first_year):
-    #             raise exceptions.ValidationError("Giá trị năm học không phải năm hiện tại!")
 
     namhoc = fields.Selection(
         string="Năm học",
@@ -89,26 +68,14 @@ class hocky(models.Model):
     # truong_sa = fields.Many2one('solienlac.truong', string='Trường', required=True)
     ghichu = fields.Char('Ghi chú')
 
-    # @api.onchange('trangthai')
-    # def _fomat_ketthuchocky(self):
-    #     if self.trangthai == 'HienTai':
-    #         self.ketthuchocky = False
-
-    # @api.onchange('ketthuchocky')
-    # def _fomat_trangthai(self):
-    #     if self.ketthuchocky:
-    #         if self.trangthai == 'DaKetThuc':
-    #             raise exceptions.ValidationError("Học kỳ đã kết thúc!")
-    #         else:
-    #             self.trangthai = 'DaKetThuc'
     @api.model
     def create(self, values):
         if values['trangthai'] == 'HienTai':
             hk = self.env['solienlac.hocky'].search([
                 ('truong', '=', values['truong']),
             ])
-            print hk
-            print len(hk)
+            # print hk
+            # print len(hk)
             if len(hk) > 1:
                 for val in hk:
                     self.env['solienlac.hocky'].browse(val.id).write({'trangthai':'DaKetThuc'})
@@ -118,14 +85,13 @@ class hocky(models.Model):
         return hk
     @api.multi
     def write(self, values):
-        print values.get('trangthai')
+        # print values.get('trangthai')
         if values.get('trangthai') == 'HienTai':
-            print self.truong
             hk = self.env['solienlac.hocky'].search([
                 ('truong', '=', self.truong.id),
             ])
-            print hk
-            print len(hk)
+            # print hk
+            # print len(hk)
             if len(hk) > 1:
                 for val in hk:
                     self.env['solienlac.hocky'].browse(val.id).write({'trangthai':'DaKetThuc'})
@@ -169,12 +135,11 @@ class caphoc(models.Model):
         lst_mach = self.env['solienlac.caphoc'].search([])
         lst_mach = map(lambda x : x.macaphoc, lst_mach)
         lst_mach.remove(self.macaphoc)
-        print lst_mach
+        # print lst_mach
         if self.macaphoc in lst_mach:
             raise exceptions.ValidationError("Mã cấp học đã tồn tại")
         else:
             pass
-    # print('OK')
 
 class captruong(models.Model):
     _name = 'solienlac.captruong'
@@ -209,7 +174,7 @@ class captruong(models.Model):
         lst = self.env['solienlac.captruong'].search([])
         lst = map(lambda x : x.macaptruong, lst)
         lst.remove(self.macaptruong)
-        print lst
+        # print lst
         if self.macaptruong in lst:
             raise exceptions.ValidationError("Mã cấp trường đã tồn tại")
         else:
@@ -234,7 +199,7 @@ class hangtruong(models.Model):
         lst = self.env['solienlac.hangtruong'].search([])
         lst = map(lambda x : x.mahangtruong, lst)
         lst.remove(self.mahangtruong)
-        print lst
+        # print lst
         if self.mahangtruong in lst:
             raise exceptions.ValidationError("Mã hạng trường đã tồn tại")
         else:
@@ -262,7 +227,7 @@ class loaihinhtruong(models.Model):
         lst = self.env['solienlac.loaihinhtruong'].search([])
         lst = map(lambda x : x.maloaihinhtruong, lst)
         lst.remove(self.maloaihinhtruong)
-        print lst
+        # print lst
         if self.maloaihinhtruong in lst:
             raise exceptions.ValidationError("Mã loại hình trường đã tồn tại")
         else:
@@ -291,7 +256,7 @@ class truongchuyenbiet(models.Model):
         lst = self.env['solienlac.truongchuyenbiet'].search([])
         lst = map(lambda x : x.matruongchuyenbiet, lst)
         lst.remove(self.matruongchuyenbiet)
-        print lst
+        # print lst
         if self.matruongchuyenbiet in lst:
             raise exceptions.ValidationError("Mã trường chuyên biệt đã tồn tại")
         else:
@@ -315,23 +280,38 @@ class truong(models.Model):
 
     matruong = fields.Char('Mã trường', required=True)
     tentruong = fields.Char('Tên trường', required=True)
-    hieutruong = fields.Char('Hiệu trưởng')
-    namthanhlap = fields.Integer('Năm thành lập')
-
+    hieutruong = fields.Char(string='Hiệu trưởng')
+    namthanhlap = fields.Char('Năm thành lập')
+    @api.constrains('namthanhlap')
+    def _validate_namthanhlap(self):
+        now = datetime.datetime.now()
+        current_year = int(now.year)
+        if self.namthanhlap != False:
+            if len(str(self.namthanhlap)) == 4:
+                try:
+                    print(self.namthanhlap)
+                    d = int(self.namthanhlap)
+                    if d < 1930 or d > current_year:
+                        print 12
+                        raise exceptions.ValidationError("Giá trị năm thành lập không hợp lệ!")
+                except ValueError:
+                    raise exceptions.ValidationError("Giá trị năm thành lập không hợp lệ!")
+            else:
+                raise exceptions.ValidationError("Giá trị năm thành lập không hợp lệ!")
     fax = fields.Char('Fax')
     email = fields.Char('Email')
     sodienthoai = fields.Char('Số điện thoại')
     @api.constrains('sodienthoai')
     def check_number(self):
-        if self.sodienthoai == False:
-            return
-        if (len(self.sodienthoai) < 10):
-            raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
-        try:
-          int(self.sodienthoai)
-        except ValueError:
-          raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
+        if self.sodienthoai != False:
+            if len(str(self.sodienthoai)) < 10:
+                raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
+            try:
+                int(self.sodienthoai)
+            except ValueError:
+              raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
     website = fields.Char('Website')
+
 
     tinhthanhpho = fields.Many2one('solienlac.tinhthanhpho', string='Tỉnh/Thành phố')
     quanhuyen = fields.Many2one('solienlac.quanhuyen', string='Quận/Huyện')
@@ -389,7 +369,7 @@ class truong(models.Model):
         lst = self.env['solienlac.truong'].search([])
         lst = map(lambda x : x.matruong, lst)
         lst.remove(self.matruong)
-        print lst
+        # print lst
         if self.matruong in lst:
             raise exceptions.ValidationError("Mã trường đã tồn tại")
         else:
@@ -410,12 +390,13 @@ class giaovien(models.Model):
     sodienthoai = fields.Char("Số điện thoại")
     @api.constrains('sodienthoai')
     def check_number(self):
-        if (len(self.sodienthoai) < 10):
-            raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
-        try:
-          int(self.sodienthoai)
-        except ValueError:
-          raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
+        if self.sodienthoai != False:
+            if len(str(self.sodienthoai)) < 10:
+                raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
+            try:
+                int(self.sodienthoai)
+            except ValueError:
+              raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
     socmnd = fields.Char("Số chứng minh thư/căn cước")
     email = fields.Char("Email",required=True)
     matkhau = fields.Char("Mật khẩu")
@@ -476,7 +457,7 @@ class giaovien(models.Model):
         lst_magiaovien = self.env['solienlac.giaovien'].search([])
         lst_magiaovien = map(lambda x : x.magiaovien, lst_magiaovien)
         lst_magiaovien.remove(self.magiaovien)
-        print lst_magiaovien
+        # print lst_magiaovien
         if self.magiaovien in lst_magiaovien:
             raise exceptions.ValidationError("Mã giáo viên đã tồn tại")
         else:
@@ -622,7 +603,7 @@ class to(models.Model):
         lst = self.env['solienlac.to'].search([])
         lst = map(lambda x : x.mato, lst)
         lst.remove(self.mato)
-        print lst
+        # print lst
         if self.mato in lst:
             raise exceptions.ValidationError("Mã tổ đã tồn tại")
         else:
@@ -649,7 +630,7 @@ class phuongxa(models.Model):
         lst = self.env['solienlac.phuongxa'].search([])
         lst = map(lambda x : x.PhuongXaID, lst)
         lst.remove(self.PhuongXaID)
-        print lst
+        # print lst/
         if self.PhuongXaID in lst:
             raise exceptions.ValidationError("Mã phường/xã đã tồn tại")
         else:
@@ -672,7 +653,7 @@ class quanhuyen(models.Model):
         lst = self.env['solienlac.quanhuyen'].search([])
         lst = map(lambda x : x.maquanhuyen, lst)
         lst.remove(self.maquanhuyen)
-        print lst
+        # print lst
         if self.maquanhuyen in lst:
             raise exceptions.ValidationError("Mã Quận/Huyện đã tồn tại")
         else:
@@ -694,7 +675,8 @@ class tinhthanhpho(models.Model):
         lst = self.env['solienlac.tinhthanhpho'].search([])
         lst = map(lambda x : x.matinhthanhpho, lst)
         lst.remove(self.matinhthanhpho)
-        print lst
+        # print lst
+
         if self.matinhthanhpho in lst:
             raise exceptions.ValidationError("Mã Tỉnh/Thành phố đã tồn tại")
         else:
@@ -712,7 +694,7 @@ class dantoc(models.Model):
         lst = self.env['solienlac.dantoc'].search([])
         lst = map(lambda x : x.madantoc, lst)
         lst.remove(self.madantoc)
-        print lst
+        # print lst
         if self.madantoc in lst:
             raise exceptions.ValidationError("Mã dân tộc đã tồn tại")
         else:
@@ -729,7 +711,7 @@ class tongiao(models.Model):
         lst = self.env['solienlac.tongiao'].search([])
         lst = map(lambda x : x.matongiao, lst)
         lst.remove(self.matongiao)
-        print lst
+        # print lst
         if self.matongiao in lst:
             raise exceptions.ValidationError("Mã tôn giáo đã tồn tại")
         else:
@@ -744,21 +726,22 @@ class phongban(models.Model):
     sodienthoai = fields.Char("Số điện thoại")
     @api.constrains('sodienthoai')
     def check_number(self):
-        if (len(self.sodienthoai) < 10):
-            raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
-        try:
-          int(self.sodienthoai)
-        except ValueError:
-          raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
+        if self.sodienthoai != False:
+            if len(str(self.sodienthoai)) < 10:
+                raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
+            try:
+                int(self.sodienthoai)
+            except ValueError:
+              raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
+
     ghichu = fields.Char("Ghi chú")
     truongphong = fields.Many2one('solienlac.giaovien', string = "Trưởng phòng")
-
     @api.constrains('maphongban')
     def _dantoc_uniq(self):
         lst = self.env['solienlac.phongban'].search([])
         lst = map(lambda x : x.maphongban, lst)
         lst.remove(self.maphongban)
-        print lst
+        # print lst
         if self.maphongban in lst:
             raise exceptions.ValidationError("Mã phòng ban đã tồn tại")
         else:
@@ -997,12 +980,13 @@ class phuhuynh(models.Model):
     sodienthoai = fields.Char('Số Điện Thoại', required=True)
     @api.constrains('sodienthoai')
     def check_number(self):
-        if (len(self.sodienthoai) < 10):
-            raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
-        try:
-          int(self.sodienthoai)
-        except ValueError:
-          raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
+        if self.sodienthoai != False:
+            if len(str(self.sodienthoai)) < 10:
+                raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
+            try:
+                int(self.sodienthoai)
+            except ValueError:
+              raise exceptions.ValidationError("Số điện thoại không hợp lệ!")
     ghichu = fields.Char('Ghi Chú')
 
     diachi = fields.Char('Địa chỉ', )
@@ -1159,7 +1143,7 @@ class hocsinh(models.Model):
     doituonguutien = fields.Many2many('solienlac.doituonguutien', string='Đối tượng ưu tiên')
     phuhuynh = fields.Many2many('solienlac.phuhuynh', string='Phụ huynh')
     hanhkiem = fields.One2many("solienlac.hanhkiem", "hocsinh", string="Hạnh kiểm")
-    ketquahoctap = fields.One2many('solienlac.ketquahoctap', 'hocsinh', string="Kết quả học tập")
+    ketquahoctap = fields.One2many('solienlac.ketquahoctap', 'hocsinh', string="Kết quả học tập", readonly=True)
     bangdiem = fields.One2many('solienlac.nhapdiemchitiet', 'hocsinh', string="Bảng điểm")
     nenep = fields.One2many('solienlac.nenep', 'hocsinh', string="Nề nếp")
     noitru = fields.Boolean('Nội trú', default=False)
@@ -1306,7 +1290,7 @@ class hocsinh(models.Model):
             'groups_id': quyen_da_chon,
             'truong' : truong_id,
         }
-        print vals
+        # print vals
         self.env['res.users'].sudo().create(vals)
 
         user = super(hocsinh, self).create(values)
@@ -1874,7 +1858,7 @@ class danhhieuhocsinh(models.Model):
             ('hocsinh.id','=',self.hocsinh.id),
         ])
         # lst_macv = map(lambda cv : cv.machucvu, lst_macv)
-        print '(%s,%s,%s,%s)' % (self.hocky,self.namhoc,self.hocsinh.id,n)
+        # print '(%s,%s,%s,%s)' % (self.hocky,self.namhoc,self.hocsinh.id,n)
         if n>1:
             raise exceptions.ValidationError("Học sinh không thể nhận 2 danh hiệu trong kỳ này")
         else:
@@ -1990,10 +1974,23 @@ class nhapdiemhocsinh(models.Model):
             ('giaovien.id','=',self.env.user.giaovien.id)
         ])
         lst_lop = map(lambda x: x.lop.id, lst_phanban)
-        print 'id lop cua giao vien dang giang day mon nay:'
-        print lst_lop
+        # print 'id lop cua giao vien dang giang day mon nay:'
+        # print lst_lop
         return {'domain':{'lop': [('id', 'in', lst_lop)]}}
-
+    print ('-----------------------------------')
+    @api.constrains('monhoc', 'hocky', 'namhoc')
+    def _nhapdiemhocsinh_uniq(self):
+        print ('-----------------------------------')
+        mycount = self.env['solienlac.nhapdiemhocsinh'].search_count([
+            ('hocky','=',self.hocky), # notice, how about a year
+            ('namhoc','=',self.namhoc),
+            ('monhoc.id','=',self.monhoc.id),
+            ('lop.id','=',self.lop.id),
+            ('giaovien.id','=',self.giaovien.id),
+        ])
+        print mycount
+        if mycount > 1:
+            raise exceptions.ValidationError("Dữ liệu đã tồn tại.")
     @api.multi
     # @api.onchange('lop','namhoc','hocky','napdulieu')
     def compute_model(self):
@@ -2076,6 +2073,7 @@ class nhapdiemhocsinh(models.Model):
                 # Show objects nhapdiemchitiet has just created
                 self.nhapdiemchitiet = lst_hs_nhapdiem
 
+
 class nhapdiemchitiet(models.Model):
     _name = 'solienlac.nhapdiemchitiet'
 
@@ -2157,7 +2155,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diemhocky)
         if not tmp:
             self.diemhocky = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diemmieng2',)
@@ -2165,7 +2162,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diemmieng2)
         if not tmp:
             self.diemmieng2 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diemmieng3',)
@@ -2173,7 +2169,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diemmieng3)
         if not tmp:
             self.diemmieng3 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diemmieng4',)
@@ -2181,7 +2176,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diemmieng4)
         if not tmp:
             self.diemmieng4 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diemmieng5',)
@@ -2189,7 +2183,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diemmieng5)
         if not tmp:
             self.diemmieng5 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diemmieng6',)
@@ -2197,7 +2190,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diemmieng6)
         if not tmp:
             self.diemmieng6 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diem15phut2',)
@@ -2205,7 +2197,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diem15phut2)
         if not tmp:
             self.diem15phut2 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diem15phut3',)
@@ -2213,7 +2204,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diem15phut3)
         if not tmp:
             self.diem15phut3 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diem15phut4',)
@@ -2221,7 +2211,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diem15phut4)
         if not tmp:
             self.diem15phut4 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diem15phut5',)
@@ -2229,7 +2218,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diem15phut5)
         if not tmp:
             self.diem15phut5 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diem15phut6',)
@@ -2237,7 +2225,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diem15phut6)
         if not tmp:
             self.diem15phut6 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diem1tiet2',)
@@ -2245,7 +2232,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diem1tiet2)
         if not tmp:
             self.diem1tiet2 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diem1tiet3',)
@@ -2253,7 +2239,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diem1tiet3)
         if not tmp:
             self.diem1tiet3 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diem1tiet4',)
@@ -2261,7 +2246,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diem1tiet4)
         if not tmp:
             self.diem1tiet4 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diem1tiet5',)
@@ -2269,7 +2253,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diem1tiet5)
         if not tmp:
             self.diem1tiet5 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diem1tiet6',)
@@ -2277,7 +2260,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diem1tiet6)
         if not tmp:
             self.diem1tiet6 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
 
@@ -2386,9 +2368,9 @@ class Users(models.Model):
 
         result = solienlac_groups_id
 
-        print 'system_admin_level_1_id'
-        print system_admin_level_1_id
-        print user_groups_id
+        # print 'system_admin_level_1_id'
+        # print system_admin_level_1_id
+        # print user_groups_id
 
         if (system_admin_level_1_id in user_groups_id):
             pass
@@ -2833,6 +2815,8 @@ class khenthuonghocsinh(models.Model):
     napdulieu = fields.Boolean('Tải danh sách học sinh')
     @api.model
     def _get_current_gv(self):
+        print 'quyen giao vien'
+        print self.env.user.quyen
         dmain = [('id', '=', self.env.user.giaovien.id)]
         return dmain
     giaovien = fields.Many2one(
@@ -2931,8 +2915,8 @@ class khenthuonghocsinh(models.Model):
             ('tinhtranghocsinh', '=', 'value1'), #value1 = học bình thường
             ('lop.id', '=', self.lop.id),
         ])
-        print 'lst_hs'
-        print lst_hs
+        # print 'lst_hs'
+        # print lst_hs
 
         # Get (khenthuongchitiet object list)
         lst_hs_nhapdiem = self.env['solienlac.khenthuongchitiet'].search([
@@ -2941,8 +2925,8 @@ class khenthuonghocsinh(models.Model):
             ('ngaykhenthuong','=',self.ngaykhenthuong),
         ])
 
-        print 'lst_hs_nhapdiem'
-        print lst_hs_nhapdiem
+        # print 'lst_hs_nhapdiem'
+        # print lst_hs_nhapdiem
 
         # Get (hocsinh object list) just hocsinh id
         lst_hs_id = map(lambda x: x.id, lst_hs)
@@ -2953,8 +2937,8 @@ class khenthuonghocsinh(models.Model):
         # Get hocsinh id is not exsit in khenthuongchitiet
         lst_hs_thieu = filter(lambda x: x not in lst_hs_nhapdiem_id, lst_hs_id)
 
-        print 'lst_hs_thieu'
-        print lst_hs_thieu
+        # print 'lst_hs_thieu'
+        # print lst_hs_thieu
 
         if len(lst_hs_thieu) == 0:
             # In case the teacher wanna edit the score
@@ -2978,8 +2962,8 @@ class khenthuonghocsinh(models.Model):
                 elif item == False:
                     flag = False
 
-            print 'flag'
-            print flag
+            # print 'flag'
+            # print flag
 
             if flag:
                 # Create objects khenthuongchitiet
