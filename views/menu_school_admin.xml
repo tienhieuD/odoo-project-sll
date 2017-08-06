@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <odoo>
   <!-- Trường -->
   <!-- <record model="ir.ui.view" id="truong_school_admin_action_filter">
