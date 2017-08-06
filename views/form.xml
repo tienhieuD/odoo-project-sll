@@ -82,51 +82,61 @@
           </header>
           <sheet>
             <group colspan="4" col="4" string='Thông tin giáo viên'>
-              <group colspan="2" col="2">
-                <field name="magiaovien"/>
-                <field name="hoten"/>
-                <field name="gioitinh"/>
-                <field name="truong" options="{'no_create_edit': True}"/>
-                <!-- <field name="name"/>
-                <field name="login"/>
-                <field name="partner_id"/>
-                <field name="company_id"/> -->
-              </group>
-              <group colspan="2" col="2">
-                <field name="ngaysinh"/>
-                <field name="noisinh"/>
-                <field name="sodienthoai"/>
-                <field name="socmnd"/>
-                <field name="email"/>
-              </group>
-
-            </group>
-            <group colspan="4" col="4">
-              <group colspan="2" col="2" string='Thông tin quản lý'>
-                <field name="tinhthanhpho" options="{'no_create_edit': True}"/>
-                <field name="quanhuyen" options="{'no_create_edit': True}"/>
-                <field name="phuongxa" options="{'no_create_edit': True}"/>
-                <field name="diachi"/>
-                <field name="dantoc" options="{'no_create_edit': True}"/>
-                <field name="tongiao" options="{'no_create_edit': True}"/>
-              </group>
-              <group colspan="2" col="2" string='Thông tin quản lý'>
-                <field name="bomon" widget="many2many_tags"/>
-                <field name="phongban"/>
-                <!-- <field name="chucvu" widget="many2one_tags"/> -->
-                <field name="vanbang"/>
-                <field name="dien"/>
-                <field name="namvaonganh"/>
-                <field name="tinhtranghonnhan"/>
-              </group>
               <notebook colspan="4">
-                <!-- <page string="Phân công giảng dạy">
+                <page string='Thông tin giáo viên'>
+                  <group colspan="4" col="4">
+                    <group  colspan="2" col="2">
+                      <field name="magiaovien"/>
+                      <field name="hoten"/>
+                      <field name="gioitinh"/>
+                      <field name="truong" options="{'no_create_edit': True}"/>
+                    </group>
+                    <group  colspan="2" col="2">
+                      <field name="ngaysinh"/>
+                      <field name="noisinh"/>
+                      <field name="socmnd"/>
+                    </group>
+                  </group>
+                </page>
+                <page string='Thông tin hành chính'>
+                  <group colspan="4" col="4">
+                    <group colspan="2" col="2">
+                      <field name="tinhthanhpho" options="{'no_create_edit': True}"/>
+                      <field name="quanhuyen" options="{'no_create_edit': True}"/>
+                      <field name="phuongxa" options="{'no_create_edit': True}"/>
+                      <field name="diachi"/>
+                    </group>
+                    <group colspan="2" col="2">
+                      <field name="dantoc" options="{'no_create_edit': True}"/>
+                      <field name="tongiao" options="{'no_create_edit': True}"/>
+                    </group>
+                  </group>
+                </page>
+                <page string='Thông tin quản lý'>
+                  <group colspan="4" col="4">
+                    <group colspan="2" col="2">
+                      <field name="bomon" widget="many2many_tags"/>
+                      <field name="phongban"/>
+                      <field name="vanbang"/>
+                    </group>
+                    <group colspan="2" col="2">
+                      <field name="dien"/>
+                      <field name="namvaonganh"/>
+                      <field name="tinhtranghonnhan"/>
+                    </group>
+                  </group>
+                </page>
+                <page string="Phân công giảng dạy">
                   <field name="monhoc"/>
-                </page> -->
+                </page>
                 <page string="Lớp chủ nhiệm">
                   <field name="lop"/>
                 </page>
               </notebook>
+              <group colspan="4" col="4" string='Liên hệ'>
+                <field name="sodienthoai"/>
+                <field name="email"/>
+              </group>
             </group>
           </sheet>
         </form>

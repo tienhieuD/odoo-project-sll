@@ -564,7 +564,7 @@
 
 
 
-  <menuitem id="menu_danhmuchanhchinh" name="Danh mục hành chính" sequence="4" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"
+  <menuitem id="menu_danhmuchanhchinh" name="Danh mục hành chính" sequence="1" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"
     icon="fa-usd"
     web_icon="account,static/description/icon.png" />
     <menuitem id="menu_phuongxa" name="Phường/xã" parent="menu_danhmuchanhchinh" action="phuongxa_action_form"/>
@@ -573,20 +573,20 @@
     <menuitem id="menu_dantoc" name="Dân tộc" parent="menu_danhmuchanhchinh" action="dantoc_action_form"/>
     <menuitem id="menu_tongiao" name="Tôn giáo" parent="menu_danhmuchanhchinh" action="tongiao_action_form"/>
 
-  <menuitem id="menu_thongtintruong" name="Quản lý các trường học" sequence="0"  groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"/> <!--New-->
+  <menuitem id="menu_thongtintruong" name="Quản lý các trường học" sequence="1"  groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"/> <!--New-->
     <menuitem id="menu_truong" name="Trường học" parent="menu_thongtintruong" action="truong_action_form"/>   <!--New-->
     <menuitem id="menu_caphoc" name="Cấp học" parent="menu_thongtintruong" action="caphoc_action_form"/>  <!--New-->
     <menuitem id="menu_captruong" name="Cấp trường" parent="menu_thongtintruong" action="captruong_action_form"/> <!--New-->
     <menuitem id="menu_hangtruong" name="Hạng trường" parent="menu_thongtintruong" action="hangtruong_action_form_sa" groups="group_systemadmin_l1,group_systemadmin_l2"/>   <!--New-->
     <menuitem id="menu_truongchuyenbiet" name="Trường chuyên biệt" parent="menu_thongtintruong" action="truongchuyenbiet_action_form_sa" groups="group_systemadmin_l1,group_systemadmin_l2"/>  <!--New-->
     <menuitem id="menu_loaihinhtruong" name="Loại hình trường" parent="menu_thongtintruong" action="loaihinhtruong_action_form_sa" groups="group_systemadmin_l1,group_systemadmin_l2"/> <!--New-->
-  <menuitem id="menu_truongquanly" name="Danh mục trường quản lý" sequence="3"
+  <menuitem id="menu_truongquanly" name="Danh mục trường quản lý" sequence="0"
     icon="fa-usd"
     web_icon="stock,static/description/icon.png"
     groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3,group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3,group_customer"/>
 
     <menuitem id="menu_noibonhatruong" name="Nội bộ nhà trường" parent="menu_truongquanly" sequence="3" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"/>
-      <menuitem id="menu_hocky" name="Tạo học kỳ mới" parent="menu_noibonhatruong" action="hocky_action_form_sa" sequence="0"/>
+      <menuitem id="menu_hocky" name="Quản lý kỳ học" parent="menu_noibonhatruong" action="hocky_action_form_sa" sequence="0"/>
       <menuitem id="menu_khoi" name="Khối học" parent="menu_noibonhatruong" action="khoi_action_form" sequence=""/>
       <menuitem id="menu_banhoc" name="Ban học" parent="menu_noibonhatruong" action="banhoc_action_form" sequence=""/>
       <menuitem id="menu_tobomon" name="Tổ bộ môn" parent="menu_noibonhatruong" action="bomon_action_form" sequence=""/>

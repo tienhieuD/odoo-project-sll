@@ -101,15 +101,38 @@ class hocky(models.Model):
     #             raise exceptions.ValidationError("Học kỳ đã kết thúc!")
     #         else:
     #             self.trangthai = 'DaKetThuc'
-    @api.constrains('trangthai')
-    def _trangthai_cont(self):
-        lst = self.env['solienlac.hocky'].search([
-            ('trangthai', '=', 'HienTai'),
-            ('namhoc', '=', self.namhoc),
-            ('truong.id', '=', self.truong.id),
-        ])
-        if(len(lst) > 1):
-            raise exceptions.ValidationError("Có 1 học kỳ đang ở trạng thái 'Hiện tại', hãy kết thúc nó trước khi tạo học kỳ mới")
+    @api.model
+    def create(self, values):
+        if values['trangthai'] == 'HienTai':
+            hk = self.env['solienlac.hocky'].search([
+                ('truong', '=', values['truong']),
+            ])
+            print hk
+            print len(hk)
+            if len(hk) > 1:
+                for val in hk:
+                    self.env['solienlac.hocky'].browse(val.id).write({'trangthai':'DaKetThuc'})
+
+            # Deo lien quan dau kemeno
+        hk = super(hocky, self).create(values)
+        return hk
+    @api.multi
+    def write(self, values):
+        print values.get('trangthai')
+        if values.get('trangthai') == 'HienTai':
+            print self.truong
+            hk = self.env['solienlac.hocky'].search([
+                ('truong', '=', self.truong.id),
+            ])
+            print hk
+            print len(hk)
+            if len(hk) > 1:
+                for val in hk:
+                    self.env['solienlac.hocky'].browse(val.id).write({'trangthai':'DaKetThuc'})
+
+            # Deo lien quan dau kemeno
+        hk = super(hocky, self).write(values)
+        return hk
 
     @api.constrains('truong', 'namhoc', 'hocky')
     def hocky_cont(self):

@@ -46,7 +46,7 @@
     </field>
   </record>
 
-  <menuitem id="menu_tai_khoan" name="Quản lý tài khoản" action="taikhoan_action_form"
+  <menuitem id="menu_tai_khoan" name="Quản lý tài khoản" action="taikhoan_action_form" sequence="1"
     icon="fa-usd"
     web_icon="website_customer,static/description/icon.png"
     groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3,group_schooladmin_l1"/>
