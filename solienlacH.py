@@ -2016,6 +2016,9 @@ class nhapdiemhocsinh(models.Model):
                         'hocky'       : self.hocky,
                         'namhoc'      : self.namhoc,
                         'monhoc'      : self.monhoc.id,
+                        'lop'         : self.lop.id,
+                        'khoi'        : self.lop.khoi.id,
+                        'truong'      : self.lop.khoi.truong.id,
                     }
                     self.env['solienlac.nhapdiemchitiet'].sudo().create(vals)
 
@@ -2032,6 +2035,20 @@ class nhapdiemhocsinh(models.Model):
 
 class nhapdiemchitiet(models.Model):
     _name = 'solienlac.nhapdiemchitiet'
+
+    lop = fields.Many2one(
+        string="Lớp",
+        comodel_name="solienlac.lop",
+    )
+    khoi = fields.Many2one(
+        string="Khối",
+        comodel_name="solienlac.khoi",
+    )
+    truong = fields.Many2one(
+        string="Trường",
+        comodel_name="solienlac.truong",
+    )
+
     @api.model
     def _get_list_namhoc(self):
         lst_namhoc=[]
@@ -2268,6 +2285,40 @@ class nhapdiemchitiet(models.Model):
             diemtk = str(float(tong)/float(he_so))[0:4]
 
             record.diemtongket = float(diemtk)
+
+    # lop = fields.Many2one(
+    #     string="Lớp",
+    #     comodel_name="solienlac.lop",
+    #     compute = '_get_lop_ato',
+    #     store=True,
+    # )
+    # @api.depends('hocsinh')
+    # def _get_lop_ato(self):
+    #     for r in self:
+    #         r.lop = hocsinh.lop
+
+    # khoi = fields.Many2one(
+    #     string="Khối",
+    #     comodel_name="solienlac.khoi",
+    #     compute = '_get_khoi_ato',
+    #     store=True,
+    # )
+    # @api.depends('hocsinh')
+    # def _get_khoi_ato(self):
+    #     for r in self:
+    #         r.khoi = hocsinh.lop.khoi
+    #
+    # truong = fields.Many2one(
+    #     string="Trường",
+    #     comodel_name="solienlac.truong",
+    #     compute = '_get_truong_ato',
+    #     store=True,
+    # )
+    # @api.depends('hocsinh')
+    # def _get_truong_ato(self):
+    #     for r in self:
+    #         r.truong = hocsinh.lop.khoi.truong
+
 
 class Users(models.Model):
     _name = 'solienlac.taikhoan'
