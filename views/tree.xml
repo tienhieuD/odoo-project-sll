@@ -253,9 +253,9 @@
       <field name="model">solienlac.diemdanhhocsinh</field>
       <field name="arch" type="xml">
         <tree string="Điểm danh học sinh">
-          <field name="giaovien"/>
-          <field name="lop"/>
           <field name="ngayvang"/>
+          <field name="lop"/>
+          <field name="giaovien"/>
           <field name="hocky"/>
           <field name="namhoc"/>
         </tree>
