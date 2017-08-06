@@ -514,7 +514,7 @@ class monhoc_has_giaovien(models.Model):
         selection=[
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
-        ],default = '_get_hockyhientai',required=True, readonly=True)
+        ],required=True, )
     monhoc = fields.Many2one('solienlac.monhoc', string='Môn học',required=True)
     giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên')
     lop = fields.Many2one('solienlac.lop', string='Lớp',required=True)
