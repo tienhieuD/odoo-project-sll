@@ -471,6 +471,9 @@
      <field name="model">solienlac.nhapdiemchitiet</field>
      <field name="arch" type="xml">
        <tree string="Nhập điểm chi tiết" editable='bottom' create="false">
+         <field name="namhoc" readonly="1"/>
+         <field name="hocky" readonly="1"/>
+         <field name="monhoc" readonly="1"/>
          <field name="hocsinh" readonly="1"/>
          <field name="monhoc" groups="solienlac.group_customer"/>
          <field name="diemmieng1"/>
