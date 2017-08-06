@@ -616,7 +616,7 @@
               </group>
               <group colspan="4" string='Thông tin tài khoản'>
                 <field name="username"/>
-                <field name="password"/>
+                <field name="password" password="True"/>
               </group>
               <group colspan="4" string='Nguồn gốc và tình trạng học sinh'>
                 <group colspan="2" col="2">

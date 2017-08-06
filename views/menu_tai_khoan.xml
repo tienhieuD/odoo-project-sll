@@ -34,7 +34,7 @@
         <sheet>
           <group>
             <field name="login"/>
-            <field name="password"/>
+            <field name="password" password="True"/>
             <field name="quyen"/>
             <field name="string" invisible='1'/>
             <field name="truong"/>

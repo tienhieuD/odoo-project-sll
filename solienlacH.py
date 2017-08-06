@@ -1137,7 +1137,7 @@ class hocsinh(models.Model):
     phuhuynh = fields.Many2many('solienlac.phuhuynh', string='Phụ huynh')
     hanhkiem = fields.One2many("solienlac.hanhkiem", "hocsinh", string="Hạnh kiểm")
     ketquahoctap = fields.One2many('solienlac.ketquahoctap', 'hocsinh', string="Kết quả học tập")
-    bangdiem = fields.One2many('solienlac.bangdiem', 'hocsinh', string="Bảng điểm")
+    bangdiem = fields.One2many('solienlac.nhapdiemchitiet', 'hocsinh', string="Bảng điểm")
     nenep = fields.One2many('solienlac.nenep', 'hocsinh', string="Nề nếp")
     noitru = fields.Boolean('Nội trú', default=False)
     # @api.onchange('noitru')
