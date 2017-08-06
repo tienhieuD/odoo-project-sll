@@ -1071,15 +1071,15 @@ class hocsinh(models.Model):
     _rec_name = 'hoten' # optional
 
     mahocsinh = fields.Char('Mã học sinh', required='True')
-    @api.constrains('mahocsinh')
-    def _hocsinh_uinq(self):
-        lst = self.env['solienlac.hocsinh'].search([])
-        lst = map(lambda x: x.mahocsinh, lst)
-        lst.remove(self.mahocsinh)
-        if self.mahocsinh in lst:
-            raise exceptions.ValidationError(' Mã học sinh đã tồn tại.')
-        else:
-            pass
+    # @api.constrains('mahocsinh')
+    # def _hocsinh_uinq(self):
+    #     lst = self.env['solienlac.hocsinh'].search([])
+    #     lst = map(lambda x: x.mahocsinh, lst)
+    #     lst.remove(self.mahocsinh)
+    #     if self.mahocsinh in lst:
+    #         raise exceptions.ValidationError(' Mã học sinh đã tồn tại.')
+    #     else:
+    #         pass
     hoten = fields.Char('Họ tên', required='True')
     gioitinh = fields.Selection([
         ('Nam', 'Nam'),
@@ -1254,7 +1254,7 @@ class hocsinh(models.Model):
     @api.model
     def create(self, values):
         groups1 = self.env['res.groups'].search([
-            ('name','ilike','customer_tai_khoan_hoc_sinh'),
+            ('name','ilike','CUST:'),
         ])[0].id
         lop_id = values['lop']
         truong_id = self.env['solienlac.lop'].search([
@@ -1621,8 +1621,8 @@ class chucvu(models.Model):
     def _validate_machucvu(self):
         lst_macv = self.env['solienlac.chucvu'].search([])
         lst_macv = map(lambda cv : cv.machucvu, lst_macv)
-        print lst_macv
-        if self.machucvu in lst_macv[0:-1]:
+        lst_macv.remove(self.machucvu)
+        if self.machucvu in lst_macv:
             raise exceptions.ValidationError("Mã chức vụ đã tồn tại")
         else:
             pass
@@ -1953,6 +1953,7 @@ class nhapdiemhocsinh(models.Model):
             ('monhoc.id','=',current_monhoc_id),
             ('hocky','=',self.hocky),
             ('namhoc','=',self.namhoc),
+            ('giaovien.id','=',self.env.user.giaovien.id)
         ])
         lst_lop = map(lambda x: x.lop.id, lst_phanban)
         print 'id lop cua giao vien dang giang day mon nay:'
@@ -1960,8 +1961,8 @@ class nhapdiemhocsinh(models.Model):
         return {'domain':{'lop': [('id', 'in', lst_lop)]}}
 
     @api.multi
-    @api.onchange('lop','namhoc','hocky','napdulieu')
-    def _compute_model(self):
+    # @api.onchange('lop','namhoc','hocky','napdulieu')
+    def compute_model(self):
         self.test1 = str(self.env.uid) + str(random.randint(0,10))
         # Get hocsinh object
         def get_hs(self, id):
@@ -2024,6 +2025,9 @@ class nhapdiemhocsinh(models.Model):
                         'hocky'       : self.hocky,
                         'namhoc'      : self.namhoc,
                         'monhoc'      : self.monhoc.id,
+                        'lop'         : self.lop.id,
+                        'khoi'        : self.lop.khoi.id,
+                        'truong'      : self.lop.khoi.truong.id,
                     }
                     self.env['solienlac.nhapdiemchitiet'].sudo().create(vals)
 
@@ -2040,6 +2044,20 @@ class nhapdiemhocsinh(models.Model):
 
 class nhapdiemchitiet(models.Model):
     _name = 'solienlac.nhapdiemchitiet'
+
+    lop = fields.Many2one(
+        string="Lớp",
+        comodel_name="solienlac.lop",
+    )
+    khoi = fields.Many2one(
+        string="Khối",
+        comodel_name="solienlac.khoi",
+    )
+    truong = fields.Many2one(
+        string="Trường",
+        comodel_name="solienlac.truong",
+    )
+
     @api.model
     def _get_list_namhoc(self):
         lst_namhoc=[]
@@ -2096,7 +2114,7 @@ class nhapdiemchitiet(models.Model):
     diem1tiet5 = fields.Char('4')
     diem1tiet6 = fields.Char('5')
     diemhocky = fields.Char('Điểm học kỳ')
-    diemtongket = fields.Char(string='Tổng kểt', store=True, compute='_compute_final')
+    diemtongket = fields.Float(string='Tổng kểt', store=True, compute='_compute_final')
     xephang = fields.Integer('#')
 
     @api.onchange('diemhocky',)
@@ -2275,7 +2293,41 @@ class nhapdiemchitiet(models.Model):
             tong  = sum(lst_diem_mieng) + sum(lst_diem_15) + 2*sum(lst_diem_1t) + 3*convert_to_float(record.diemhocky)
             diemtk = str(float(tong)/float(he_so))[0:4]
 
-            record.diemtongket = diemtk
+            record.diemtongket = float(diemtk)
+
+    # lop = fields.Many2one(
+    #     string="Lớp",
+    #     comodel_name="solienlac.lop",
+    #     compute = '_get_lop_ato',
+    #     store=True,
+    # )
+    # @api.depends('hocsinh')
+    # def _get_lop_ato(self):
+    #     for r in self:
+    #         r.lop = hocsinh.lop
+
+    # khoi = fields.Many2one(
+    #     string="Khối",
+    #     comodel_name="solienlac.khoi",
+    #     compute = '_get_khoi_ato',
+    #     store=True,
+    # )
+    # @api.depends('hocsinh')
+    # def _get_khoi_ato(self):
+    #     for r in self:
+    #         r.khoi = hocsinh.lop.khoi
+    #
+    # truong = fields.Many2one(
+    #     string="Trường",
+    #     comodel_name="solienlac.truong",
+    #     compute = '_get_truong_ato',
+    #     store=True,
+    # )
+    # @api.depends('hocsinh')
+    # def _get_truong_ato(self):
+    #     for r in self:
+    #         r.truong = hocsinh.lop.khoi.truong
+
 
 class Users(models.Model):
     _name = 'solienlac.taikhoan'
@@ -2292,10 +2344,11 @@ class Users(models.Model):
         user_groups_id = self.env.user.groups_id
         user_groups_id = map(lambda x: x.id, user_groups_id)
 
-        system_admin_level_1_id = self.env['res.groups'].sudo().search([('name','like','system_admin_level_1')])[0].id
-        system_admin_level_2_id = self.env['res.groups'].sudo().search([('name','like','system_admin_level_2')])[0].id
-        system_admin_level_3_id = self.env['res.groups'].sudo().search([('name','like','system_admin_level_3')])[0].id
-        school_admin_level_1_hieu_truong_id = self.env['res.groups'].sudo().search([('name','like','school_admin_level_1_hieu_truong')])[0].id
+        system_admin_level_1_id = self.env['res.groups'].sudo().search([('name','like','SYA1:')])[0].id
+        system_admin_level_2_id = self.env['res.groups'].sudo().search([('name','like','SYA2:')])[0].id
+        system_admin_level_3_id = self.env['res.groups'].sudo().search([('name','like','SYA3:')])[0].id
+        school_admin_level_1_hieu_truong_id = self.env['res.groups'].sudo().search([('name','like','SCA1:')])[0].id
+        cus = self.env['res.groups'].sudo().search([('name','like','CUST:')])[0].id
 
         result = solienlac_groups_id
 
@@ -2304,7 +2357,7 @@ class Users(models.Model):
         print user_groups_id
 
         if (system_admin_level_1_id in user_groups_id):
-            result = solienlac_groups_id
+            pass
 
         if (system_admin_level_2_id in user_groups_id):
             result.remove(system_admin_level_1_id)
@@ -2348,10 +2401,10 @@ class Users(models.Model):
 
     @api.model
     def create(self, values):
-        system_admin_level_1_id = self.env['res.groups'].sudo().search([('name','like','system_admin_level_1')])[0].id
-        system_admin_level_2_id = self.env['res.groups'].sudo().search([('name','like','system_admin_level_2')])[0].id
-        system_admin_level_3_id = self.env['res.groups'].sudo().search([('name','like','system_admin_level_3')])[0].id
-        school_admin_level_1_hieu_truong_id = self.env['res.groups'].sudo().search([('name','like','school_admin_level_1_hieu_truong')])[0].id
+        system_admin_level_1_id = self.env['res.groups'].sudo().search([('name','like','SYA1:')])[0].id
+        system_admin_level_2_id = self.env['res.groups'].sudo().search([('name','like','SYA2:')])[0].id
+        system_admin_level_3_id = self.env['res.groups'].sudo().search([('name','like','SYA3:')])[0].id
+        school_admin_level_1_hieu_truong_id = self.env['res.groups'].sudo().search([('name','like','SCA1:')])[0].id
 
         # user_groups_id = self.env.user.groups_id
         # user_groups_id = map(lambda x: x.id, user_groups_id)
