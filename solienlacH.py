@@ -2127,7 +2127,7 @@ class nhapdiemhocsinh(models.Model):
     @api.constrains('monhoc', 'hocky', 'namhoc')
     def _nhapdiemhocsinh_uniq(self):
         mycount = self.env['solienlac.nhapdiemhocsinh'].search_count([
-            ('hocsinh.lop.id','=',self.lop.id),
+            ('lop.id','=',self.lop.id),
             ('hocky','=',self.hocky), # notice, how about a year
             ('namhoc','=',self.namhoc),
             ('monhoc.id','=',self.monhoc.id),
