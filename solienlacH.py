@@ -83,24 +83,24 @@ class hocky(models.Model):
         ('HienTai', 'Hiện tại'),
         ('DaKetThuc', 'Đã kết thúc')
     ],string='Trạng thái', default='HienTai')
-    ketthuchocky = fields.Boolean('Kết thúc học kỳ', default=False)
+    # ketthuchocky = fields.Boolean('Kết thúc học kỳ', default=False)
     truong = fields.Many2one('solienlac.truong', string='Trường', default=lambda self:self.env.user.truong, required=True,)
     # groups='solienlac.group_schooladmin_l1'
     # truong_sa = fields.Many2one('solienlac.truong', string='Trường', required=True)
     ghichu = fields.Char('Ghi chú')
 
-    @api.onchange('trangthai')
-    def _fomat_ketthuchocky(self):
-        if self.trangthai == 'HienTai':
-            self.ketthuchocky = False
+    # @api.onchange('trangthai')
+    # def _fomat_ketthuchocky(self):
+    #     if self.trangthai == 'HienTai':
+    #         self.ketthuchocky = False
 
-    @api.onchange('ketthuchocky')
-    def _fomat_trangthai(self):
-        if self.ketthuchocky:
-            if self.trangthai == 'DaKetThuc':
-                raise exceptions.ValidationError("Học kỳ đã kết thúc!")
-            else:
-                self.trangthai = 'DaKetThuc'
+    # @api.onchange('ketthuchocky')
+    # def _fomat_trangthai(self):
+    #     if self.ketthuchocky:
+    #         if self.trangthai == 'DaKetThuc':
+    #             raise exceptions.ValidationError("Học kỳ đã kết thúc!")
+    #         else:
+    #             self.trangthai = 'DaKetThuc'
     @api.constrains('trangthai')
     def _trangthai_cont(self):
         lst = self.env['solienlac.hocky'].search([
@@ -485,7 +485,7 @@ class monhoc_has_giaovien(models.Model):
     def _get_namhoc_now(self):
         now = datetime.datetime.now()
         year = now.year
-        if now.month <= 9:
+        if now.month < 8:
             year -= 1
         return str(year) + "-" + str(year+1)
 
@@ -494,21 +494,30 @@ class monhoc_has_giaovien(models.Model):
         selection= _get_list_namhoc,
         default = _get_namhoc_now,
         required=True,
+        readonly=True
     )
     #---------- end define fields namhoc ------------
-
+    # @api.model
+    # def _get_hockyhientai(self):
+    #     c = self.env['solienlac.hocky'].search([
+    #         ('trangthai', '=', 'HienTai'),
+    #         ('truong.id', '=', self.lop.khoi.truong.id)
+    #     ])
+    #     if len(c)>1:
+    #         hocky = map(lambda x: x.hocky, c)
+    #         return hocky
+    #     else:
+    #         s=u'Truong hoc chua tao hoc ky hien tai !.'
+    #         raise exceptions.ValidationError(s)
     hocky = fields.Selection(
         string="Học kỳ",
         selection=[
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
-                ('iii', 'Cả năm'),
-        ],default = 'i',required=True)
+        ],default = '_get_hockyhientai',required=True, readonly=True)
     monhoc = fields.Many2one('solienlac.monhoc', string='Môn học',required=True)
     giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên')
     lop = fields.Many2one('solienlac.lop', string='Lớp',required=True)
-    ngaybatdau = fields.Date('Ngày bắt đầu:')
-    ngayketthuc = fields.Date('Ngày kết thúc: ')
 
     @api.constrains('hocky','namhoc','lop','monhoc')
     def _validate_phancong(self):
@@ -522,7 +531,7 @@ class monhoc_has_giaovien(models.Model):
         if n>1:
             obj = map(lambda x: x.giaovien, obj)
             obj.remove(self.giaovien)
-            s=u'Môn học này đã được phân công cho giáo viên ' + obj[0].hoten + " ("+obj[0].magiaovien+")"
+            s=u'Dữ liệu đã tồn tại !.'
             raise exceptions.ValidationError(s)
         else:
             pass

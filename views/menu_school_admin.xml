@@ -439,26 +439,25 @@
     <field name="view_mode">tree,form</field>
   </record>
 
-  <menuitem id="menu_thongtintruong_school_admin" name="Thông tin nhà trường" parent="menu_truongquanly" sequence="" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/> <!--New-->
-    <menuitem id="menu_truong_school_admin" name="Thông tin trường" parent="menu_thongtintruong_school_admin" action="truong_school_admin_action_form" sequence=""/>
-  <menuitem id="menu_noibonhatruong_school_admin" name="Nội bộ nhà trường" parent="menu_truongquanly" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/>
-    <menuitem id="menu_hocky_school_admin_" name="Tạo học kỳ mới" parent="menu_noibonhatruong_school_admin" action="hocky_action_form_sca" sequence="0" groups="group_schooladmin_l1"/>
-    <menuitem id="menu_giaovien_school_admin" name="Giáo viên" parent="menu_noibonhatruong_school_admin" action="giaovien_school_admin_action_form" sequence=""/>
-    <menuitem id="menu_phongban_school_admin" name="Phòng ban" parent="menu_noibonhatruong_school_admin" action="phongban_school_admin_action_form" sequence=""/>
-    <menuitem id="menu_khoi_school_admin" name="Khối học" parent="menu_noibonhatruong_school_admin" action="khoi_school_admin_action_form" sequence=""/>
-    <menuitem id="menu_lop_school_admin" name="Lớp học" parent="menu_noibonhatruong_school_admin" action="lop_school_admin_action_form" sequence=""/>
-    <menuitem id="menu_monhoc_school_admin" name="Môn học" parent="menu_noibonhatruong_school_admin" action="monhoc_school_admin_action_form" sequence=""/>
-    <menuitem id="menu_banhoc_school_admin" name="Ban học" parent="menu_noibonhatruong_school_admin" action="banhoc_school_admin_action_form" sequence=""/>
-    <menuitem id="menu_tobomon_school_admin" name="Tổ bộ môn" parent="menu_noibonhatruong_school_admin" action="bomon_school_admin_action_form" sequence=""/>
-  <menuitem sequence="0" id="menu_quanlyhocsinh_school_admin" name="Quản lý học sinh" parent="menu_truongquanly" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/>
-    <menuitem id="menu_hocsinh_school_admin" name="Học sinh" parent="menu_quanlyhocsinh_school_admin" action="hocsinh_school_admin_action_form"/>
-    <menuitem id="menu_nhapdiemhocsinh_school_admin" name="Xem và nhập điểm học sinh" parent="menu_quanlyhocsinh_school_admin" action="nhapdiemhocsinh_school_admin_action_form" sequence=""/>
-    <!-- <menuitem id="menu_nhapdiemchitiet_school_admin" name="Nhập điểm CT" parent="menu_quanlyhocsinh_school_admin" action="nhapdiemchitiet_school_admin_action_form" sequence=""/> -->
-    <menuitem id="menu_bangdiemdanh_school_admin_" name="Bảng điểm danh" parent="menu_quanlyhocsinh_school_admin" action="diemdanhhocsinh_action_form_sca" sequence=""/>
-    <!-- <menuitem id="menu_chucvu_school_admin" name="Chức vụ học sinh" parent="menu_quanlyhocsinh_school_admin" action="chucvu_school_admin_action_form" sequence=""/> -->
-    <menuitem id="menu_khenthuong_hocsinh_school_admin" name="Khen thưởng học sinh" parent="menu_quanlyhocsinh_school_admin" action="khenthuonghocsinh_school_admin_action_form" groups="group_schooladmin_l1,group_schooladmin_l22"  sequence=""/>
-    <menuitem id="menu_kyluat_hocsinh_school_admin" name="Kỷ luật học sinh" parent="menu_quanlyhocsinh_school_admin" action="kyluathocsinh_school_admin_action_form"  groups="group_schooladmin_l1,group_schooladmin_l22" sequence=""/>
-    <menuitem id="menu_phuhuynh_school_admin" name="Phụ huynh học sinh" parent="menu_quanlyhocsinh_school_admin" action="phuhuynh_school_admin_action_form" groups="group_schooladmin_l1,group_schooladmin_l22" sequence=""/>
-  <!-- <menuitem id="menu_khac_school_admin" name="Khác" parent="menu_truongquanly" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/> -->
-    <!-- <menuitem id="menu_doituongchinhsach_school_admin" name="Đối tượng chính sách" parent="menu_khac_school_admin" action="doituongchinhsach_school_admin_action_form" sequence=""/> -->
+    <menuitem id="menu_noibonhatruong_sca" name="Nội bộ nhà trường" parent="menu_truongquanly" sequence="3" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/>
+      <menuitem id="menu_hocky_school_admin_" name="Tạo học kỳ mới" parent="menu_noibonhatruong_sca" action="hocky_action_form_sca" sequence="0" groups="group_schooladmin_l1"/>
+      <menuitem id="menu_khoi_school_admin" name="Khối học" parent="menu_noibonhatruong_sca" action="khoi_school_admin_action_form" sequence=""/>
+      <menuitem id="menu_banhoc_school_admin" name="Ban học" parent="menu_noibonhatruong_sca" action="banhoc_school_admin_action_form" sequence=""/>
+      <menuitem id="menu_tobomon_school_admin" name="Tổ bộ môn" parent="menu_noibonhatruong_sca" action="bomon_school_admin_action_form" sequence=""/>
+    <menuitem id="menu_quanlynhansu_sca" name="Quản lý nhân sự" parent="menu_truongquanly" sequence="2" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/>
+      <menuitem id="menu_phongban_school_admin" name="Phòng ban" parent="menu_quanlynhansu_sca" action="phongban_school_admin_action_form" sequence=""/>
+      <menuitem id="menu_giaovien_school_admin" name="Giáo viên" parent="menu_quanlynhansu_sca" action="giaovien_school_admin_action_form" sequence=""/>
+      <menuitem id="menu_phanconggiangday_sca" name="Phân công giảng dạy" parent="menu_quanlynhansu_sca" action="phanconggiangday_action_form" sequence=""/>
+    <menuitem id="menu_quanlyhocsinh_sca" name="Quản lý học sinh" parent="menu_truongquanly" sequence="1" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/>
+      <menuitem id="menu_lop_school_admin" name="Danh sách lớp học" parent="menu_quanlyhocsinh_sca" action="lop_school_admin_action_form" sequence=""/>
+      <menuitem id="menu_hocsinh_school_admin" name="Danh sách học sinh" parent="menu_quanlyhocsinh_sca" action="hocsinh_school_admin_action_form"/>
+      <menuitem id="menu_bangdiemdanh_school_admin_" name="Điểm danh" parent="menu_quanlyhocsinh_sca" action="diemdanhhocsinh_action_form_sca" sequence=""/>
+      <menuitem id="menu_chucvu_school_admin" name="Chức vụ học sinh" parent="menu_quanlyhocsinh_sca" action="chucvu_school_admin_action_form" sequence="" groups="group_schooladmin_l1"/>
+      <menuitem id="menu_khenthuong_hocsinh_school_admin" name="Khen thưởng học sinh" parent="menu_quanlyhocsinh_sca" action="khenthuonghocsinh_school_admin_action_form" groups="group_schooladmin_l1,group_schooladmin_l22"  sequence=""/>
+      <menuitem id="menu_kyluat_hocsinh_school_admin" name="Kỷ luật học sinh" parent="menu_quanlyhocsinh_sca" action="kyluathocsinh_school_admin_action_form"  groups="group_schooladmin_l1,group_schooladmin_l22" sequence=""/>
+      <menuitem id="menu_chucvu_school_admin" name="Chức vụ học sinh" parent="menu_quanlyhocsinh_sca" action="chucvu_school_admin_action_form" sequence="" groups="group_schooladmin_l1"/>
+      <menuitem id="menu_phuhuynh_school_admin" name="Phụ huynh học sinh" parent="menu_quanlyhocsinh_sca" action="phuhuynh_school_admin_action_form" groups="group_schooladmin_l1,group_schooladmin_l22" sequence=""/>
+    <menuitem id="menu_quanlydiemvamonhoc_sca" name="Quản lý điểm và môn học" parent="menu_truongquanly" sequence="0" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/>
+      <menuitem id="menu_monhoc_school_admin" name="Danh sách môn học" parent="menu_quanlydiemvamonhoc_sca" action="monhoc_school_admin_action_form" sequence=""/>
+      <menuitem id="menu_nhapdiemhocsinh_school_admin" name="Nhập điểm học sinh" parent="menu_quanlydiemvamonhoc_sca" action="nhapdiemhocsinh_school_admin_action_form" sequence=""/>
 </odoo>

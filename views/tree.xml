@@ -38,6 +38,7 @@
       <field name="model">solienlac.monhoc_has_giaovien</field>
       <field name="arch" type="xml">
         <tree string="">
+          <field name="giaovien"/>
           <field name="lop"/>
           <field name="monhoc"/>
           <field name="hocky"/>

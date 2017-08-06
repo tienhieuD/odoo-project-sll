@@ -120,9 +120,9 @@
                 <field name="tinhtranghonnhan"/>
               </group>
               <notebook colspan="4">
-                <page string="Phân công giảng dạy">
+                <!-- <page string="Phân công giảng dạy">
                   <field name="monhoc"/>
-                </page>
+                </page> -->
                 <page string="Lớp chủ nhiệm">
                   <field name="lop"/>
                 </page>
@@ -732,7 +732,7 @@
               </group>
               <group colspan='2' col='2'>
                 <field name="trangthai"/>
-                <field name="ketthuchocky"/>
+                <!-- <field name="ketthuchocky"/> -->
                 <field name="ghichu"/>
               </group>
             </group>
@@ -847,13 +847,16 @@
       <field name="arch" type="xml">
         <form string="Phân công giảng dạy">
           <sheet>
-            <group>
-              <field name="monhoc"/>
-              <field name="hocky"/>
-              <field name="namhoc"/>
-              <field name="lop"/>
-              <field name="ngaybatdau"/>
-              <field name="ngayketthuc"/>
+            <group colspan='4' col='4'>
+              <group colspan='2' col='2'>
+                <field name="giaovien" options="{'no_create_edit': True}"/>
+                <field name="monhoc" options="{'no_create_edit': True}"/>
+                <field name="lop" options="{'no_create_edit': True}"/>
+              </group>
+              <group colspan='2' col='2'>
+                <field name="namhoc"/>
+                <field name="hocky"/>
+              </group>
             </group>
           </sheet>
         </form>
