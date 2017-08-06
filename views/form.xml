@@ -684,16 +684,11 @@
       <field name="model">solienlac.nhapdiemhocsinh</field>
       <field name="arch" type="xml">
         <form string="Nhập điểm học sinh">
-
           <sheet>
-
                 <h3 align='center'>Nhập điểm học sinh</h3>
-
             <group colspan='4' col='4'>
               <group colspan='1' col='1'></group>
               <group colspan='2' col='2'>
-
-
                 <field name="hocky"/>
                 <field name="namhoc"/>
                 <field name="giaovien" options="{'no_create_edit': True}"/>
@@ -706,7 +701,6 @@
                 <!-- <field name="test1"/> -->
               </group>
               <group colspan='1' col='1'></group>
-
             </group>
             <p align='center'>
               <button string="Tải danh sách học sinh" type="object" name="compute_model"/>
