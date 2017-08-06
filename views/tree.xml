@@ -359,10 +359,12 @@
       <field name="model">solienlac.hanhkiem</field>
       <field name="arch" type="xml">
         <tree string="Hạnh kiểm">
+          <field name="hocsinh"/>
           <field name="namhoc"/>
           <field name="hocky"/>
           <field name="xeploai"/>
           <field name="nhanxetcuagiaovien"/>
+          <field name="giaovien"/>
           <field name="ghichu"/>
         </tree>
       </field>
@@ -392,6 +394,7 @@
      <field name="model">solienlac.nenep</field>
      <field name="arch" type="xml">
        <tree string="Nề nếp học đường">
+         <field name="hocsinh"/>
          <field name="namhoc"/>
          <field name="hocky"/>
          <field name="dongphuc"/>

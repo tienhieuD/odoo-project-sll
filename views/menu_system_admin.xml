@@ -258,7 +258,7 @@
   <record id="hanhkiem_action_form" model="ir.actions.act_window">
     <field name="name">Hạnh kiểm</field>
     <field name="res_model">solienlac.hanhkiem</field>
-    <field name="context">{'group_by':['namhoc','hocky','hocsinh',]}</field>
+    <field name="context">{'group_by':['truong','namhoc','hocky','khoi','lop',]}</field>
     <field name="view_mode">tree,form</field>
     <field name="help" type="html">
       <p class="oe_view_nocontent_create">
@@ -425,7 +425,7 @@
   <record id="nenep_action_form" model="ir.actions.act_window">
     <field name="name">Nề nếp</field>
     <field name="res_model">solienlac.nenep</field>
-    <field name="context">{'group_by':['namhoc','hocky','hocsinh',]}</field>
+    <field name="context">{'group_by':['truong','namhoc','hocky','khoi','lop',]}</field>
     <field name="view_mode">tree,form</field>
     <field name="help" type="html">
       <p class="oe_view_nocontent_create">
