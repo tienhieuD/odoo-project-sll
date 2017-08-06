@@ -413,7 +413,7 @@
   <record id="nhapdiemchitiet_school_admin_action_form_theohs" model="ir.actions.act_window">
     <field name="name">Nhập điểm chi tiết</field>
     <field name="res_model">solienlac.nhapdiemchitiet</field>
-    <field name="context">{'group_by':['namhoc','hocky','truong','khoi','lop','hocsinh',]}</field>
+    <field name="context">{'group_by':['namhoc','hocky','truong','khoi','lop','hocsinh','monhoc']}</field>
     <field name="view_mode">tree,form</field>
     <field name="help" type="html">
       <p class="oe_view_nocontent_create">
@@ -461,7 +461,7 @@
   </record>
 
     <menuitem id="menu_noibonhatruong_sca" name="Nội bộ nhà trường" parent="menu_truongquanly" sequence="3" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/>
-      <menuitem id="menu_hocky_school_admin_" name="Quản lý kỳ học" parent="menu_noibonhatruong_sca" action="hocky_action_form_sca" sequence="0" groups="group_schooladmin_l1"/>
+      <menuitem id="menu_hocky_school_admin_" name="Tạo học kỳ mới" parent="menu_noibonhatruong_sca" action="hocky_action_form_sca" sequence="0" groups="group_schooladmin_l1"/>
       <menuitem id="menu_khoi_school_admin" name="Khối học" parent="menu_noibonhatruong_sca" action="khoi_school_admin_action_form" sequence=""/>
       <menuitem id="menu_banhoc_school_admin" name="Ban học" parent="menu_noibonhatruong_sca" action="banhoc_school_admin_action_form" sequence=""/>
       <menuitem id="menu_tobomon_school_admin" name="Tổ bộ môn" parent="menu_noibonhatruong_sca" action="bomon_school_admin_action_form" sequence=""/>
