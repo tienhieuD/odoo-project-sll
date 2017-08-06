@@ -2438,6 +2438,8 @@ class diemdanhhocsinh(models.Model):
     _name = 'solienlac.diemdanhhocsinh'
     _rec_name = 'giaovien' # optional
 
+
+
     test1 = fields.Char()
     ngayvang = fields.Date(string="Ngày", default = datetime.datetime.now())
     @api.onchange('ngayvang')
@@ -2627,6 +2629,9 @@ class diemdanhhocsinh(models.Model):
                         'namhoc'      : self.namhoc,
                         'monhoc'      : self.monhoc.id,
                         'ngayvang'    : self.ngayvang,
+                        'lop'         : self.lop.id,
+                        'khoi'        : self.lop.khoi.id,
+                        'truong'      : self.lop.khoi.truong.id,
                     }
                     self.env['solienlac.diemdanhchitiet'].sudo().create(vals)
 
@@ -2644,6 +2649,20 @@ class diemdanhhocsinh(models.Model):
 
 class diemdanhchitiet(models.Model):
     _name = 'solienlac.diemdanhchitiet'
+
+    lop = fields.Many2one(
+        string="Lớp",
+        comodel_name="solienlac.lop",
+    )
+    khoi = fields.Many2one(
+        string="Khối",
+        comodel_name="solienlac.khoi",
+    )
+    truong = fields.Many2one(
+        string="Trường",
+        comodel_name="solienlac.truong",
+    )
+
     ngayvang = fields.Date(string="Ngày", )
     vang = fields.Boolean(string="Vắng", )
     ghichu = fields.Char(string="Ghi chú", )
