@@ -480,6 +480,22 @@
     </field>
   </record>
 
+  <!--nhapdiemchitiet-->
+  <record id="nhapdiemchitiet_action_form_ths" model="ir.actions.act_window">
+    <field name="name">Nhập điểm chi tiết</field>
+    <field name="res_model">solienlac.nhapdiemchitiet</field>
+    <field name="view_mode">tree</field>
+    <field name="context">{'group_by':['namhoc','hocky','truong','khoi','lop','hocsinh',]}</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
   <record id="diemdanhchitiet_action_form" model="ir.actions.act_window">
     <field name="name">Điểm danh chi tiết</field>
     <field name="res_model">solienlac.diemdanhchitiet</field>
@@ -597,7 +613,8 @@
     <menuitem id="menu_quanlydiemvamonhoc" name="Quản lý điểm và môn học" parent="menu_truongquanly" sequence="0" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"/>
       <menuitem id="menu_monhoc" name="Danh sách môn học" parent="menu_quanlydiemvamonhoc" action="monhoc_action_form" sequence=""/>
       <menuitem id="menu_nhapdiemhocsinh" name="Nhập điểm học sinh" parent="menu_quanlydiemvamonhoc" action="nhapdiemhocsinh_action_form" sequence=""/>
-      <menuitem id="menu_nhapdiemchitiet" name="Xem điểm học sinh" parent="menu_quanlydiemvamonhoc" action="nhapdiemchitiet_action_form" sequence=""/>
+      <menuitem id="menu_nhapdiemchitiet" name="Xem điểm học sinh theo môn" parent="menu_quanlydiemvamonhoc" action="nhapdiemchitiet_action_form" sequence=""/>
+      <menuitem id="menu_nhapdiemchitiet_ths" name="Xem điểm học sinh theo cá nhân" parent="menu_quanlydiemvamonhoc" action="nhapdiemchitiet_action_form_ths" sequence=""/>
     <menuitem id="menu_khac" name="Khác" parent="menu_truongquanly" sequence="5" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"/>
       <menuitem id="menu_doituongchinhsach" name="Đối tượng chính sách" parent="menu_khac" action="doituongchinhsach_action_form" sequence=""/>
 </odoo>

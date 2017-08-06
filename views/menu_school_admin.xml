@@ -407,6 +407,22 @@
     </field>
   </record>
 
+  <!--nhapdiemchitiet-->
+  <record id="nhapdiemchitiet_school_admin_action_form_theohs" model="ir.actions.act_window">
+    <field name="name">Nhập điểm chi tiết</field>
+    <field name="res_model">solienlac.nhapdiemchitiet</field>
+    <field name="context">{'group_by':['namhoc','hocky','truong','khoi','lop','hocsinh',]}</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+        <!-- Add Text Here -->
+      </p>
+      <p>
+        <!-- More details about what a user can do -->
+      </p>
+    </field>
+  </record>
+
   <!--doituongchinhsach-->
   <record id="doituongchinhsach_school_admin_action_form" model="ir.actions.act_window">
     <field name="name">Đối tượng chính sách</field>
@@ -461,5 +477,6 @@
     <menuitem id="menu_quanlydiemvamonhoc_sca" name="Quản lý điểm và môn học" parent="menu_truongquanly" sequence="0" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/>
       <menuitem id="menu_monhoc_school_admin" name="Danh sách môn học" parent="menu_quanlydiemvamonhoc_sca" action="monhoc_school_admin_action_form" sequence=""/>
       <menuitem id="menu_nhapdiemhocsinh_school_admin" name="Nhập điểm học sinh" parent="menu_quanlydiemvamonhoc_sca" action="nhapdiemhocsinh_school_admin_action_form" sequence=""/>
-      <menuitem id="menu_nhapdiemchitiet_school_admin" name="Xem điểm học sinh" parent="menu_quanlydiemvamonhoc_sca" action="nhapdiemchitiet_school_admin_action_form" sequence=""/>
+      <menuitem id="menu_nhapdiemchitiet_school_admin" name="Xem điểm học sinh theo môn" parent="menu_quanlydiemvamonhoc_sca" action="nhapdiemchitiet_school_admin_action_form" sequence=""/>
+      <menuitem id="menu_nhapdiemchitiet_school_admin_theohs" name="Xem điểm học sinh theo cá nhân" parent="menu_quanlydiemvamonhoc_sca" action="nhapdiemchitiet_school_admin_action_form_theohs" sequence=""/>
 </odoo>
