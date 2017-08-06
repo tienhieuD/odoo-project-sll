@@ -579,9 +579,8 @@
       <menuitem id="menu_bangdiemdanh" name="Điểm danh" parent="menu_quanlyhocsinh" action="diemdanhhocsinh_action_form_sa" sequence=""/>
       <!-- <menuitem id="menu_nhapdiemhocsinh" name="Nhập điểm học sinh" parent="menu_quanlyhocsinh" action="nhapdiemhocsinh_action_form" sequence=""/> -->
 
-      <menuitem id="menu_nhapdiemchitiet" name="Xem điểm học sinh" parent="menu_quanlydiemvamonhoc" action="nhapdiemchitiet_action_form" sequence=""/>
       <menuitem id="menu_bangdiemdanh" name="Điểm danh học sinh" parent="menu_quanlyhocsinh" action="diemdanhhocsinh_action_form_sa" sequence=""/>
-      
+
       <menuitem id="menu_bangdiemdanhtk" name="Bảng điểm danh thống kê" parent="menu_quanlyhocsinh" action="diemdanhchitiet_action_form" sequence=""/>
       <menuitem id="menu_khenthuong_hocsinh" name="Khen thưởng học sinh" parent="menu_quanlyhocsinh" action="khenthuonghocsinh_action_form" sequence=""/>
       <menuitem id="menu_kyluat_hocsinh" name="Kỷ luật học sinh" parent="menu_quanlyhocsinh" action="kyluathocsinh_action_form" sequence=""/>
@@ -590,6 +589,7 @@
     <menuitem id="menu_quanlydiemvamonhoc" name="Quản lý điểm và môn học" parent="menu_truongquanly" sequence="0" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"/>
       <menuitem id="menu_monhoc" name="Danh sách môn học" parent="menu_quanlydiemvamonhoc" action="monhoc_action_form" sequence=""/>
       <menuitem id="menu_nhapdiemhocsinh" name="Nhập điểm học sinh" parent="menu_quanlydiemvamonhoc" action="nhapdiemhocsinh_action_form" sequence=""/>
+      <menuitem id="menu_nhapdiemchitiet" name="Xem điểm học sinh" parent="menu_quanlydiemvamonhoc" action="nhapdiemchitiet_action_form" sequence=""/>
     <menuitem id="menu_khac" name="Khác" parent="menu_truongquanly" sequence="5" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"/>
       <menuitem id="menu_doituongchinhsach" name="Đối tượng chính sách" parent="menu_khac" action="doituongchinhsach_action_form" sequence=""/>
 </odoo>
