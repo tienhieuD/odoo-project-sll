@@ -879,14 +879,19 @@
                 <field name="giaovien" options="{'no_create_edit': True}"/>
                 <field name="monhoc" options="{'no_create_edit': True}"/>
                 <field name="lop" options="{'no_create_edit': True}"/>
-                <field name="napdulieu"/>
+                <field name="napdulieu" invisible='1'/>
                 <!-- <field name="test1"/> -->
               </group>
               <group colspan='1' col='1'></group>
 
             </group>
 
+            <p align='center'>
+              <button string="Tải danh sách học sinh" type="object" name="compute_model"/>
+            </p>
+
           </sheet>
+
             <field name="diemdanhchitiet" options="{'no_create': True}"/>
         </form>
       </field>
@@ -906,13 +911,15 @@
                 <field name="ngaykhenthuong"/>
                 <field name="lop" options="{'no_create_edit': True}"/>
                 <field name="ghichukhenthuong"/>
-                <field name="napdulieu"/>
+                <field name="napdulieu" invisible='1'/>
                 <!-- <field name="test1"/> -->
               </group>
               <group colspan='1' col='1'></group>
 
             </group>
-
+            <p align='center'>
+              <button string="Tải danh sách học sinh" type="object" name="compute_model"/>
+            </p>
           </sheet>
             <field name="khenthuongchitiet" options="{'no_create': True}"/>
         </form>

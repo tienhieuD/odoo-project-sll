@@ -2583,7 +2583,7 @@ class diemdanhhocsinh(models.Model):
 
     @api.multi
     @api.onchange('lop','namhoc','hocky','napdulieu','ngayvang')
-    def _compute_model(self):
+    def compute_model(self):
         self.test1 = str(self.env.uid) + str(random.randint(0,10))
         # Get hocsinh object
         def get_hs(self, id):
@@ -2894,7 +2894,7 @@ class khenthuonghocsinh(models.Model):
 
     @api.multi
     @api.onchange('lop', 'ngaykhenthuong','napdulieu')
-    def _compute_model(self):
+    def compute_model(self):
         self.test1 = str(self.env.uid) + str(random.randint(0,10))
         # Get hocsinh object
         def get_hs(self, id):

@@ -543,6 +543,7 @@
     <field name="view_mode">tree,form</field>
   </record>
 
+
   <menuitem id="menu_danhmuchanhchinh" name="Danh mục hành chính" sequence="4" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"
     icon="fa-usd"
     web_icon="account,static/description/icon.png" />
