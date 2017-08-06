@@ -717,6 +717,44 @@
       </field>
     </record>
 
+    <record id="nhapdiemchitiet_view_form" model="ir.ui.view">
+      <field name="name">solienlac.nhapdiemchitiet.form</field>
+      <field name="model">solienlac.nhapdiemchitiet</field>
+      <field name="arch" type="xml">
+        <form string="Nhập điểm chi tiết">
+          <sheet>
+            <group string='ĐIỂM THÀNH PHẦN CHI TIẾT'>
+              <field name="monhoc"/>
+              <field name="diemhocky"/>
+              <field name="diemtongket"/>
+              <field name="giaovien"/>
+            </group>
+            <group string='ĐẦU ĐIỂM MIỆNG'>
+              <field name="diemmieng2"/>
+              <field name="diemmieng3"/>
+              <field name="diemmieng4"/>
+              <field name="diemmieng5"/>
+              <field name="diemmieng6"/>
+            </group>
+            <group string='ĐẦU ĐIỂM 15 phút'>
+              <field name="diem15phut2"/>
+              <field name="diem15phut3"/>
+              <field name="diem15phut4"/>
+              <field name="diem15phut5"/>
+              <field name="diem15phut6"/>
+            </group>
+            <group  string='ĐẦU ĐIỂM 1 TIẾT'>
+              <field name="diem1tiet2"/>
+              <field name="diem1tiet3"/>
+              <field name="diem1tiet4"/>
+              <field name="diem1tiet5"/>
+              <field name="diem1tiet6"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
     <!-- Học kỳ-->
     <record id="hocky_view_form" model="ir.ui.view">
       <field name="name">solienlac.hocky.form</field>
