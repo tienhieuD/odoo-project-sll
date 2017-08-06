@@ -1062,15 +1062,15 @@ class hocsinh(models.Model):
     _rec_name = 'hoten' # optional
 
     mahocsinh = fields.Char('Mã học sinh', required='True')
-    @api.constrains('mahocsinh')
-    def _hocsinh_uinq(self):
-        lst = self.env['solienlac.hocsinh'].search([])
-        lst = map(lambda x: x.mahocsinh, lst)
-        lst.remove(self.mahocsinh)
-        if self.mahocsinh in lst:
-            raise exceptions.ValidationError(' Mã học sinh đã tồn tại.')
-        else:
-            pass
+    # @api.constrains('mahocsinh')
+    # def _hocsinh_uinq(self):
+    #     lst = self.env['solienlac.hocsinh'].search([])
+    #     lst = map(lambda x: x.mahocsinh, lst)
+    #     lst.remove(self.mahocsinh)
+    #     if self.mahocsinh in lst:
+    #         raise exceptions.ValidationError(' Mã học sinh đã tồn tại.')
+    #     else:
+    #         pass
     hoten = fields.Char('Họ tên', required='True')
     gioitinh = fields.Selection([
         ('Nam', 'Nam'),
@@ -1245,7 +1245,7 @@ class hocsinh(models.Model):
     @api.model
     def create(self, values):
         groups1 = self.env['res.groups'].search([
-            ('name','ilike','customer_tai_khoan_hoc_sinh'),
+            ('name','ilike','CUST:'),
         ])[0].id
         lop_id = values['lop']
         truong_id = self.env['solienlac.lop'].search([
@@ -2088,7 +2088,7 @@ class nhapdiemchitiet(models.Model):
     diem1tiet5 = fields.Char('4')
     diem1tiet6 = fields.Char('5')
     diemhocky = fields.Char('Điểm học kỳ')
-    diemtongket = fields.Char(string='Tổng kểt', store=True, compute='_compute_final')
+    diemtongket = fields.Float(string='Tổng kểt', store=True, compute='_compute_final')
     xephang = fields.Integer('#')
 
     @api.onchange('diemhocky',)
@@ -2267,7 +2267,7 @@ class nhapdiemchitiet(models.Model):
             tong  = sum(lst_diem_mieng) + sum(lst_diem_15) + 2*sum(lst_diem_1t) + 3*convert_to_float(record.diemhocky)
             diemtk = str(float(tong)/float(he_so))[0:4]
 
-            record.diemtongket = diemtk
+            record.diemtongket = float(diemtk)
 
 class Users(models.Model):
     _name = 'solienlac.taikhoan'
@@ -2298,7 +2298,7 @@ class Users(models.Model):
 
         if (system_admin_level_1_id in user_groups_id):
             pass
-            
+
         if (system_admin_level_2_id in user_groups_id):
             result.remove(system_admin_level_1_id)
 

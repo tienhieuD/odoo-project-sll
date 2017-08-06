@@ -466,7 +466,8 @@
   <record id="nhapdiemchitiet_action_form" model="ir.actions.act_window">
     <field name="name">Nhập điểm chi tiết</field>
     <field name="res_model">solienlac.nhapdiemchitiet</field>
-    <field name="view_mode">tree,form</field>
+    <field name="view_mode">tree</field>
+    <field name="context">{'group_by':['namhoc','hocky','monhoc',]}</field>
     <field name="help" type="html">
       <p class="oe_view_nocontent_create">
         <!-- Add Text Here -->
@@ -477,7 +478,11 @@
     </field>
   </record>
 
-
+  <record id="diemdanhchitiet_action_form" model="ir.actions.act_window">
+    <field name="name">Điểm danh chi tiết</field>
+    <field name="res_model">solienlac.diemdanhchitiet</field>
+    <field name="view_mode">pivot</field>
+  </record>
 
   <!--doituongchinhsach-->
   <record id="doituongchinhsach_action_form" model="ir.actions.act_window">
@@ -541,7 +546,7 @@
 
   <menuitem id="menu_truongquanly" name="Danh mục trường quản lý"
     icon="fa-usd"
-    web_icon="stock,static/description/icon.png" 
+    web_icon="stock,static/description/icon.png"
     groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3,group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3,group_customer"/>
     <menuitem id="menu_thongtintruong" name="Thông tin nhà trường" parent="menu_truongquanly" sequence="" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"/> <!--New-->
       <menuitem id="menu_truong" name="Trường học" parent="menu_thongtintruong" action="truong_action_form"/>   <!--New-->
@@ -561,9 +566,10 @@
       <menuitem id="menu_tobomon" name="Tổ bộ môn" parent="menu_noibonhatruong" action="bomon_action_form" sequence=""/>
     <menuitem id="menu_quanlyhocsinh" name="Quản lý học sinh" parent="menu_truongquanly" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"/>
       <menuitem id="menu_hocsinh" name="Học sinh" parent="menu_quanlyhocsinh" action="hocsinh_action_form" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"/>
-      <menuitem id="menu_nhapdiemhocsinh" name="Nhập điểm học sinh" parent="menu_quanlyhocsinh" action="nhapdiemhocsinh_action_form" sequence=""/>
-      <!-- <menuitem id="menu_nhapdiemchitiet" name="Nhập điểm CT" parent="menu_quanlyhocsinh" action="nhapdiemchitiet_action_form" sequence=""/> -->
+      <!-- <menuitem id="menu_nhapdiemhocsinh" name="Nhập điểm học sinh" parent="menu_quanlyhocsinh" action="nhapdiemhocsinh_action_form" sequence=""/> -->
+      <menuitem id="menu_nhapdiemchitiet" name="Điểm học sinh" parent="menu_quanlyhocsinh" action="nhapdiemchitiet_action_form" sequence=""/>
       <menuitem id="menu_bangdiemdanh" name="Bảng điểm danh" parent="menu_quanlyhocsinh" action="diemdanhhocsinh_action_form_sa" sequence=""/>
+      <menuitem id="menu_bangdiemdanhtk" name="Bảng điểm danh thống kê" parent="menu_quanlyhocsinh" action="diemdanhchitiet_action_form" sequence=""/>
       <menuitem id="menu_chucvu" name="Chức vụ học sinh" parent="menu_quanlyhocsinh" action="chucvu_action_form" sequence=""/>
       <menuitem id="menu_khenthuong_hocsinh" name="Khen thưởng học sinh" parent="menu_quanlyhocsinh" action="khenthuonghocsinh_action_form" sequence=""/>
       <menuitem id="menu_kyluat_hocsinh" name="Kỷ luật học sinh" parent="menu_quanlyhocsinh" action="kyluathocsinh_action_form" sequence=""/>
