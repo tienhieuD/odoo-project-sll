@@ -413,7 +413,7 @@
   <record id="nhapdiemchitiet_school_admin_action_form_theohs" model="ir.actions.act_window">
     <field name="name">Nhập điểm chi tiết</field>
     <field name="res_model">solienlac.nhapdiemchitiet</field>
-    <field name="context">{'group_by':['namhoc','hocky','truong','khoi','lop','hocsinh',]}</field>
+    <field name="context">{'group_by':['namhoc','hocky','truong','khoi','lop','hocsinh','monhoc']}</field>
     <field name="view_mode">tree,form</field>
     <field name="help" type="html">
       <p class="oe_view_nocontent_create">
