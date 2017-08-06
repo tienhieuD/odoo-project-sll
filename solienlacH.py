@@ -482,39 +482,50 @@ class monhoc_has_giaovien(models.Model):
         return lst_namhoc
 
     @api.model
-    def _get_namhoc_now(self):
-        now = datetime.datetime.now()
-        year = now.year
-        if now.month < 8:
-            year -= 1
-        return str(year) + "-" + str(year+1)
+    def _get_current_namhoc(self):
+        try:
+            namhoc = self.env['solienlac.hocky'].search([
+                ('trangthai' , '=', 'HienTai'),
+                ('truong.id', '=', self.env.user.truong.id)
+            ])[-1]
+            return namhoc.namhoc
+        except:
+            now = datetime.datetime.now()
+            year = now.year
+            if now.month <= 9:
+                year -= 1
+            return str(year) + "-" + str(year+1)
 
     namhoc = fields.Selection(
         string="Năm học",
         selection= _get_list_namhoc,
-        default = _get_namhoc_now,
+        default = _get_current_namhoc,
         required=True,
         readonly=True
     )
     #---------- end define fields namhoc ------------
-    # @api.model
-    # def _get_hockyhientai(self):
-    #     c = self.env['solienlac.hocky'].search([
-    #         ('trangthai', '=', 'HienTai'),
-    #         ('truong.id', '=', self.lop.khoi.truong.id)
-    #     ])
-    #     if len(c)>1:
-    #         hocky = map(lambda x: x.hocky, c)
-    #         return hocky
-    #     else:
-    #         s=u'Truong hoc chua tao hoc ky hien tai !.'
-    #         raise exceptions.ValidationError(s)
+    @api.model
+    def _get_current_hocky(self):
+        try:
+            hocky = self.env['solienlac.hocky'].search([
+                ('trangthai' , '=', 'HienTai'),
+                ('truong.id', '=', self.env.user.truong.id)
+            ])[-1]
+            return hocky.hocky
+        except:
+            now = datetime.datetime.now()
+            month = now.month
+            if month in [1,2,3,4,5,6,7]:
+                return 'ii'
+            else:
+                return 'i'
+
     hocky = fields.Selection(
         string="Học kỳ",
         selection=[
                 ('i', 'Học kỳ I'),
                 ('ii', 'Học kỳ II'),
-        ],required=True, )
+        ],required=True, default = _get_current_hocky, readonly=True )
     monhoc = fields.Many2one('solienlac.monhoc', string='Môn học',required=True)
     giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên')
     lop = fields.Many2one('solienlac.lop', string='Lớp',required=True)

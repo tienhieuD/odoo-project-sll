@@ -572,7 +572,7 @@
     <menuitem id="menu_quanlynhansu" name="Quản lý nhân sự" parent="menu_truongquanly" sequence="2" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"/>
       <menuitem id="menu_phongban" name="Phòng ban" parent="menu_quanlynhansu" action="phongban_action_form" sequence=""/>
       <menuitem id="menu_giaovien" name="Giáo viên" parent="menu_quanlynhansu" action="giaovien_action_form" sequence=""/>
-      <menuitem id="menu_phanconggiangday" name="Phân công giảng dạy" parent="menu_quanlynhansu" action="phanconggiangday_action_form" sequence=""/>
+      <!-- <menuitem id="menu_phanconggiangday" name="Phân công giảng dạy" parent="menu_quanlynhansu" action="phanconggiangday_action_form" sequence=""/> -->
     <menuitem id="menu_quanlyhocsinh" name="Quản lý học sinh" parent="menu_truongquanly" sequence="1" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"/>
       <menuitem id="menu_lop" name="Danh sách lớp" parent="menu_quanlyhocsinh" action="lop_action_form" sequence=""/>
       <menuitem id="menu_hocsinh" name="Danh sách học sinh" parent="menu_quanlyhocsinh" action="hocsinh_action_form" groups="group_systemadmin_l1,group_systemadmin_l2,group_systemadmin_l3"/>
