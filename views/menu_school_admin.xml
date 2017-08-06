@@ -169,6 +169,7 @@
   <record id="hanhkiem_school_admin_action_form" model="ir.actions.act_window">
     <field name="name">Hạnh kiểm</field>
     <field name="res_model">solienlac.hanhkiem</field>
+    <field name="context">{'group_by':['namhoc','hocky','hocsinh',]}</field>
     <field name="view_mode">tree,form</field>
     <field name="help" type="html">
       <p class="oe_view_nocontent_create">
@@ -352,6 +353,7 @@
   <record id="nenep_school_admin_action_form" model="ir.actions.act_window">
     <field name="name">Nề nếp</field>
     <field name="res_model">solienlac.nenep</field>
+    <field name="context">{'group_by':['namhoc','hocky','hocsinh',]}</field>
     <field name="view_mode">tree,form</field>
     <field name="help" type="html">
       <p class="oe_view_nocontent_create">
@@ -448,6 +450,8 @@
     <field name="name">Điểm danh chi tiết</field>
     <field name="res_model">solienlac.diemdanhchitiet</field>
     <field name="view_mode">tree,form</field>
+    <field name="domain">[('vang','=', True)]</field>
+    <field name="context">{'group_by':['namhoc','hocky','truong','khoi','lop','ngayvang',]}</field>
   </record>
 
   <record id="hocky_action_form_sca" model="ir.actions.act_window">
@@ -474,6 +478,11 @@
       <menuitem id="menu_kyluat_hocsinh_school_admin" name="Kỷ luật học sinh" parent="menu_quanlyhocsinh_sca" action="kyluathocsinh_school_admin_action_form"  groups="group_schooladmin_l1,group_schooladmin_l22" sequence=""/>
       <menuitem id="menu_chucvu_school_admin" name="Chức vụ học sinh" parent="menu_quanlyhocsinh_sca" action="chucvu_school_admin_action_form" sequence="" groups="group_schooladmin_l1"/>
       <menuitem id="menu_phuhuynh_school_admin" name="Phụ huynh học sinh" parent="menu_quanlyhocsinh_sca" action="phuhuynh_school_admin_action_form" groups="group_schooladmin_l1,group_schooladmin_l22" sequence=""/>
+
+      <menuitem id="menu_bangdiemdanhtk_school_admin" name="Bảng điểm danh thống kê" parent="menu_quanlyhocsinh_sca" action="diemdanhchitiet_action_form_sca" sequence=""/>
+      <menuitem id="menu_hanhkiem_school_admin" name="Bảng hạnh kiểm học sinh" parent="menu_quanlyhocsinh_sca" action="hanhkiem_school_admin_action_form" sequence=""/>
+      <menuitem id="menu_nenep_school_admin" name="Bảng nề nếp học sinh" parent="menu_quanlyhocsinh_sca" action="nenep_school_admin_action_form" sequence=""/>
+
     <menuitem id="menu_quanlydiemvamonhoc_sca" name="Quản lý điểm và môn học" parent="menu_truongquanly" sequence="0" groups="group_schooladmin_l1,group_schooladmin_l21,group_schooladmin_l22,group_schooladmin_l3"/>
       <menuitem id="menu_monhoc_school_admin" name="Danh sách môn học" parent="menu_quanlydiemvamonhoc_sca" action="monhoc_school_admin_action_form" sequence=""/>
       <menuitem id="menu_nhapdiemhocsinh_school_admin" name="Nhập điểm học sinh" parent="menu_quanlydiemvamonhoc_sca" action="nhapdiemhocsinh_school_admin_action_form" sequence=""/>
