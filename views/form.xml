@@ -577,57 +577,68 @@
             Quản lý thông tin học sinh
           </header>
           <sheet>
-              <group colspan="4" col="4" string='Thông tin học sinh'>
-                <group colspan="2" col="2" >
-                  <field name="mahocsinh"/>
-                  <field name="hoten" />
-                  <field name="gioitinh"/>
-                  <field name="ngaysinh"/>
-                  <field name="noisinh"/>
-                  <field name="dantoc" options="{'no_create_edit': True}"/>
-                  <field name="tongiao" options="{'no_create_edit': True}"/>
-                  <!-- <field name="user_login"/>
-                  <field name="user_id"/> -->
-                </group>
-                <group colspan="2" col="2" >
-                  <field name="quequan"/>
-                  <field name="tinhthanhpho" options="{'no_create_edit': True}"/>
-                  <field name="quanhuyen" options="{'no_create_edit': True}"/>
-                  <field name="phuongxa" options="{'no_create_edit': True}"/>
-                  <field name="diachi"/>
-                </group>
-              <group colspan="4" string='Thông tin quản lý'>
-                <group colspan="2" col="2" >
-                  <!-- <field name="truong"/> -->
-                  <field name="lop" options="{'no_create_edit': True}"/>
-                  <field name="khoi"/>
-                  <field name="truong"/>
-                  <field name="chucvu" options="{'no_create_edit': True}" widget="many2many_tags"/>
-                  <field name="noitru"/>
-                </group>
-                <group colspan="2" col="2" >
-                  <field name="tuyenhoc"/>
-                  <field name="doituongchinhsach" widget="many2many_tags" options="{'no_create_edit': True}" />
-                  <field name="doituonguutien" widget="many2many_tags" options="{'no_create_edit': True}" />
-                </group>
-              </group>
-              <group colspan="4" string='Thông tin phụ huynh'>
-                <field name="phuhuynh"/>
-              </group>
-              <group colspan="4" string='Thông tin tài khoản'>
-                <field name="username"/>
-                <field name="password" password="True"/>
-              </group>
-              <group colspan="4" string='Nguồn gốc và tình trạng học sinh'>
-                <group colspan="2" col="2">
-                  <field name="nguongochocsinh"/>
-                  <field name="khuyettat"/>
-                </group>
-                <group colspan="2" col="2">
-                  <field name="tinhtranghocsinh"/>
-                  <field name="lydothoihoc"/>
-                </group>
-              </group>
+            <group colspan="4" col="4" string='Thông tin học sinh'>
+
+              <notebook colspan="4">
+                <page string="Thông tin học sinh">
+                  <group colspan="4" col="4">
+                    <group colspan="2" col="2" >
+                      <field name="mahocsinh"/>
+                      <field name="hoten" />
+                      <field name="gioitinh"/>
+                      <field name="ngaysinh"/>
+                      <field name="noisinh"/>
+                      <field name="dantoc" options="{'no_create_edit': True}"/>
+                      <field name="tongiao" options="{'no_create_edit': True}"/>
+                    </group>
+                    <group colspan="2" col="2" >
+                      <field name="quequan"/>
+                      <field name="tinhthanhpho" options="{'no_create_edit': True}"/>
+                      <field name="quanhuyen" options="{'no_create_edit': True}"/>
+                      <field name="phuongxa" options="{'no_create_edit': True}"/>
+                      <field name="diachi"/>
+                    </group>
+                  </group>
+                </page>
+                <page string="Thông tin quản lý">
+                  <group colspan="4" col="4">
+                    <group colspan="2" col="2" >
+                      <field name="lop" options="{'no_create_edit': True}"/>
+                      <field name="khoi"/>
+                      <field name="truong"/>
+                      <field name="chucvu" options="{'no_create_edit': True}" widget="many2many_tags"/>
+                      <field name="noitru"/>
+                    </group>
+                    <group colspan="2" col="2" >
+                      <field name="tuyenhoc"/>
+                      <field name="doituongchinhsach" widget="many2many_tags" options="{'no_create_edit': True}" />
+                      <field name="doituonguutien" widget="many2many_tags" options="{'no_create_edit': True}" />
+                    </group>
+                  </group>
+                </page>
+                <page string="Thông tin phụ huynh">
+                  <field name="phuhuynh"/>
+                </page>
+                <page string="Thông tin tài khoản">
+                  <group colspan="4" col="4">
+                    <field name="username"/>
+                    <field name="password" password="True"/>
+                  </group>
+                </page>
+                <page string="Nguồn gốc và tình trạng học sinh">
+                  <group colspan="4" col="4">
+                    <group colspan="2" col="2">
+                      <field name="nguongochocsinh"/>
+                      <field name="khuyettat"/>
+                    </group>
+                    <group colspan="2" col="2">
+                      <field name="tinhtranghocsinh"/>
+                      <field name="lydothoihoc"/>
+                    </group>
+                  </group>
+                </page>
+              </notebook>
+
               <notebook colspan="4">
                 <page string="Danh hiệu">
                   <field name="danhhieuhocsinh"/>
@@ -648,6 +659,7 @@
                   <field name="khenthuonghocsinh"/>
                 </page>
               </notebook>
+
             </group>
           </sheet>
         </form>
