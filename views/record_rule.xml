@@ -1,6 +1,53 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+
+
+
+  <record id="rule_giaov_nhin neneptrongtr" model="ir.rule">
+    <field name="name">Giáo viên nhìn nền nếp trong trường</field>
+    <field name="model_id" ref="model_solienlac_nenep"/>
+    <field name="domain_force">[('truong.id', '=', user.truong.id), ]</field>
+    <field name="perm_write" eval="0"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_unlink" eval="0"/>
+    <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l1')), (4, ref('solienlac.group_schooladmin_l21')), (4, ref('solienlac.group_schooladmin_l22')), (4, ref('solienlac.group_schooladmin_l3'))]"/>
+  </record>
+
+  <record id="rule_giaov_sua_xoa_nenep_minhtao" model="ir.rule">
+    <field name="name">Giáo viên sửa xóa nền nếp mình tạo</field>
+    <field name="model_id" ref="model_solienlac_nenep"/>
+    <field name="domain_force">[('create_uid', '=', user.id), ]</field>
+    <field name="perm_write" eval="0"/>
+    <field name="perm_create" eval="0"/>
+    <field name="perm_read" eval="0"/>
+    <field name="perm_unlink" eval="1"/>
+    <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l22'))]"/>
+  </record>
+
+  <record id="rule_giaov_nhin hanhkiemtrongtr" model="ir.rule">
+    <field name="name">Giáo viên nhìn hạnh kiểm trong trường</field>
+    <field name="model_id" ref="model_solienlac_hanhkiem"/>
+    <field name="domain_force">[('truong.id', '=', user.truong.id), ]</field>
+    <field name="perm_write" eval="0"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_unlink" eval="0"/>
+    <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l1')), (4, ref('solienlac.group_schooladmin_l21')), (4, ref('solienlac.group_schooladmin_l22')), (4, ref('solienlac.group_schooladmin_l3'))]"/>
+  </record>
+
+  <record id="rule_giaov_sua_xoa_hanhkiem_minhtao" model="ir.rule">
+    <field name="name">Giáo viên sửa xóa hanhkiem mình tạo</field>
+    <field name="model_id" ref="model_solienlac_hanhkiem"/>
+    <field name="domain_force">[('create_uid', '=', user.id), ]</field>
+    <field name="perm_write" eval="0"/>
+    <field name="perm_create" eval="0"/>
+    <field name="perm_read" eval="0"/>
+    <field name="perm_unlink" eval="1"/>
+    <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l22'))]"/>
+  </record>
+
   <record id="rule_giaovien_nhin_bangdiemdanh" model="ir.rule">
     <field name="name">Giáo viên bộ môn chỉ thấy bảng điểm danh lớp mình dạy</field>
     <field name="model_id" ref="model_solienlac_diemdanhhocsinh"/>
@@ -34,7 +81,7 @@
     <field name="perm_write" eval="1"/>
     <field name="perm_create" eval="1"/>
     <field name="perm_read" eval="1"/>
-    <field name="perm_unlink" eval="1"/>
+    <field name="perm_unlink" eval="0"/>
     <!-- You can attach this rule to a specific group, or make it global -->
     <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l21')), (4, ref('solienlac.group_schooladmin_l22'))]"/>
     <!--<field name="global" eval="1"/> -->

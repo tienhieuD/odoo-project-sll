@@ -905,16 +905,22 @@ class khoi(models.Model):
 class hanhkiem(models.Model):
     _name = 'solienlac.hanhkiem'
     _rec_name = 'xeploai' # optional
-    hocky = fields.Selection(
-        string="Học kỳ",
-        selection=[
-                ('i', 'Học kỳ I'),
-                ('ii', 'Học kỳ II'),
-                ('iii', 'Cả năm'),
-        ],default = 'i')
-    # namhoc = fields.Char('Năm học')
 
-    #---------- define fields namhoc ------------
+    @api.model
+    def _get_current_hocky(self):
+        try:
+            hocky = self.env['solienlac.hocky'].search([
+                ('trangthai' , '=', 'HienTai'),
+                ('truong.id', '=', self.env.user.truong.id)
+            ])[-1]
+            return hocky.hocky
+        except:
+            now = datetime.datetime.now()
+            month = now.month
+            if month in [1,2,3,4,5,6,7]:
+                return 'ii'
+            else:
+                return 'i'
     @api.model
     def _get_list_namhoc(self):
         lst_namhoc=[]
@@ -922,22 +928,26 @@ class hanhkiem(models.Model):
             item = str(year) + "-" + str(year+1)
             lst_namhoc.append( (item, item) )
         return lst_namhoc
-
     @api.model
-    def _get_namhoc_now(self):
-        now = datetime.datetime.now()
-        year = now.year
-        if now.month <= 9:
-            year -= 1
-        return str(year) + "-" + str(year+1)
+    def _get_current_namhoc(self):
+        try:
+            namhoc = self.env['solienlac.hocky'].search([
+                ('trangthai' , '=', 'HienTai'),
+                ('truong.id', '=', self.env.user.truong.id)
+            ])[-1]
+            return namhoc.namhoc
+        except:
+            now = datetime.datetime.now()
+            year = now.year
+            if now.month <= 9:
+                year -= 1
+            return str(year) + "-" + str(year+1)
 
-    namhoc = fields.Selection(
-        string="Năm học",
-        selection= _get_list_namhoc,
-        default = _get_namhoc_now,
-    )
-    #---------- end define fields namhoc ------------
-
+    namhoc = fields.Selection( string="Năm học",
+        selection= _get_list_namhoc, default = _get_current_namhoc, readonly=True, required=True)
+    hocky = fields.Selection(selection=[
+        ('i', 'Học kỳ I'), ('ii', 'Học kỳ II'), ('iii', 'Cả năm'), ],
+        default = _get_current_hocky, readonly=True, string="Học kỳ", required=True)
     xeploai = fields.Selection(
         string="Xếp loại",
         selection=[
@@ -946,12 +956,28 @@ class hanhkiem(models.Model):
                 ('tb', 'Trung bình'),
                 ('yeu', 'Yếu'),
                 # ('kem', 'Kém'),
-        ],
-    )
-    nhanxetcuagiaovien = fields.Char('Nhận Xét Của Giáo Viên')
+        ], required=True)
+    nhanxetcuagiaovien = fields.Text('Nhận Xét Của Giáo Viên', required=True)
+    giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên nhận xét',
+        default=lambda self: self.env.user.giaovien, required=True)
     ghichu = fields.Char('Ghi Chú')
-    hocsinh = fields.Many2one('solienlac.hocsinh', string='Học Sinh')
-
+    hocsinh = fields.Many2one('solienlac.hocsinh', string='Học sinh',
+        domain=['id','=',-1], required=True)
+    lop = fields.Many2one(string="Lớp", comodel_name="solienlac.lop",
+        domain=['id','=',-1], required=True)
+    khoi = fields.Many2one(string="Khối", comodel_name="solienlac.khoi", required=True)
+    truong = fields.Many2one(string="Trường", comodel_name="solienlac.truong",
+        default=lambda self: self.env.user.truong.id,  required=True)
+    @api.onchange('khoi')
+    def _lop_baseon_khoi(self):
+        lops = self.env['solienlac.lop'].search([('khoi.id','=',self.khoi.id)])
+        lops = [lop.id for lop in lops]
+        return {'domain':{'lop': [('id', 'in', lops)]}}
+    @api.onchange('lop')
+    def _hs_baseon_lop(self):
+        hss = self.env['solienlac.hocsinh'].search([('lop.id','=',self.lop.id)])
+        hss = [hs.id for hs in hss]
+        return {'domain':{'hocsinh': [('id', 'in', hss)]}}
     @api.constrains('namhoc', 'hocky', 'hocsinh')
     def _validate_hanhkiem(self):
         obj = self.env['solienlac.hanhkiem'].search([
@@ -961,8 +987,6 @@ class hanhkiem(models.Model):
         ])
         n = len(obj)
         if n>1:
-            # obj = map(lambda x: x.giaovien, obj)
-            # obj.remove(self.giaovien)
             s=u'Đã xét hạnh kiểm cho học sinh vào kỳ học này rồi'
             raise exceptions.ValidationError(s)
         else:
@@ -1667,25 +1691,25 @@ class chucvu(models.Model):
             self.ghichu = 'Không'
 
 class nenep(models.Model):
-    _name = 'solienlac.nenep'
-    _rec_name = 'namhoc' # optional
-    dongphuc = fields.Integer('Đồng phục')
-    dihocmuon = fields.Integer('Đi học muộn')
-    noichuyen = fields.Integer('Nói chuyện')
-    noituc = fields.Integer('Nói tục')
-    # dongphuc = fields.Integer('Đồng phục')
-    truybai = fields.Integer('Truy bài')
-    ntvt = fields.Integer('NTVT')
-    hocky = fields.Selection(
-        string="Học kỳ",
-        selection=[
-                ('i', 'Học kỳ I'),
-                ('ii', 'Học kỳ II'),
-                ('iii', 'Cả năm'),
-        ],default = 'i')
-    # namhoc = fields.Char('Năm học')
 
-    #---------- define fields namhoc ------------
+    _name = 'solienlac.nenep'
+    _rec_name = 'namhoc'
+
+    @api.model
+    def _get_current_hocky(self):
+        try:
+            hocky = self.env['solienlac.hocky'].search([
+                ('trangthai' , '=', 'HienTai'),
+                ('truong.id', '=', self.env.user.truong.id)
+            ])[-1]
+            return hocky.hocky
+        except:
+            now = datetime.datetime.now()
+            month = now.month
+            if month in [1,2,3,4,5,6,7]:
+                return 'ii'
+            else:
+                return 'i'
     @api.model
     def _get_list_namhoc(self):
         lst_namhoc=[]
@@ -1693,23 +1717,50 @@ class nenep(models.Model):
             item = str(year) + "-" + str(year+1)
             lst_namhoc.append( (item, item) )
         return lst_namhoc
-
     @api.model
-    def _get_namhoc_now(self):
-        now = datetime.datetime.now()
-        year = now.year
-        if now.month <= 9:
-            year -= 1
-        return str(year) + "-" + str(year+1)
+    def _get_current_namhoc(self):
+        try:
+            namhoc = self.env['solienlac.hocky'].search([
+                ('trangthai' , '=', 'HienTai'),
+                ('truong.id', '=', self.env.user.truong.id)
+            ])[-1]
+            return namhoc.namhoc
+        except:
+            now = datetime.datetime.now()
+            year = now.year
+            if now.month <= 9:
+                year -= 1
+            return str(year) + "-" + str(year+1)
 
-    namhoc = fields.Selection(
-        string="Năm học",
-        selection= _get_list_namhoc,
-        default = _get_namhoc_now,
-    )
-    #---------- end define fields namhoc ------------
+    namhoc = fields.Selection( string="Năm học",
+        selection= _get_list_namhoc, default = _get_current_namhoc, readonly=True, required=True )
+    hocky = fields.Selection(selection=[
+        ('i', 'Học kỳ I'), ('ii', 'Học kỳ II'), ('iii', 'Cả năm'), ],
+        default = _get_current_hocky, readonly=True, string="Học kỳ", required=True)
+    hocsinh = fields.Many2one('solienlac.hocsinh', string='Học sinh',
+        domain=['id','=',-1], required=True)
+    lop = fields.Many2one(string="Lớp", comodel_name="solienlac.lop",
+        domain=['id','=',-1], required=True)
+    khoi = fields.Many2one(string="Khối", comodel_name="solienlac.khoi", required=True)
+    truong = fields.Many2one(string="Trường", comodel_name="solienlac.truong",
+        default=lambda self: self.env.user.truong.id, required=True)
+    dongphuc = fields.Integer('Đồng phục')
+    dihocmuon = fields.Integer('Đi học muộn')
+    noichuyen = fields.Integer('Nói chuyện')
+    noituc = fields.Integer('Nói tục')
+    truybai = fields.Integer('Truy bài')
+    ntvt = fields.Integer('NTVT')
 
-    hocsinh = fields.Many2one('solienlac.hocsinh', string='Học sinh')
+    @api.onchange('khoi')
+    def _lop_baseon_khoi(self):
+        lops = self.env['solienlac.lop'].search([('khoi.id','=',self.khoi.id)])
+        lops = [lop.id for lop in lops]
+        return {'domain':{'lop': [('id', 'in', lops)]}}
+    @api.onchange('lop')
+    def _hs_baseon_lop(self):
+        hss = self.env['solienlac.hocsinh'].search([('lop.id','=',self.lop.id)])
+        hss = [hs.id for hs in hss]
+        return {'domain':{'hocsinh': [('id', 'in', hss)]}}
 
 class diemthanhphan(models.Model):
     _name = 'solienlac.diemthanhphan'
@@ -2311,6 +2362,29 @@ class nhapdiemchitiet(models.Model):
 
             record.diemtongket = float(diemtk)
 
+    @api.multi
+    def write(self, vals):
+        # kiem tra co phai hoc ky hien tai khong moi cho sua diem
+        print '----------------------------------------'
+        try:
+            hocky = self.env['solienlac.hocky'].search([
+                ('trangthai' , '=', 'HienTai'),
+                ('truong.id', '=', self.env.user.truong.id)
+            ])[-1]
+            hk_hientai = hocky.hocky
+            nh_hientai = hocky.namhoc
+
+            print hk_hientai,nh_hientai
+
+            if (self.hocky == hk_hientai) and (self.namhoc == nh_hientai):
+                print 'True'
+                obj = super(nhapndiemchitiet, self).write(vals)
+                return obj
+            else:
+                print 'False'
+                raise exceptions.ValidationError("Error1: Không thể sửa điểm học kỳ mà hiệu trưởng không cho phép!")
+        except:
+            raise exceptions.ValidationError("Error2: Không thể sửa điểm khi mà hiệu trưởng trường này chưa chưa cho phép sửa điểm trong kỳ!")
     # lop = fields.Many2one(
     #     string="Lớp",
     #     comodel_name="solienlac.lop",

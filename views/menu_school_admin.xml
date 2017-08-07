@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <odoo>
   <!-- Trường -->
   <!-- <record model="ir.ui.view" id="truong_school_admin_action_filter">
@@ -169,7 +169,7 @@
   <record id="hanhkiem_school_admin_action_form" model="ir.actions.act_window">
     <field name="name">Hạnh kiểm</field>
     <field name="res_model">solienlac.hanhkiem</field>
-    <field name="context">{'group_by':['namhoc','hocky','hocsinh',]}</field>
+    <field name="context">{'group_by':['namhoc','hocky','khoi','lop',]}</field>
     <field name="view_mode">tree,form</field>
     <field name="help" type="html">
       <p class="oe_view_nocontent_create">
@@ -353,7 +353,7 @@
   <record id="nenep_school_admin_action_form" model="ir.actions.act_window">
     <field name="name">Nề nếp</field>
     <field name="res_model">solienlac.nenep</field>
-    <field name="context">{'group_by':['namhoc','hocky','hocsinh',]}</field>
+    <field name="context">{'group_by':['namhoc','hocky','khoi','lop',]}</field>
     <field name="view_mode">tree,form</field>
     <field name="help" type="html">
       <p class="oe_view_nocontent_create">
@@ -397,7 +397,7 @@
   <record id="nhapdiemchitiet_school_admin_action_form" model="ir.actions.act_window">
     <field name="name">Nhập điểm chi tiết</field>
     <field name="res_model">solienlac.nhapdiemchitiet</field>
-    <field name="context">{'group_by':['namhoc','hocky','truong','khoi','lop','monhoc',]}</field>
+    <field name="context">{'group_by':['truong','namhoc','hocky','khoi','lop','monhoc',]}</field>
     <field name="view_mode">tree</field>
     <field name="help" type="html">
       <p class="oe_view_nocontent_create">
@@ -413,7 +413,7 @@
   <record id="nhapdiemchitiet_school_admin_action_form_theohs" model="ir.actions.act_window">
     <field name="name">Xem điểm chi tiết</field>
     <field name="res_model">solienlac.nhapdiemchitiet</field>
-    <field name="context">{'group_by':['namhoc','hocky','truong','khoi','lop','hocsinh','monhoc']}</field>
+    <field name="context">{'group_by':['truong','namhoc','hocky','khoi','lop','hocsinh','monhoc']}</field>
     <field name="view_mode">tree</field>
     <field name="help" type="html">
       <p class="oe_view_nocontent_create">
