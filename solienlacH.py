@@ -2365,8 +2365,8 @@ class nhapdiemchitiet(models.Model):
     @api.multi
     def write(self, vals):
         # kiem tra co phai hoc ky hien tai khong moi cho sua diem
-        print '----------------------------------------'
-        try:
+        # print '----------------------------------------'
+        # try:
             hocky = self.env['solienlac.hocky'].search([
                 ('trangthai' , '=', 'HienTai'),
                 ('truong.id', '=', self.env.user.truong.id)
@@ -2377,14 +2377,15 @@ class nhapdiemchitiet(models.Model):
             print hk_hientai,nh_hientai
 
             if (self.hocky == hk_hientai) and (self.namhoc == nh_hientai):
-                print 'True'
-                obj = super(nhapndiemchitiet, self).write(vals)
+                print 'True-------------------------------'
+                obj = super(nhapdiemchitiet, self).write(vals)
                 return obj
             else:
-                print 'False'
+                print 'False--------------------------------'
                 raise exceptions.ValidationError("Error1: Không thể sửa điểm học kỳ mà hiệu trưởng không cho phép!")
-        except:
-            raise exceptions.ValidationError("Error2: Không thể sửa điểm khi mà hiệu trưởng trường này chưa chưa cho phép sửa điểm trong kỳ!")
+                return
+        # except:
+        #     raise exceptions.ValidationError("Error2: Không thể sửa điểm khi mà hiệu trưởng trường này chưa chưa cho phép sửa điểm trong kỳ!")
     # lop = fields.Many2one(
     #     string="Lớp",
     #     comodel_name="solienlac.lop",
