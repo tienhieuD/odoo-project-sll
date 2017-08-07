@@ -180,8 +180,8 @@ class captruong(models.Model):
     _name = 'solienlac.captruong'
     _rec_name = 'tencaptruong'
 
-    macaptruong = fields.Integer('Mã cấp trường', required='True')
-    tencaptruong = fields.Char(string="Tên cấp trường", required='True')
+    macaptruong = fields.Integer('Mã cấp trường', required=True)
+    tencaptruong = fields.Char(string="Tên cấp trường", required=True)
     # tencaptruong = fields.Selection([
     #     ('1', 'Nhà trẻ'),
     #     ('2', 'Trường Mẫu giáo'),
@@ -219,8 +219,8 @@ class hangtruong(models.Model):
     _rec_name = 'tenhangtruong' # optional
     # _description = 'Hạng trường'
 
-    mahangtruong = fields.Integer('Mã hạng trường', required='True')
-    tenhangtruong = fields.Char(string="Tên hạng trường",  required='True')
+    mahangtruong = fields.Integer('Mã hạng trường', required=True)
+    tenhangtruong = fields.Char(string="Tên hạng trường",  required=True)
     # tenhangtruong = fields.Selection([
     #     ('1', 'Hạng I'),
     #     ('2', 'Hạng II'),
@@ -244,7 +244,7 @@ class loaihinhtruong(models.Model):
     _rec_name = 'tenloahinhtruong' # optional
     # _description = 'Loại hình trường'
 
-    maloaihinhtruong = fields.Integer('Loại hình trường', required='True')
+    maloaihinhtruong = fields.Integer('Loại hình trường', required=True)
     tenloahinhtruong = fields.Selection([
         ('1',	'Công lập'),
         ('2', 	'Bán công'),
@@ -254,7 +254,7 @@ class loaihinhtruong(models.Model):
         ('6',	'Chuyên ban'),
         ('7',	'Kỹ thuật'),
         ('8',	'Khác'),
-    ], default='4', string='Tên loại hình trường')
+    ], default='4', string='Tên loại hình trường', required=True)
     ghichu = fields.Char('Ghi chú')
 
     @api.constrains('maloaihinhtruong')
@@ -273,8 +273,8 @@ class truongchuyenbiet(models.Model):
     _rec_name = 'tentruongchuyenbiet' # optional
     # _description = 'Trường chuyên biệt'
 
-    matruongchuyenbiet = fields.Integer('Mã trường chuyên biệt', required='True')
-    tentruongchuyenbiet = fields.Char('Tên trường chuyên biệt', required='True')
+    matruongchuyenbiet = fields.Integer('Mã trường chuyên biệt', required=True)
+    tentruongchuyenbiet = fields.Char('Tên trường chuyên biệt', required=True)
     # tentruongchuyenbiet = fields.Selection([
     #     ('1',	'Năng khiếu TDTT'),
     #     ('2', 	'Khuyết tật'),
@@ -300,8 +300,8 @@ class loailopnho(models.Model):
     _name = 'solienlac.loailopnho'
     _rec_name = 'tenloailopnho' # optional
 
-    maloailopnho = fields.Integer('Mã loại lớp nhô', required='True')
-    tenloailopnho = fields.Char('Tên loại lớp nhô', required='True')
+    maloailopnho = fields.Integer('Mã loại lớp nhô', required=True)
+    tenloailopnho = fields.Char('Tên loại lớp nhô', required=True)
     # tenloailopnho = fields.Selection([
     #     ('khong', 'Không'),
     #     ('nhotren', 'Nhô trên'),
@@ -612,8 +612,8 @@ class lop_has_giaovien(models.Model):
 class to(models.Model):
     _name = 'solienlac.to'
     _rec_name = 'tento' # optional
-    mato = fields.Char("Mã tổ")
-    tento = fields.Char("Tên tổ")
+    mato = fields.Char("Mã tổ", required=True)
+    tento = fields.Char("Tên tổ", required=True)
     ghichu = fields.Char("Ghi chú")
     totruong = fields.Many2one('solienlac.giaovien', string = "Tổ trưởng")
 
@@ -848,8 +848,8 @@ class kyluathocsinh(models.Model):
 class khenthuongkyluat_hocsinh(models.Model):
     _name = 'solienlac.khenthuongkyluat_hocsinh'
     _rec_name = 'ngay_ktkl' # optional
-    ktkl = fields.Many2one('solienlac.khenthuongkyluat', string='ID Khen Thưởng Kỷ Luật', required='True')
-    hocsinh = fields.Many2one('solienlac.hocsinh', string='ID Học Sinh', required='True')
+    ktkl = fields.Many2one('solienlac.khenthuongkyluat', string='ID Khen Thưởng Kỷ Luật', required=True)
+    hocsinh = fields.Many2one('solienlac.hocsinh', string='ID Học Sinh', required=True)
     ngay_ktkl = fields.Date(string='Ngày Khen Thưởng Kỷ Luật')
 
 class tuyenhoc(models.Model):
@@ -1104,7 +1104,7 @@ class hocsinh(models.Model):
     _name = 'solienlac.hocsinh'
     _rec_name = 'hoten' # optional
 
-    mahocsinh = fields.Char('Mã học sinh', required='True')
+    mahocsinh = fields.Char('Mã học sinh', required=True)
     # @api.constrains('mahocsinh')
     # def _hocsinh_uinq(self):
     #     lst = self.env['solienlac.hocsinh'].search([])
@@ -1114,7 +1114,7 @@ class hocsinh(models.Model):
     #         raise exceptions.ValidationError(' Mã học sinh đã tồn tại.')
     #     else:
     #         pass
-    hoten = fields.Char('Họ tên', required='True')
+    hoten = fields.Char('Họ tên', required=True)
     gioitinh = fields.Selection([
         ('Nam', 'Nam'),
         ('Nu', 'Nữ'),
@@ -1136,7 +1136,7 @@ class hocsinh(models.Model):
 
     diachi = fields.Char('Địa chỉ')
     quequan = fields.Char('Quê quán')
-    lop = fields.Many2one('solienlac.lop', string='Lớp', required='True')
+    lop = fields.Many2one('solienlac.lop', string='Lớp', required=True)
     # truong = fields.Many2one('solienlac.truong', string = "Trường")
     tuyenhoc = fields.Many2one('solienlac.tuyenhoc', string='Tuyến học')
 
@@ -1413,7 +1413,7 @@ class nguongochocsinh(models.Model):
 class monhocnghe(models.Model):
     _name = 'solienlac.monhocnghe'
     _rec_name = 'tenmonhocnghe'
-    mamonhocnghe = fields.Char("Mã môn học ", required='True')
+    mamonhocnghe = fields.Char("Mã môn học ", required=True)
     tenmonhocnghe = fields.Selection(
         string="Môn học nghề",
         selection=[
@@ -1467,8 +1467,8 @@ class lop(models.Model):
     _name = 'solienlac.lop'
     # _inherit = 'solienlac.hocsinh'
     _rec_name = 'tenlop' # optional
-    malop = fields.Char('Mã lớp', required='True')
-    tenlop = fields.Char('Tên lớp', required='True')
+    malop = fields.Char('Mã lớp', required=True)
+    tenlop = fields.Char('Tên lớp', required=True)
     nienkhoa = fields.Char('Niên khóa')
     ghichu = fields.Char('Ghi chú')
     khoi = fields.Many2one('solienlac.khoi', string='Khối')
@@ -1542,7 +1542,7 @@ class lop(models.Model):
 class banhoc(models.Model):
     _name = 'solienlac.banhoc'
     _rec_name = 'tenban' # optional
-    maban = fields.Char('Mã ban', required='True')
+    maban = fields.Char('Mã ban', required=True)
     tenban = fields.Selection([
         ('coban', 'Ban cơ bản'),
         ('tunhien', 'Ban tự nhiên'),
@@ -1555,7 +1555,7 @@ class banhoc(models.Model):
         ('coban_e', 'Ban cơ bản nâng cao 1-2 môn'),
         ('coban_f', 'Ban cơ bản không nâng cao'),
         ('coban_g', 'Ban cơ bản văn địa'),
-    ], default = 'coban_kpb' ,string='Phân ban')
+    ], default = 'coban_kpb' ,string='Phân ban', required=True)
     lop = fields.One2many('solienlac.lop', 'banhoc', string='Lớp')
     ghichu = fields.Char('Ghi chú')
 
@@ -1563,8 +1563,8 @@ class monhoc(models.Model):
     _name = 'solienlac.monhoc'
     _rec_name = 'tenmonhoc' # optional
 
-    mamonhoc = fields.Integer('Mã môn học',)
-    tenmonhoc = fields.Char('Tên môn học')
+    mamonhoc = fields.Integer('Mã môn học', required=True)
+    tenmonhoc = fields.Char('Tên môn học', required=True)
     heso = fields.Float('Hệ số')
     ghichu = fields.Char('Ghi chú')
     bomon = fields.Many2one('solienlac.bomon', string='Bộ môn')
@@ -1574,8 +1574,8 @@ class monhoc(models.Model):
 class ketquahoctap(models.Model):
     _name = 'solienlac.ketquahoctap'
     _rec_name = 'monhoc' # optional
-    hocsinh = fields.Many2one('solienlac.hocsinh', string='Học sinh')
-    monhoc = fields.Many2one('solienlac.monhoc', string='Môn học')
+    hocsinh = fields.Many2one('solienlac.hocsinh', string='Học sinh', required=True)
+    monhoc = fields.Many2one('solienlac.monhoc', string='Môn học', required=True)
     giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên')
     diemtongket = fields.Float('Điểm tổng kết')
     hocky = fields.Selection(
@@ -1617,8 +1617,8 @@ class ketquahoctap(models.Model):
 class loaidiem(models.Model):
     _name = 'solienlac.loaidiem'
     _rec_name = 'tenloai' # optional
-    maloai = fields.Char('Mã loai', required='True')
-    tenloai = fields.Char('Tên loai', required='True')
+    maloai = fields.Char('Mã loai', required=True)
+    tenloai = fields.Char('Tên loai', required=True)
     heso = fields.Float('Hệ số')
     ghichu = fields.Char('Ghi chú')
 
@@ -1635,7 +1635,7 @@ class diem(models.Model):
 class chucvu(models.Model):
     _name = 'solienlac.chucvu'
     _rec_name = 'ghichu' # optional
-    machucvu = fields.Integer('Mã chức vụ')
+    machucvu = fields.Integer('Mã chức vụ', required=True)
     tenchucvu = fields.Selection([
                 ('value1', 'Không'),
                 ('value2', 'Liên đội trưởng'),
@@ -1648,7 +1648,7 @@ class chucvu(models.Model):
                 ('value9', 'Chi đội phó'),
                 ('value10', 'Lớp trưởng'),
                 ('value11', 'Lớp phó'),
-        ],string="Tên chức vụ")
+        ],string="Tên chức vụ", required=True)
     ghichu = fields.Char('Chức vụ')
 
     @api.constrains('machucvu')
@@ -1746,12 +1746,12 @@ class diemthanhphan(models.Model):
 
 class bangdiem_thanhphan(models.Model):
     _name = 'solienlac.bangdiem_thanhphan'
-    monhoc = fields.Many2one('solienlac.monhoc', string='Môn học')
-    bangdiem = fields.Many2one('solienlac.bangdiem', string='Kết quả học tập')
+    monhoc = fields.Many2one('solienlac.monhoc', string='Môn học', required=True)
+    bangdiem = fields.Many2one('solienlac.bangdiem', string='Kết quả học tập', required=True)
     diemthanhphan = fields.One2many("solienlac.diemthanhphan", "bangdiem_thanhphan", string="Điểm thành phần")
     diemtongket = fields.Float(string="Điểm tổng kết môn")
     ghichu = fields.Char(string="Ghi chú")
-    giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên bộ môn')
+    giaovien = fields.Many2one('solienlac.giaovien', string='Giáo viên bộ môn', required=True)
     ykiengiaovien = fields.Char('Ý kiến giáo viên bộ môn')
     ngaycapnhat = fields.Datetime(string="Ngày cập nhật")
 
@@ -2076,6 +2076,18 @@ class nhapdiemhocsinh(models.Model):
                 # Show objects nhapdiemchitiet has just created
                 self.nhapdiemchitiet = lst_hs_nhapdiem
 
+    @api.constrains('monhoc', 'hocky', 'namhoc')
+    def _nhapdiemhocsinh_uniq(self):
+        mycount = self.env['solienlac.nhapdiemhocsinh'].search_count([
+            ('hocsinh.lop.id','=',self.lop.id),
+            ('hocky','=',self.hocky), # notice, how about a year
+            ('namhoc','=',self.namhoc),
+            ('monhoc.id','=',self.monhoc.id),
+        ])
+        print mycount
+        if mycount > 1:
+            return {'value':{},'warning':{'title':'Lỗi','message':'Dữ liệu đã tồn tại.'}}
+
 class nhapdiemchitiet(models.Model):
     _name = 'solienlac.nhapdiemchitiet'
 
@@ -2157,7 +2169,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diemhocky)
         if not tmp:
             self.diemhocky = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diemmieng2',)
@@ -2165,7 +2176,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diemmieng2)
         if not tmp:
             self.diemmieng2 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diemmieng3',)
@@ -2173,7 +2183,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diemmieng3)
         if not tmp:
             self.diemmieng3 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diemmieng4',)
@@ -2181,7 +2190,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diemmieng4)
         if not tmp:
             self.diemmieng4 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diemmieng5',)
@@ -2189,7 +2197,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diemmieng5)
         if not tmp:
             self.diemmieng5 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diemmieng6',)
@@ -2197,7 +2204,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diemmieng6)
         if not tmp:
             self.diemmieng6 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diem15phut2',)
@@ -2205,7 +2211,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diem15phut2)
         if not tmp:
             self.diem15phut2 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diem15phut3',)
@@ -2213,7 +2218,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diem15phut3)
         if not tmp:
             self.diem15phut3 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diem15phut4',)
@@ -2221,7 +2225,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diem15phut4)
         if not tmp:
             self.diem15phut4 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diem15phut5',)
@@ -2229,7 +2232,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diem15phut5)
         if not tmp:
             self.diem15phut5 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diem15phut6',)
@@ -2237,7 +2239,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diem15phut6)
         if not tmp:
             self.diem15phut6 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diem1tiet2',)
@@ -2245,7 +2246,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diem1tiet2)
         if not tmp:
             self.diem1tiet2 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diem1tiet3',)
@@ -2253,7 +2253,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diem1tiet3)
         if not tmp:
             self.diem1tiet3 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diem1tiet4',)
@@ -2261,7 +2260,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diem1tiet4)
         if not tmp:
             self.diem1tiet4 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diem1tiet5',)
@@ -2269,7 +2267,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diem1tiet5)
         if not tmp:
             self.diem1tiet5 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
     @api.onchange('diem1tiet6',)
@@ -2277,7 +2274,6 @@ class nhapdiemchitiet(models.Model):
         tmp = _validate_diem(self.diem1tiet6)
         if not tmp:
             self.diem1tiet6 = ''
-            return {'value':{},'warning':{'title':'Lỗi','message':'Điểm vừa nhập không hợp lệ.'}}
         else:
             pass
 
