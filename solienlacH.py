@@ -2073,17 +2073,6 @@ class nhapdiemhocsinh(models.Model):
                 # Show objects nhapdiemchitiet has just created
                 self.nhapdiemchitiet = lst_hs_nhapdiem
 
-    @api.constrains('monhoc', 'hocky', 'namhoc')
-    def _nhapdiemhocsinh_uniq(self):
-        mycount = self.env['solienlac.nhapdiemhocsinh'].search_count([
-            ('hocsinh.lop.id','=',self.lop.id),
-            ('hocky','=',self.hocky), # notice, how about a year
-            ('namhoc','=',self.namhoc),
-            ('monhoc.id','=',self.monhoc.id),
-        ])
-        print mycount
-        if mycount > 1:
-            return {'value':{},'warning':{'title':'Lỗi','message':'Dữ liệu đã tồn tại.'}}
 
 class nhapdiemchitiet(models.Model):
     _name = 'solienlac.nhapdiemchitiet'
