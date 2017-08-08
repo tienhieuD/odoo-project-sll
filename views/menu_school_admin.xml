@@ -449,7 +449,7 @@
   <record id="diemdanhchitiet_action_form_sca" model="ir.actions.act_window">
     <field name="name">Điểm danh chi tiết</field>
     <field name="res_model">solienlac.diemdanhchitiet</field>
-    <field name="view_mode">tree,form</field>
+    <field name="view_mode">tree</field>
     <field name="domain">[('vang','=', True)]</field>
     <field name="context">{'group_by':['namhoc','hocky','truong','khoi','lop','ngayvang',]}</field>
   </record>

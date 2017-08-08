@@ -1320,6 +1320,21 @@ class hocsinh(models.Model):
         user = super(hocsinh, self).create(values)
         return user
 
+    @api.multi
+    def write(self, vals):
+        '''Chi giao vien chu nhiem moi sua duoc hocsinh lop minh'''
+
+        flag = True
+
+        id_gvhientai = self.env.user.giaovien.id
+        id_gvcn = self.lop.gvcn.id
+
+        if id_gvhientai == id_gvcn:
+            obj = super(hocsinh, self).write(vals)
+            return obj
+        else:
+            raise exceptions.ValidationError("Error1: Không thể sửa thông tin học sinh ngoài lớp chủ nhiệm!")
+            return
 
 class lydothoihoc(models.Model):
     _name = 'solienlac.lydothoihoc'
@@ -2749,6 +2764,7 @@ class diemdanhhocsinh(models.Model):
 
 class diemdanhchitiet(models.Model):
     _name = 'solienlac.diemdanhchitiet'
+    _rec_name = 'hocsinh'
 
     lop = fields.Many2one(
         string="Lớp",

@@ -60,7 +60,7 @@
   <record id="rule_giaovien_nhin_bangdiemdanh" model="ir.rule">
     <field name="name">Giáo viên bộ môn chỉ thấy bảng điểm danh lớp mình dạy</field>
     <field name="model_id" ref="model_solienlac_diemdanhhocsinh"/>
-    <field name="domain_force">[('giaovien.id', '=', user.giaovien.id), ]</field>
+    <field name="domain_force">[('giaovien.id', '=', user.giaovien.id),  ]</field>
     <field name="perm_write" eval="1"/>
     <field name="perm_create" eval="1"/>
     <field name="perm_read" eval="1"/>
@@ -80,6 +80,32 @@
     <field name="perm_unlink" eval="1"/>
     <!-- You can attach this rule to a specific group, or make it global -->
     <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l22'))]"/>
+    <!--<field name="global" eval="1"/> -->
+  </record>
+
+  <record id="rule_gvtruongnao_nhinbangdiemdanh_truongday" model="ir.rule">
+    <field name="name">Giáo viên trường nào nhìn điểm danh trường đấy</field>
+    <field name="model_id" ref="model_solienlac_diemdanhhocsinh"/>
+    <field name="domain_force">[('giaovien.truong.id', '=', user.truong.id), ]</field>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_unlink" eval="1"/>
+    <!-- You can attach this rule to a specific group, or make it global -->
+    <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l1')), (4, ref('solienlac.group_schooladmin_l21')), (4, ref('solienlac.group_schooladmin_l22')), ]"/>
+    <!--<field name="global" eval="1"/> -->
+  </record>
+
+  <record id="rule_gvtruongnao_nhinbangdiemdanh_chitiet_truongday" model="ir.rule">
+    <field name="name">Giáo viên trường nào nhìn điểm danh trường đấy</field>
+    <field name="model_id" ref="model_solienlac_diemdanhchitiet"/>
+    <field name="domain_force">[('giaovien.truong.id', '=', user.truong.id), ]</field>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_unlink" eval="1"/>
+    <!-- You can attach this rule to a specific group, or make it global -->
+    <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l1')), (4, ref('solienlac.group_schooladmin_l21')), (4, ref('solienlac.group_schooladmin_l22')), ]"/>
     <!--<field name="global" eval="1"/> -->
   </record>
 
@@ -206,12 +232,10 @@
     <field name="perm_create" eval="0"/>
     <field name="perm_read" eval="1"/>
     <field name="perm_unlink" eval="0"/>
-    <!-- You can attach this rule to a specific group, or make it global -->
     <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l21')), (4, ref('solienlac.group_schooladmin_l22')), ]"/>
-    <!--<field name="global" eval="1"/> -->
   </record>
 
-  <record id="rule_giaovien_sua_lopchunhiem" model="ir.rule">
+  <!-- <record id="rule_giaovienchunhiem" model="ir.rule">
     <field name="name">Giáo viên sửa đưuọc thông tin lớp họ chủ nhiệm</field>
     <field name="model_id" ref="model_solienlac_hocsinh"/>
     <field name="domain_force">[('lop.gvcn.id', '=', user.giaovien.id), ]</field>
@@ -219,10 +243,32 @@
     <field name="perm_create" eval="0"/>
     <field name="perm_read" eval="1"/>
     <field name="perm_unlink" eval="0"/>
+    <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l22'))]"/>
+  </record> -->
+
+  <record id="rule_giaovienchunhiem_sua_hocsinh_lopcn" model="ir.rule">
+    <field name="name">Giaovien chu nhiem sua thong tin hoc sinh lop chu nhiem</field>
+    <field name="model_id" ref="model_solienlac_hocsinh"/>
+    <field name="domain_force">[('lop.gvcn.id', '=', user.giaovien.id), ]</field>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_unlink" eval="1"/>
     <!-- You can attach this rule to a specific group, or make it global -->
     <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l22'))]"/>
     <!--<field name="global" eval="1"/> -->
   </record>
+
+  <!-- <record id="rule_giaovienchunhiem_kosua_hocsinh_lopcn" model="ir.rule">
+    <field name="name">Giaovien chu nhiem sua thong tin hoc sinh lop chu nhiem</field>
+    <field name="model_id" ref="model_solienlac_hocsinh"/>
+    <field name="domain_force">[('lop.gvcn.id', '!=', user.giaovien.id), ]</field>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_unlink" eval="1"/>
+    <field name="groups" eval="[(4, ref('solienlac.group_schooladmin_l22'))]"/>
+  </record> -->
 
 
   <record id="rule_hocsinh_customer" model="ir.rule">

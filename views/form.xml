@@ -2,6 +2,24 @@
 <odoo>
   <data>
 
+    <record id="diemdanhchitiet_view_form" model="ir.ui.view">
+      <field name="name">solienlac.diemdanhchitiet.form</field>
+      <field name="model">solienlac.diemdanhchitiet</field>
+      <field name="arch" type="xml">
+        <form string="Chi tiết điểm danh">
+          <sheet>
+            <group>
+              <field name="hocsinh"/>
+              <field name="ngayvang"/>
+              <field name="vang"/>
+              <field name="ghichu"/>
+              <field name="monhoc"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
     <record id="kyluathocsinh_view_form" model="ir.ui.view">
       <field name="name">solienlac.kyluathocsinh.form</field>
       <field name="model">solienlac.kyluathocsinh</field>
