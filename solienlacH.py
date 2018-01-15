@@ -9,28 +9,23 @@ import hashlib
 import re
 
 def _validate_diem(mark):
+    # Mark must have an value
     if not mark:
         return False
-
+    
+    # Mark must contain available char
     available_char = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '.']
-    count_of_dot = 0
-
-    # Return false if this case happened
-    for char in mark:
-        if char not in available_char:
-            return False
-        elif char == '.' or char == ',':
-            count_of_dot += 1
-            if count_of_dot > 1:
-                return False
-
-    if ',' in mark:
-        mark = mark.replace(',', '.')
-
+    if not all(char in available_char for char in mark)
+        return False
+    
+    # Just one separator in mark
+    if mark.count('.') + mark.count(',') > 1:
+        return False
+    
+    # Mark must in range[0, 10]
+    mark = mark.replace(',', '.') if ',' in mark else mark
     mark = float(mark)
-    if 0.0 <= mark <= 10.0:
-        return True
-    return False
+    return 0.0 <= mark <= 10.0
 
 class hocky(models.Model):
     _name = 'solienlac.hocky'
