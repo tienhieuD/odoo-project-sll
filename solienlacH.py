@@ -34,11 +34,7 @@ class hocky(models.Model):
 
     @api.model
     def _get_list_namhoc(self):
-        lst_namhoc=[]
-        for year in range(1990,2050):
-            item = str(year) + "-" + str(year+1)
-            lst_namhoc.append( (item, item) )
-        return lst_namhoc
+        return [str(k) + '-' + str(k+1) for k in range(1990,2020)]
 
     @api.model
     def _get_namhoc_now(self):
