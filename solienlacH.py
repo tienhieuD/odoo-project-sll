@@ -8,19 +8,29 @@ import json
 import hashlib
 import re
 
-def _validate_diem(n):
-    try:
-        diem = n
-        str_diem = diem.replace(',','.')
-        float_diem = float(str_diem)
-        if float_diem>10 or float_diem<0:
-            return False
-        else:
-            return True
-    except:
-        # raise exceptions.ValidationError("Giá trị năm học không phải năm hiện tại!")
-        # raise exceptions.Warning("Giá trị điểm vừa nhập không hợp lệ. Điểm tổng kết sẽ bỏ qua giá trị này!")
+def _validate_diem(mark):
+    if not mark:
         return False
+
+    available_char = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '.']
+    count_of_dot = 0
+
+    # Return false if this case happened
+    for char in mark:
+        if char not in available_char:
+            return False
+        elif char == '.' or char == ',':
+            count_of_dot += 1
+            if count_of_dot > 1:
+                return False
+
+    if ',' in mark:
+        mark = mark.replace(',', '.')
+
+    mark = float(mark)
+    if 0.0 <= mark <= 10.0:
+        return True
+    return False
 
 class hocky(models.Model):
     _name = 'solienlac.hocky'
