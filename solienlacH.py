@@ -15,7 +15,7 @@ def _validate_diem(mark):
     
     # Mark must contain available char
     available_char = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '.']
-    if not all(char in available_char for char in mark)
+    if not all(char in available_char for char in mark):
         return False
     
     # Just one separator in mark
