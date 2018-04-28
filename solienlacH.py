@@ -9,7 +9,7 @@ import hashlib
 import re
 
 def _validate_diem(mark):
-    parten = "(^[0-9](,|.)?[0-9]*$|^10(,|.)?0*$)"
+    parten = "(^[0-9](,|\.)?[0-9]*$|^10(,|.)?0*$)"
     return re.match(parten, mark)
 
 class hocky(models.Model):
